@@ -152,41 +152,6 @@
       (add-nested acs task n))
     task))
 
-(defn execute-task [clazz args]
-  (let [task (prepare-type clazz args)]
-    (println "executing task" (display-name task))
-    (.execute task)))
-
-
-;<copy todir="../backup/dir">
-;  <fileset dir="src_dir"/>
-;  <filterset>
-;    <filter token="TITLE" value="Foo Bar"/>
-;  </filterset>
-;</copy>
-
-
-(comment
-  ; ==>
-  (copy :todir "../backup/dir"
-        (fileset :dir "src_dir")
-        (filterset
-          (filter :token "TITLE" :value "Foo Bar")))
-
-  ;<copy todir= "../dest/dir" >
-  ;  <fileset dir= "src_dir" >
-  ;    <exclude name= "**/*.java" />
-  ;  </fileset>
-  ;</copy>
-
-  )
-
-;  public synchronized NameEntry createExclude() {
-
-(def mappings
-  {:copy    Copy
-   :fileset FileSet})
-
 (defn exclude [& args]
   (parse-args :exclude args))
 
@@ -199,10 +164,6 @@
 (defn fileset [& args]
   (parse-args :fileset args))
 
-(comment
-  (def REMEMBER "./src/main/org/apache/tools/ant/types/defaults.properties")
-
-  )
 (defn copy
   "Example code:
 
@@ -211,7 +172,7 @@
         (fileset dir=\".\" includes=\"**/*.java\")))
 
   valid attributes:
-  
+
     :preservelastmodified :tofile :todir :overwrite :force
     :filtering :flatten :includeEmptyDirs :failonerror :quiet
     :verbose :encoding :outputencoding :enablemultiplemappings
@@ -220,91 +181,22 @@
   valid nested elements:
 
     fileset filenamemapper resourcecollection
-    
+
   https://ant.apache.org/manual/Tasks/copy.html"
   [& args]
   (parse-args :copy args))
 
-(comment
-  (defn file? [o] (instance? File o))
-
-  (s/def ::attr-value (s/or ::string-value string?
-                            ::file-value file?))
-  (s/def ::attr (s/cat ::name keyword?
-                       ::value ::attr-value))
-  (s/def ::nested (s/cat ::n map?))
-  (s/def ::args (s/cat ::attrs (s/* ::attr) ::nesteds (s/* ::nested)))
-
-  ; https://stackoverflow.com/questions/43256665/realistic-clojure-spec-for-function-with-named-arguments
-  (s/fdef copy
-          :args (s/cat
-                  ::attrs
-                  (s/* (s/cat ::name
-                              (s/keys :opt-un [::todir ::tofile ::preservelastmodified ::overwrite
-                                               ::force ::filtering ::flatten ::includeEmptyDirs
-                                               ::failonerror ::quiet ::verbose ::encoding
-                                               ::outputencoding ::enablemultiplemappings
-                                               ::g])
-                              ::value ::attr-value))
-                  ::nesteds (s/* ::nested))
-          :ret map?)
-  )
-
-
-(defn string-backed-file [str-data]
-  (let [loc "source-file.clj:81"]
-    (proxy [File] [(str "antclj:" loc)]
-      (hashCode [] CljAntProjectHelper/MAGIC_CLJ_ANT)
-      (toString [] (str "string-backed-file> " (proxy-super getPath)))
-      (exists [] true)
-      (isFile [] true)
-      (isDirectory [] false)
-      (getParent [] str-data)
-      (toPath []
-        (println "returning path")
-        (proxy [Path] []
-          (getFileSystem []
-            (println "returning filesystem")
-            (proxy [FileSystem] []              
-              (provider []
-                (println "returning proxy")
-                (proxy [FileSystemProvider] []
-                  (newInputStream [path options-arr]
-                    (ByteArrayInputStream.
-                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))
-
-(defn project-helper [build-file]
-  (proxy [ProjectHelper2] []
-    (parse [project build-file]
-      (proxy-super project ()))
-    ))
-
-(defn set-private-field [obj field-name value]
-  (let [f (.getDeclaredField (class obj) field-name)]
-    (.setAccessible f true)
-    (.set f obj value)))
-
-
-(defn call-private-method
-  [obj method-name & args]
-  (let [^Method m (first (filter #(= method-name (.getName %))
-                                 (.getDeclaredMethods (class obj))))]
-    (.setAccessible m true)
-    (.invoke m obj (into-array Object args))))
-
-
 
 (defn run-ant [build-file-str ant-args extra-props classloader]
-  (let [bf  (CljAntBuildFile. "clj-ant-build" build-file-str (io/file "."))
-        main (CljAntMain.)]
+  (let [bf   (CljAntBuildFile. "clj-ant-build" build-file-str (io/file "."))
+        main (CljAntMain. bf)]
     (CljAntProjectHelper/register)
-    (set! (.buildFile main) bf)
-    (.startAnt main (into-array String ant-args) extra-props classloader)))
-    
-    ;(set-private-field main "buildFile" bf)
-    ;(set-private-field main "readyToRun" true)
-    ;(call-private-method  main "runBuild" nil))) ;(make-array String 0) nil nil)))
-    ;(call-private-method ant "runBuild" nil)))
+    (.startAnt main (into-array String (:options ant-args)) extra-props classloader)))
+
+;(set-private-field main "buildFile" bf)
+;(set-private-field main "readyToRun" true)
+;(call-private-method  main "runBuild" nil))) ;(make-array String 0) nil nil)))
+;(call-private-method ant "runBuild" nil)))
 
 (comment
   ; maybe the easiest is to write your own url protocol handler
@@ -331,10 +223,11 @@
 
   )
 
-(defn convert-to-xml [& args]
-  ;(xml/emit
-  (xml/indent-str
-    (xml/element :project {} args)))
+(defn convert-to-xml [ant-args & nested]
+  (let [prj-attrs (select-keys ant-args [:default :name :basedir])]
+    ;(xml/emit
+    (xml/indent-str
+      (xml/element :project prj-attrs nested))))
 
 
 
@@ -352,9 +245,9 @@
   structures which are then executed by the ant function. 
 
   Please note that every effort has been made to make this api self
-  document and applicable for repl driven development. Thus things
+  documenting and applicable for repl driven development. Thus things
   like `(doc fileset)` should return a decent explanation of the
-  available arguments and options.
+  available arguments and nested elements.
 
   In addition to nested function calls, ant accepts the following
   keyword arguments:
@@ -364,7 +257,9 @@
     :default - string. Default target to call. Note that tasks added
     directly under the ant element will be added to an implicit target
     and executed when no default or explicit target is defined.
+
     :name - string. The name of the project.
+
     :basedir - string or File. The base directory from which all
     path calculation are done .
 
@@ -382,30 +277,24 @@
 
     for a full list of available options.
 
-
-   
    Will return a map with the following structure:
 
    {:tasks - coll of executed task instances
     :targets -  
   "
   [& args]
-  (let [[ant-args nested] (parse-args args)
-        xml (apply convert-to-xml nested]
-    (println "XML" xml)
-    (run-ant xml ant-args nil nil)))
+  (let [[attrs nested] (partition-args args)
+        prj-keys  [:default :name :basedir]
+        prj-attrs (select-keys attrs prj-keys)
+        ant-attrs (apply dissoc attrs prj-keys)
+        xml       (apply convert-to-xml prj-attrs nested)]
+    (run-ant xml ant-attrs nil nil)))
 
 ; anyway, scsh is quite complex and does a lot of cool stuff, there's
 ; like a couple of nice ideas you can steal from it
 ; https://github.com/ChaosEternal/guile-scsh
 ; https://gist.github.com/noisesmith/06102f38f14bad40ebe4a04f79f5dfda
 ; https://gist.github.com/noisesmith/684e09a77ca4390f03fd2e53af1d5464
-
-(defn function-two [& args]
-  (throw (Throwable.)))
-
-(defn function-one [& args]
-  (apply function-two args))
 
 (comment
 
@@ -419,3 +308,31 @@
                    (exclude :name "**/src/**"))))
 
   )
+
+(comment
+  (def REMEMBER "./src/main/org/apache/tools/ant/types/defaults.properties")
+
+  (defn file? [o] (instance? File o))
+
+  (s/def ::attr-value (s/or ::string-value string?
+                            ::file-value file?))
+  (s/def ::attr (s/cat ::name keyword?
+                       ::value ::attr-value))
+  (s/def ::nested (s/cat ::n map?))
+  (s/def ::args (s/cat ::attrs (s/* ::attr) ::nesteds (s/* ::nested)))
+
+  ; https://stackoverflow.com/questions/43256665/realistic-clojure-spec-for-function-with-named-arguments
+  (s/fdef copy
+          :args (s/cat
+                  ::attrs
+                  (s/* (s/cat ::name
+                              (s/keys :opt-un [::todir ::tofile ::preservelastmodified ::overwrite
+                                               ::force ::filtering ::flatten ::includeEmptyDirs
+                                               ::failonerror ::quiet ::verbose ::encoding
+                                               ::outputencoding ::enablemultiplemappings
+                                               ::g])
+                              ::value ::attr-value))
+                  ::nesteds (s/* ::nested))
+          :ret map?)
+  )
+
