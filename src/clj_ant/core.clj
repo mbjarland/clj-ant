@@ -6,16 +6,15 @@
             [clojure.data.xml :as xml])
   (:import (org.apache.tools.ant.taskdefs Copy)
            (java.io File ByteArrayInputStream)
-           (org.apache.tools.ant.types FileSet FilterSet)
-           (org.apache.tools.ant Project ProjectHelper NoBannerLogger ComponentHelper Main ProjectHelperRepository)
-           (clojure.lang IFn)
+           (org.apache.tools.ant.types FileSet)
+           (org.apache.tools.ant Project ProjectHelper NoBannerLogger CljAntMain)
            (java.util Map)
            (java.nio.charset StandardCharsets)
            (java.nio.file.spi FileSystemProvider)
            (java.nio.file FileSystem Path)
            (org.apache.tools.ant.helper ProjectHelper2)
            (java.lang.reflect Method)
-           (cljant CljAntProjectHelper CljAntBuildFile CljAntMain)))
+           (cljant CljAntProjectHelper CljAntBuildFile)))
 
 ;protected static Project createProject() {
 ;    final Project project = new Project();
@@ -295,13 +294,16 @@
 
 
 
-(defn run-ant [build-file-str]
+(defn run-ant [build-file-str ant-args extra-props classloader]
   (let [bf  (CljAntBuildFile. "clj-ant-build" build-file-str (io/file "."))
-        main (Main.)]
+        main (CljAntMain.)]
     (CljAntProjectHelper/register)
-    (set-private-field main "buildFile" bf)
-    (set-private-field main "readyToRun" true)
-    (call-private-method  main "runBuild" nil))) ;(make-array String 0) nil nil)))
+    (set! (.buildFile main) bf)
+    (.startAnt main (into-array String ant-args) extra-props classloader)))
+    
+    ;(set-private-field main "buildFile" bf)
+    ;(set-private-field main "readyToRun" true)
+    ;(call-private-method  main "runBuild" nil))) ;(make-array String 0) nil nil)))
     ;(call-private-method ant "runBuild" nil)))
 
 (comment
@@ -336,10 +338,68 @@
 
 
 
-(defn ant [& args]
-  (let [xml (apply convert-to-xml args)]
+(defn ant
+  "The main entry point to the clj-ant api. The ant function is
+  the only function which actually executes any ant tasks/types
+  in the clj-ant api. Specifically in an expression like:
+
+  (ant
+    (copy :todir \"/tmp\"
+      (fileset :dir \"src\"
+        (include :name \"main/**/*.clj\"))))
+
+  the functions 'copy', 'fileset', and 'include' only return data
+  structures which are then executed by the ant function. 
+
+  Please note that every effort has been made to make this api self
+  document and applicable for repl driven development. Thus things
+  like `(doc fileset)` should return a decent explanation of the
+  available arguments and options.
+
+  In addition to nested function calls, ant accepts the following
+  keyword arguments:
+
+  Arguments normally defined on the <project ...> element in ant:
+
+    :default - string. Default target to call. Note that tasks added
+    directly under the ant element will be added to an implicit target
+    and executed when no default or explicit target is defined.
+    :name - string. The name of the project.
+    :basedir - string or File. The base directory from which all
+    path calculation are done .
+
+    https://ant.apache.org/manual/using.html#projects
+
+  :options
+    A coll of string options which would normally be provided to
+    ant as command line options. Example:
+
+    (ant :options [\"-d\"])
+
+    would turn on debugging output. Please run:
+
+    (ant :options [\"--help\"])
+
+    for a full list of available options.
+
+
+   
+   Will return a map with the following structure:
+
+   {:tasks - coll of executed task instances
+    :targets -  
+  "
+  [& args]
+  (let [[ant-args nested] (parse-args args)
+        xml (apply convert-to-xml nested]
     (println "XML" xml)
-    (run-ant xml)))
+    (run-ant xml ant-args nil nil)))
+
+; anyway, scsh is quite complex and does a lot of cool stuff, there's
+; like a couple of nice ideas you can steal from it
+; https://github.com/ChaosEternal/guile-scsh
+; https://gist.github.com/noisesmith/06102f38f14bad40ebe4a04f79f5dfda
+; https://gist.github.com/noisesmith/684e09a77ca4390f03fd2e53af1d5464
 
 (defn function-two [& args]
   (throw (Throwable.)))
