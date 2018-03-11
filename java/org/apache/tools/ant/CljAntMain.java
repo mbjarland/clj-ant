@@ -313,6 +313,14 @@ public class CljAntMain implements AntMain {
     }
 
     /**
+     * Constructor used when creating Main for later arg processing
+     * and startup
+     */
+    public CljAntMain(File buildFile) {
+        this.buildFile = buildFile;
+    }
+
+    /**
      * Sole constructor, which parses and deals with command line
      * arguments.
      *

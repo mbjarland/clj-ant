@@ -7,5 +7,6 @@
                  [org.apache.ant/ant "1.10.2"]
                  [org.clojure/data.xml "0.0.8"]]
   :java-source-paths ["java"]
-
+  :javac-options ["-target" "1.8" "-source" "1.8"
+                  "-Xlint:deprecation" "-Xlint:options"]
   :jvm-opts ["-Xms512m" "-Xmx2g" "-server"])

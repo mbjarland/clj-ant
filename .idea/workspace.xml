@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6204a53c-3621-4995-b378-2f2930817aa3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/java/cljant/CljAntMain.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/clj-ant.iml" afterPath="$PROJECT_DIR$/clj-ant.iml" />
+      <change beforePath="$PROJECT_DIR$/java/org/apache/tools/ant/CljAntMain.java" afterPath="$PROJECT_DIR$/java/org/apache/tools/ant/CljAntMain.java" />
+      <change beforePath="$PROJECT_DIR$/project.clj" afterPath="$PROJECT_DIR$/project.clj" />
       <change beforePath="$PROJECT_DIR$/src/clj_ant/core.clj" afterPath="$PROJECT_DIR$/src/clj_ant/core.clj" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,11 +32,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="core.clj" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/clj_ant/core.clj">
+      <file leaf-file-name="defaults.properties" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/taskdefs/defaults.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1253">
-              <caret line="395" column="25" lean-forward="false" selection-start-line="395" selection-start-column="25" selection-end-line="395" selection-end-column="25" />
+            <state relative-caret-position="-5004">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -49,12 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>configurePt</find>
-      <find>par</find>
-      <find>openConnection</find>
-      <find>MSG_ERR</find>
-      <find>MSG_INFO</find>
-      <find>new Project</find>
       <find>loggerClassname</find>
       <find>printMessage</find>
       <find>PRIMARY_INSTANCE</find>
@@ -79,6 +77,12 @@
       <find>run-an</find>
       <find>runAnt</find>
       <find>startAnt</find>
+      <find>abstract</find>
+      <find>setOw</find>
+      <find>execute-task</find>
+      <find>project-helper</find>
+      <find>call-pri</find>
+      <find>copy</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -113,8 +117,8 @@
         <option value="$PROJECT_DIR$/java/cljant/CljAntProjectHelper.java" />
         <option value="$PROJECT_DIR$/java/cljant/CljAntMain.java" />
         <option value="$PROJECT_DIR$/java/cljant/CljAntBuildFile.java" />
-        <option value="$PROJECT_DIR$/project.clj" />
         <option value="$PROJECT_DIR$/java/org/apache/tools/ant/CljAntMain.java" />
+        <option value="$PROJECT_DIR$/project.clj" />
         <option value="$PROJECT_DIR$/src/clj_ant/core.clj" />
       </list>
     </option>
@@ -125,14 +129,12 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7" fullScreen="true">
-    <option name="x" value="221" />
-    <option name="y" value="122" />
-    <option name="width" value="2927" />
-    <option name="height" value="1612" />
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="896" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -147,31 +149,6 @@
     </navigator>
     <panes>
       <pane id="AndroidView" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="clj-ant" type="b2602c69:ProjectViewProjectNode" />
-              <item name="clj-ant" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="clj-ant" type="b2602c69:ProjectViewProjectNode" />
-              <item name="clj-ant" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="clj-ant" type="b2602c69:ProjectViewProjectNode" />
-              <item name="clj-ant" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="clj_ant" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -187,12 +164,12 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/project.clj" />
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="PersistentVector&#9;PSI&#9;JAVA://clojure.lang.PersistentVector&#10;core.&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/src/clj_ant/core.clj&#10;CljAntMa&#9;PSI&#9;JAVA://org.apache.tools.ant.CljAntMain&#10;project.clj&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/project.clj&#10;Launcher&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/launch/Launcher.java&#10;tool windows&#9;ACTION&#9;ToolWindowsGroup&#10;CljAntBu&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/cljant/CljAntBuildFile.java&#10;CljAnt&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/cljant/CljAntMain.java&#10;Reflect&#9;PSI&#9;JAVA://org.apache.tools.ant.util.ReflectUtil&#10;CljAntProje&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/cljant/CljAntProjectHelper.java&#10;Main.java&#9;FILE&#9;jar:///home/mbjarland/.m2/repository/org/apache/ant/ant/1.10.2/ant-1.10.2-sources.jar!/org/apache/tools/ant/Main.java&#10;CljAntFileUtils&#9;PSI&#9;JAVA://clj_ant.CljAntFileUtils&#10;cljantproj&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/cljant/CljAntProjectHelper.java&#10;ProjectHelper2&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/helper/ProjectHelper2.java&#10;Task.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Task.java&#10;Main&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Main.java&#10;cljant&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/sun/net/www/protocol/cljant&#10;Main.java:762&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Main.java&#10;project&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Project.java&#10;FileNameMapper&#9;PSI&#9;JAVA://org.apache.tools.ant.util.FileNameMapper&#10;Project.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Project.java&#10;ProjectComponent.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/ProjectComponent.java&#10;DataType.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/types/DataType.java&#10;NoBanner&#9;PSI&#9;JAVA://org.apache.tools.ant.NoBannerLogger&#10;Fileset.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/types/FileSet.java&#10;Tool Windows&#9;ACTION&#9;ToolWindowsGroup&#10;Copy.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/taskdefs/Copy.java&#10;Copy&#9;PSI&#9;JAVA://org.apache.tools.ant.taskdefs.Copy" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="SearchEverywhereHistoryKey" value="defaults.&#9;FILE&#9;file:///Users/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/taskdefs/defaults.properties&#10;defaults.pro&#9;FILE&#9;file:///Users/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/types/defaults.properties&#10;proje&#9;FILE&#9;file:///Users/mbjarland/projects/clojure/clj-ant/project.clj&#10;PersistentVector&#9;PSI&#9;JAVA://clojure.lang.PersistentVector&#10;core.&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/src/clj_ant/core.clj&#10;CljAntMa&#9;PSI&#9;JAVA://org.apache.tools.ant.CljAntMain&#10;project.clj&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/project.clj&#10;Launcher&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/launch/Launcher.java&#10;tool windows&#9;ACTION&#9;ToolWindowsGroup&#10;CljAntBu&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/cljant/CljAntBuildFile.java&#10;CljAnt&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/cljant/CljAntMain.java&#10;Reflect&#9;PSI&#9;JAVA://org.apache.tools.ant.util.ReflectUtil&#10;CljAntProje&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/cljant/CljAntProjectHelper.java&#10;Main.java&#9;FILE&#9;jar:///home/mbjarland/.m2/repository/org/apache/ant/ant/1.10.2/ant-1.10.2-sources.jar!/org/apache/tools/ant/Main.java&#10;CljAntFileUtils&#9;PSI&#9;JAVA://clj_ant.CljAntFileUtils&#10;cljantproj&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/cljant/CljAntProjectHelper.java&#10;ProjectHelper2&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/helper/ProjectHelper2.java&#10;Task.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Task.java&#10;Main&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Main.java&#10;cljant&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/java/sun/net/www/protocol/cljant&#10;Main.java:762&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Main.java&#10;project&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Project.java&#10;FileNameMapper&#9;PSI&#9;JAVA://org.apache.tools.ant.util.FileNameMapper&#10;Project.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/Project.java&#10;ProjectComponent.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/ProjectComponent.java&#10;DataType.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/types/DataType.java&#10;NoBanner&#9;PSI&#9;JAVA://org.apache.tools.ant.NoBannerLogger&#10;Fileset.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/types/FileSet.java&#10;Tool Windows&#9;ACTION&#9;ToolWindowsGroup&#10;Copy.java&#9;FILE&#9;file:///home/mbjarland/projects/clojure/clj-ant/ant/src/main/org/apache/tools/ant/taskdefs/Copy.java&#10;Copy&#9;PSI&#9;JAVA://org.apache.tools.ant.taskdefs.Copy" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="ReplState" timestamp="1520700871724">{:repl-history {:ide [], :local [{:command &quot;(let [m (Main.)]\n  (set-private-field m \&quot;buildFile\&quot; (File. \&quot;this is bob\&quot;))\n  (.startAnt m (make-array String 0) nil nil))&quot;, :offset 110, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;\n  \n  \&quot;)&quot;, :offset 19} {:command &quot;(.normalize (FileUtils/getFileUtils) \n            (.getAbsolutePath (string-backed-file \&quot;bob is great\&quot;)))&quot;, :offset 105, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (toString [] \&quot;string-backed-file!\&quot;)\n      (exists [] true)\n      (toPath []\n        (proxy [Path] []\n          (getFileSystem []\n            (proxy [FileSystem] []\n              (provider []\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path &amp; options]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 524, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (toString [] (str \&quot;string-backed-file&gt; \&quot; (proxy-super getPath)))\n      (exists [] true)\n      (toPath []\n        (proxy [Path] []\n          (getFileSystem []\n            (proxy [FileSystem] []\n              (provider []\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path &amp; options]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 553, :ns &quot;clj-ant.core&quot;} {:command &quot;(.toString (string-backed-file \&quot;blb\&quot;))&quot;, :offset 35, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf (string-backed-file build-file-str)\n        ant (Main.)\n        phr (ProjectHelperRepository/getInstance)]\n\n    (set-private-field ant \&quot;buildFile\&quot; (string-backed-file build-file-str))\n    (set-private-field ant \&quot;readyToRun\&quot; true)\n    (call-private-method ant \&quot;runBuild\&quot; nil)))&quot;, :offset 318, :ns &quot;clj-ant.core&quot;} {:command &quot;(instancde? IFn (fn [] ))&quot;, :offset 24, :ns &quot;clj-ant.core&quot;} {:command &quot;(instance? IFn (fn [] ))&quot;, :offset 8, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (string-backed-file \&quot;bob\&quot;))&quot;, :offset 49, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (.toPath (string-backed-file \&quot;bob\&quot;)))&quot;, :offset 59, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (.toPath (File. \&quot;project.clj\&quot;)) nil)&quot;, :offset 57, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (toString [] (str \&quot;string-backed-file&gt; \&quot; (proxy-super getPath)))\n      (exists [] true)\n      (toPath []\n        (println \&quot;returning path\&quot;)\n        (proxy [Path] []\n          (getFileSystem []\n            (println \&quot;returning filesystem\&quot;)\n            (proxy [FileSystem] []\n              (provider []\n                (println \&quot;returning proxy\&quot;)\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path options]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 675, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream )&quot;, :offset 22} {:command &quot;(Files/newInputStream (.toPath (File. \&quot;project.clj\&quot;)))&quot;, :offset 53, :ns &quot;clj-ant.core&quot;} {:command &quot;(.toPath (File. \&quot;project.clj\&quot;))&quot;, :offset 31, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (.toPath (File. \&quot;project.clj\&quot;)) (make-array OpenOption 0))&quot;, :offset 78, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (string-backed-file \&quot;bob\&quot;) (make-array OpenOption 0))&quot;, :offset 46, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream \n  (.toPath (string-backed-file \&quot;bob\&quot;)) \n  (make-array OpenOption 0))&quot;, :offset 61, :ns &quot;clj-ant.core&quot;} {:command &quot;(.toString (string-backed-file \&quot;bob\&quot;))&quot;, :offset 35} {:command &quot;(.foo (proxy [String] [\&quot;bob\&quot;]\n  (foo [] \&quot;this is foo\&quot;)))&quot;, :offset 6, :ns &quot;clj-ant.core&quot;} {:command &quot;(.foo (proxy [File] [\&quot;bob\&quot;]\n  (foo [] \&quot;this is foo\&quot;)))&quot;, :offset 18, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getPath \n  (proxy [File] [\&quot;bob\&quot;] \n    (foo [] \&quot;this is foo\&quot;)))&quot;, :offset 9, :ns &quot;clj-ant.core&quot;} {:command &quot;(.toString \n  (proxy [File] [\&quot;bob\&quot;] \n    (toString [] \&quot;this is foo\&quot;)))&quot;, :offset 10, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc proxy)&quot;, :offset 11, :ns &quot;user&quot;} {:command &quot;()&quot;, :offset 1} {:command &quot;(.foo \n  (proxy [File] [\&quot;bob\&quot;] \n    (foo [] \&quot;this is foo\&quot;)))&quot;, :offset 5, :ns &quot;user&quot;} {:command &quot;(.getPath \n  (proxy [File] [\&quot;bob\&quot;] \n    (getPath [] \&quot;foookyaaa\&quot;)))&quot;, :offset 62, :ns &quot;user&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (toString [] (str \&quot;string-backed-file&gt; \&quot; (proxy-super getPath)))\n      (exists [] true)\n      (isFile [] true)\n      (isDirectory [] false)\n      (getParent [] str-data)\n      (toPath []\n        (println \&quot;returning path\&quot;)\n        (proxy [Path] []\n          (getFileSystem []\n            (println \&quot;returning filesystem\&quot;)\n            (proxy [FileSystem] []              \n              (provider []\n                (println \&quot;returning proxy\&quot;)\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path options-arr]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 775, :ns &quot;clj-ant.core&quot;} {:command &quot;(URL. (str \&quot;cljant://?\&quot; \&quot;abcdefghijkl\&quot;))&quot;, :offset 37, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;\n  &lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n  &lt;/project&gt;\n  \&quot;)&quot;, :offset 77, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n  &lt;/project&gt;\n  \&quot;)&quot;, :offset 13, :ns &quot;clj-ant.core&quot;} {:command &quot;(slurp (.openConnection (URL. (str \&quot;cljant://?\&quot; \&quot;content\&quot;))))&quot;, :offset 61, :ns &quot;clj-ant.core&quot;} {:command &quot;(slurp (.getInputStream \n         (.openConnection (URL. (str \&quot;cljant://?\&quot; \&quot;content\&quot;)))))&quot;, :offset 89, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;?xml version=\\\&quot;1.0\\\&quot;?&gt;\n   &lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n   &lt;/project&gt;\&quot;)&quot;, :offset 40, :ns &quot;clj-ant.core&quot;} {:command &quot;(Integer/MAX_VALUE)&quot;, :offset 18, :ns &quot;user&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (hashCode [] CljAntProjectHelper/MAGIC_CLJ_ANT)\n      (toString [] (str \&quot;string-backed-file&gt; \&quot; (proxy-super getPath)))\n      (exists [] true)\n      (isFile [] true)\n      (isDirectory [] false)\n      (getParent [] str-data)\n      (toPath []\n        (println \&quot;returning path\&quot;)\n        (proxy [Path] []\n          (getFileSystem []\n            (println \&quot;returning filesystem\&quot;)\n            (proxy [FileSystem] []              \n              (provider []\n                (println \&quot;returning proxy\&quot;)\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path options-arr]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 829, :ns &quot;clj-ant.core&quot;} {:command &quot;(.clone \&quot;\&quot;)&quot;, :offset 10, :ns &quot;user&quot;} {:command &quot;(.getAbsolutePath\n  (proxy [File] \&quot;bob\&quot;\n    (getAbsolutePath [] this)))&quot;, :offset 71, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getAbsolutePath\n  (proxy [File] [\&quot;bob\&quot;]\n    (getAbsolutePath [] this)))&quot;, :offset 41, :ns &quot;clj-ant.core&quot;} {:command &quot;(ReflectUtil/invoke \&quot;\&quot;)&quot;, :offset 21, :ns &quot;clj-ant.core&quot;} {:command &quot;(ReflectUtil/invoke (Main.) \&quot;processArgs\&quot; \n                    (class (make-array String 0)) \n                    (to-array [\&quot;bob\&quot;]))&quot;, :offset 129, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getDeclaredField Main \&quot;buildFile\&quot;)&quot;, :offset 36, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getDeclaredField CljAntMain \&quot;buildFile\&quot;)&quot;, :offset 25, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getDeclaredField (class (CljAntMain.)) \&quot;buildFile\&quot;)&quot;, :offset 40, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf  (.setXmlData (CljAntBuildFile. \&quot;clj-ant-build\&quot;) build-file-str)\n        ant (Main.)]\n    (CljAntProjectHelper/register)\n    (set-private-field ant Main \&quot;buildFile\&quot; bf)\n    (set-private-field ant Main \&quot;readyToRun\&quot; true)\n    (.runBuild ant nil)))&quot;, :offset 287, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf  (.setXmlData (CljAntBuildFile. \&quot;clj-ant-build\&quot;) build-file-str)\n        ant (Main.)]\n    (CljAntProjectHelper/register)\n    (set-private-field ant Main \&quot;buildFile\&quot; bf)\n    (set-private-field ant Main \&quot;readyToRun\&quot; true)\n    (call-private-method  ant \&quot;runBuild\&quot;)))&quot;, :offset 305, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf  (.setXmlData (CljAntBuildFile. \&quot;clj-ant-build\&quot;) build-file-str)\n        ant (Main.)]\n    (CljAntProjectHelper/register)\n    (set-private-field ant Main \&quot;buildFile\&quot; bf)\n    (set-private-field ant Main \&quot;readyToRun\&quot; true)\n    (call-private-method  ant \&quot;runBuild\&quot; nil)))&quot;, :offset 309, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getAbsolutePath (CljAntBuildFile. \&quot;bob\&quot;))&quot;, :offset 43, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf  (-&gt; (CljAntBuildFile. \&quot;clj-ant-build\&quot;) (.setXmlData build-file-str))\n        ant (Main.)]\n    (CljAntProjectHelper/register)\n    (set-private-field ant \&quot;buildFile\&quot; bf)\n    (set-private-field ant \&quot;readyToRun\&quot; true)\n    (call-private-method  ant \&quot;runBuild\&quot; nil)))&quot;, :offset 304, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getDeclaredField (class (Main.)) \&quot;buildFile\&quot;)&quot;, :offset 47, :ns &quot;clj-ant.core&quot;} {:command &quot;(let [o (Main. )\n      f (.getDeclaredField (class o) \&quot;buildFile\&quot;)]\n  (.setAccessible f true)\n  (.set f o (File. \&quot;bob\&quot;))\n  )&quot;, :offset 120, :ns &quot;clj-ant.core&quot;} {:command &quot;(let [o (Main. )\n      f (.getDeclaredField (class o) \&quot;buildFile\&quot;)]\n  (.setAccessible f true)\n  (.set f o (File. \&quot;bob\&quot;))\n  (.get f o))&quot;, :offset 134, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn set-private-field [obj field-name value]\n  (let [f (.getDeclaredField (class obj) field-name)]\n    (.setAccessible f true)\n    (prn \&quot;setting\&quot; :f f :obj obj :value value)\n    (.set f obj value)))&quot;, :offset 200, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;project&gt; \n    &lt;echo xmessage=\\\&quot;Hello World!\\\&quot; /&gt;\n   &lt;/project&gt;\&quot;)&quot;, :offset 35, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn set-private-field [obj field-name value]\n  (let [f (.getDeclaredField (class obj) field-name)]\n    (.setAccessible f true)\n    (.set f obj value)))&quot;, :offset 153, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n   &lt;/project&gt;\&quot;)&quot;, :offset 77, :ns &quot;clj-ant.core&quot;} {:command &quot;(fileset :dir \&quot;foo\&quot; :includes \&quot;**/*.java\&quot;)&quot;, :offset 40, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n    &lt;copy file=\\\&quot;project.clj\\\&quot; tofile=\\\&quot;olle.clj\\\&quot; /&gt;\n   &lt;/project&gt;\&quot;)&quot;, :offset 115, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/element :baz {} \&quot;The baz value\&quot;)))&quot;, :offset 5, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/element :baz {} \&quot;The baz value\&quot;)&quot;, :offset 37, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/emit (xml/element :baz {} \&quot;The baz value\&quot;))&quot;, :offset 48, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/emit \n  (xml/element :baz {} \&quot;The baz value\&quot;)\n  *out*)&quot;, :offset 58, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/emit\n  (element :foo {:foo-attr \&quot;foo value\&quot;}\n           (element :bar {:bar-attr \&quot;bar value\&quot;}\n                    (element :baz {} \&quot;The baz value\&quot;)))\n  *out*)&quot;, :offset 154, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/emit\n  (xml/element :foo {:foo-attr \&quot;foo value\&quot;}\n           (xml/element :bar {:bar-attr \&quot;bar value\&quot;}\n                    (xml/element :baz {} \&quot;The baz value\&quot;)))\n  *out*)&quot;, :offset 132, :ns &quot;clj-ant.core&quot;} {:command &quot;(copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))&quot;, :offset 95, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/indent-str\n  (xml/element :foo {:foo-attr \&quot;foo value\&quot;}\n           (xml/element :bar {:bar-attr \&quot;bar value\&quot;}\n                    (xml/element :baz {} \&quot;The baz value\&quot;)))\n  *out*)&quot;, :offset 15, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/indent-str\n  (xml/element :foo {:foo-attr \&quot;foo value\&quot;}\n           (xml/element :bar {:bar-attr \&quot;bar value\&quot;}\n                    (xml/element :baz {} \&quot;The baz value\&quot;))))&quot;, :offset 173, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (doseq [m args]\n      (xml/element (:name m) (:attrs m)\n                   (apply convert-to-xml (:nested m))))))&quot;, :offset 178, :ns &quot;clj-ant.core&quot;} {:command &quot;(some? nil)&quot;, :offset 10, :ns &quot;clj-ant.core&quot;} {:command &quot;(some [])&quot;, :offset 5, :ns &quot;clj-ant.core&quot;} {:command &quot;(some? [])&quot;, :offset 7, :ns &quot;clj-ant.core&quot;} {:command &quot;(not (empty? [])&quot;, :offset 13, :ns &quot;clj-ant.core&quot;} {:command &quot;(not (empty? []))&quot;, :offset 17, :ns &quot;clj-ant.core&quot;} {:command &quot;(not (empty? [1]))&quot;, :offset 15, :ns &quot;clj-ant.core&quot;} {:command &quot;(not (empty? nil))&quot;, :offset 16, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/element :foo {} nil)&quot;, :offset 25, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/indent-str (xml/element :foo {} nil))&quot;, :offset 42, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (doseq [{:keys [name attrs nested]} args]\n      (xml/element name attrs\n                   (when (not (empty? nested))\n                     (apply convert-to-xml (:nested m)))))))&quot;, :offset 244, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (doseq [{:keys [name attrs nested]} args]\n      (xml/element name attrs\n                   (when (not (empty? nested))\n                     (apply convert-to-xml nested))))))&quot;, :offset 239, :ns &quot;clj-ant.core&quot;} {:command &quot;(doseq [x [1 2 3]]\n  x)&quot;, :offset 22, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (map (fn [{:keys [name attrs nested]}]\n      (xml/element name attrs\n                   (when (not (empty? nested))\n                     (apply convert-to-xml nested)))))\n    args))&quot;, :offset 246, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (map (fn [{:keys [name attrs nested]}]\n      (xml/element name attrs\n                   (when (not (empty? nested))\n                     (apply convert-to-xml nested))))\n         args)))&quot;, :offset 251, :ns &quot;clj-ant.core&quot;} {:command &quot;(convert-to-xml \n  {:name :bob\n   :attrs {:foo \&quot;bar\&quot;}})&quot;, :offset 55, :ns &quot;clj-ant.core&quot;} {:command &quot;(convert-to-xml \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;))))&quot;, :offset 115, :ns &quot;clj-ant.core&quot;} {:command &quot;(println (convert-to-xml \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))))&quot;, :offset 125, :ns &quot;clj-ant.core&quot;} {:command &quot;(prn (convert-to-xml \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))))&quot;, :offset 3, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn ant [&amp; args]\n  (let [xml (apply convert-to-xml args)]\n    (println \&quot;XML\&quot; xml)\n    (run-ant xml)))&quot;, :offset 103, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (xml/element :project {}\n      (map (fn [{:keys [name attrs nested]}]\n        (xml/element name attrs\n                     (when (not (empty? nested))\n                       (apply convert-to-xml nested))))\n           args))))&quot;, :offset 291, :ns &quot;clj-ant.core&quot;} {:command &quot;(merge (xml/element :foo {})\n       (xml/element :bar {:bara \&quot;bob\&quot;}))&quot;, :offset 65, :ns &quot;clj-ant.core&quot;} {:command &quot; \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))&quot;, :offset 99, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn parse-args [name args]\n  (let [t (Throwable.)\n        [attrs nested] (partition-args args)]\n    (xml/element name\n                 attrs ;(merge attrs {:trace (fn [] t)})\n                 nested)))&quot;, :offset 203, :ns &quot;clj-ant.core&quot;} {:command &quot;(ant \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))))&quot;, :offset 4, :ns &quot;clj-ant.core&quot;} {:command &quot;(ant \n  (copy :todir \&quot;/tmp\&quot;\n      (fileset :dir \&quot;.\&quot;\n               (include :dir \&quot;ant\&quot; :name \&quot;**/*.java\&quot;))))&quot;, :offset 87, :ns &quot;clj-ant.core&quot;} {:command &quot;(ant \n  (copy :todir \&quot;/tmp\&quot;\n      (fileset :dir \&quot;ant\&quot;\n               (include :name \&quot;**/*.java\&quot;))))&quot;, :offset 78, :ns &quot;clj-ant.core&quot;} {:command &quot;(println \&quot;kalle\&quot;)&quot;, :offset 17, :ns &quot;clj-ant.core&quot;} {:command &quot;(ant \n  (copy :todir \&quot;/tmp\&quot;\n      (fileset :dir \&quot;.\&quot;\n               (include :name \&quot;ant/**/*.java\&quot;))))&quot;, :offset 87, :ns &quot;clj-ant.core&quot;} {:command &quot;(let [m (CljAntMain.)\n      (.-buildFile m (io/file \&quot;bob\&quot;))])&quot;, :offset 61, :ns &quot;user&quot;} {:command &quot;(let [m (CljAntMain.)]\n      (.-buildFile m (io/file \&quot;bob\&quot;)))&quot;, :offset 44, :ns &quot;user&quot;} {:command &quot;(let [m (CljAntMain.)]\n  (set! (.-buildFile m) (io/file \&quot;bob\&quot;)))&quot;, :offset 64, :ns &quot;user&quot;} {:command &quot;(let [m (CljAntMain.)]\n  (set! (.buildFile m) (io/file \&quot;bob\&quot;)))&quot;, :offset 33, :ns &quot;user&quot;}], :remote []}}</component>
+  <component name="ReplState" timestamp="1520759328651">{:repl-history {:ide [], :local [{:command &quot;(let [m (Main.)]\n  (set-private-field m \&quot;buildFile\&quot; (File. \&quot;this is bob\&quot;))\n  (.startAnt m (make-array String 0) nil nil))&quot;, :offset 110, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;\n  \n  \&quot;)&quot;, :offset 19} {:command &quot;(.normalize (FileUtils/getFileUtils) \n            (.getAbsolutePath (string-backed-file \&quot;bob is great\&quot;)))&quot;, :offset 105, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (toString [] \&quot;string-backed-file!\&quot;)\n      (exists [] true)\n      (toPath []\n        (proxy [Path] []\n          (getFileSystem []\n            (proxy [FileSystem] []\n              (provider []\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path &amp; options]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 524, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (toString [] (str \&quot;string-backed-file&gt; \&quot; (proxy-super getPath)))\n      (exists [] true)\n      (toPath []\n        (proxy [Path] []\n          (getFileSystem []\n            (proxy [FileSystem] []\n              (provider []\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path &amp; options]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 553, :ns &quot;clj-ant.core&quot;} {:command &quot;(.toString (string-backed-file \&quot;blb\&quot;))&quot;, :offset 35, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf (string-backed-file build-file-str)\n        ant (Main.)\n        phr (ProjectHelperRepository/getInstance)]\n\n    (set-private-field ant \&quot;buildFile\&quot; (string-backed-file build-file-str))\n    (set-private-field ant \&quot;readyToRun\&quot; true)\n    (call-private-method ant \&quot;runBuild\&quot; nil)))&quot;, :offset 318, :ns &quot;clj-ant.core&quot;} {:command &quot;(instancde? IFn (fn [] ))&quot;, :offset 24, :ns &quot;clj-ant.core&quot;} {:command &quot;(instance? IFn (fn [] ))&quot;, :offset 8, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (string-backed-file \&quot;bob\&quot;))&quot;, :offset 49, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (.toPath (string-backed-file \&quot;bob\&quot;)))&quot;, :offset 59, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (.toPath (File. \&quot;project.clj\&quot;)) nil)&quot;, :offset 57, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (toString [] (str \&quot;string-backed-file&gt; \&quot; (proxy-super getPath)))\n      (exists [] true)\n      (toPath []\n        (println \&quot;returning path\&quot;)\n        (proxy [Path] []\n          (getFileSystem []\n            (println \&quot;returning filesystem\&quot;)\n            (proxy [FileSystem] []\n              (provider []\n                (println \&quot;returning proxy\&quot;)\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path options]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 675, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream )&quot;, :offset 22} {:command &quot;(Files/newInputStream (.toPath (File. \&quot;project.clj\&quot;)))&quot;, :offset 53, :ns &quot;clj-ant.core&quot;} {:command &quot;(.toPath (File. \&quot;project.clj\&quot;))&quot;, :offset 31, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (.toPath (File. \&quot;project.clj\&quot;)) (make-array OpenOption 0))&quot;, :offset 78, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream (string-backed-file \&quot;bob\&quot;) (make-array OpenOption 0))&quot;, :offset 46, :ns &quot;clj-ant.core&quot;} {:command &quot;(Files/newInputStream \n  (.toPath (string-backed-file \&quot;bob\&quot;)) \n  (make-array OpenOption 0))&quot;, :offset 61, :ns &quot;clj-ant.core&quot;} {:command &quot;(.toString (string-backed-file \&quot;bob\&quot;))&quot;, :offset 35} {:command &quot;(.foo (proxy [String] [\&quot;bob\&quot;]\n  (foo [] \&quot;this is foo\&quot;)))&quot;, :offset 6, :ns &quot;clj-ant.core&quot;} {:command &quot;(.foo (proxy [File] [\&quot;bob\&quot;]\n  (foo [] \&quot;this is foo\&quot;)))&quot;, :offset 18, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getPath \n  (proxy [File] [\&quot;bob\&quot;] \n    (foo [] \&quot;this is foo\&quot;)))&quot;, :offset 9, :ns &quot;clj-ant.core&quot;} {:command &quot;(.toString \n  (proxy [File] [\&quot;bob\&quot;] \n    (toString [] \&quot;this is foo\&quot;)))&quot;, :offset 10, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc proxy)&quot;, :offset 11, :ns &quot;user&quot;} {:command &quot;(.foo \n  (proxy [File] [\&quot;bob\&quot;] \n    (foo [] \&quot;this is foo\&quot;)))&quot;, :offset 5, :ns &quot;user&quot;} {:command &quot;(.getPath \n  (proxy [File] [\&quot;bob\&quot;] \n    (getPath [] \&quot;foookyaaa\&quot;)))&quot;, :offset 62, :ns &quot;user&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (toString [] (str \&quot;string-backed-file&gt; \&quot; (proxy-super getPath)))\n      (exists [] true)\n      (isFile [] true)\n      (isDirectory [] false)\n      (getParent [] str-data)\n      (toPath []\n        (println \&quot;returning path\&quot;)\n        (proxy [Path] []\n          (getFileSystem []\n            (println \&quot;returning filesystem\&quot;)\n            (proxy [FileSystem] []              \n              (provider []\n                (println \&quot;returning proxy\&quot;)\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path options-arr]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 775, :ns &quot;clj-ant.core&quot;} {:command &quot;(URL. (str \&quot;cljant://?\&quot; \&quot;abcdefghijkl\&quot;))&quot;, :offset 37, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;\n  &lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n  &lt;/project&gt;\n  \&quot;)&quot;, :offset 77, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n  &lt;/project&gt;\n  \&quot;)&quot;, :offset 13, :ns &quot;clj-ant.core&quot;} {:command &quot;(slurp (.openConnection (URL. (str \&quot;cljant://?\&quot; \&quot;content\&quot;))))&quot;, :offset 61, :ns &quot;clj-ant.core&quot;} {:command &quot;(slurp (.getInputStream \n         (.openConnection (URL. (str \&quot;cljant://?\&quot; \&quot;content\&quot;)))))&quot;, :offset 89, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;?xml version=\\\&quot;1.0\\\&quot;?&gt;\n   &lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n   &lt;/project&gt;\&quot;)&quot;, :offset 40, :ns &quot;clj-ant.core&quot;} {:command &quot;(Integer/MAX_VALUE)&quot;, :offset 18, :ns &quot;user&quot;} {:command &quot;(defn string-backed-file [str-data]\n  (let [loc \&quot;source-file.clj:81\&quot;]\n    (proxy [File] [(str \&quot;antclj:\&quot; loc)]\n      (hashCode [] CljAntProjectHelper/MAGIC_CLJ_ANT)\n      (toString [] (str \&quot;string-backed-file&gt; \&quot; (proxy-super getPath)))\n      (exists [] true)\n      (isFile [] true)\n      (isDirectory [] false)\n      (getParent [] str-data)\n      (toPath []\n        (println \&quot;returning path\&quot;)\n        (proxy [Path] []\n          (getFileSystem []\n            (println \&quot;returning filesystem\&quot;)\n            (proxy [FileSystem] []              \n              (provider []\n                (println \&quot;returning proxy\&quot;)\n                (proxy [FileSystemProvider] []\n                  (newInputStream [path options-arr]\n                    (ByteArrayInputStream.\n                      (.getBytes str-data StandardCharsets/UTF_8))))))))))))&quot;, :offset 829, :ns &quot;clj-ant.core&quot;} {:command &quot;(.clone \&quot;\&quot;)&quot;, :offset 10, :ns &quot;user&quot;} {:command &quot;(.getAbsolutePath\n  (proxy [File] \&quot;bob\&quot;\n    (getAbsolutePath [] this)))&quot;, :offset 71, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getAbsolutePath\n  (proxy [File] [\&quot;bob\&quot;]\n    (getAbsolutePath [] this)))&quot;, :offset 41, :ns &quot;clj-ant.core&quot;} {:command &quot;(ReflectUtil/invoke \&quot;\&quot;)&quot;, :offset 21, :ns &quot;clj-ant.core&quot;} {:command &quot;(ReflectUtil/invoke (Main.) \&quot;processArgs\&quot; \n                    (class (make-array String 0)) \n                    (to-array [\&quot;bob\&quot;]))&quot;, :offset 129, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getDeclaredField Main \&quot;buildFile\&quot;)&quot;, :offset 36, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getDeclaredField CljAntMain \&quot;buildFile\&quot;)&quot;, :offset 25, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getDeclaredField (class (CljAntMain.)) \&quot;buildFile\&quot;)&quot;, :offset 40, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf  (.setXmlData (CljAntBuildFile. \&quot;clj-ant-build\&quot;) build-file-str)\n        ant (Main.)]\n    (CljAntProjectHelper/register)\n    (set-private-field ant Main \&quot;buildFile\&quot; bf)\n    (set-private-field ant Main \&quot;readyToRun\&quot; true)\n    (.runBuild ant nil)))&quot;, :offset 287, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf  (.setXmlData (CljAntBuildFile. \&quot;clj-ant-build\&quot;) build-file-str)\n        ant (Main.)]\n    (CljAntProjectHelper/register)\n    (set-private-field ant Main \&quot;buildFile\&quot; bf)\n    (set-private-field ant Main \&quot;readyToRun\&quot; true)\n    (call-private-method  ant \&quot;runBuild\&quot;)))&quot;, :offset 305, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf  (.setXmlData (CljAntBuildFile. \&quot;clj-ant-build\&quot;) build-file-str)\n        ant (Main.)]\n    (CljAntProjectHelper/register)\n    (set-private-field ant Main \&quot;buildFile\&quot; bf)\n    (set-private-field ant Main \&quot;readyToRun\&quot; true)\n    (call-private-method  ant \&quot;runBuild\&quot; nil)))&quot;, :offset 309, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getAbsolutePath (CljAntBuildFile. \&quot;bob\&quot;))&quot;, :offset 43, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn run-ant [build-file-str]\n  (let [bf  (-&gt; (CljAntBuildFile. \&quot;clj-ant-build\&quot;) (.setXmlData build-file-str))\n        ant (Main.)]\n    (CljAntProjectHelper/register)\n    (set-private-field ant \&quot;buildFile\&quot; bf)\n    (set-private-field ant \&quot;readyToRun\&quot; true)\n    (call-private-method  ant \&quot;runBuild\&quot; nil)))&quot;, :offset 304, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getDeclaredField (class (Main.)) \&quot;buildFile\&quot;)&quot;, :offset 47, :ns &quot;clj-ant.core&quot;} {:command &quot;(let [o (Main. )\n      f (.getDeclaredField (class o) \&quot;buildFile\&quot;)]\n  (.setAccessible f true)\n  (.set f o (File. \&quot;bob\&quot;))\n  )&quot;, :offset 120, :ns &quot;clj-ant.core&quot;} {:command &quot;(let [o (Main. )\n      f (.getDeclaredField (class o) \&quot;buildFile\&quot;)]\n  (.setAccessible f true)\n  (.set f o (File. \&quot;bob\&quot;))\n  (.get f o))&quot;, :offset 134, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn set-private-field [obj field-name value]\n  (let [f (.getDeclaredField (class obj) field-name)]\n    (.setAccessible f true)\n    (prn \&quot;setting\&quot; :f f :obj obj :value value)\n    (.set f obj value)))&quot;, :offset 200, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;project&gt; \n    &lt;echo xmessage=\\\&quot;Hello World!\\\&quot; /&gt;\n   &lt;/project&gt;\&quot;)&quot;, :offset 35, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn set-private-field [obj field-name value]\n  (let [f (.getDeclaredField (class obj) field-name)]\n    (.setAccessible f true)\n    (.set f obj value)))&quot;, :offset 153, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n   &lt;/project&gt;\&quot;)&quot;, :offset 77, :ns &quot;clj-ant.core&quot;} {:command &quot;(fileset :dir \&quot;foo\&quot; :includes \&quot;**/*.java\&quot;)&quot;, :offset 40, :ns &quot;clj-ant.core&quot;} {:command &quot;(run-ant \n  \&quot;&lt;project&gt; \n    &lt;echo message=\\\&quot;Hello World!\\\&quot; /&gt;\n    &lt;copy file=\\\&quot;project.clj\\\&quot; tofile=\\\&quot;olle.clj\\\&quot; /&gt;\n   &lt;/project&gt;\&quot;)&quot;, :offset 115, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/element :baz {} \&quot;The baz value\&quot;)))&quot;, :offset 5, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/element :baz {} \&quot;The baz value\&quot;)&quot;, :offset 37, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/emit (xml/element :baz {} \&quot;The baz value\&quot;))&quot;, :offset 48, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/emit \n  (xml/element :baz {} \&quot;The baz value\&quot;)\n  *out*)&quot;, :offset 58, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/emit\n  (element :foo {:foo-attr \&quot;foo value\&quot;}\n           (element :bar {:bar-attr \&quot;bar value\&quot;}\n                    (element :baz {} \&quot;The baz value\&quot;)))\n  *out*)&quot;, :offset 154, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/emit\n  (xml/element :foo {:foo-attr \&quot;foo value\&quot;}\n           (xml/element :bar {:bar-attr \&quot;bar value\&quot;}\n                    (xml/element :baz {} \&quot;The baz value\&quot;)))\n  *out*)&quot;, :offset 132, :ns &quot;clj-ant.core&quot;} {:command &quot;(copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))&quot;, :offset 95, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/indent-str\n  (xml/element :foo {:foo-attr \&quot;foo value\&quot;}\n           (xml/element :bar {:bar-attr \&quot;bar value\&quot;}\n                    (xml/element :baz {} \&quot;The baz value\&quot;)))\n  *out*)&quot;, :offset 15, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/indent-str\n  (xml/element :foo {:foo-attr \&quot;foo value\&quot;}\n           (xml/element :bar {:bar-attr \&quot;bar value\&quot;}\n                    (xml/element :baz {} \&quot;The baz value\&quot;))))&quot;, :offset 173, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (doseq [m args]\n      (xml/element (:name m) (:attrs m)\n                   (apply convert-to-xml (:nested m))))))&quot;, :offset 178, :ns &quot;clj-ant.core&quot;} {:command &quot;(some? nil)&quot;, :offset 10, :ns &quot;clj-ant.core&quot;} {:command &quot;(some [])&quot;, :offset 5, :ns &quot;clj-ant.core&quot;} {:command &quot;(some? [])&quot;, :offset 7, :ns &quot;clj-ant.core&quot;} {:command &quot;(not (empty? [])&quot;, :offset 13, :ns &quot;clj-ant.core&quot;} {:command &quot;(not (empty? []))&quot;, :offset 17, :ns &quot;clj-ant.core&quot;} {:command &quot;(not (empty? [1]))&quot;, :offset 15, :ns &quot;clj-ant.core&quot;} {:command &quot;(not (empty? nil))&quot;, :offset 16, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/element :foo {} nil)&quot;, :offset 25, :ns &quot;clj-ant.core&quot;} {:command &quot;(xml/indent-str (xml/element :foo {} nil))&quot;, :offset 42, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (doseq [{:keys [name attrs nested]} args]\n      (xml/element name attrs\n                   (when (not (empty? nested))\n                     (apply convert-to-xml (:nested m)))))))&quot;, :offset 244, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (doseq [{:keys [name attrs nested]} args]\n      (xml/element name attrs\n                   (when (not (empty? nested))\n                     (apply convert-to-xml nested))))))&quot;, :offset 239, :ns &quot;clj-ant.core&quot;} {:command &quot;(doseq [x [1 2 3]]\n  x)&quot;, :offset 22, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (map (fn [{:keys [name attrs nested]}]\n      (xml/element name attrs\n                   (when (not (empty? nested))\n                     (apply convert-to-xml nested)))))\n    args))&quot;, :offset 246, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (map (fn [{:keys [name attrs nested]}]\n      (xml/element name attrs\n                   (when (not (empty? nested))\n                     (apply convert-to-xml nested))))\n         args)))&quot;, :offset 251, :ns &quot;clj-ant.core&quot;} {:command &quot;(convert-to-xml \n  {:name :bob\n   :attrs {:foo \&quot;bar\&quot;}})&quot;, :offset 55, :ns &quot;clj-ant.core&quot;} {:command &quot;(convert-to-xml \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;))))&quot;, :offset 115, :ns &quot;clj-ant.core&quot;} {:command &quot;(println (convert-to-xml \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))))&quot;, :offset 125, :ns &quot;clj-ant.core&quot;} {:command &quot;(prn (convert-to-xml \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))))&quot;, :offset 3, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn ant [&amp; args]\n  (let [xml (apply convert-to-xml args)]\n    (println \&quot;XML\&quot; xml)\n    (run-ant xml)))&quot;, :offset 103, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn convert-to-xml [&amp; args]\n  ;(xml/emit\n  (xml/indent-str\n    (xml/element :project {}\n      (map (fn [{:keys [name attrs nested]}]\n        (xml/element name attrs\n                     (when (not (empty? nested))\n                       (apply convert-to-xml nested))))\n           args))))&quot;, :offset 291, :ns &quot;clj-ant.core&quot;} {:command &quot;(merge (xml/element :foo {})\n       (xml/element :bar {:bara \&quot;bob\&quot;}))&quot;, :offset 65, :ns &quot;clj-ant.core&quot;} {:command &quot; \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))&quot;, :offset 99, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn parse-args [name args]\n  (let [t (Throwable.)\n        [attrs nested] (partition-args args)]\n    (xml/element name\n                 attrs ;(merge attrs {:trace (fn [] t)})\n                 nested)))&quot;, :offset 203, :ns &quot;clj-ant.core&quot;} {:command &quot;(ant \n  (copy :todir \&quot;todir\&quot;\n      (fileset :dir \&quot;fromdir\&quot;\n               (include :name \&quot;**/*.java\&quot;)))))&quot;, :offset 4, :ns &quot;clj-ant.core&quot;} {:command &quot;(ant \n  (copy :todir \&quot;/tmp\&quot;\n      (fileset :dir \&quot;.\&quot;\n               (include :dir \&quot;ant\&quot; :name \&quot;**/*.java\&quot;))))&quot;, :offset 87, :ns &quot;clj-ant.core&quot;} {:command &quot;(ant \n  (copy :todir \&quot;/tmp\&quot;\n      (fileset :dir \&quot;ant\&quot;\n               (include :name \&quot;**/*.java\&quot;))))&quot;, :offset 78, :ns &quot;clj-ant.core&quot;} {:command &quot;(println \&quot;kalle\&quot;)&quot;, :offset 17, :ns &quot;clj-ant.core&quot;} {:command &quot;(ant \n  (copy :todir \&quot;/tmp\&quot;\n      (fileset :dir \&quot;.\&quot;\n               (include :name \&quot;ant/**/*.java\&quot;))))&quot;, :offset 87, :ns &quot;clj-ant.core&quot;} {:command &quot;(let [m (CljAntMain.)\n      (.-buildFile m (io/file \&quot;bob\&quot;))])&quot;, :offset 61, :ns &quot;user&quot;} {:command &quot;(let [m (CljAntMain.)]\n      (.-buildFile m (io/file \&quot;bob\&quot;)))&quot;, :offset 44, :ns &quot;user&quot;} {:command &quot;(let [m (CljAntMain.)]\n  (set! (.-buildFile m) (io/file \&quot;bob\&quot;)))&quot;, :offset 64, :ns &quot;user&quot;} {:command &quot;(let [m (CljAntMain.)]\n  (set! (.buildFile m) (io/file \&quot;bob\&quot;)))&quot;, :offset 33, :ns &quot;user&quot;} {:command &quot;(defn accessors [clazz]\n  (let [s (:members (reflect/type-reflect clazz :ancestors true))]\n    (reduce\n      (fn [a m]\n        (let [m (dissoc m :return-type :exception-types :declaring-class :flags)]\n          (condp #(str/starts-with? %2 %1) (name (:name m))\n            \&quot;add\&quot; (assoc-in a [:adders (count (:adders a))] m)\n            \&quot;set\&quot; (assoc-in a [:setters (method-&gt;dsl-kw m 3)] m)\n            \&quot;create\&quot; (assoc-in a [:creators (method-&gt;dsl-kw m 6)] m)\n            a)))\n      {:adders []}\n      (filter #((:flags %) :public) s))))&quot;, :offset 535, :ns &quot;clj-ant.core&quot;} {:command &quot;(accessors FileSet)&quot;, :offset 19, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn prepare-task [clazz args]\n  (let [[attrs nested] (destructure-args args)\n        task (.newInstance clazz)\n        acs  (accessors-m clazz)\n        prj    (create-project-m)]\n    (when (get-in acs [:setters :project])\n      (println \&quot;setting project on\&quot; (class task))\n      (set-attribute acs task :project prj))\n    (doseq [[attr-name value] attrs]\n      (println \&quot;setting attribute\&quot; attr-name \&quot;on task\&quot; (class task) \&quot;to\&quot; value)\n      (set-attribute acs task attr-name value))\n    (doseq [n nested]\n      (add-nested acs task n))\n    task))&quot;, :offset 547, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (copy :todir \&quot;/tmp\&quot;\n        (fileset :dir \&quot;.\&quot;\n                 (include :name \&quot;ant/**/*.sh\&quot;)\n                 (exclude :name \&quot;**/src/**\&quot;))))&quot;, :offset 101, :ns &quot;clj-ant.core&quot;} {:command &quot;(time (println \&quot;olle\&quot;))&quot;, :offset 20, :ns &quot;clj-ant.core&quot;} {:command &quot;(time)&quot;, :offset 5, :ns &quot;clj-ant.core&quot;} {:command &quot;(time \&quot;\&quot;)&quot;, :offset 8, :ns &quot;clj-ant.core&quot;} {:command &quot;(time nil)&quot;, :offset 9, :ns &quot;clj-ant.core&quot;} {:command &quot;(time 0)&quot;, :offset 7, :ns &quot;clj-ant.core&quot;} {:command &quot;(time (time \&quot;\&quot;))&quot;, :offset 14, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc repeatedly)&quot;, :offset 16, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc iterate)&quot;, :offset 12, :ns &quot;clj-ant.core&quot;} {:command &quot;(take 20 (iterate time))&quot;, :offset 24, :ns &quot;clj-ant.core&quot;} {:command &quot;(macroexpand time)&quot;, :offset 18, :ns &quot;clj-ant.core&quot;} {:command &quot;(macroexpand 'time)&quot;, :offset 14, :ns &quot;clj-ant.core&quot;} {:command &quot;time&quot;, :offset 4} {:command &quot;(reflect/type-reflect HashMap)&quot;, :offset 30, :ns &quot;clj-ant.core&quot;} {:command &quot;{:keyone 1}&quot;, :offset 11, :ns &quot;clj-ant.core&quot;} {:command &quot;{:keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n\n\n }&quot;, :offset 0, :ns &quot;clj-ant.core&quot;} {:command &quot;{:keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n\n\n }&quot;, :offset 33, :ns &quot;clj-ant.core&quot;} {:command &quot;{:keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n\n\n }&quot;, :offset 55, :ns &quot;clj-ant.core&quot;} {:command &quot;{:keyone 1\n :keyone 1\n :keyone 1\n :keyone 1\n\n\n }&quot;, :offset 33, :ns &quot;clj-ant.core&quot;} {:command &quot;(.getCanonicalPath (io/file \&quot;.\&quot;))&quot;, :offset 33, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (copy :todir \&quot;/tmp\&quot;\n    (fileset :dir \&quot;.\&quot;\n      (include :name \&quot;ant/**/*.sh\&quot;)\n      (exclude :name \&quot;**/src/**\&quot;))))&quot;, :offset 90, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (copy :todir \&quot;/tmp\&quot;\n    (fileset :dir \&quot;.\&quot;\n      (include :name \&quot;ant/*.sh\&quot;)\n      (exclude :name \&quot;**/src/**\&quot;))))&quot;, :offset 76, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (copy :todir \&quot;/tmp\&quot;\n    (fileset :dir \&quot;.\&quot;\n      (include :name \&quot;ant/*.sh\&quot;))))&quot;, :offset 82, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (copy :todir \&quot;/tmp\&quot;\n        (fileset :dir \&quot;.\&quot;\n                 (include :name \&quot;ant/**/*.sh\&quot;)\n                 (exclude :name \&quot;**/etc/**\&quot;)\n                 (exclude :name \&quot;**/lib/**\&quot;)\n                 (exclude :name \&quot;**/manual/**\&quot;)\n                 (exclude :name \&quot;**/src/**\&quot;))))&quot;, :offset 286, :ns &quot;clj-ant.core&quot;} {:command &quot;(:name nil)&quot;, :offset 11, :ns &quot;clj-ant.core&quot;} {:command &quot;(str nil)&quot;, :offset 9, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (copy :todir \&quot;/tmp\&quot;\n        (fileset :dir \&quot;.\&quot;\n                 (include :name \&quot;ant/**/*.xml\&quot;)\n                 (exclude :name \&quot;**/src/**\&quot;))))&quot;, :offset 102, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn exclude [&amp; args]\n  (parse-args :exclude args))&quot;, :offset 52, :ns &quot;clj-ant.core&quot;} {:command &quot;(merge {:bob :mary} {:a 1 :b 2})&quot;, :offset 30, :ns &quot;clj-ant.core&quot;} {:command &quot;(empty? (apply hash-map []))&quot;, :offset 26, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc partition-all)&quot;, :offset 19, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc partition)&quot;, :offset 14, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc partition-all 2 [\&quot;a\&quot;])&quot;, :offset 24, :ns &quot;clj-ant.core&quot;} {:command &quot;(partition-all 2 [\&quot;a\&quot;])&quot;, :offset 0} {:command &quot;(partition-by #(not (keyword? (first %)))\n              (partition-all 2 [\&quot;a\&quot;]))&quot;, :offset 76, :ns &quot;clj-ant.core&quot;} {:command &quot;(let [[attrs nested]] (partition-by #(not (keyword? (first %)))\n              (partition-all 2 [\&quot;a\&quot;]))]&quot;, :offset 103, :ns &quot;clj-ant.core&quot;} {:command &quot;(let [[attrs nested] (partition-by #(not (keyword? (first %)))\n              (partition-all 2 [\&quot;a\&quot;]))]\n  (prn :attrs attrs :nested nested))&quot;, :offset 139, :ns &quot;clj-ant.core&quot;} {:command &quot;(let [[attrs nested] (partition-by #(not (keyword? (first %)))\n              (partition-all 2 [:k \&quot;a\&quot;]))]\n  (prn :attrs attrs :nested nested))&quot;, :offset 98, :ns &quot;clj-ant.core&quot;} {:command &quot;(reduce \n  (fn [a [k v]]\n    (prn :k k :v v))\n  {}\n  [[:a 1] [:b 2] [:c]])&quot;, :offset 71, :ns &quot;clj-ant.core&quot;} {:command &quot;(reduce \n  (fn [a [k v]]\n    (prn :k k :v v))\n  {}\n  [:a 1 :b 2 :c])&quot;, :offset 66, :ns &quot;clj-ant.core&quot;} {:command &quot;(reduce \n  (fn [a [k v]]\n    (prn :k k :v v))\n  {}\n  (partition 2 [:a 1 :b 2 :c]))&quot;, :offset 82, :ns &quot;clj-ant.core&quot;} {:command &quot;(reduce \n  (fn [a [k v]]\n    (prn :k k :v v))\n  {}\n  (partition-all 2 [:a 1 :b 2 :c]))&quot;, :offset 67, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn partition-args [args]\n  (reduce\n    (fn [[a n] [k v]]\n      (cond\n        (nil? v) [a (conj n k)]\n        (keyword? k) [(assoc a k v) n]\n        :else [a (concat n [k v])]))\n    [{} []]\n    (partition-all 2 args)))&quot;, :offset 220, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn parse-args [name args]\n  (let [[attrs nested] (partition-args args)]\n    (reduce\n      (fn [a [k v]]\n        (if (empty? v)\n          a\n          (merge a {k v})))\n      {:name name}\n      [[:attrs (apply hash-map (flatten attrs))]\n       [:nested (flatten nested)]])))&quot;, :offset 275, :ns &quot;clj-ant.core&quot;} {:command &quot;(parse-args :copy \&quot;bob\&quot;)&quot;, :offset 22, :ns &quot;clj-ant.core&quot;} {:command &quot;(conj [] 1)&quot;, :offset 10, :ns &quot;clj-ant.core&quot;} {:command &quot;(concat [1 2] [3 4])&quot;, :offset 18, :ns &quot;clj-ant.core&quot;} {:command &quot;(vector (concat [1 2] [3 4]))&quot;, :offset 29, :ns &quot;clj-ant.core&quot;} {:command &quot;(aplpy vector (concat [1 2] [3 4]))&quot;, :offset 7, :ns &quot;clj-ant.core&quot;} {:command &quot;(apply vector (concat [1 2] [3 4]))&quot;, :offset 5, :ns &quot;clj-ant.core&quot;} {:command &quot;(conj (conj [] :k) :v)&quot;, :offset 22, :ns &quot;clj-ant.core&quot;} {:command &quot;(conj (conj [:a] :k) :v)&quot;, :offset 15, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn partition-args [args]\n  (reduce\n    (fn [[a n] [k v]]\n      (prn :a a :v v :k k :v v)\n      (cond\n        (nil? v) [a (conj n k)]\n        (keyword? k) [(assoc a k v) n]\n        :else [a (conj (conj n k) v)]))\n    [{} []]\n    (partition-all 2 args)))&quot;, :offset 255, :ns &quot;clj-ant.core&quot;} {:command &quot;(flatten [1 2 [3 4]])&quot;, :offset 18, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn parse-args [name args]\n  (let [[attrs nested] (partition-args args)]\n    (reduce\n      (fn [a [k v]]\n        (if (empty? v)\n          a\n          (merge a {k v})))\n      {:name name}\n      [[:attrs (apply hash-map (flatten attrs))]\n       [:nested (into [] (flatten nested))]])))&quot;, :offset 285, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn parse-args [name args]\n  (let [[attrs nested] (partition-args args)]\n    (prn :attrs attrs :nested nested)\n    (reduce\n      (fn [a [k v]]\n        (if (empty? v)\n          a\n          (merge a {k v})))\n      {:name name}\n      [[:attrs (apply hash-map (flatten attrs))]\n       [:nested (into [] (flatten nested))]])))&quot;, :offset 323, :ns &quot;clj-ant.core&quot;} {:command &quot;(parse-args :copy [\&quot;bob\&quot;])&quot;, :offset 10, :ns &quot;clj-ant.core&quot;} {:command &quot;(parse-args :copy [:todir \&quot;/tmp\&quot; \&quot;bob\&quot;])&quot;, :offset 38, :ns &quot;clj-ant.core&quot;} {:command &quot;(copy\n      (fileset :dir \&quot;src\&quot; :include \&quot;**/*.java\&quot;\n               (include :name \&quot;**/*.clj\&quot;)))\n&quot;, :offset 5, :ns &quot;clj-ant.core&quot;} {:command &quot;(copy :todir \&quot;/tmp\&quot;\n      (fileset :dir \&quot;src\&quot; :include \&quot;**/*.java\&quot;\n               (include :name \&quot;**/*.clj\&quot;)))\n&quot;, :offset 18, :ns &quot;clj-ant.core&quot;} {:command &quot;(copy :todir \&quot;/tmp\&quot;\n      (fileset :dir \&quot;.\&quot;\n               (include :name \&quot;ant/**/*.sh\&quot;)\n               (exclude :name \&quot;**/etc/**\&quot;)\n               (exclude :name \&quot;**/lib/**\&quot;)\n               (exclude :name \&quot;**/manual/**\&quot;)\n               (exclude :name \&quot;**/src/**\&quot;))))\n\n&quot;, :offset 268, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn partition-args [args]\n  (reduce\n    (fn [[a n] [k v]]\n      (cond\n        (nil? v) [a (conj n k)]\n        (keyword? k) [(assoc a k v) n]\n        :else [a (concat n [v k])]))\n    [{} []]\n    (partition-all 2 args)))&quot;, :offset 220, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn partition-args [args]\n  (reduce\n    (fn [[a n] [k v]]\n      (cond\n        (nil? v) [a (conj n k)]\n        (keyword? k) [(assoc a k v) n]\n        :else [a (conj (conj n k) v)]))\n    [{} []]\n    (partition-all 2 args)))&quot;, :offset 223, :ns &quot;clj-ant.core&quot;} {:command &quot;(copy :todir \&quot;/tmp\&quot;\n      (fileset :dir \&quot;.\&quot;\n               (include :name \&quot;ant/**/*.sh\&quot;)\n               (exclude :name \&quot;**/etc/**\&quot;)\n               (exclude :name \&quot;**/lib/**\&quot;)\n               (exclude :name \&quot;**/manual/**\&quot;)\n               (exclude :name \&quot;**/src/**\&quot;)))\n\n&quot;, :offset 265, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (copy :todir \&quot;/tmp\&quot;\n        (fileset :dir \&quot;.\&quot;\n                 (include :name \&quot;ant/**/*.sh\&quot;)\n                 (exclude :name \&quot;**/etc/**\&quot;)\n                 (exclude :name \&quot;**/lib/**\&quot;)\n                 (exclude :name \&quot;**/manual/**\&quot;)\n                 (exclude :name \&quot;**/src/**\&quot;))))\n\n&quot;, :offset 8, :ns &quot;clj-ant.core&quot;} {:command &quot;(def ant identity)&quot;, :offset 18, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (ant \n    (copy :todir \&quot;/tmp\&quot;\n        (fileset :dir \&quot;.\&quot;\n                 (include :name \&quot;ant/**/*.sh\&quot;)\n                 (exclude :name \&quot;**/etc/**\&quot;)\n                 (exclude :name \&quot;**/lib/**\&quot;)\n                 (exclude :name \&quot;**/manual/**\&quot;)\n                 (exclude :name \&quot;**/src/**\&quot;)))))\n\n&quot;, :offset 219, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (ant (copy :todir \&quot;/tmp\&quot; :includes \&quot;ant/**/*.sh\&quot;)))\n\n&quot;, :offset 5, :ns &quot;clj-ant.core&quot;} {:command &quot;(time\n  (ant (copy :todir \&quot;/tmp\&quot; \n             :dir \&quot;.\&quot; \n             :includes \&quot;ant/**/*.sh\&quot;)))\n\n&quot;, :offset 70, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc s/keys)&quot;, :offset 12, :ns &quot;clj-ant.core&quot;} {:command &quot;(instance? File (io/as-file \&quot;.\&quot;))&quot;, :offset 30, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/def ::file (partial instance? File))&quot;, :offset 39, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/fdef copy\n        :args (s/keys* :opt-un [:file ::file])\n                      ;:preservelastmodified :tofile :todir\n                      ;         :overwrite :force :filtering :flatten\n                      ;         :includeEmptyDirs :failonerror :quiet :verbose\n                      ;         :encoding :outputencoding :enablemultiplemappings :granularity])\n        :ret map?)&quot;, :offset 384, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/fdef copy\n        :args (s/keys* :opt-un [::file])\n                      ;:preservelastmodified :tofile :todir\n                      ;         :overwrite :force :filtering :flatten\n                      ;         :includeEmptyDirs :failonerror :quiet :verbose\n                      ;         :encoding :outputencoding :enablemultiplemappings :granularity])\n        :ret map?)&quot;, :offset 378, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn copy\n  \&quot;https://ant.apache.org/manual/Tasks/copy.html\&quot;\n  [&amp; args]\n  (parse-args :copy args))&quot;, :offset 98, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn copy\n  \&quot;example:\n    (copy todir=\\\&quot;/tmp\\\&quot;\n      (fileset dir=\\\&quot;.\\\&quot; includes=\\\&quot;**/*.java\\\&quot;))\n\n  https://ant.apache.org/manual/Tasks/copy.html\&quot;\n  [&amp; args]\n  (parse-args :copy args))&quot;, :offset 185, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn copy\n  \&quot;Example code:\n  \n    (copy todir=\\\&quot;/tmp\\\&quot;\n      (fileset dir=\\\&quot;.\\\&quot; includes=\\\&quot;**/*.java\\\&quot;))\n\n  https://ant.apache.org/manual/Tasks/copy.html\&quot;\n  [&amp; args]\n  (parse-args :copy args))&quot;, :offset 193, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/def ::attrs (s/cat ::name keyword?\n                      ::value (s/or ::svalue string?\n                                    ::fvalue file?)))&quot;, :offset 144, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn file? [o] (instance? File o))&quot;, :offset 35, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/conform ::attrs [:a \&quot;bob\&quot;])&quot;, :offset 27, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/conform ::attrs [\&quot;foo\&quot; \&quot;bob\&quot;])&quot;, :offset 24, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/valid? :attrs [\&quot;foo\&quot; \&quot;bar\&quot;])&quot;, :offset 28, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/valid? ::attrs [\&quot;foo\&quot; \&quot;bar\&quot;])&quot;, :offset 11, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/explain ::attrs [\&quot;foo\&quot; \&quot;bar\&quot;])&quot;, :offset 10, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/explain ::attrs [:todir \&quot;bar\&quot;])&quot;, :offset 26, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/explain ::attrs [:todir 3])&quot;, :offset 28, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/explain ::args [:todir 3 {:bob \&quot;foo\&quot;}])&quot;, :offset 38, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/explain ::args [:todir \&quot;bar\&quot; {:bob \&quot;foo\&quot;}])&quot;, :offset 30, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/explain ::args [:todir \&quot;bar\&quot; 0 {:bob \&quot;foo\&quot;}])&quot;, :offset 34, :ns &quot;clj-ant.core&quot;} {:command &quot;(copy :bob \&quot;foo\&quot;)&quot;, :offset 15, :ns &quot;clj-ant.core&quot;} {:command &quot;(s/explain ::copy [:bob \&quot;foo\&quot;])&quot;, :offset 30, :ns &quot;clj-ant.core&quot;} {:command &quot;(clojure.spec.test/ins)&quot;, :offset 22} {:command &quot;(s/unfn copy)&quot;, :offset 13, :ns &quot;clj-ant.core&quot;} {:command &quot;(use 'clojure.repl)&quot;, :offset 19, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc copy)&quot;, :offset 10, :ns &quot;clj-ant.core&quot;} {:command &quot;(defn ant [&amp; args]\n  (let [ch (ComponentHelper/getComponentHelper (create-project))\n        _  (.initDefaultDefinitions ch)]\n    (prn args)\n  ))&quot;, :offset 144, :ns &quot;clj-ant.core&quot;} {:command &quot;(ant\n    (copy :todir \&quot;/tmp\&quot;\n          (fileset :dir \&quot;.\&quot;\n                   (include :name \&quot;ant/**/*.sh\&quot;)\n                   (exclude :name \&quot;**/etc/**\&quot;)\n                   (exclude :name \&quot;**/lib/**\&quot;)\n                   (exclude :name \&quot;**/manual/**\&quot;)\n                   (exclude :name \&quot;**/src/**\&quot;))))&quot;, :offset 299, :ns &quot;clj-ant.core&quot;} {:command &quot;(nth \&quot;bob\&quot; 1)&quot;, :offset 12, :ns &quot;clj-ant.core&quot;} {:command &quot;(.isUpperCase \\c)&quot;, :offset 17, :ns &quot;clj-ant.core&quot;} {:command &quot;(Character/isUpperCase \\c)&quot;, :offset 11, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc str/starts-with?)&quot;, :offset 21, :ns &quot;clj-ant.core&quot;} {:command &quot;(doc cond)&quot;, :offset 10, :ns &quot;clj-ant.core&quot;} {:command &quot;(accessors-m FileSet)&quot;, :offset 21, :ns &quot;clj-ant.core&quot;} {:command &quot;()&quot;, :offset 1} {:command &quot;(accessors-m Javadoc)&quot;, :offset 20, :ns &quot;clj-ant.core&quot;} {:command &quot;(accessors-m Zip)&quot;, :offset 9, :ns &quot;clj-ant.core&quot;} {:command &quot;(System/getProperties)&quot;, :offset 22, :ns &quot;clj-ant.core&quot;} {:command &quot;(select-keys {:a 1 :b 2 :c 3 :d 4} [:b :d])&quot;, :offset 41, :ns &quot;clj-ant.core&quot;} {:command &quot;(select-keys {:a 1 :b 2 :c 3 :d 4} [:x :y])&quot;, :offset 41, :ns &quot;clj-ant.core&quot;}], :remote []}}</component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -329,71 +306,72 @@
     <option name="totallyTimeSpent" value="94497000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-30" width="2560" height="1630" extended-state="7" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2522222" sideWeight="0.50293255" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="REPL" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6173611" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24939951" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997061" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SonarLint" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25231788" sideWeight="0.49706745" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25231788" sideWeight="0.50293255" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="REPL" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5015625" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997061" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24939951" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="SonarLint" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25231788" sideWeight="0.49706745" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25231788" sideWeight="0.50293255" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="REPL" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5156125" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997061" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997061" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24939951" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="SonarLint" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25231788" sideWeight="0.49706745" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="SonarLint" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25231788" sideWeight="0.49706745" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -409,76 +387,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.sdkman/candidates/java/8u161-oracle/src.zip!/java/util/concurrent/locks/Lock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="166" column="17" lean-forward="false" selection-start-line="166" selection-start-column="17" selection-end-line="166" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/Task.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="33" column="39" lean-forward="true" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/ProjectComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
-          <caret line="103" column="30" lean-forward="false" selection-start-line="103" selection-start-column="30" selection-end-line="103" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.sdkman/candidates/java/8u161-oracle/src.zip!/org/xml/sax/helpers/DefaultHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-507">
-          <caret line="434" column="29" lean-forward="false" selection-start-line="434" selection-start-column="24" selection-end-line="434" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/Location.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="75" column="40" lean-forward="true" selection-start-line="75" selection-start-column="40" selection-end-line="75" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.sdkman/candidates/java/8u161-oracle/src.zip!/java/lang/Throwable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="818" column="45" lean-forward="false" selection-start-line="818" selection-start-column="45" selection-end-line="818" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.sdkman/candidates/java/8u161-oracle/src.zip!/org/xml/sax/Locator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="611">
-          <caret line="68" column="17" lean-forward="false" selection-start-line="68" selection-start-column="17" selection-end-line="68" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.sdkman/candidates/java/8u161-oracle/src.zip!/java/net/URLConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/helper/AntXMLContext.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="112" column="11" lean-forward="false" selection-start-line="112" selection-start-column="11" selection-end-line="112" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.sdkman/candidates/java/8u161-oracle/src.zip!/java/io/UnixFileSystem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="82" column="18" lean-forward="false" selection-start-line="82" selection-start-column="18" selection-end-line="82" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.sdkman/candidates/java/8u161-oracle/src.zip!/java/io/FileSystem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="843">
@@ -558,8 +466,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/helper/ProjectHelper2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="266" column="65" lean-forward="true" selection-start-line="266" selection-start-column="65" selection-end-line="266" selection-end-column="65" />
+        <state relative-caret-position="196">
+          <caret line="252" column="43" lean-forward="false" selection-start-line="252" selection-start-column="36" selection-end-line="252" selection-end-column="50" />
         </state>
       </provider>
     </entry>
@@ -593,13 +501,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/CljAntBuildLogger.java" />
     <entry file="file://$PROJECT_DIR$/src/clj_ant/CljAntFileUtils.java" />
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.10.2/ant-1.10.2-sources.jar!/org/apache/tools/ant/util/FileUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="739" column="25" lean-forward="false" selection-start-line="739" selection-start-column="15" selection-end-line="739" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.10.2/ant-1.10.2-sources.jar!/org/apache/tools/ant/util/FileUtils.java" />
     <entry file="file://$PROJECT_DIR$/java/cljant/CljAntFileUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -642,13 +544,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/cljant/CljAntMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/java/cljant/CljAntMain.java" />
     <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/launch/AntMain.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
@@ -660,10 +556,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1112">
           <caret line="913" column="45" lean-forward="false" selection-start-line="913" selection-start-column="45" selection-end-line="913" selection-end-column="45" />
-          <folding>
-            <element signature="e#8498#8499#0" expanded="true" />
-            <element signature="e#8535#8536#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -671,7 +563,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="900">
           <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -679,7 +570,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="17" column="10" lean-forward="false" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -687,49 +577,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="701">
           <caret line="282" column="19" lean-forward="false" selection-start-line="282" selection-start-column="19" selection-end-line="282" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project.clj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="7" column="47" lean-forward="false" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.10.2/ant-1.10.2-sources.jar!/org/apache/tools/ant/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#52441#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/java/org/apache/tools/ant/CljAntMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="223" column="24" lean-forward="false" selection-start-line="223" selection-start-column="16" selection-end-line="223" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/clojure/data.xml/0.0.8/data.xml-0.0.8.jar!/clojure/data/xml.clj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="143" column="6" lean-forward="false" selection-start-line="143" selection-start-column="6" selection-end-line="143" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.10.2/ant-1.10.2-sources.jar!/org/apache/tools/ant/Main.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/clojure/clojure/1.9.0/clojure-1.9.0.jar!/clojure/lang/IEditableCollection.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -737,7 +592,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="14" column="51" lean-forward="true" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -745,7 +599,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -753,7 +606,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="653">
           <caret line="496" column="29" lean-forward="false" selection-start-line="496" selection-start-column="29" selection-end-line="496" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -761,14 +613,118 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="533">
           <caret line="311" column="10" lean-forward="false" selection-start-line="311" selection-start-column="10" selection-end-line="311" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/src.zip!/java/nio/file/spi/FileSystemProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="1002" column="19" lean-forward="false" selection-start-line="1002" selection-start-column="19" selection-end-line="1002" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.10.2/ant-1.10.2.jar!/org/apache/tools/ant/taskdefs/Zip.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="61" column="33" lean-forward="false" selection-start-line="61" selection-start-column="33" selection-end-line="61" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.10.2/ant-1.10.2.jar!/org/apache/tools/ant/taskdefs/MatchingTask.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.10.2/ant-1.10.2.jar!/org/apache/tools/ant/Task.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-29">
+          <caret line="26" column="23" lean-forward="false" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/src.zip!/java/nio/file/Files.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="96" column="30" lean-forward="false" selection-start-line="96" selection-start-column="30" selection-end-line="96" selection-end-column="30" />
+          <folding>
+            <element signature="e#2577#2578#0" expanded="false" />
+            <element signature="e#2631#2632#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/src.zip!/java/nio/file/Path.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="105" column="10" lean-forward="false" selection-start-line="105" selection-start-column="10" selection-end-line="105" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/src.zip!/java/nio/file/FileSystem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="111" column="26" lean-forward="false" selection-start-line="111" selection-start-column="26" selection-end-line="111" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/jre/lib/rt.jar!/sun/nio/fs/AbstractPath.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-618">
+          <caret line="17" column="15" lean-forward="false" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/clojure/data.xml/0.0.8/data.xml-0.0.8.jar!/clojure/data/xml.clj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="406" column="6" lean-forward="false" selection-start-line="406" selection-start-column="6" selection-end-line="406" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/org/apache/tools/ant/CljAntMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="311" column="11" lean-forward="false" selection-start-line="311" selection-start-column="11" selection-end-line="311" selection-end-column="11" />
+          <folding>
+            <element signature="docComment;method#CljAntMain#0;class#CljAntMain#0" expanded="false" />
+            <element signature="docComment;method#CljAntMain#1;class#CljAntMain#0" expanded="false" />
+            <element signature="e#10185#10186#0" expanded="false" />
+            <element signature="e#10227#10228#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project.clj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/clj_ant/core.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1253">
-          <caret line="395" column="25" lean-forward="false" selection-start-line="395" selection-start-column="25" selection-end-line="395" selection-end-column="25" />
+        <state relative-caret-position="961">
+          <caret line="338" column="0" lean-forward="true" selection-start-line="338" selection-start-column="0" selection-end-line="338" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/types/defaults.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-465">
+          <caret line="5" column="37" lean-forward="false" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ant/src/main/org/apache/tools/ant/taskdefs/defaults.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5004">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -802,6 +758,7 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
+          <last-edited>groovy-2.4.6</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
