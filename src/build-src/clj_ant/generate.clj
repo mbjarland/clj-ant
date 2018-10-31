@@ -16,6 +16,9 @@
 
 (def manual-path "ant/manual/")
 
+(def task-renames
+  {"ant" "ant-ant"})
+
 (def header
   (str "(in-ns 'clj-ant.core)" \newline
        \newline))
