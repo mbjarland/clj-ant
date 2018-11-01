@@ -4,7 +4,7 @@
     [clojure.string :as str]
     [clojure.reflect :as reflect]
     [pl.danieljanus.tagsoup :as ts]
-    [com.rpl.specter :as spctr :refer [ALL select defdynamicnav multi-path
+    [com.rpl.specter :refer [ALL select defdynamicnav multi-path
                                        before-index LAST AFTER-ELEM pred
                                        late-resolved-fn collect filterer
                                        srange-dynamic]])
@@ -12,16 +12,18 @@
 
 (def task-defs-path "org/apache/tools/ant/taskdefs/defaults.properties")
 (def type-defs-path "org/apache/tools/ant/types/defaults.properties")
-(def generated-path "target/generated/clj_ant/core_generated.clj")
+(def generated-path "target/generated/clj_ant/tasks.clj")
 
 (def manual-path "ant/manual/")
 
 (def task-renames
   {"ant" "ant-ant"})
 
+
 (def header
-  (str "(in-ns 'clj-ant.core)" \newline
-       \newline))
+  (str "(ns clj-ant.tasks" \newline
+       "  (:require" \newline
+       "   [clj-ant.core :as c]))" \newline))
 
 (defn load-properties [path]
   (let [p (Properties.)]
@@ -162,22 +164,23 @@
        " " (build-doc tag renamed-tag class-name) \newline
        "  {:arglists '([{:keys [" (arg-list class-name) "]} & nested])} " \newline
        "  [& args] " \newline
-       "  (ant-xml :" tag " args)) " \newline
+       "  (c/ant-xml :" tag " args)) " \newline
        \newline
        \newline))
 
 (defn generate-from-props [coll]
-  (let [replacements {" ant " " antant "}
-        replace      (fn [name] (or (replacements name) name))]
+  (let [replacements {"ant" "antant"}]
     (reduce
       (fn [a [t c]]
+        (prn :t t :c c)
+        (prn :replace (replacements t t))
         (try
-          (str a (gen-fn-source t (replace t) c))
+          (str a (gen-fn-source t (replacements t t) c))
           (catch Exception e
             (do
               (println " error generating source for " c)
               a))))
-      " "
+      ""
       coll)))
 
 (defn generate []
@@ -187,7 +190,7 @@
     (spit generated-path
           (str header
                \newline
-               "                                            ;; generated at: " (Date.)
+               ";; generated at: " (Date.)
                \newline
                \newline
                (generate-from-props props)))))

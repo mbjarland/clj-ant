@@ -46,7 +46,7 @@
     [{} []]
     (partition-all 2 args)))
 
-(defn- ant-xml [name args]
+(defn ant-xml [name args]
   (let [t (Throwable.)
         [attrs nested] (partition-args args)]
     (xml/element name
@@ -179,7 +179,7 @@
     (run-ant xml ant-attrs nil nil)))
 
 
-(load "core_generated")
+(load "tasks")
 ; anyway, scsh is quite complex and does a lot of cool stuff, there's
 ; like a couple of nice ideas you can steal from it
 ; https://github.com/ChaosEternal/guile-scsh
