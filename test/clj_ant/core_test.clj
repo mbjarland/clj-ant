@@ -217,6 +217,78 @@
       (is (= ["x.txt"] (mapv #(.getName %)
                              (.listFiles (File. base "out"))))))))
 
+(deftest tree-helpers-tolerate-full-vocab
+  (testing "elements walks Element + JavaChild + map-with-:tag uniformly"
+    (let [tree (a/element :copy
+                 ;; Map-shaped node (no Element record):
+                 {:tag :fileset :attrs {:dir "src"} :children []}
+                 ;; JavaChild wrapper (a real ResourceCollection):
+                 (a/lazy-resources [(java.io.File. "x.txt")] {:size 1}))
+          tags (mapv :tag (a/elements tree))]
+      (is (= [:copy :fileset :resources] tags))))
+
+  (testing "transform passes JavaChildren through and preserves map shapes"
+    (let [tree (a/element :copy
+                 {:tag :fileset :attrs {:dir "src"} :children []}
+                 (a/lazy-resources [(java.io.File. "x")] {:size 1}))
+          out  (a/transform tree identity)
+          kids (:children out)]
+      ;; both children survive identity-transform
+      (is (= 2 (count kids)))
+      (is (= :fileset (-> kids (nth 0) :tag)))
+      (is (a/java-child? (nth kids 1)))))
+
+  (testing "transform on a tree with JavaChild leaves doesn't drop them"
+    ;; Public API: a vec of strings goes through as-child and becomes
+    ;; a JavaChild in :children. transform must preserve it.
+    (let [tree (a/element :copy ["a.txt" "b.txt" "c.txt"])
+          out  (a/transform tree identity)
+          kid  (first (:children out))]
+      (is (a/java-child? kid)))))
+
+(deftest reused-project-no-listener-leak
+  (testing "execute! detaches its listener so reused projects don't double-deliver"
+    (let [p     (a/make-project {:level :warn})
+          calls (atom 0)]
+      (a/with-project p
+        (a/ant :on-event (fn [_] (swap! calls inc))
+               (a/element :echo :message "first"))
+        (let [after-first @calls]
+          (reset! calls 0)
+          (a/ant :on-event (fn [_] (swap! calls inc))
+                 (a/element :echo :message "second"))
+          ;; Without the leak fix, the first call's listener would
+          ;; still fire here -- we'd get ~2x the events.
+          (let [after-second @calls]
+            (is (<= after-second (* 1.2 after-first))
+                (str "second run got " after-second
+                     " events, first got " after-first
+                     " -- listener probably leaked"))))))))
+
+(deftest nested-only-tags-are-introspectable
+  (testing "describe recognises nested-only tags via wrapper meta"
+    (let [d (a/describe :tokenfilter)]
+      (is (= :nested (:kind d)))
+      (is (re-find #"TokenFilter" (str (:class d)))))
+    (let [d (a/describe :replacestring)]
+      (is (= :nested (:kind d)))
+      (is (contains? (:attrs d) "from"))
+      (is (contains? (:attrs d) "to"))))
+
+  (testing "schema-for + closed validation work for nested-only tags"
+    (is (nil? (@(requiring-resolve 'clj-ant.spec/validate)
+                :replacestring {:from "x" :to "y"} {:closed? true})))
+    (is (some? (@(requiring-resolve 'clj-ant.spec/validate)
+                 :replacestring {:from "x" :nope "y"} {:closed? true})))))
+
+(deftest nested-aliases-have-wrappers
+  (testing "tags that share a class with an earlier-seen tag get their own wrapper"
+    (require '[clj-ant.tasks])
+    (let [tasks (the-ns 'clj-ant.tasks)]
+      (doseq [tag ["jvmarg" "sysproperty" "argument" "targetfile" "arg"]]
+        (is (some? (ns-resolve tasks (symbol tag)))
+            (str tag " should have a wrapper"))))))
+
 (deftest tree-query-and-transform
   (let [tree (a/element :project
                (a/element :target :name "compile"

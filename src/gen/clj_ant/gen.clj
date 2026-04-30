@@ -166,7 +166,7 @@
           (.getSimpleName c)))
 
 (defn- task-fn-source
-  [{:keys [tag class? sym kind description info]}]
+  [{:keys [tag class? sym kind description info other-classes]}]
   (let [{:keys [attrs nested supports-text?]} info
         attr-keys (mapv (comp symbol name attr-keyword first) attrs)
         attr-block  (when (seq attrs)
@@ -181,6 +181,19 @@
                       :task   (str "  https://ant.apache.org/manual/Tasks/" tag ".html")
                       :type   (str "  https://ant.apache.org/manual/Types/" tag ".html")
                       :nested "  Nested-only element discovered via introspection.")
+        ;; Some nested tags are ambiguous: <attribute> on macrodef is
+        ;; MacroDef$Attribute, on manifest is Manifest$Attribute.
+        ;; The runner picks the right class at execute time based on
+        ;; parent context; the wrapper just carries the data. The
+        ;; docstring lists every class we saw so users know.
+        ambiguity   (when (seq other-classes)
+                      (str "  Note: this tag has multiple meanings depending\n"
+                           "  on parent context. Other classes seen:" \newline
+                           (str/join \newline
+                                     (map #(str "    " %) other-classes))
+                           \newline
+                           "  The runner picks the right class at execute time;\n"
+                           "  attribute docs above are for the first one."))
         desc        (or description
                         (str "Ant " (clojure.core/name kind) " "
                              tag ". (No description bundled.)"))
@@ -189,6 +202,7 @@
                           attr-block
                           nested-block
                           text-block
+                          ambiguity
                           ""
                           link
                           ""
@@ -227,25 +241,38 @@
   (let [manual (let [d (io/file manual-dir)] (when (.isDirectory d) d))
         tasks  (load-defaults task-defs-path)
         types  (load-defaults type-defs-path)
-        ;; Walk every top-level type's nested-element graph to pick
-        ;; up nested-only tags like tokenfilter, replacestring,
-        ;; modified, size, srcfile, targetfile, etc. defaults.properties
+        ;; Walk every top-level type's nested-element graph to pick up
+        ;; nested-only tags (tokenfilter, replacestring, jvmarg,
+        ;; sysproperty, argument, targetfile, ...). defaults.properties
         ;; lists what's reachable at the top level; recursive
         ;; introspection lists what's reachable at all.
-        nested
-        (let [project (doto (Project.) .init)
-              seen-classes (java.util.HashSet.)
-              found        (java.util.LinkedHashMap.)]
+        ;;
+        ;; Two concerns kept separate:
+        ;;   * cycle prevention -- tracked in `seen-classes`
+        ;;   * tag bookkeeping -- tracked in `tag->classes`
+        ;; A class can be reached under multiple tag names (Argument
+        ;; lives behind <arg>, <jvmarg>, <argument>, ...) and a tag
+        ;; can resolve to multiple classes depending on parent
+        ;; (<attribute> on macrodef vs manifest). We record EVERY
+        ;; observed (tag, class) pair so users see all aliases and
+        ;; the docstring can flag context ambiguity.
+        [nested tag->classes]
+        (let [project       (doto (Project.) .init)
+              seen-classes  (java.util.HashSet.)
+              tag->classes  (java.util.LinkedHashMap.)] ; tag -> Set of class names
           (letfn [(visit [tag class-name]
                     (when class-name
                       (try
-                        (let [klass (Class/forName class-name)]
-                          (when (.add seen-classes klass)
-                            (when (and tag
-                                       (not (.containsKey found tag))
-                                       (not (.containsKey tasks tag))
-                                       (not (.containsKey types tag)))
-                              (.put found tag class-name))
+                        (let [klass     (Class/forName class-name)
+                              new-class (.add seen-classes klass)]
+                          (when (and tag
+                                     (not (.containsKey tasks tag))
+                                     (not (.containsKey types tag)))
+                            (let [classes (or (.get tag->classes tag)
+                                              (java.util.LinkedHashSet.))]
+                              (.add classes class-name)
+                              (.put tag->classes tag classes)))
+                          (when new-class
                             (doseq [^java.util.Map$Entry e
                                     (.getNestedElementMap
                                       (IntrospectionHelper/getHelper
@@ -254,16 +281,25 @@
                                      (.getName ^Class (.getValue e))))))
                         (catch Throwable _ nil))))]
             (doseq [[t c] (concat tasks types)] (visit t c))
-            (into (sorted-map) found)))
+            ;; Reduce to the simple tag->first-class map render expects,
+            ;; plus keep the full alias map for docstring context.
+            [(into (sorted-map)
+                   (map (fn [[t cs]] [t (first cs)])
+                        tag->classes))
+             (into (sorted-map)
+                   (map (fn [[t cs]] [t (vec cs)])
+                        tag->classes))]))
         render (fn [tag klass-name kind]
                  (when-some [info (introspect klass-name)]
                    (task-fn-source
-                     {:tag         tag
-                      :class?      klass-name
-                      :sym         (safe-symbol tag)
-                      :kind        kind
-                      :description (read-description manual tag)
-                      :info        info})))
+                     {:tag           tag
+                      :class?        klass-name
+                      :sym           (safe-symbol tag)
+                      :kind          kind
+                      :description   (read-description manual tag)
+                      :info          info
+                      :other-classes (when-some [cs (get tag->classes tag)]
+                                       (seq (remove #(= % klass-name) cs)))})))
         all-tags    (concat (keys tasks) (keys types) (keys nested))
         all-syms    (set (map safe-symbol all-tags))
         core-syms   (set (map name (keys (ns-publics 'clojure.core))))

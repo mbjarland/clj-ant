@@ -617,13 +617,20 @@
                     (.executeTargets project v))
                   nil
                   (catch Throwable t t))]
-      (.fireBuildFinished project error)
-      (cond-> {:project project
-               :target  implicit
-               :targets named-tgts
-               :tasks   ues}
-        events       (assoc :events @events)
-        (some? error) (assoc :error error)))))
+      (try
+        (.fireBuildFinished project error)
+        (cond-> {:project project
+                 :target  implicit
+                 :targets named-tgts
+                 :tasks   ues}
+          events       (assoc :events @events)
+          (some? error) (assoc :error error))
+        ;; Detach our listener even on the failure path. Without
+        ;; this, with-project / explicit :project reuse would
+        ;; accumulate listeners across calls and double-deliver
+        ;; events on later runs.
+        (finally
+          (when rec (.removeBuildListener project rec)))))))
 
 ;; ---------------------------------------------------------------------------
 ;; Targets
@@ -804,38 +811,60 @@
 ;; reading them. These helpers package the two operations every
 ;; auditor or refactor script wants: walk-and-find, walk-and-rewrite.
 
+(defn- ^:no-doc node-like?
+  "Recognises every shape `as-child` produces: Element records,
+  JavaChild records, and node-shaped maps (anything with a :tag).
+  Vectors of strings, raw seqs of Files etc. are NOT node-like --
+  they're leaf payloads inside a parent's :children."
+  [x]
+  (or (element? x)
+      (java-child? x)
+      (and (map? x) (contains? x :tag))))
+
 (defn elements
   "Lazy depth-first seq of every element in `tree`.
 
-  With `pred`, only elements matching pred. Predicates over
-  attributes read naturally:
+  Walks Elements, JavaChild wrappers, and node-shaped maps -- the
+  same vocabulary `as-child` produces. Non-node payloads (raw
+  vectors of File paths, etc.) are leaves and skipped over.
+
+  With `pred`, only nodes matching pred:
 
       (elements tree #(= :scp (:tag %)))
       (elements tree #(and (= :javac (:tag %))
                            (= \"false\" (-> % :attrs :debug))))"
-  ([tree]      (filter element? (tree-seq element? :children tree)))
+  ([tree]      (filter node-like? (tree-seq node-like? :children tree)))
   ([tree pred] (filter pred (elements tree))))
 
 (defn transform
-  "Walk `tree` depth-first, applying `f` to each element. `f` must
-  return an element (or nil to drop it). Children are transformed
+  "Walk `tree` depth-first, applying `f` to each node. `f` must
+  return a node (or nil to drop it). Children are transformed
   before parents see them, so `f` always observes already-rewritten
   descendants.
 
+  Tolerates the full child vocabulary -- Element records, JavaChild
+  wrappers, node-shaped maps, and non-node leaves (which pass
+  through unchanged).
+
       ;; lowercase every :todir attribute everywhere in the tree
       (transform tree
-                 (fn [e]
-                   (cond-> e
-                     (-> e :attrs :todir)
+                 (fn [n]
+                   (cond-> n
+                     (-> n :attrs :todir)
                      (update-in [:attrs :todir]
                                 clojure.string/lower-case))))"
   [tree f]
-  (when (element? tree)
+  (cond
+    (or (element? tree) (and (map? tree) (contains? tree :tag)))
     (let [kids (->> (:children tree)
                     (map #(transform % f))
                     (remove nil?)
                     vec)]
-      (f (assoc tree :children kids)))))
+      (f (assoc tree :children kids)))
+
+    (java-child? tree) (f tree)
+
+    :else tree))
 
 ;; ---------------------------------------------------------------------------
 ;; Runtime introspection. Useful for tooling, REPL exploration, and for
@@ -847,6 +876,17 @@
         (map (fn [^java.util.Map$Entry e] [(.getKey e) (.getValue e)]))
         m))
 
+(defn- ^:no-doc nested-recorded-class
+  "Lookup the class the generator recorded for a nested-only tag.
+  Returns nil for unknown tags."
+  [tag]
+  (try
+    (when-some [v (requiring-resolve
+                    (symbol "clj-ant.tasks" (name tag)))]
+      (when-some [cn (:clj-ant/class (meta v))]
+        (Class/forName cn)))
+    (catch Throwable _ nil)))
+
 (defn describe
   "Return a data description of a task or type by tag. Useful for
   building UIs, validators, or just satisfying curiosity at the REPL.
@@ -857,17 +897,25 @@
           :kind  :task
           :attrs {:todir File, :tofile File, ...}
           :nested {:fileset FileSet, ...}
-          :text? true|false}"
+          :text? true|false}
+
+  Works for nested-only tags too (`:attribute`, `:tokenfilter`,
+  `:replacestring`, ...). For those, :kind is :nested and :class is
+  whichever class the generator recorded first; remember Ant may
+  pick a different class at execute time based on the parent's
+  context."
   [tag]
   (let [project (Project.) _ (.init project)
         n       (name tag)
-        kind    (cond
-                  (.containsKey (.getTaskDefinitions project) n)     :task
-                  (.containsKey (.getDataTypeDefinitions project) n) :type)
-        klass   (case kind
-                  :task (.get (.getTaskDefinitions project) n)
-                  :type (.get (.getDataTypeDefinitions project) n)
-                  nil)]
+        top-kind (cond
+                   (.containsKey (.getTaskDefinitions project) n)     :task
+                   (.containsKey (.getDataTypeDefinitions project) n) :type)
+        klass   (or (case top-kind
+                      :task (.get (.getTaskDefinitions project) n)
+                      :type (.get (.getDataTypeDefinitions project) n)
+                      nil)
+                    (nested-recorded-class tag))
+        kind    (or top-kind (when klass :nested))]
     (when klass
       (let [helper (IntrospectionHelper/getHelper project klass)]
         {:tag    (keyword n)

@@ -60,10 +60,23 @@
        (map (fn [^java.util.Map$Entry e] [(.getKey e) (.getValue e)]))
        (sort-by first)))
 
+(defn- wrapper-recorded-class
+  "For nested-only tags (not registered as top-level task or type),
+  the generator records the discovered class as :clj-ant/class on
+  the wrapper var. Resolve and return that Class."
+  [tag]
+  (try
+    (when-some [v (requiring-resolve
+                    (symbol "clj-ant.tasks" (name tag)))]
+      (when-some [cn (:clj-ant/class (meta v))]
+        (Class/forName cn)))
+    (catch Throwable _ nil)))
+
 (defn- klass-for-tag [^Project project tag]
   (let [n (name tag)]
     (or (.get (.getTaskDefinitions project) n)
-        (.get (.getDataTypeDefinitions project) n))))
+        (.get (.getDataTypeDefinitions project) n)
+        (wrapper-recorded-class tag))))
 
 ;; ---------------------------------------------------------------------------
 ;; Cached per-tag schema build
