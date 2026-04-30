@@ -66,10 +66,22 @@ verification with a `<fail>` short-circuit, SSH push, remote
 command — all with `▶`/`✓`/log lines streaming live to the
 console as Ant fires the events.
 
-bb's `babashka.fs` and `babashka.process` cover the small
-filesystem ops they do well; the pod covers the long tail
-(filter chains, mappers, archives, SSH, replaceregexp, parallel
-…) that bb itself can't host.
+`babashka.fs` and `babashka.process` cover the small filesystem
+ops they do well. The pod is the right choice for **large file
+operations that need a real pipeline**: filter-chain rewriting
+across thousands of files, `restrict` + selector pruning,
+`replaceregexp` over a tree, archive surgery (`<unzip>` /
+`<zipfileset>` reading entries without extracting), mapper-driven
+mass renames, bulk SSH push of a fileset, parallel chains where
+several independent fileset operations run concurrently.
+
+There's also a perf angle worth being honest about: at large
+scale, Ant's file scanner is meaningfully faster than `babashka.fs`.
+It walks directory trees via JDK NIO with primitive include /
+exclude pattern compilation, caches scan results across a session,
+and dispatches per-file work through a real Java task graph rather
+than serial Clojure interop calls. For a tree with tens or hundreds
+of thousands of files, the gap shows.
 
 Operations exposed today:
 
@@ -118,13 +130,29 @@ out `{:tag … :attrs …}` by hand.
    startup happens once. Subsequent calls are JVM-quick.
 
 
-## Pure-bb alternative
+## When to skip the pod
 
-For simple file-shuffling that doesn't need Ant's filter chains or
-mappers, just use `babashka.fs` / `babashka.process` directly — it'll
-be lighter and faster than spinning up a pod. The pod is the right
-choice when you need Ant's ecosystem (tasks like `<javac>`, `<jar>`,
-`<signjar>`, `<scp>`, `<junitreport>`, etc.) from a bb script.
+For one-off `cp` / `mv` / `glob` work, plain `babashka.fs` is
+lighter — no pod startup, no JVM in the loop. Use it.
+
+Reach for the pod when one or more of these is true:
+
+- **Pipelined file operations.** Filter-chain templating during
+  copy, `replaceregexp` across a tree, mapper-driven mass renames,
+  selector chains (`restrict` + `modified` + `size` + `contains`).
+  These compose in Ant; in bb they'd be many bespoke loops.
+- **Large filesets.** Ant's NIO-backed scanner with compiled
+  include/exclude patterns outpaces `(fs/glob ...)` once trees
+  reach the tens of thousands of files. Sessions amortise the
+  scan cost across a sequence of operations.
+- **Archive surgery without extracting.** `<zipfileset>` /
+  `<tarfileset>` expose archive entries as resources you can
+  iterate, slurp, or selectively `<unzip>`.
+- **SSH.** Vanilla bb has no built-in SSH. clj-ant ships
+  `<scp>` and `<sshexec>` with the Terrapin-fixed JSch fork.
+- **Parallel pipelines.** `<parallel>` runs independent task
+  chains concurrently; useful when several heavyweight scans
+  or transforms can overlap.
 
 
 ## Future: a native pod
