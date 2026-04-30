@@ -66,6 +66,17 @@
                                 (map clojure.string/upper-case))
                        (sort-by #(.getName %) (a/files fs))))))))))
 
+(deftest describe-returns-data
+  (testing "describe returns introspection data for known tasks"
+    (let [d (a/describe :copy)]
+      (is (= :copy (:tag d)))
+      (is (= :task (:kind d)))
+      (is (contains? (:attrs d) "todir"))
+      (is (contains? (:nested d) "fileset"))
+      (is (string? (:class d)))))
+  (testing "describe returns nil for unknown tags"
+    (is (nil? (a/describe :no-such-thing-12345)))))
+
 (deftest plan-prints-tree
   (testing "plan renders a build tree without executing it"
     (let [n (a/node :copy :todir "out"
