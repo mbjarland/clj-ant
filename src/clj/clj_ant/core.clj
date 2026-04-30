@@ -365,17 +365,41 @@
   mutate an atom -- and the args are richer than Ant's
   string-attribute model can carry.
 
-  When you want a *reusable* named task across many builds, use
-  `deftask` instead -- this fn is for one-shot inline use, with a
-  fresh registration per call (the tag is synthesised from the fn's
-  identity hash if you don't supply one)."
+  Unlike `deftask`, the fn is NOT added to a global registry.
+  Instead, it's attached to the element as `:clj-ant/inline-fn`
+  metadata; the runner registers it on the project just before
+  execution and removes it in `finally`. So a 1000-call REPL
+  session leaves no entries behind. Use `deftask` when you want a
+  reusable named task across many builds."
   ([f] (task nil f))
   ([tag f]
    (let [tag (or tag
                  (keyword "clj-ant.run"
                           (str (System/identityHashCode f))))]
-     (deftask tag (fn [_] (f)))
-     (element tag))))
+     (with-meta (element tag)
+                {:clj-ant/inline-fn f}))))
+
+(defn- ^:no-doc collect-inline-tasks
+  "Walk `elements` and return [{:tag <kw> :fn <fn>} ...] for every
+  element that carries an :clj-ant/inline-fn meta (created via
+  `task`). Used by execute! to register/unregister around a build."
+  [elements]
+  (letfn [(walk [acc x]
+            (cond
+              (and (element? x)
+                   (-> x meta :clj-ant/inline-fn))
+              (let [acc (conj acc {:tag (:tag x)
+                                   :fn  (-> x meta :clj-ant/inline-fn)})]
+                (reduce walk acc (:children x)))
+
+              (element? x)
+              (reduce walk acc (:children x))
+
+              (and (map? x) (contains? x :tag))
+              (reduce walk acc (:children x))
+
+              :else acc))]
+    (reduce walk [] elements)))
 
 ;; ---------------------------------------------------------------------------
 ;; Data → UnknownElement
@@ -452,8 +476,13 @@
         (.setAttribute wrap (name k) (attr->string v)))
       (when text
         (.addText wrap (str text)))
+      ;; Coerce on the way through. Children that didn't go via
+      ;; `element` / `split-args` (from-xml-built maps, pod-built
+      ;; maps, hand-rolled data) may carry raw payloads that
+      ;; ->unknown-element can't handle directly. as-child turns
+      ;; them into proper Element / JavaChild before recursion.
       (doseq [c children]
-        (let [child (->unknown-element c project target)]
+        (let [child (->unknown-element (as-child c) project target)]
           (.addChild ue child)
           (.addChild wrap (.getWrapper child))))
       ;; Task.setRuntimeConfigurableWrapper is public; this is the same
@@ -529,6 +558,14 @@
         ;; and idempotent on a fresh project too.
         _       (doseq [tn (.keySet ClojureTask/REGISTRY)]
                   (.addTaskDefinition project tn ClojureTask))
+        ;; Inline tasks created via `task`. We add their fns to the
+        ;; registry just for this run and remove them in `finally`,
+        ;; so a long REPL session doesn't leak per-call inline tasks.
+        inline-tasks (collect-inline-tasks elements)
+        _ (doseq [{:keys [tag fn]} inline-tasks]
+            (let [n (clojure.core/name tag)]
+              (.put ClojureTask/REGISTRY n (clojure.core/fn [_] (fn)))
+              (.addTaskDefinition project n ClojureTask)))
         events  (when (:capture? opts) (atom []))
         on-event (:on-event opts)
         emit    (fn [m]
@@ -625,12 +662,16 @@
                  :tasks   ues}
           events       (assoc :events @events)
           (some? error) (assoc :error error))
-        ;; Detach our listener even on the failure path. Without
-        ;; this, with-project / explicit :project reuse would
-        ;; accumulate listeners across calls and double-deliver
-        ;; events on later runs.
+        ;; Detach our listener and any inline-task registrations
+        ;; even on the failure path. Without this, with-project /
+        ;; explicit :project reuse would accumulate listeners
+        ;; across calls and double-deliver events on later runs;
+        ;; inline tasks would pile up forever in the static
+        ;; ClojureTask/REGISTRY.
         (finally
-          (when rec (.removeBuildListener project rec)))))))
+          (when rec (.removeBuildListener project rec))
+          (doseq [{:keys [tag]} inline-tasks]
+            (.remove ClojureTask/REGISTRY (clojure.core/name tag))))))))
 
 ;; ---------------------------------------------------------------------------
 ;; Targets
@@ -876,15 +917,20 @@
         (map (fn [^java.util.Map$Entry e] [(.getKey e) (.getValue e)]))
         m))
 
-(defn- ^:no-doc nested-recorded-class
-  "Lookup the class the generator recorded for a nested-only tag.
-  Returns nil for unknown tags."
+(defn- ^:no-doc nested-recorded-classes
+  "Lookup every class the generator recorded for a nested-only tag
+  (more than one when the tag is context-ambiguous). Returns nil if
+  the wrapper isn't there."
   [tag]
   (try
     (when-some [v (requiring-resolve
                     (symbol "clj-ant.tasks" (name tag)))]
-      (when-some [cn (:clj-ant/class (meta v))]
-        (Class/forName cn)))
+      (let [m (meta v)]
+        (->> (or (:clj-ant/classes m)
+                 (when-some [c (:clj-ant/class m)] [c]))
+             (keep #(try (Class/forName %) (catch Throwable _ nil)))
+             vec
+             not-empty)))
     (catch Throwable _ nil)))
 
 (defn describe
@@ -894,36 +940,55 @@
       (describe :copy)
       => {:tag :copy
           :class \"org.apache.tools.ant.taskdefs.Copy\"
+          :classes [\"...Copy\"]
           :kind  :task
           :attrs {:todir File, :tofile File, ...}
           :nested {:fileset FileSet, ...}
           :text? true|false}
 
   Works for nested-only tags too (`:attribute`, `:tokenfilter`,
-  `:replacestring`, ...). For those, :kind is :nested and :class is
-  whichever class the generator recorded first; remember Ant may
-  pick a different class at execute time based on the parent's
-  context."
+  `:replacestring`, ...). For ambiguous tags (`:attribute` is
+  MacroDef$Attribute under <macrodef> and Manifest$Attribute under
+  <manifest>) the result merges every observed class:
+
+    :class    -> the canonical class (first one seen by the generator)
+    :classes  -> every recorded class
+    :attrs    -> union across all classes
+    :nested   -> union across all classes"
   [tag]
   (let [project (Project.) _ (.init project)
         n       (name tag)
         top-kind (cond
                    (.containsKey (.getTaskDefinitions project) n)     :task
                    (.containsKey (.getDataTypeDefinitions project) n) :type)
-        klass   (or (case top-kind
-                      :task (.get (.getTaskDefinitions project) n)
-                      :type (.get (.getDataTypeDefinitions project) n)
-                      nil)
-                    (nested-recorded-class tag))
-        kind    (or top-kind (when klass :nested))]
-    (when klass
-      (let [helper (IntrospectionHelper/getHelper project klass)]
-        {:tag    (keyword n)
-         :class  (.getName klass)
-         :kind   kind
-         :attrs  (entries-of (.getAttributeMap helper))
-         :nested (entries-of (.getNestedElementMap helper))
-         :text?  (.supportsCharacters helper)}))))
+        top-klass (case top-kind
+                    :task (.get (.getTaskDefinitions project) n)
+                    :type (.get (.getDataTypeDefinitions project) n)
+                    nil)
+        klasses (or (when top-klass [top-klass])
+                    (nested-recorded-classes tag))
+        kind    (or top-kind (when (seq klasses) :nested))]
+    (when (seq klasses)
+      (let [helpers   (mapv #(IntrospectionHelper/getHelper project %) klasses)
+            ;; Merge attrs and nested across all classes. For ambiguous
+            ;; tags this lists every key any of the classes accepts;
+            ;; the runtime-effective set still depends on parent.
+            merged    (fn [getter]
+                        (->> helpers
+                             (mapcat #(seq (getter %)))
+                             (map (fn [^java.util.Map$Entry e]
+                                    [(.getKey e) (.getValue e)]))
+                             ;; first-occurrence wins on conflicts
+                             (reduce (fn [acc [k v]]
+                                       (if (contains? acc k) acc (assoc acc k v)))
+                                     (sorted-map))))]
+        {:tag     (keyword n)
+         :class   (.getName ^Class (first klasses))
+         :classes (mapv #(.getName ^Class %) klasses)
+         :kind    kind
+         :attrs   (merged #(.getAttributeMap %))
+         :nested  (merged #(.getNestedElementMap %))
+         :text?   (boolean (some #(.supportsCharacters %) helpers))}))))
 
 (defn plan
   "Pretty-print a element tree to *out*. Useful for sanity-checking a

@@ -60,43 +60,65 @@
        (map (fn [^java.util.Map$Entry e] [(.getKey e) (.getValue e)]))
        (sort-by first)))
 
-(defn- wrapper-recorded-class
-  "For nested-only tags (not registered as top-level task or type),
-  the generator records the discovered class as :clj-ant/class on
-  the wrapper var. Resolve and return that Class."
+(defn- wrapper-recorded-classes
+  "For nested-only tags, return every class the generator recorded
+  for this tag (more than one when the tag is context-ambiguous,
+  e.g. <attribute> on macrodef vs manifest). Returns nil if the
+  wrapper isn't there."
   [tag]
   (try
     (when-some [v (requiring-resolve
                     (symbol "clj-ant.tasks" (name tag)))]
-      (when-some [cn (:clj-ant/class (meta v))]
-        (Class/forName cn)))
+      (let [m (meta v)]
+        (->> (or (:clj-ant/classes m)
+                 (when-some [c (:clj-ant/class m)] [c]))
+             (keep #(try (Class/forName %) (catch Throwable _ nil)))
+             vec
+             not-empty)))
     (catch Throwable _ nil)))
 
-(defn- klass-for-tag [^Project project tag]
+(defn- klasses-for-tag [^Project project tag]
   (let [n (name tag)]
-    (or (.get (.getTaskDefinitions project) n)
-        (.get (.getDataTypeDefinitions project) n)
-        (wrapper-recorded-class tag))))
+    (or (when-some [c (.get (.getTaskDefinitions project) n)]     [c])
+        (when-some [c (.get (.getDataTypeDefinitions project) n)] [c])
+        (wrapper-recorded-classes tag))))
 
 ;; ---------------------------------------------------------------------------
 ;; Cached per-tag schema build
 
 (def ^:private schema-cache (atom {}))
 
+(defn- attrs-of [^Project project ^Class klass]
+  (let [helper (IntrospectionHelper/getHelper project klass)]
+    (->> (entries-of (.getAttributeMap helper))
+         (remove (fn [[k _]] (framework-attrs (str k)))))))
+
 (defn- build-schema [tag closed?]
   (let [project (Project.) _ (.init project)
-        klass   (klass-for-tag project tag)]
-    (when klass
-      (let [helper (IntrospectionHelper/getHelper project klass)
-            attrs  (->> (entries-of (.getAttributeMap helper))
-                        (remove (fn [[k _]] (framework-attrs (str k)))))]
+        klasses (klasses-for-tag project tag)]
+    (when (seq klasses)
+      ;; For ambiguous tags (multiple classes), build a UNION schema:
+      ;; an attr key is valid if any class accepts it, and its schema
+      ;; is :or over all the classes that accept it. Closed-mode
+      ;; rejection then only fires when the key is in NONE of them --
+      ;; e.g. macrodef's :default and manifest's :value both pass on
+      ;; <attribute>, while a typo like :defalt is still caught.
+      (let [;; key (lowercased) -> [class1-schema class2-schema ...]
+            schemas-by-key
+            (reduce (fn [acc klass]
+                      (reduce (fn [a [^String k ^Class c]]
+                                (update a (keyword (.toLowerCase k))
+                                        (fnil conj []) (ant-attr-schema c)))
+                              acc
+                              (attrs-of project klass)))
+                    {}
+                    klasses)]
         (into [:map {:closed (boolean closed?)}]
-              (for [[^String k ^Class c] attrs]
-                ;; XML attribute names are case-insensitive in Ant. Keep the
-                ;; lowercased key as canonical and tolerate either form.
-                [(keyword (.toLowerCase k))
-                 {:optional true}
-                 (ant-attr-schema c)]))))))
+              (for [[k schemas] (sort-by first schemas-by-key)]
+                [k {:optional true}
+                 (if (= 1 (count (set schemas)))
+                   (first schemas)
+                   (into [:or] (distinct schemas)))]))))))
 
 (defn schema-for
   "Return a cached malli schema for a tag (e.g. `:copy`). Returns nil

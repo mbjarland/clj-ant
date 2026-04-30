@@ -219,7 +219,10 @@
       (println (str "  \"" (str/replace docstring "\"" "\\\"") "\""))
       (println (str "  {:arglists " (pr-str arglists)
                     ", :clj-ant/tag " (pr-str tag)
-                    ", :clj-ant/class \"" class? "\"}"))
+                    ", :clj-ant/class \"" class? "\""
+                    ", :clj-ant/classes "
+                    (pr-str (vec (cons class? (or other-classes []))))
+                    "}"))
       (println "  [& args]")
       (println (str "  (clojure.core/apply c/element "
                     (pr-str (keyword tag)) " args))"))

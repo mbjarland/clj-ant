@@ -83,7 +83,7 @@ Replaced by ~150 lines of Clojure walking the data into
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  Generated wrappers   (clj-ant.tasks, ~467 fns)             │
+│  Generated wrappers   (clj-ant.tasks)                       │
 │  Each is one line: (apply c/element :tag args).             │
 │  Carries rich :doc + :arglists for the IDE.                 │
 └─────────────────────────────────────────────────────────────┘
@@ -119,9 +119,9 @@ src/clj/clj_ant/
                            target/deftarget, deftask, from-xml,
                            realize, files, resources, plan,
                            describe, datafy
-  tasks.clj   ~16000 LOC   GENERATED -- 467 task / type / nested
-                           wrappers (top-level defaults.properties
-                           plus the recursive nested-element graph).
+  tasks.clj   GENERATED   one wrapper per Ant task, type, and nested
+                           element (top-level defaults.properties plus
+                           the recursive nested-element graph).
                            Don't edit; regenerate with clj -X:gen.
   spec.clj      ~140 LOC   malli schemas built lazily from
                            IntrospectionHelper. validate!,
@@ -349,7 +349,8 @@ top-level dispatch read as a one-liner `if`.
 
 We could resolve task names at runtime — every `(t/foo …)` call
 delegates to a single `(element :foo …)`. Instead the generator
-emits 467 explicit `defn`s with rich docstrings + `:arglists`
+emits one explicit `defn` per discoverable tag, with rich docstrings
+and `:arglists`
 metadata.
 
 Why: **IDE ergonomics**. Cursive, CIDER, and clojure-lsp read
@@ -457,7 +458,7 @@ bb script                       JVM pod
                                    - clj-ant.pod ns (execute, plan,
                                      files, execute-stream, files-stream)
                                    - clj-ant.tasks ns (reflected from
-                                     JVM, 467 wrappers + make-element)
+                                     JVM tasks namespace + make-element)
                                  returns bencode dict
    ◄──── sci eval'd into bb's runtime
 (t/copy :todir ... (t/fileset ...))

@@ -217,6 +217,45 @@
       (is (= ["x.txt"] (mapv #(.getName %)
                              (.listFiles (File. base "out"))))))))
 
+(deftest plain-map-tree-with-raw-children
+  (testing "execute! handles map-shaped trees with raw seq/File children
+            (the shape from-xml and the bb pod produce)"
+    (let [base (tmp-dir)
+          src  (File. base "src") dst (File. base "dst")]
+      (.mkdirs src)
+      (spit-file src "x.txt" "x")
+      (let [tree {:tag :copy
+                  :attrs {:todir (.getAbsolutePath dst)}
+                  :children [[(.getAbsolutePath (File. src "x.txt"))]]
+                  :text nil}]
+        (a/ant :level :warn tree)
+        (is (= ["x.txt"] (mapv #(.getName %) (.listFiles dst))))))))
+
+(deftest task-no-registry-leak
+  (testing "(a/task f) registers and de-registers per-call"
+    (let [hits   (atom 0)
+          before (count (.keySet cljant.ClojureTask/REGISTRY))]
+      (dotimes [_ 25]
+        (a/ant :level :error (a/task #(swap! hits inc))))
+      (let [after (count (.keySet cljant.ClojureTask/REGISTRY))]
+        (is (= 25 @hits))
+        (is (= before after)
+            "registry size unchanged after 25 inline tasks")))))
+
+(deftest ambiguous-tag-union-schema
+  (testing "<attribute> on macrodef and on manifest both pass closed validation"
+    (let [v   (requiring-resolve 'clj-ant.spec/validate)]
+      (is (nil? (v :attribute {:name "who" :default "world"} {:closed? true})))
+      (is (nil? (v :attribute {:name "X-Foo" :value "bar"} {:closed? true})))
+      ;; typo still caught
+      (is (some? (v :attribute {:name "x" :defalt "y"} {:closed? true})))))
+
+  (testing "describe lists every recorded class for ambiguous tags"
+    (let [d (a/describe :attribute)]
+      (is (>= (count (:classes d)) 2))
+      (is (contains? (:attrs d) "default"))   ; from MacroDef$Attribute
+      (is (contains? (:attrs d) "value")))))  ; from Manifest$Attribute
+
 (deftest tree-helpers-tolerate-full-vocab
   (testing "elements walks Element + JavaChild + map-with-:tag uniformly"
     (let [tree (a/element :copy
