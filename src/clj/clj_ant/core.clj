@@ -203,29 +203,38 @@
                                {:errors (vec errs)})))))
         project ^Project (or (:project opts) (make-project opts))
         events  (when (:capture? opts) (atom []))
-        rec     (when events
+        on-event (:on-event opts)
+        emit    (fn [m]
+                  (when events   (swap! events conj m))
+                  (when on-event (on-event m))
+                  nil)
+        rec     (when (or events on-event)
                   (reify BuildListener
-                    (buildStarted   [_ _] nil)
-                    (buildFinished  [_ _] nil)
-                    (targetStarted  [_ _] nil)
-                    (targetFinished [_ _] nil)
+                    (buildStarted   [_ _] (emit {:phase :build-started}))
+                    (buildFinished  [_ e]
+                      (emit {:phase :build-finished
+                             :error (some-> ^BuildEvent e .getException
+                                            .getMessage)}))
+                    (targetStarted  [_ e]
+                      (emit {:phase :target-started
+                             :target (some-> ^BuildEvent e .getTarget .getName)}))
+                    (targetFinished [_ e]
+                      (emit {:phase :target-finished
+                             :target (some-> ^BuildEvent e .getTarget .getName)
+                             :error (some-> ^BuildEvent e .getException
+                                             .getMessage)}))
                     (taskStarted    [_ e]
-                      (swap! events conj
-                             {:phase :task-started
-                              :task  (some-> ^BuildEvent e .getTask .getTaskName)})
-                      nil)
+                      (emit {:phase :task-started
+                             :task  (some-> ^BuildEvent e .getTask .getTaskName)}))
                     (taskFinished   [_ e]
-                      (swap! events conj
-                             {:phase :task-finished
-                              :task  (some-> ^BuildEvent e .getTask .getTaskName)
-                              :error (.getException ^BuildEvent e)})
-                      nil)
+                      (emit {:phase :task-finished
+                             :task  (some-> ^BuildEvent e .getTask .getTaskName)
+                             :error (some-> ^BuildEvent e .getException
+                                             .getMessage)}))
                     (messageLogged  [_ e]
-                      (swap! events conj
-                             {:phase   :message
-                              :message (.getMessage  ^BuildEvent e)
-                              :level   (.getPriority ^BuildEvent e)})
-                      nil)))
+                      (emit {:phase   :message
+                             :message (.getMessage  ^BuildEvent e)
+                             :level   (.getPriority ^BuildEvent e)}))))
         target  (doto (Target.)
                   (.setName "")
                   (.setProject project))

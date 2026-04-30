@@ -130,6 +130,23 @@
   (-> (apply core/execute! nodes (mapcat identity (or opts {})))
       node-clean))
 
+(defn ^:no-doc op-execute-stream
+  "Streaming variant of execute. Each event is sent as its own pod
+  reply (status []). The final result map is the last reply with
+  status [done]. `partial!` is called by the pod loop for every
+  intermediate value."
+  [{:keys [nodes opts]} partial!]
+  (let [done (promise)]
+    (apply core/execute! nodes
+           (mapcat identity
+                   (-> (or opts {})
+                       (assoc :on-event
+                              (fn [e] (partial! e))))))
+    ;; The build has finished synchronously. Anything we want to send
+    ;; as the *final* value goes back through the normal return path.
+    (deliver done :ok)
+    {:phase :result}))
+
 (defn ^:no-doc op-files [{:keys [node opts]}]
   (mapv #(.getAbsolutePath ^java.io.File %)
         (apply core/files node (mapcat identity (or opts {})))))
@@ -138,9 +155,11 @@
   (with-out-str (core/plan node)))
 
 (def ops
-  {"clj-ant.pod/execute" #'op-execute
-   "clj-ant.pod/files"   #'op-files
-   "clj-ant.pod/plan"    #'op-plan})
+  {"clj-ant.pod/execute" {:fn #'op-execute}
+   "clj-ant.pod/files"   {:fn #'op-files}
+   "clj-ant.pod/plan"    {:fn #'op-plan}
+   "clj-ant.pod/execute-stream"
+   {:fn #'op-execute-stream :stream? true}})
 
 ;; ---------------------------------------------------------------------------
 ;; Pod loop
@@ -170,27 +189,48 @@
                 "  (babashka.pods/invoke "
                 "    \"clj-ant.pod\" "
                 "    'clj-ant.pod/plan "
-                "    [{:node node}]))")}]}]
+                "    [{:node node}]))")}
+             ;; Streaming variant: the supplied handler fn is called
+             ;; with each event as it happens, and the final return
+             ;; is the result map.
+             {"name" "execute-stream" "code"
+              (str
+                "(defn execute-stream [nodes handler & {:as opts}] "
+                "  (babashka.pods/invoke "
+                "    \"clj-ant.pod\" "
+                "    'clj-ant.pod/execute-stream "
+                "    [{:nodes nodes :opts opts}] "
+                "    {:handlers {:success handler "
+                "                :error   (fn [{:keys [ex-message]}] "
+                "                           (throw (ex-info ex-message {})))}}))")}]}]
    "ops"
    {"shutdown" {}}})
+
+(defn ^:no-doc send! [out reply]
+  (locking out
+    (write-bencode out reply)
+    (.flush out)))
 
 (defn ^:no-doc handle-invoke [in out msg]
   (let [op-name (get msg "var")
         id      (get msg "id")
         args    (when-some [a (get msg "args")] (edn/read-string a))
-        op      (ops op-name)
-        reply   (try
-                  (let [v (apply op args)]
-                    {"id"     id
-                     "value"  (pr-str v)
-                     "status" ["done"]})
-                  (catch Throwable t
-                    {"id"      id
-                     "ex-message" (.getMessage t)
-                     "ex-data" (pr-str (or (ex-data t) {}))
-                     "status"  ["done" "error"]}))]
-    (write-bencode out reply)
-    (.flush out)))
+        {f :fn stream? :stream?} (ops op-name)]
+    (try
+      (if stream?
+        (let [partial! (fn [v]
+                         (send! out {"id" id
+                                     "value" (pr-str v)
+                                     "status" []}))
+              final    (apply f (conj args partial!))]
+          (send! out {"id" id "value" (pr-str final) "status" ["done"]}))
+        (let [v (apply f args)]
+          (send! out {"id" id "value" (pr-str v) "status" ["done"]})))
+      (catch Throwable t
+        (send! out {"id" id
+                    "ex-message" (or (.getMessage t) "(no message)")
+                    "ex-data" (pr-str (or (ex-data t) {}))
+                    "status" ["done" "error"]})))))
 
 (defn -main [& _]
   ;; Capture the real stdout for bencode replies before anything else

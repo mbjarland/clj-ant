@@ -77,6 +77,21 @@
   (testing "describe returns nil for unknown tags"
     (is (nil? (a/describe :no-such-thing-12345)))))
 
+(deftest event-streaming
+  (testing ":on-event fires synchronously per build event"
+    (let [seen (atom [])]
+      (a/ant
+        :level :warn
+        :on-event #(swap! seen conj %)
+        (a/node :echo :message "x"))
+      (let [phases (set (map :phase @seen))]
+        (is (contains? phases :build-started))
+        (is (contains? phases :task-started))
+        (is (contains? phases :task-finished))
+        (is (contains? phases :build-finished))
+        (is (some #(and (= :task-started (:phase %)) (= "echo" (:task %)))
+                  @seen))))))
+
 (deftest plan-prints-tree
   (testing "plan renders a build tree without executing it"
     (let [n (a/node :copy :todir "out"
