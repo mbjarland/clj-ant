@@ -24,7 +24,7 @@ public AST classes.
 
 ## Why a data-first model
 
-Each task call returns a node:
+Each task call returns an element:
 
 ```clojure
 (t/copy :todir "out"
@@ -37,10 +37,10 @@ Because that's just data you can:
 
 * `update`, `assoc`, `dissoc`, `walk` it before running
 * store it in an atom, send it across processes, save it to disk
-* `(plan node)` to print the tree without running it
-* compose builds out of normal Clojure functions
-* feed the same node into the [babashka pod](doc/babashka.md) instead
-  of a JVM REPL
+* `(plan elt)` to print the tree without running it
+* compose pipelines out of normal Clojure functions
+* feed the same element into the [babashka pod](doc/babashka.md)
+  instead of a JVM REPL
 
 Execution doesn't happen until the tree is handed to `a/ant` (or
 `a/execute!`). At that point clj-ant builds Ant's own
@@ -69,7 +69,7 @@ through `a/resources` (yields `Resource`) and `a/files` (yields
 You can round-trip: pull a fileset into Clojure, filter it
 arbitrarily, then hand the surviving files **straight back as a
 child of any task**. The runner accepts whatever you have — a clj-ant
-node, a real Ant `FileSet`, a single `File`, or a (lazy) seq of
+element, a real Ant `FileSet`, a single `File`, or a (lazy) seq of
 `File`/`Resource`/path-string — and wraps it through Ant's project
 reference machinery as needed. So you never write `(str/join "," xs)`
 or build a tree of nested `<file>` elements, even at million-file
@@ -134,9 +134,9 @@ whose attributes vanilla Ant can't introspect.
   (t/javac :srcdir "src" :destdir "out"))
 ```
 
-Phases the listener emits: `:build-started` `:target-started`
+Phases the listener emits: `:started` `:target-started`
 `:task-started` `:message` `:task-finished` `:target-finished`
-`:build-finished`. Composes with `:capture? true` if you want both
+`:finished`. Composes with `:capture? true` if you want both
 live updates and a final list.
 
 The babashka pod ships an `execute-stream` and `files-stream` op that

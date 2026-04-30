@@ -125,17 +125,17 @@
                      {:tag tag :errors errs :attrs attrs})))))
 
 (defn validate-tree
-  "Walk a node tree and collect all validation errors as a vector of
+  "Walk a element tree and collect all validation errors as a vector of
   `{:tag :path :errors}` maps. Empty vector means everything checks
   out.
 
   Options forwarded to `validate` (notably `:closed?`)."
-  ([node] (validate-tree node {}))
-  ([node opts]
+  ([element] (validate-tree element {}))
+  ([element opts]
    (letfn [(walk [path n]
              (let [here (when-some [e (validate (:tag n) (:attrs n) opts)]
                           [{:tag (:tag n) :path (vec path) :errors e}])]
                (concat
                  here
                  (mapcat #(walk (conj path (:tag n)) %) (:children n)))))]
-     (vec (walk [] node)))))
+     (vec (walk [] element)))))

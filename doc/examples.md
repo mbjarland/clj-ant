@@ -29,14 +29,14 @@ this with hand-rolled string replacement; Ant has `<filterchain>` +
 (a/ant :level :warn
   (t/copy :todir "deploy/etc"
     (t/fileset :dir "etc/templates" :includes "**/*.conf")
-    (a/node :filterchain
-      (a/node :tokenfilter
-        (a/node :replacestring :from "@VERSION@" :to (:version env))
-        (a/node :replacestring :from "@HOST@"    :to (:host env))
-        (a/node :replacestring :from "@DB_URL@"  :to (:db env))))))
+    (a/element :filterchain
+      (a/element :tokenfilter
+        (a/element :replacestring :from "@VERSION@" :to (:version env))
+        (a/element :replacestring :from "@HOST@"    :to (:host env))
+        (a/element :replacestring :from "@DB_URL@"  :to (:db env))))))
 ```
 
-Drop in `(a/node :replaceregex :pattern …)` instead of `:replacestring`
+Drop in `(a/element :replaceregex :pattern …)` instead of `:replacestring`
 for regex tokens, or `:expandproperties` to substitute every `${name}`
 from the project properties in one shot. Streaming-style: the file is
 never fully buffered.
@@ -89,7 +89,7 @@ skips by content rather than mtime).
 (a/ant :level :warn
   (t/move :todir "src"
     (t/fileset :dir "src" :includes "**/*.clj")
-    (a/node :globmapper :from "*.clj" :to "*.cljc")))
+    (a/element :globmapper :from "*.clj" :to "*.cljc")))
 ```
 
 Mappers come in many flavours — `glob`, `regexp`, `package` (for
@@ -106,7 +106,7 @@ rest. `<unzip>` + `<patternset>`:
 ```clojure
 (a/ant :level :warn
   (t/unzip :src "deps/big.jar" :dest "extracted/"
-    (a/node :patternset
+    (a/element :patternset
             :includes "**/*.properties,META-INF/services/**"
             :excludes "**/test/**")))
 ```
@@ -151,11 +151,11 @@ file (or, with `:parallel "true"`, in parallel):
   (t/apply :executable "convert" :parallel "true"
            :dest "build/thumbs"
     (t/fileset :dir "src/img" :includes "**/*.png")
-    (a/node :globmapper :from "*.png" :to "*.thumb.png")
-    (a/node :arg :value "-resize")
-    (a/node :arg :value "120x120")
-    (a/node :srcfile)
-    (a/node :targetfile)))
+    (a/element :globmapper :from "*.png" :to "*.thumb.png")
+    (a/element :arg :value "-resize")
+    (a/element :arg :value "120x120")
+    (a/element :srcfile)
+    (a/element :targetfile)))
 ```
 
 Mapper-driven `<apply>` is the part that's actually painful from raw
@@ -171,7 +171,7 @@ composed several independent build phases:
 ```clojure
 (let [t0 (System/currentTimeMillis)]
   (a/ant :level :warn
-    (a/node :parallel
+    (a/element :parallel
       (t/sleep :seconds "2")            ; pretend: javac main
       (t/sleep :seconds "2")            ; pretend: javac test
       (t/sleep :seconds "2")))          ; pretend: docs
@@ -227,22 +227,24 @@ multiplex multiple commands and forward ports.
 
 ### Babashka: scriptable Ant in <100 ms steady-state
 
-Once the pod is loaded, individual ops are just function calls. The
-JVM stays warm across calls in the same script run:
+Once the pod is loaded, the same `t/copy`, `t/get`, `t/unzip`, …
+wrappers you use on the JVM are available in bb. The JVM stays warm
+across calls in the same script run:
 
 ```clojure
 (require '[babashka.pods :as pods])
 (pods/load-pod ["clojure" "-M:pod"])
-(require '[clj-ant.pod :as a])
+(require '[clj-ant.pod   :as a]
+         '[clj-ant.tasks :as t])
 
-;; live-stream events to the bb console as a build runs
+;; live-stream events to the bb console as tasks execute
 (a/execute-stream
-  [{:tag :get   :attrs {:src "https://…/v1.zip" :dest "/tmp/v.zip"}}
-   {:tag :unzip :attrs {:src "/tmp/v.zip"      :dest "/opt/v"}}]
-  (fn [{:keys [phase task message] :as e}]
+  [(t/get   :src "https://…/v1.zip" :dest "/tmp/v.zip")
+   (t/unzip :src "/tmp/v.zip"        :dest "/opt/v")]
+  (fn [{:keys [phase task message]}]
     (case phase
-      :task-started (println "[start]" task)
-      :message      (when message (println " " message))
+      :task-started  (println "[start]" task)
+      :message       (when message (println " " message))
       :task-finished (println "[done] " task)
       nil)))
 ```
@@ -287,7 +289,7 @@ for non-File data, or `a/realize` for the live Java object).
 (a/files
   (t/first :count "10"
     (t/sort (t/fileset :dir "logs" :includes "*.log")
-            (a/node :date))))         ; or :name, :size, :type, ...
+            (a/element :date))))         ; or :name, :size, :type, ...
 ```
 
 
@@ -300,8 +302,8 @@ content match, file signature, "present in another tree", and so on.
 (a/files
   (t/restrict
     (t/fileset :dir "src")
-    (a/node :size :when "more" :size "1024")            ; > 1KiB
-    (a/node :modified :seconds "86400")))               ; modified in last day
+    (a/element :size :when "more" :size "1024")            ; > 1KiB
+    (a/element :modified :seconds "86400")))               ; modified in last day
 ```
 
 
@@ -327,7 +329,7 @@ you get a resource per line, slurpable individually:
 
 ```clojure
 (->> (t/tokens (t/file :file "TODO.md")
-               (a/node :linetokenizer))
+               (a/element :linetokenizer))
      a/resources
      (map #(slurp (.getInputStream %)))
      (filter #(re-find #"^- \[ \]" %)))
@@ -343,7 +345,7 @@ you get a resource per line, slurpable individually:
 (a/files
   (t/mappedresources
     (t/fileset :dir "src" :includes "**/*.clj")
-    (a/node :globmapper :from "*.clj" :to "*.cljc")))
+    (a/element :globmapper :from "*.clj" :to "*.cljc")))
 ;; same files reported under .cljc names
 ```
 
@@ -383,7 +385,7 @@ fold:
 
 ```clojure
 (a/files-stream
-  {:tag :fileset :attrs {:dir "/big/data" :includes "**/*"}}
+  (t/fileset :dir "/big/data" :includes "**/*")
   (fn [path]
     (when (string? path)               ; :phase :done is the sentinel
       (handle path))))
