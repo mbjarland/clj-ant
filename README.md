@@ -42,9 +42,10 @@ children of any task.
                :keyfile "~/.ssh/id_ed25519" :trust "true"
                :command "systemctl --user restart app")
 
-    ;; Arbitrary Clojure code as a first-class Ant task in the chain:
-    (a/task :notify
-      #(slack/post webhook (str ":rocket: shipped v" version)))))
+    ;; Arbitrary Clojure as the next step in the chain. `task`
+    ;; returns an element; when the build reaches it the fn fires,
+    ;; same as any other task -- not just a registration.
+    (a/task #(slack/post webhook (str ":rocket: shipped v" version)))))
 ```
 
 That single expression weaves five things vanilla Clojure can't
