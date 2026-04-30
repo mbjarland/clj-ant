@@ -92,12 +92,22 @@ For babashka:
 | Doc | Read it for |
 |-----|-------------|
 | **[doc/intro.md](doc/intro.md)** | Where to start. |
-| **[doc/examples.md](doc/examples.md)** | Recipe cookbook (templating, bulk find-replace, smart copy, archive surgery, parallel pipelines, SSH, …). |
+| **[doc/examples.md](doc/examples.md)** | Recipe cookbook (templating, bulk find-replace, smart copy, archive surgery, parallel pipelines, SSH, watch mode, …). |
 | **[doc/architecture.md](doc/architecture.md)** | Design rationale, layer model, anti-patterns. For contributors. |
 | **[doc/babashka.md](doc/babashka.md)** | The bb pod story. |
 | **[doc/tools-build.md](doc/tools-build.md)** | Interop with `clojure.tools.build`. |
 | **[doc/roadmap.md](doc/roadmap.md)** | What's done, what's planned. |
 | **[doc/pre-release.md](doc/pre-release.md)** | Operational checklist for v1.0. |
+
+For the underlying Ant tasks themselves — what each one does, what
+attributes they take, what nested elements they accept — the
+canonical reference is:
+
+📖 **[Apache Ant Tasks Reference](https://ant.apache.org/manual/tasks.html)**
+
+Every wrapper in `clj-ant.tasks` has a docstring with a direct link
+to its corresponding Ant manual page. Browse the full list there
+for tasks not yet covered in the cookbook.
 
 
 ## Highlights
@@ -148,6 +158,62 @@ Many small calls in a REPL loop? Reuse one Ant Project:
 
 50-call benchmark on a 2-task plan: `~575 ms` fresh → `~23 ms`
 sessioned → `~14 ms` with `(a/prepare ...)`.
+
+
+### Async + cancellation
+
+For long-running builds, `execute-async!` returns a `Run` that
+behaves like a `promise`/`future`:
+
+```clojure
+(let [run (a/execute-async! [(t/scp :file "big.tar"
+                                     :todir "deploy@host:/srv/"
+                                     :keyfile "..." :trust "true")]
+                            :on-event #(println (:phase %)))]
+  ;; ...do other work...
+  (when (slow?) (a/cancel! run))    ; interrupts the build thread
+  @run)                             ; blocks for the result
+```
+
+IO tasks (`<scp>`, `<get>`, `<sshexec>`) honour the interrupt
+cleanly. Pure-CPU tasks (`<javac>`, large `<copy>`) often don't
+observe it, so `:cancelled? true` lands on the result map either
+way to reflect caller intent.
+
+
+### Watch mode
+
+The "edit, save, see rebuild" loop bb developers expect, for any
+clj-ant pipeline:
+
+```clojure
+(def stop (a/watch [(t/javac :srcdir "src" :destdir "out")
+                    (t/copy  :todir "deploy" (t/fileset :dir "out"))]
+                   :paths   ["src"]
+                   :poll-ms 300
+                   :session (a/session {:level :warn})))
+;; ...edit src/...
+(stop)
+```
+
+Polling-based, so it works the same on Linux, macOS, and Windows.
+Pair with `:session` for the cheapest re-runs.
+
+
+### Errors carry the element tree
+
+When Ant raises a `BuildException` four levels into nested
+elements, the error coming back is `ex-info` you can pattern-
+match in code rather than a stringly-typed mystery:
+
+```clojure
+(let [r (a/ant (t/copy :tdoir "/tmp"))]   ; typo: tdoir
+  (when-let [err (:error r)]
+    (let [{:keys [clj-ant/elements ant/message]} (ex-data err)]
+      (println message "in" (pr-str elements)))))
+;; copy doesn't support the "tdoir" attribute in [#Element{...}]
+```
+
 
 ### Read existing `build.xml`
 

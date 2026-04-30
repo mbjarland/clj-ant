@@ -141,6 +141,13 @@ out `{:tag … :attrs …}` by hand.
    in JVM-land.
 2. **Latency.** Each pod call reuses the same long-lived JVM, so cold
    startup happens once. Subsequent calls are JVM-quick.
+3. **Async / watch / cancel are JVM-only for now.** `execute-async!`,
+   `cancel!`, and `watch` exist on the JVM but aren't exposed as pod
+   ops yet. For long-running bb scripts that want a watch loop, run
+   `bb` in foreground and rely on bb's own scripting (e.g.
+   `babashka.process/process` waiting on `inotifywait`) to drive
+   re-runs, calling `a/execute` per iteration. Open issue if you'd
+   like this exposed; it's straightforward, just hasn't been needed.
 
 
 ## When to skip the pod
