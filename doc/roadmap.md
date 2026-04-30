@@ -60,7 +60,7 @@ Same shape powers a static analyzer over a corpus of build files —
 **Size:** small. ~80 lines using `clojure.xml` (built-in, no dep).
 
 
-### tools.build interop  ⏳
+### tools.build interop  ✅
 
 Two-way bridge between clj-ant and `clojure.tools.build.api`.
 Direction A: `b/javac`, `b/jar`, `b/copy-dir` etc. wrapped as
