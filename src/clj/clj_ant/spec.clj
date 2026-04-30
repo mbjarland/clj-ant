@@ -60,28 +60,51 @@
        (map (fn [^java.util.Map$Entry e] [(.getKey e) (.getValue e)]))
        (sort-by first)))
 
-(defn- wrapper-recorded-classes
-  "For nested-only tags, return every class the generator recorded
-  for this tag (more than one when the tag is context-ambiguous,
-  e.g. <attribute> on macrodef vs manifest). Returns nil if the
-  wrapper isn't there."
-  [tag]
+(defn- ^Class load-class [class-name]
+  (try (Class/forName class-name) (catch Throwable _ nil)))
+
+(defn- wrapper-meta [tag]
   (try
     (when-some [v (requiring-resolve
                     (symbol "clj-ant.tasks" (name tag)))]
-      (let [m (meta v)]
-        (->> (or (:clj-ant/classes m)
-                 (when-some [c (:clj-ant/class m)] [c]))
-             (keep #(try (Class/forName %) (catch Throwable _ nil)))
-             vec
-             not-empty)))
+      (meta v))
     (catch Throwable _ nil)))
 
-(defn- klasses-for-tag [^Project project tag]
-  (let [n (name tag)]
-    (or (when-some [c (.get (.getTaskDefinitions project) n)]     [c])
-        (when-some [c (.get (.getDataTypeDefinitions project) n)] [c])
-        (wrapper-recorded-classes tag))))
+(defn- wrapper-recorded-classes
+  "Every class the generator recorded for a nested-only tag. More
+  than one when the tag is context-ambiguous (e.g. <attribute>)."
+  [tag]
+  (let [m (wrapper-meta tag)]
+    (->> (or (:clj-ant/classes m)
+             (when-some [c (:clj-ant/class m)] [c]))
+         (keep load-class)
+         vec
+         not-empty)))
+
+(defn- klasses-for-tag
+  "Best-known class set for a tag. With `parent` (a tag), prefer the
+  class the generator recorded for that specific (parent, tag) pair
+  if any -- so <attribute> under <macrodef> validates against
+  MacroDef$Attribute, not the Manifest$Attribute union. Without a
+  parent, return every recorded class for the union path."
+  ([^Project project tag] (klasses-for-tag project tag nil))
+  ([^Project project tag parent]
+   (let [n (name tag)]
+     (or (when-some [c (.get (.getTaskDefinitions project) n)]     [c])
+         (when-some [c (.get (.getDataTypeDefinitions project) n)] [c])
+         ;; If the parent is known and this tag has a recorded
+         ;; (parent-class -> child-class) mapping, that wins -- the
+         ;; runtime would resolve to the same class.
+         (when parent
+           (when-some [parent-class
+                       (or (.get (.getTaskDefinitions project) (name parent))
+                           (.get (.getDataTypeDefinitions project) (name parent))
+                           (first (wrapper-recorded-classes parent)))]
+             (when-some [bp (:clj-ant/by-parent (wrapper-meta tag))]
+               (when-some [child-class-name (get bp (.getName ^Class parent-class))]
+                 (when-some [k (load-class child-class-name)]
+                   [k])))))
+         (wrapper-recorded-classes tag)))))
 
 ;; ---------------------------------------------------------------------------
 ;; Cached per-tag schema build
@@ -93,9 +116,9 @@
     (->> (entries-of (.getAttributeMap helper))
          (remove (fn [[k _]] (framework-attrs (str k)))))))
 
-(defn- build-schema [tag closed?]
+(defn- build-schema [tag closed? parent]
   (let [project (Project.) _ (.init project)
-        klasses (klasses-for-tag project tag)]
+        klasses (klasses-for-tag project tag parent)]
     (when (seq klasses)
       ;; For ambiguous tags (multiple classes), build a UNION schema:
       ;; an attr key is valid if any class accepts it, and its schema
@@ -123,12 +146,18 @@
 (defn schema-for
   "Return a cached malli schema for a tag (e.g. `:copy`). Returns nil
   for unknown tags. With `:closed? true`, the schema rejects unknown
-  attributes (useful for catching typos like `:tdoir`)."
+  attributes (useful for catching typos like `:tdoir`).
+
+  Pass `:parent <parent-tag>` to scope the schema to the specific
+  class that tag resolves to under that parent -- relevant for
+  context-ambiguous tags like `:attribute` (different classes under
+  <macrodef> vs <manifest>). Without a parent, the schema is the
+  union over every recorded class."
   ([tag] (schema-for tag {}))
-  ([tag {:keys [closed?] :as opts}]
-   (let [k [tag (boolean closed?)]]
+  ([tag {:keys [closed? parent] :as opts}]
+   (let [k [tag (boolean closed?) parent]]
      (or (get @schema-cache k)
-         (when-some [s (build-schema tag closed?)]
+         (when-some [s (build-schema tag closed? parent)]
            (swap! schema-cache assoc k s)
            s)))))
 
@@ -147,7 +176,11 @@
   loaded via `<taskdef>`.
 
   Options:
-    :closed?  reject unknown attributes too (default false)."
+    :closed?  reject unknown attributes too (default false).
+    :parent   <parent-tag> used to disambiguate context-sensitive
+              nested tags. Lets <attribute> under <macrodef>
+              validate against MacroDef$Attribute even though the
+              same tag means Manifest$Attribute under <manifest>."
   ([tag attrs] (validate tag attrs {}))
   ([tag attrs opts]
    (when-some [schema (schema-for tag opts)]
@@ -171,13 +204,19 @@
   `{:tag :path :errors}` maps. Empty vector means everything checks
   out.
 
+  Threads parent context down so context-ambiguous nested tags
+  (`:attribute` under <macrodef> vs <manifest>, `:element` under
+  <scriptdef> vs <macrodef>, ...) validate against the correct
+  class for their parent.
+
   Options forwarded to `validate` (notably `:closed?`)."
   ([element] (validate-tree element {}))
   ([element opts]
-   (letfn [(walk [path n]
-             (let [here (when-some [e (validate (:tag n) (:attrs n) opts)]
+   (letfn [(walk [parent path n]
+             (let [here (when-some [e (validate (:tag n) (:attrs n)
+                                                (assoc opts :parent parent))]
                           [{:tag (:tag n) :path (vec path) :errors e}])]
                (concat
                  here
-                 (mapcat #(walk (conj path (:tag n)) %) (:children n)))))]
-     (vec (walk [] element)))))
+                 (mapcat #(walk (:tag n) (conj path (:tag n)) %) (:children n)))))]
+     (vec (walk nil [] element)))))

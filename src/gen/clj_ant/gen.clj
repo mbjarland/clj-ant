@@ -166,7 +166,7 @@
           (.getSimpleName c)))
 
 (defn- task-fn-source
-  [{:keys [tag class? sym kind description info other-classes]}]
+  [{:keys [tag class? sym kind description info other-classes by-parent]}]
   (let [{:keys [attrs nested supports-text?]} info
         attr-keys (mapv (comp symbol name attr-keyword first) attrs)
         attr-block  (when (seq attrs)
@@ -222,6 +222,8 @@
                     ", :clj-ant/class \"" class? "\""
                     ", :clj-ant/classes "
                     (pr-str (vec (cons class? (or other-classes []))))
+                    (when by-parent
+                      (str ", :clj-ant/by-parent " (pr-str by-parent)))
                     "}"))
       (println "  [& args]")
       (println (str "  (clojure.core/apply c/element "
@@ -250,20 +252,25 @@
         ;; lists what's reachable at the top level; recursive
         ;; introspection lists what's reachable at all.
         ;;
-        ;; Two concerns kept separate:
-        ;;   * cycle prevention -- tracked in `seen-classes`
-        ;;   * tag bookkeeping -- tracked in `tag->classes`
+        ;; Three concerns kept separate during the walk:
+        ;;   * cycle prevention   -- tracked in `seen-classes`
+        ;;   * tag aliases        -- (tag -> ordered set of classes)
+        ;;   * parent context     -- (tag -> {parent-class -> child-class})
+        ;;
         ;; A class can be reached under multiple tag names (Argument
-        ;; lives behind <arg>, <jvmarg>, <argument>, ...) and a tag
-        ;; can resolve to multiple classes depending on parent
-        ;; (<attribute> on macrodef vs manifest). We record EVERY
-        ;; observed (tag, class) pair so users see all aliases and
-        ;; the docstring can flag context ambiguity.
-        [nested tag->classes]
+        ;; lives behind <arg>, <jvmarg>, <argument>, ...). A tag can
+        ;; resolve to multiple classes depending on parent
+        ;; (<attribute> is MacroDef$Attribute under <macrodef>, but
+        ;; Manifest$Attribute under <manifest>). Recording the
+        ;; (parent, tag) -> child triple lets the validator pick the
+        ;; right schema when the parent is known, instead of unioning
+        ;; everything (which under-validates context-specific misuse).
+        [nested tag->classes tag->by-parent]
         (let [project       (doto (Project.) .init)
               seen-classes  (java.util.HashSet.)
-              tag->classes  (java.util.LinkedHashMap.)] ; tag -> Set of class names
-          (letfn [(visit [tag class-name]
+              tag->classes  (java.util.LinkedHashMap.)
+              tag->by-parent (java.util.LinkedHashMap.)]
+          (letfn [(visit [parent-class-name tag class-name]
                     (when class-name
                       (try
                         (let [klass     (Class/forName class-name)
@@ -271,27 +278,36 @@
                           (when (and tag
                                      (not (.containsKey tasks tag))
                                      (not (.containsKey types tag)))
+                            ;; Record alias.
                             (let [classes (or (.get tag->classes tag)
                                               (java.util.LinkedHashSet.))]
                               (.add classes class-name)
-                              (.put tag->classes tag classes)))
+                              (.put tag->classes tag classes))
+                            ;; Record parent->child mapping.
+                            (when parent-class-name
+                              (let [bp (or (.get tag->by-parent tag)
+                                           (java.util.LinkedHashMap.))]
+                                (.putIfAbsent bp parent-class-name class-name)
+                                (.put tag->by-parent tag bp))))
                           (when new-class
                             (doseq [^java.util.Map$Entry e
                                     (.getNestedElementMap
                                       (IntrospectionHelper/getHelper
                                         project klass))]
-                              (visit (.getKey e)
+                              (visit class-name
+                                     (.getKey e)
                                      (.getName ^Class (.getValue e))))))
                         (catch Throwable _ nil))))]
-            (doseq [[t c] (concat tasks types)] (visit t c))
-            ;; Reduce to the simple tag->first-class map render expects,
-            ;; plus keep the full alias map for docstring context.
+            (doseq [[t c] (concat tasks types)] (visit nil t c))
             [(into (sorted-map)
                    (map (fn [[t cs]] [t (first cs)])
                         tag->classes))
              (into (sorted-map)
                    (map (fn [[t cs]] [t (vec cs)])
-                        tag->classes))]))
+                        tag->classes))
+             (into (sorted-map)
+                   (map (fn [[t bp]] [t (into (sorted-map) bp)])
+                        tag->by-parent))]))
         render (fn [tag klass-name kind]
                  (when-some [info (introspect klass-name)]
                    (task-fn-source
@@ -302,7 +318,13 @@
                       :description   (read-description manual tag)
                       :info          info
                       :other-classes (when-some [cs (get tag->classes tag)]
-                                       (seq (remove #(= % klass-name) cs)))})))
+                                       (seq (remove #(= % klass-name) cs)))
+                      ;; Only emit the parent-context map for tags that
+                      ;; are genuinely ambiguous (more than one distinct
+                      ;; child class) -- otherwise it's noise.
+                      :by-parent     (when-some [bp (get tag->by-parent tag)]
+                                       (when (> (count (set (vals bp))) 1)
+                                         bp))})))
         all-tags    (concat (keys tasks) (keys types) (keys nested))
         all-syms    (set (map safe-symbol all-tags))
         core-syms   (set (map name (keys (ns-publics 'clojure.core))))
