@@ -225,6 +225,58 @@ Clojure side. Pair with `<sshsession>` for sustained sessions that
 multiplex multiple commands and forward ports.
 
 
+### Mix Clojure code into the element tree with `deftask`
+
+Sometimes the work is part Ant (copy, scp, jar), part Clojure
+(query an API, post to Slack, mutate an atom). Without `deftask`
+you'd flip back and forth: assemble Ant calls, run them, do the
+Clojure step, assemble more Ant. With `deftask` the Clojure code
+becomes a first-class Ant task, mixable into the same element tree:
+
+```clojure
+(a/deftask :slack-notify
+  (fn [{:keys [channel msg webhook]}]
+    (slack/post webhook channel msg)))
+
+(a/ant
+  (t/property :name "version" :value (read-version))
+  (t/jar     :destfile "app-${version}.jar" ...)
+  (t/scp     :file "app-${version}.jar"
+             :todir "deploy@host:/srv/" :keyfile key)
+  (a/element :slack-notify
+             :webhook    slack-url
+             :channel    "#deploys"
+             :msg        "shipped ${version}"))
+```
+
+The Clojure fn participates in Ant fully:
+
+- `${version}` is property-expanded *before* the fn is called, so
+  `:msg` arrives as `"shipped 1.2.3"`.
+- The build logger fires `:task-started` and `:task-finished` for
+  the Clojure task — your event stream sees it.
+- `<antcall>` can target it, `<macrodef>` can wrap it, `<parallel>`
+  can run it alongside other tasks.
+
+The fn receives one map: every attribute as a keyword key
+(values are post-expansion strings), plus `:project`, `:task-name`,
+and `:text` if the element had a text body.
+
+```clojure
+(a/deftask :greet (fn [{:keys [who]}] (println "hello," who)))
+
+(a/ant
+  (t/macrodef :name "greet-twice"
+    (a/element :attribute :name "who")
+    (a/element :sequential
+      (a/element :greet :who "@{who}")
+      (a/element :greet :who "@{who}")))
+  (a/element :greet-twice :who "world"))
+;; hello, world
+;; hello, world
+```
+
+
 ### Babashka: scriptable Ant in <100 ms steady-state
 
 Once the pod is loaded, the same `t/copy`, `t/get`, `t/unzip`, …

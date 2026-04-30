@@ -1,4 +1,4 @@
-{:paths   ["src/clj"]
+{:paths   ["src/clj" "target/classes"]    ; src/java compiled here
 
  :deps    {org.clojure/clojure     {:mvn/version "1.11.4"}
            org.apache.ant/ant      {:mvn/version "1.10.17"}
@@ -21,7 +21,8 @@
            :gen   {:exec-fn     clj-ant.gen/generate!
                    :extra-paths ["src/gen"]}
 
-           ;; Build via tools.build:  clj -T:build jar
+           ;; Compile the single Java bridge class into target/classes.
+           ;; Required once before tests / development.  clj -T:build javac
            :build {:deps       {io.github.clojure/tools.build
                                 {:git/tag "v0.10.5" :git/sha "2a21b7a"}}
                    :ns-default build}

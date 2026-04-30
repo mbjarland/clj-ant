@@ -12,7 +12,7 @@ Statuses:
 
 ## High-leverage
 
-### `deftask` — Clojure fns as first-class Ant tasks  ⏳
+### `deftask` — Clojure fns as first-class Ant tasks  ✅
 
 Today there's a wall between *Clojure code* and *the Ant element
 tree*: you flip out of `(a/ant …)` to do anything in Clojure, then

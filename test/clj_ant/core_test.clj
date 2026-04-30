@@ -162,6 +162,32 @@
                   (File. src "a.txt")))
         (is (= ["a.txt"] (mapv #(.getName %) (.listFiles dst))))))))
 
+(deftest deftask-integration
+  (let [seen (atom [])]
+    (a/deftask :test-tap
+      (fn [{:keys [project task-name v] :as args}]
+        (swap! seen conj (select-keys args [:task-name :v]))))
+
+    (testing "deftask is true for registered tags"
+      (is (a/deftask? :test-tap)))
+
+    (testing "fn fires with expanded properties + task-name"
+      (a/ant :level :warn
+        (a/element :property :name "x" :value "hi")
+        (a/element :test-tap :v "got: ${x}"))
+      (is (= [{:task-name "test-tap" :v "got: hi"}] @seen)))
+
+    (testing "deftask participates in the event stream"
+      (reset! seen [])
+      (let [phases (atom [])]
+        (a/ant :level :warn
+          :on-event #(when (= :task-started (:phase %))
+                       (swap! phases conj (:task %)))
+          (a/element :echo :message "before")
+          (a/element :test-tap :v "middle")
+          (a/element :echo :message "after"))
+        (is (= ["echo" "test-tap" "echo"] @phases))))))
+
 (deftest plan-prints-tree
   (testing "plan renders a build tree without executing it"
     (let [n (a/element :copy :todir "out"
