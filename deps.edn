@@ -1,0 +1,26 @@
+{:paths   ["src/clj"]
+
+ :deps    {org.clojure/clojure {:mvn/version "1.11.4"}
+           org.apache.ant/ant  {:mvn/version "1.10.15"}}
+
+ :aliases {;; Stub generator. Walks Ant's defaults.properties and the
+           ;; bundled Ant manual to produce src/clj/clj_ant/tasks.clj.
+           ;;
+           ;;   clj -X:gen
+           :gen   {:exec-fn     clj-ant.gen/generate!
+                   :extra-paths ["src/gen"]}
+
+           ;; Build via tools.build:  clj -T:build jar
+           :build {:deps       {io.github.clojure/tools.build
+                                {:git/tag "v0.10.5" :git/sha "2a21b7a"}}
+                   :ns-default build}
+
+           ;; nREPL for editor connections
+           :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "1.3.0"}}
+                   :main-opts  ["-m" "nrepl.cmdline"]}
+
+           ;; Tests:  clj -M:test
+           :test  {:extra-paths ["test"]
+                   :extra-deps  {lambdaisland/kaocha
+                                 {:mvn/version "1.91.1392"}}
+                   :main-opts   ["-m" "kaocha.runner"]}}}
