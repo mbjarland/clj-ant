@@ -194,8 +194,9 @@
                   :else (throw (ex-info "execute! expects a node or seq of nodes"
                                         {:value nodes})))
         _       (when (:validate? opts)
-                  (let [errs (mapcat (requiring-resolve 'clj-ant.spec/validate-tree)
-                                     nodes)]
+                  (let [vt   (requiring-resolve 'clj-ant.spec/validate-tree)
+                        vopt (select-keys opts [:closed?])
+                        errs (mapcat #(vt % vopt) nodes)]
                     (when (seq errs)
                       (throw (ex-info
                                (str "Build failed validation: " (count errs)
