@@ -92,6 +92,27 @@
         (is (some #(and (= :task-started (:phase %)) (= "echo" (:task %)))
                   @seen))))))
 
+(deftest deftarget-and-dependencies
+  (testing "named targets honour declared dependencies"
+    (let [order (atom [])
+          t-clean   (a/target :name "clean"
+                              (a/node :echo :message "clean"))
+          t-compile (a/target :name "compile"
+                              :depends [:clean]
+                              (a/node :echo :message "compile"))
+          t-package (a/target :name "package"
+                              :depends [:compile]
+                              (a/node :echo :message "package"))]
+      (a/ant
+        :level :warn
+        :on-event (fn [e]
+                    (when (and (= :target-started (:phase e))
+                               (seq (:target e)))
+                      (swap! order conj (:target e))))
+        :targets ["package"]
+        t-clean t-compile t-package)
+      (is (= ["clean" "compile" "package"] @order)))))
+
 (deftest plan-prints-tree
   (testing "plan renders a build tree without executing it"
     (let [n (a/node :copy :todir "out"

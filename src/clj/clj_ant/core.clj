@@ -235,25 +235,99 @@
                       (emit {:phase   :message
                              :message (.getMessage  ^BuildEvent e)
                              :level   (.getPriority ^BuildEvent e)}))))
-        target  (doto (Target.)
-                  (.setName "")
-                  (.setProject project))
-        _       (.addOrReplaceTarget project target)
-        ues     (mapv #(->unknown-element % project target) nodes)]
+        ;; Split target nodes from regular task/type nodes. Targets get
+        ;; their own Target instance + addOrReplaceTarget; regular nodes
+        ;; go onto an implicit unnamed target that runs by default.
+        target-nodes (filter #(= :target (:tag %)) nodes)
+        task-nodes   (remove #(= :target (:tag %)) nodes)
+        implicit  (doto (Target.)
+                    (.setName "")
+                    (.setProject project))
+        _         (.addOrReplaceTarget project implicit)
+        ;; Register named targets.
+        named-tgts (mapv (fn [n]
+                           (let [{:keys [attrs children]} n
+                                 t (doto (Target.)
+                                     (.setName        (str (:name attrs)))
+                                     (.setProject     project)
+                                     (.setDescription (:description attrs)))
+                                 deps (:depends attrs)
+                                 deps-str (cond
+                                            (nil? deps) nil
+                                            (sequential? deps)
+                                            (clojure.string/join ","
+                                                                 (map clojure.core/name deps))
+                                            :else (str deps))]
+                             (when deps-str (.setDepends t deps-str))
+                             (when-some [v (:if attrs)]     (.setIf t (str v)))
+                             (when-some [v (:unless attrs)] (.setUnless t (str v)))
+                             (.addOrReplaceTarget project t)
+                             (doseq [c children]
+                               (.addTask t (->unknown-element c project t)))
+                             t))
+                         target-nodes)
+        ues       (mapv #(->unknown-element % project implicit) task-nodes)
+        _         (doseq [^UnknownElement ue ues] (.addTask implicit ue))
+        ;; Pick what to actually run.
+        targets-to-run (or (:targets opts)
+                           (if (seq named-tgts)
+                             ;; If user defined targets but didn't pick any,
+                             ;; honour the project's default if given, else
+                             ;; just run the first declared target.
+                             [(or (:default opts)
+                                  (.getName ^Target (first named-tgts)))]
+                             [""]))]
     (when rec (.addBuildListener project rec))
-    (doseq [^UnknownElement ue ues]
-      (.addTask target ue))
+    (when-some [d (:default opts)] (.setDefault project (str d)))
     (.fireBuildStarted project)
     (let [error (try
-                  (.executeTarget project "")
+                  (let [v (java.util.Vector.)]
+                    (doseq [t targets-to-run] (.add v (str t)))
+                    (.executeTargets project v))
                   nil
                   (catch Throwable t t))]
       (.fireBuildFinished project error)
       (cond-> {:project project
-               :target  target
+               :target  implicit
+               :targets named-tgts
                :tasks   ues}
         events       (assoc :events @events)
         (some? error) (assoc :error error)))))
+
+;; ---------------------------------------------------------------------------
+;; Targets
+;;
+;; A target node carries a name, depends list, optional description,
+;; if/unless, and a sequence of child task nodes. The runner above
+;; turns these into real Ant Target instances.
+
+(defn target
+  "Build a target node. The name attribute is required.
+
+      (target :name \"compile\"
+              :depends [:clean]
+              :description \"build the jar\"
+              (mkdir :dir \"classes\")
+              (javac :srcdir \"src\" :destdir \"classes\"))"
+  [& args]
+  (apply node :target args))
+
+(defmacro deftarget
+  "def a target node bound to `nm`, with :name set from the symbol's
+  name. Body is the same shape as `target` minus the :name attribute.
+
+      (deftarget compile
+        :depends [:clean]
+        (mkdir :dir \"classes\")
+        (javac :srcdir \"src\" :destdir \"classes\"))
+
+  Then run with:
+
+      (a/ant :targets [\"compile\"] compile clean)
+      (a/ant compile clean)              ; runs `compile` since it is first"
+  [nm & body]
+  `(def ~nm
+     (target :name ~(name nm) ~@body)))
 
 ;; ---------------------------------------------------------------------------
 ;; Top-level convenience
