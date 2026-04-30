@@ -183,6 +183,48 @@ composed several independent build phases:
 flag if you want the first failure to abort the rest.
 
 
+### SSH and SCP from babashka without writing your own SSH
+
+clj-ant ships with `ant-jsch` and a maintained JSch fork (the
+Terrapin-fixed `com.github.mwiede:jsch`), so `<scp>` and `<sshexec>`
+work out of the box from both JVM and bb. This is the recipe that
+saves the most code in practice — Clojure has nothing built-in for
+SSH, and rolling it from `ProcessBuilder` over the `ssh` CLI means
+fighting key prompts, host-key verification, and quoting hell.
+
+Push a build artifact and run a remote command in one expression:
+
+```clojure
+(a/ant :level :warn
+  (t/scp :file        "target/app.jar"
+         :todir       "deploy@web-1.example.com:/srv/app/"
+         :keyfile     (str (System/getenv "HOME") "/.ssh/id_ed25519")
+         :passphrase  ""
+         :trust       "true")        ; or :knownhosts "/path/to/known_hosts"
+
+  (t/sshexec :host       "web-1.example.com"
+             :username   "deploy"
+             :keyfile    (str (System/getenv "HOME") "/.ssh/id_ed25519")
+             :command    "systemctl --user restart app"
+             :trust      "true"))
+```
+
+For a pull rather than push, swap source and dest:
+
+```clojure
+(t/scp :file  "deploy@web-1.example.com:/var/log/app.log"
+       :todir "/tmp/"
+       :keyfile (str (System/getenv "HOME") "/.ssh/id_ed25519")
+       :trust "true")
+```
+
+`<sshexec>` accepts `:outputproperty` to capture remote stdout into
+an Ant property and `:errorproperty` for stderr — combined with
+`:on-event` you can pipe remote command output straight into your
+Clojure side. Pair with `<sshsession>` for sustained sessions that
+multiplex multiple commands and forward ports.
+
+
 ### Babashka: scriptable Ant in <100 ms steady-state
 
 Once the pod is loaded, individual ops are just function calls. The
