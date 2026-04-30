@@ -217,6 +217,32 @@
       (is (= ["x.txt"] (mapv #(.getName %)
                              (.listFiles (File. base "out"))))))))
 
+(deftest tree-query-and-transform
+  (let [tree (a/element :project
+               (a/element :target :name "compile"
+                 (a/element :javac :srcdir "src" :debug "true"))
+               (a/element :target :name "deploy"
+                 (a/element :scp :trust "true" :file "x")
+                 (a/element :scp :trust "false" :file "y")))]
+    (testing "elements walks every node depth-first"
+      (is (= [:project :target :javac :target :scp :scp]
+             (mapv :tag (a/elements tree)))))
+
+    (testing "elements with pred filters"
+      (is (= 2 (count (a/elements tree #(= :scp (:tag %))))))
+      (is (= 1 (count (a/elements tree #(and (= :scp (:tag %))
+                                              (= "true" (-> % :attrs :trust)))))))
+      (is (= 0 (count (a/elements tree #(= :nope (:tag %)))))))
+
+    (testing "transform rewrites every matching element"
+      (let [t' (a/transform tree
+                            (fn [e]
+                              (cond-> e
+                                (= :scp (:tag e))
+                                (assoc-in [:attrs :trust] "false"))))]
+        (is (every? #(= "false" (-> % :attrs :trust))
+                    (a/elements t' #(= :scp (:tag %)))))))))
+
 (deftest task-inline-thunk
   (testing "(a/task tag f) runs f and shows up as a task event"
     (let [hits  (atom 0)

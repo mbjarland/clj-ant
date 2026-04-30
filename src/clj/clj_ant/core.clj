@@ -736,6 +736,46 @@
 ;; Plan: print a tree of what would execute, without executing.
 
 ;; ---------------------------------------------------------------------------
+;; Tree querying & transformation
+;;
+;; Element trees are plain data, so `tree-seq` already handles
+;; reading them. These helpers package the two operations every
+;; auditor or refactor script wants: walk-and-find, walk-and-rewrite.
+
+(defn elements
+  "Lazy depth-first seq of every element in `tree`.
+
+  With `pred`, only elements matching pred. Predicates over
+  attributes read naturally:
+
+      (elements tree #(= :scp (:tag %)))
+      (elements tree #(and (= :javac (:tag %))
+                           (= \"false\" (-> % :attrs :debug))))"
+  ([tree]      (filter element? (tree-seq element? :children tree)))
+  ([tree pred] (filter pred (elements tree))))
+
+(defn transform
+  "Walk `tree` depth-first, applying `f` to each element. `f` must
+  return an element (or nil to drop it). Children are transformed
+  before parents see them, so `f` always observes already-rewritten
+  descendants.
+
+      ;; lowercase every :todir attribute everywhere in the tree
+      (transform tree
+                 (fn [e]
+                   (cond-> e
+                     (-> e :attrs :todir)
+                     (update-in [:attrs :todir]
+                                clojure.string/lower-case))))"
+  [tree f]
+  (when (element? tree)
+    (let [kids (->> (:children tree)
+                    (map #(transform % f))
+                    (remove nil?)
+                    vec)]
+      (f (assoc tree :children kids)))))
+
+;; ---------------------------------------------------------------------------
 ;; Runtime introspection. Useful for tooling, REPL exploration, and for
 ;; users to discover what attributes a task accepts without hopping out
 ;; to the manual.
