@@ -1,216 +1,263 @@
 (ns clj-ant.core
-  (:require [clojure.reflect :as reflect]
-            [clojure.java.io :as io]
-            [clojure.string :as str]
-            [clojure.spec.alpha :as s]
-            [clojure.data.xml :as xml])
-  (:import (org.apache.tools.ant.taskdefs Copy)
-           (java.io File ByteArrayInputStream)
-           (org.apache.tools.ant.types FileSet)
-           (org.apache.tools.ant Project ProjectHelper NoBannerLogger CljAntMain)
-           (java.util Map)
-           (java.nio.charset StandardCharsets)
-           (java.nio.file.spi FileSystemProvider)
-           (java.nio.file FileSystem Path)
-           (org.apache.tools.ant.helper ProjectHelper2)
-           (java.lang.reflect Method)
-           (cljant CljAntProjectHelper CljAntBuildFile)))
+  "Fluent Ant from Clojure.
 
-;protected static Project createProject() {
-;    final Project project = new Project();
-;
-;    final ProjectHelper helper = ProjectHelper.getProjectHelper();
-;    project.addReference(ProjectHelper.PROJECTHELPER_REFERENCE, helper);
-;    helper.getImportStack().addElement("AntBuilder"); // import checks that stack is not empty
-;
-;    final BuildLogger logger = new NoBannerLogger();
-;
-;    logger.setMessageOutputLevel(org.apache.tools.ant.Project.MSG_INFO);
-;    logger.setOutputPrintStream(System.out);(
-;    logger.setErrorPrintStream(System.err);
-;
-;    project.addBuildListener(logger);
-;
-;    project.init();
-;    project.getBaseDir();
-;    return project;
-;}
+  This namespace exposes a single mental model: an Ant build is a tree
+  of plain Clojure data. Each node is a map of the form
 
-(defn- partition-args [args]
-  (reduce
-    (fn [[a n] [k v]]
+      {:tag :copy
+       :attrs {:todir \"out\"}
+       :children [...]
+       :text \"...\"}
+
+  and is constructed by calling the corresponding task or type
+  function, e.g.
+
+      (copy :todir \"out\"
+        (fileset :dir \"src\" :includes \"**/*.clj\"))
+
+  Nothing executes until the tree is passed to `run!`. `run!` builds
+  Ant's own intermediate representation (`UnknownElement` +
+  `RuntimeConfigurable`) directly — the same tree Ant's XML parser
+  would build — and asks Ant to execute it. This means property
+  expansion (`${foo}`), `refid`, `macrodef`, `presetdef`, `if`/`unless`
+  attributes, etc. all work for free, because they are implemented
+  inside Ant's runtime configuration machinery, not its parser."
+  (:require [clojure.java.io :as io])
+  (:import [org.apache.tools.ant Project Target Location
+                                 UnknownElement RuntimeConfigurable
+                                 DefaultLogger BuildListener BuildEvent]
+           [java.io File PrintStream]))
+
+;; ---------------------------------------------------------------------------
+;; Node construction
+;;
+;; Tasks and types are nothing but functions that return a map. The map is
+;; opaque data — in particular, calling (copy ...) does NOT trigger any Ant
+;; activity. That only happens once the tree is handed to `run!`.
+
+(defrecord Node [tag attrs children text])
+
+(defn node?
+  "Truthy if `x` is a clj-ant node."
+  [x]
+  (instance? Node x))
+
+(defn- split-args
+  "Pulls keyword/value attribute pairs off the front of a positional arg
+  list, leaving anything else as children. Mirrors hiccup-style calling
+  conventions while keeping the data form a plain map."
+  [args]
+  (loop [attrs {} text nil children [] xs args]
+    (let [x (first xs)]
       (cond
-        (nil? v) [a (conj n k)]
-        (keyword? k) [(assoc a k v) n]
-        :else [a (conj (conj n k) v)]))
-    [{} []]
-    (partition-all 2 args)))
+        (empty? xs)
+        [attrs text children]
 
-(defn ant-xml [name args]
-  (let [t (Throwable.)
-        [attrs nested] (partition-args args)]
-    (xml/element name
-                 (merge attrs {:trace (fn [] t)})
-                 nested)))
+        (and (keyword? x) (seq (rest xs)))
+        (recur (assoc attrs x (second xs)) text children (drop 2 xs))
 
-(defn- copy
-  "Example code:
+        (string? x)
+        (recur attrs (str (or text "") x) children (rest xs))
 
-    (ant
-      (copy todir=\"/tmp\"
-        (fileset dir=\".\" includes=\"**/*.java\")))
+        (or (node? x) (map? x))
+        (recur attrs text (conj children x) (rest xs))
 
-  valid attributes:
+        (sequential? x)
+        (recur attrs text (into children x) (rest xs))
 
-    :preservelastmodified :tofile :todir :overwrite :force
-    :filtering :flatten :includeEmptyDirs :failonerror :quiet
-    :verbose :encoding :outputencoding :enablemultiplemappings
-    :granularity
+        (nil? x)
+        (recur attrs text children (rest xs))
 
-  valid nested elements:
+        :else
+        (throw (ex-info (str "Unsupported child of an Ant node: " (pr-str x))
+                        {:value x}))))))
 
-    fileset filenamemapper resourcecollection
+(defn node
+  "Build a clj-ant node for tag `tag-kw`. The remaining args follow
+  hiccup-ish positional rules:
 
-  https://ant.apache.org/manual/Tasks/copy.html"
-  [& args]
-  (ant-xml :copy args))
+  * keyword/value pairs are attributes
+  * strings concatenate into the element's text body
+  * maps or other nodes become children
+  * sequential collections splice their contents in as children
 
-(defn- run-ant [build-file-str ant-args extra-props classloader]
-  (let [bf   (CljAntBuildFile. "clj-ant-build" build-file-str (io/file "."))
-        main (CljAntMain. bf)]
-    (CljAntProjectHelper/register)
-    (.startAnt main (into-array String (:options ant-args)) extra-props classloader)))
+  Returned value is a `Node` record — a plain map you can inspect,
+  walk, diff, transform with `update`, store in an atom, etc."
+  [tag-kw & args]
+  (let [[attrs text children] (split-args args)]
+    (->Node tag-kw attrs (vec children) text)))
 
-;(set-private-field main "buildFile" bf)
-;(set-private-field main "readyToRun" true)
-;(call-private-method  main "runBuild" nil))) ;(make-array String 0) nil nil)))
-;(call-private-method ant "runBuild" nil)))
+;; ---------------------------------------------------------------------------
+;; Project lifecycle
 
-(comment
-  ; maybe the easiest is to write your own url protocol handler
-  ; https://stackoverflow.com/questions/26363573/registering-and-using-a-custom-java-net-url-protocol
-  ; and let ProjectHelper2.parse parse your custom url
-  ; 
-  ; 0. override ProjectHelper2  
-  ; 1. get instance of project helper repository
-  ; 2. add your instance to the project helper registry
-  ; 3. override Resource/getInputStream and return
-  ;    (ByteArrayInputStream. (.getBytes str-data StandardCharsets/UTF_8))
-  ; 3. call Main/runBuild(null)
-  ; 4.
-  ;
-  ; override the following in ProjectHelper2
-  ;public void setDocumentLocator(Locator locator) {
-  ;  context.setLocator(locator);
-  ;}
-  ;
-  ; implement your own override of locator which translates from the line number
-  ; and system id of the xml to line and column in the clojure file 
-  ;
-  ;  file.getPath().getFileSystem().provider().newInputStream(path, options);
+(defn ^:no-doc default-logger
+  ^DefaultLogger [{:keys [out err level emacs?]
+                   :or   {out    System/out
+                          err    System/err
+                          level  :info
+                          emacs? false}}]
+  (doto (DefaultLogger.)
+    (.setMessageOutputLevel
+      (case level
+        :error   Project/MSG_ERR
+        :warn    Project/MSG_WARN
+        :info    Project/MSG_INFO
+        :verbose Project/MSG_VERBOSE
+        :debug   Project/MSG_DEBUG))
+    (.setOutputPrintStream  ^PrintStream out)
+    (.setErrorPrintStream   ^PrintStream err)
+    (.setEmacsMode (boolean emacs?))))
 
-  )
+(defn make-project
+  "Build a fresh `org.apache.tools.ant.Project`, attach a logger, and
+  call `init` so all built-in tasks/types are registered.
 
-(defn- convert-to-xml [ant-args & nested]
-  (let [prj-attrs (select-keys ant-args [:default :name :basedir])]
-    ;(xml/emit
-    (xml/indent-str
-      (xml/element :project prj-attrs nested))))
+  Options:
 
+    :basedir   String or File. Default: current working directory.
+    :name      Project name string. Default: \"clj-ant\".
+    :level     :error | :warn | :info | :verbose | :debug. Default :info.
+    :out, :err PrintStream for the default logger.
+    :emacs?    Strip the [taskname] adornments. Default false.
+    :listeners Coll of `BuildListener` instances to attach.
+    :props     Map of user properties to seed."
+  ^Project [{:keys [basedir name listeners props]
+             :or   {basedir "." name "clj-ant"}
+             :as   opts}]
+  (let [p (doto (Project.)
+            (.setName name)
+            (.setBaseDir (io/file basedir))
+            (.addBuildListener (default-logger opts))
+            (.init))]
+    (doseq [^BuildListener l listeners]
+      (.addBuildListener p l))
+    (doseq [[k v] props]
+      (.setUserProperty p (clojure.core/name k) (str v)))
+    p))
 
+;; ---------------------------------------------------------------------------
+;; Data → UnknownElement
+;;
+;; This is the whole interop surface. Everything else in clj-ant just feeds
+;; nodes here.
+
+(defn- ->unknown-element
+  ^UnknownElement [{:keys [tag attrs children text]}
+                   ^Project project ^Target target]
+  (let [tag-name (name tag)
+        ue       (doto (UnknownElement. tag-name)
+                   (.setProject project)
+                   (.setOwningTarget target)
+                   (.setQName tag-name)
+                   (.setTaskName tag-name)
+                   (.setLocation Location/UNKNOWN_LOCATION))
+        wrap     (RuntimeConfigurable. ue tag-name)]
+    (doseq [[k v] attrs]
+      (.setAttribute wrap (name k) (str v)))
+    (when text
+      (.addText wrap (str text)))
+    (doseq [c children]
+      (let [child (->unknown-element c project target)]
+        (.addChild ue child)
+        (.addChild wrap (.getWrapper child))))
+    ;; Task.setRuntimeConfigurableWrapper is public; this is the same
+    ;; hook ProjectHelper2 uses when assembling the AST from XML.
+    (.setRuntimeConfigurableWrapper ue wrap)
+    ue))
+
+;; ---------------------------------------------------------------------------
+;; Execution
+
+(defn execute!
+  "Execute one or more nodes against a fresh (or supplied) project.
+
+  Top-level forms become tasks of an implicit unnamed target which is
+  then executed. Returns a map containing the project, the target, the
+  list of UnknownElements that ran, plus any captured build events.
+
+  Options:
+
+    :project    An existing org.apache.tools.ant.Project. If absent, a
+                fresh one is built from the same options.
+    :capture?   If true, attach a recording BuildListener and return
+                the captured events under :events. Default false.
+
+  Plus any options accepted by `make-project`."
+  [nodes & {:as opts}]
+  (let [nodes   (cond
+                  (node? nodes)       [nodes]
+                  (sequential? nodes) (vec nodes)
+                  (map? nodes)        [nodes]
+                  :else (throw (ex-info "execute! expects a node or seq of nodes"
+                                        {:value nodes})))
+        project ^Project (or (:project opts) (make-project opts))
+        events  (when (:capture? opts) (atom []))
+        rec     (when events
+                  (reify BuildListener
+                    (buildStarted   [_ _] nil)
+                    (buildFinished  [_ _] nil)
+                    (targetStarted  [_ _] nil)
+                    (targetFinished [_ _] nil)
+                    (taskStarted    [_ e]
+                      (swap! events conj
+                             {:phase :task-started
+                              :task  (some-> ^BuildEvent e .getTask .getTaskName)})
+                      nil)
+                    (taskFinished   [_ e]
+                      (swap! events conj
+                             {:phase :task-finished
+                              :task  (some-> ^BuildEvent e .getTask .getTaskName)
+                              :error (.getException ^BuildEvent e)})
+                      nil)
+                    (messageLogged  [_ e]
+                      (swap! events conj
+                             {:phase   :message
+                              :message (.getMessage  ^BuildEvent e)
+                              :level   (.getPriority ^BuildEvent e)})
+                      nil)))
+        target  (doto (Target.)
+                  (.setName "")
+                  (.setProject project))
+        _       (.addOrReplaceTarget project target)
+        ues     (mapv #(->unknown-element % project target) nodes)]
+    (when rec (.addBuildListener project rec))
+    (doseq [^UnknownElement ue ues]
+      (.addTask target ue))
+    (.fireBuildStarted project)
+    (let [error (try
+                  (.executeTarget project "")
+                  nil
+                  (catch Throwable t t))]
+      (.fireBuildFinished project error)
+      (cond-> {:project project
+               :target  target
+               :tasks   ues}
+        events       (assoc :events @events)
+        (some? error) (assoc :error error)))))
+
+;; ---------------------------------------------------------------------------
+;; Top-level convenience
 
 (defn ant
-  "The main entry point to the clj-ant api. The ant function is
-  the only function which actually executes any ant tasks/types
-  in the clj-ant api. Specifically in an expression like:
+  "Run an Ant build defined inline. Each top-level form is added as a
+  task of an implicit unnamed target. Keyword options must come first
+  and are forwarded to `execute!` / `make-project`.
 
-  (ant
-    (copy :todir \"/tmp\"
-      (fileset :dir \"src\"
-        (include :name \"main/**/*.clj\"))))
+  Example:
 
-  the functions 'copy', 'fileset', and 'include' only return data
-  structures which are then executed by the ant function. 
+      (ant
+        :basedir \"out\"
+        (mkdir :dir \"classes\")
+        (copy  :todir \"classes\"
+          (fileset :dir \"src\" :includes \"**/*.clj\")))
 
-  Please note that every effort has been made to make this api self
-  documenting and applicable for repl driven development. Thus things
-  like `(doc fileset)` should return a decent explanation of the
-  available arguments and nested elements.
-
-  In addition to nested function calls, ant accepts the following
-  keyword arguments:
-
-  Arguments normally defined on the <project ...> element in ant:
-
-    :default - string. Default target to call. Note that tasks added
-    directly under the ant element will be added to an implicit target
-    and executed when no default or explicit target is defined.
-
-    :name - string. The name of the project.
-
-    :basedir - string or File. The base directory from which all
-    path calculation are done .
-
-    https://ant.apache.org/manual/using.html#projects
-
-  :options
-    A coll of string options which would normally be provided to
-    ant as command line options. Example:
-
-    (ant :options [\"-d\"])
-
-    would turn on debugging output. Please run:
-
-    (ant :options [\"--help\"])
-
-    for a full list of available options.
-
-   Will return a map with the following structure:
-
-   {:tasks - coll of executed task instances
-    :targets -  
-  "
+  Note that the task functions like `mkdir`, `copy`, `fileset` live in
+  `clj-ant.tasks` (auto-generated). For ad-hoc/unknown elements, use
+  `(node :my-tag ...)` from this namespace."
   [& args]
-  (let [[attrs nested] (partition-args args)
-        prj-keys  [:default :name :basedir]
-        prj-attrs (select-keys attrs prj-keys)
-        ant-attrs (apply dissoc attrs prj-keys)
-        xml       (apply convert-to-xml prj-attrs nested)]
-    (run-ant xml ant-attrs nil nil)))
-
-
-(load "tasks")
-; anyway, scsh is quite complex and does a lot of cool stuff, there's
-; like a couple of nice ideas you can steal from it
-; https://github.com/ChaosEternal/guile-scsh
-; https://gist.github.com/noisesmith/06102f38f14bad40ebe4a04f79f5dfda
-; https://gist.github.com/noisesmith/684e09a77ca4390f03fd2e53af1d5464
-
-
-(comment
-  (def REMEMBER "./src/main/org/apache/tools/ant/types/defaults.properties")
-
-  (defn file? [o] (instance? File o))
-
-  (s/def ::attr-value (s/or ::string-value string?
-                            ::file-value file?))
-  (s/def ::attr (s/cat ::name keyword?
-                       ::value ::attr-value))
-  (s/def ::nested (s/cat ::n map?))
-  (s/def ::args (s/cat ::attrs (s/* ::attr) ::nesteds (s/* ::nested)))
-
-  ; https://stackoverflow.com/questions/43256665/realistic-clojure-spec-for-function-with-named-arguments
-  (s/fdef copy
-          :args (s/cat
-                  ::attrs
-                  (s/* (s/cat ::name
-                              (s/keys :opt-un [::todir ::tofile ::preservelastmodified ::overwrite
-                                               ::force ::filtering ::flatten ::includeEmptyDirs
-                                               ::failonerror ::quiet ::verbose ::encoding
-                                               ::outputencoding ::enablemultiplemappings
-                                               ::g])
-                              ::value ::attr-value))
-                  ::nesteds (s/* ::nested))
-          :ret map?)
-  )
-
+  (let [[opts rest-args]
+        (loop [opts {} xs args]
+          (if (and (keyword? (first xs)) (not (node? (second xs))))
+            (recur (assoc opts (first xs) (second xs)) (drop 2 xs))
+            [opts xs]))]
+    (apply execute! (vec rest-args) (mapcat identity opts))))
