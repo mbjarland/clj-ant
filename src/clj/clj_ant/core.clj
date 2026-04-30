@@ -792,7 +792,23 @@
                     (doseq [t targets-to-run] (.add v (str t)))
                     (.executeTargets project v))
                   nil
-                  (catch Throwable t t))]
+                  (catch Throwable t
+                    ;; Surface enough context to figure out which
+                    ;; element blew up. Ant's BuildException knows
+                    ;; the Location and message but not the Clojure
+                    ;; tree; we hold the input. Wrap so the user
+                    ;; sees both, while keeping the original
+                    ;; throwable as :cause for full stack access.
+                    (let [root (loop [e t]
+                                 (if-some [c (.getCause e)] (recur c) e))]
+                      (ex-info (str "Ant build failed: "
+                                    (or (.getMessage t) (.getMessage root)))
+                               {:clj-ant/error  true
+                                :clj-ant/elements elements
+                                :clj-ant/targets  (vec targets-to-run)
+                                :ant/exception-class (.getName (class root))
+                                :ant/message      (.getMessage root)}
+                               t))))]
       (try
         (.fireBuildFinished project error)
         (cond-> {:project project
@@ -918,6 +934,172 @@
   [^Plan plan & {:as opts}]
   (apply execute! (:elements plan)
          (mapcat identity (merge (:opts plan) opts))))
+
+;; ---------------------------------------------------------------------------
+;; Async + cancellation
+;;
+;; `execute!` is synchronous -- handy for scripts, awkward for long
+;; builds where the caller wants to do something else while it runs
+;; or cancel mid-flight. `execute-async!` puts the build on a
+;; dedicated thread, returns a Run handle that's IDeref-able for the
+;; result and `cancel!`-able for abort. Cancel uses Thread.interrupt;
+;; Ant's IO-bound tasks (scp/get/sshexec) honour it cleanly,
+;; CPU-bound ones don't always -- same caveat as any JVM cancel.
+
+;; A Run is a thin wrapper over a clojure.core/promise. The promise
+;; holds the result map; we delegate IDeref / IBlockingDeref /
+;; IPending straight to it so callers use it like any other
+;; promise/future-like value (`@run`, `(deref run ms tv)`,
+;; `(realized? run)`). The other two fields are bookkeeping for
+;; `cancel!` -- a promise carrying the build thread (so we can
+;; .interrupt it) and an atom flagging caller intent.
+
+(deftype ^:no-doc Run [^clojure.lang.IDeref result
+                        ^clojure.lang.IDeref thread
+                        ^clojure.lang.Atom   cancelled?]
+  clojure.lang.IDeref
+  (deref [_] @result)
+  clojure.lang.IBlockingDeref
+  (deref [_ ms timeout-val] (deref result ms timeout-val))
+  clojure.lang.IPending
+  (isRealized [_] (realized? result)))
+
+(defn execute-async!
+  "Run `nodes` on a daemon background thread. Returns a Run handle
+  that behaves like a `promise`/`future`:
+
+      @run                   ; blocks for the result map
+      (deref run ms timeout) ; bounded wait, returns timeout-val
+      (realized? run)        ; true once finished/cancelled/failed
+      (cancel! run)          ; interrupts the build thread
+
+  All the options accepted by `execute!` work here too -- including
+  `:on-event` for streaming events while the build runs.
+
+  Implementation note: just `clojure.core/promise` + a daemon
+  `Thread`. No `Executors`, no `Future.cancel` to interact with.
+  The thread is daemon so a stray async run does not pin the JVM
+  open after `main` returns -- a real bug in scripts, hard to
+  spot otherwise."
+  [nodes & {:as opts}]
+  (let [result     (promise)
+        thread-p   (promise)
+        cancelled? (atom false)
+        body       (fn []
+                     (deliver thread-p (Thread/currentThread))
+                     (deliver result
+                       (try
+                         ;; Annotate caller intent on the result.
+                         ;; Ant tasks vary in honouring interrupts:
+                         ;; <get>/<scp>/<sshexec> abort cleanly,
+                         ;; <sleep> swallows the interrupt and the
+                         ;; build finishes normally. Either way the
+                         ;; user asked for cancel, so :cancelled?
+                         ;; should be on the result map.
+                         (let [r (apply execute! nodes
+                                        (mapcat identity opts))]
+                           (cond-> r @cancelled? (assoc :cancelled? true)))
+                         (catch InterruptedException _
+                           (reset! cancelled? true)
+                           {:cancelled? true})
+                         (catch Throwable t
+                           (if @cancelled?
+                             {:cancelled? true :error t}
+                             {:error t})))))]
+    (doto (Thread. ^Runnable body "clj-ant-async")
+      (.setDaemon true)
+      (.start))
+    (->Run result thread-p cancelled?)))
+
+(defn cancel!
+  "Cancel a Run started via `execute-async!` -- sets the cancelled
+  flag and `Thread.interrupt`s the build thread. IO tasks (scp,
+  get, sshexec) abort cleanly; CPU-bound tasks (large copies,
+  javac) often don't observe the interrupt and run to completion.
+  Either way, `:cancelled? true` is on the eventual result map.
+  Returns the Run."
+  [^Run run]
+  (reset! (.-cancelled? run) true)
+  (when-some [^Thread t (deref (.-thread run) 0 nil)]
+    (.interrupt t))
+  run)
+
+(defn cancelled?
+  "True once `cancel!` has been called on this Run (regardless of
+  whether the build itself observed the interrupt)."
+  [^Run run]
+  @(.-cancelled? run))
+
+;; ---------------------------------------------------------------------------
+;; Watch mode -- re-run a plan when files under `paths` change.
+;; Polling-based: portable across Linux / macOS / Windows without
+;; platform-specific quirks (macOS WatchService is broken for
+;; recursive watches; inotify on Linux has limits). 500 ms poll is
+;; cheap and lets us reuse the same as-child / file-walk machinery
+;; the rest of the lib uses.
+
+(defn- ^:no-doc dir-snapshot
+  "Map of file path -> mtime for every regular file under `paths`."
+  [paths]
+  (into {}
+        (for [^String p paths
+              ^File   f (file-seq (io/file p))
+              :when (.isFile f)]
+          [(.getAbsolutePath f) (.lastModified f)])))
+
+(defn watch
+  "Run `nodes` once, then re-run whenever any file under `:paths`
+  changes (added / modified / removed). Returns a 0-arg `stop!` fn.
+
+      (def stop (a/watch [(t/javac :srcdir \"src\" :destdir \"out\")]
+                          :paths   [\"src\"]
+                          :poll-ms 300))
+      ;; ...edit, save, see rebuild on stdout...
+      (stop)
+
+  Options:
+    :paths         coll of dir paths to watch (required)
+    :poll-ms       polling interval, default 500
+    :on-rebuild    fn called with the (cleaned) result map after
+                   each rebuild. Defaults to printing :error if any.
+    :on-event      forwarded to execute! for live event streaming.
+    :session       reuse a session across rebuilds (recommended --
+                   amortises Project init across every rerun).
+
+  In-flight builds aren't cancelled when a new change arrives;
+  the watcher waits for the current build to finish before starting
+  the next. (Cancellation mid-build is supported via `execute-async!`
+  + `cancel!`; combining the two is left to the caller for now.)"
+  [nodes & {:keys [paths poll-ms on-rebuild]
+            :or   {poll-ms    500
+                   on-rebuild #(when-some [e (:error %)]
+                                 (println "watch: error:"
+                                          (or (when (instance? Throwable e)
+                                                (.getMessage ^Throwable e))
+                                              e)))}
+            :as   opts}]
+  (when-not (seq paths)
+    (throw (ex-info "watch: :paths is required" {})))
+  (let [stopped? (atom false)
+        run-opts (mapcat identity (dissoc opts :paths :poll-ms :on-rebuild))
+        run!     (fn []
+                   (try
+                     (on-rebuild (apply execute! nodes run-opts))
+                     (catch Throwable t
+                       (on-rebuild {:error t}))))
+        loop!    (future
+                   (run!)
+                   (loop [prev (dir-snapshot paths)]
+                     (when-not @stopped?
+                       (Thread/sleep poll-ms)
+                       (let [cur (dir-snapshot paths)]
+                         (when (not= prev cur)
+                           (run!))
+                         (recur cur)))))]
+    (fn stop! []
+      (reset! stopped? true)
+      (future-cancel loop!)
+      :stopped)))
 
 ;; ---------------------------------------------------------------------------
 ;; Top-level convenience
