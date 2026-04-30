@@ -303,6 +303,37 @@
   [tag]
   (.containsKey ClojureTask/REGISTRY (clojure.core/name tag)))
 
+(defn task
+  "Inline a Clojure thunk as an Ant task. Returns an element you can
+  drop into any element tree. The fn runs in target order with full
+  event-stream participation -- you'll see :task-started /
+  :task-finished for the chosen tag.
+
+      (a/ant
+        (t/echo :message \"before\")
+        (a/task :compile #(b/javac {:src-dirs [\"src\"]
+                                     :class-dir \"out\" :basis @basis}))
+        (a/task :jar     #(b/jar {:class-dir \"out\"
+                                   :jar-file \"target/app.jar\"}))
+        (t/scp :file \"target/app.jar\" :todir \"deploy@host:/srv/\"))
+
+  Use this when you need arbitrary Clojure code between Ant tasks
+  -- tools.build operations, slack notifications, query an API,
+  mutate an atom -- and the args are richer than Ant's
+  string-attribute model can carry.
+
+  When you want a *reusable* named task across many builds, use
+  `deftask` instead -- this fn is for one-shot inline use, with a
+  fresh registration per call (the tag is synthesised from the fn's
+  identity hash if you don't supply one)."
+  ([f] (task nil f))
+  ([tag f]
+   (let [tag (or tag
+                 (keyword "clj-ant.run"
+                          (str (System/identityHashCode f))))]
+     (deftask tag (fn [_] (f)))
+     (element tag))))
+
 ;; ---------------------------------------------------------------------------
 ;; Data → UnknownElement
 ;;

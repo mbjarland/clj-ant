@@ -217,6 +217,19 @@
       (is (= ["x.txt"] (mapv #(.getName %)
                              (.listFiles (File. base "out"))))))))
 
+(deftest task-inline-thunk
+  (testing "(a/task tag f) runs f and shows up as a task event"
+    (let [hits  (atom 0)
+          phases (atom [])]
+      (a/ant :level :warn
+        :on-event #(when (= :task-started (:phase %))
+                     (swap! phases conj (:task %)))
+        (a/element :echo :message "before")
+        (a/task :compile #(swap! hits inc))
+        (a/element :echo :message "after"))
+      (is (= 1 @hits))
+      (is (= ["echo" "compile" "echo"] @phases)))))
+
 (deftest plan-prints-tree
   (testing "plan renders a build tree without executing it"
     (let [n (a/element :copy :todir "out"
