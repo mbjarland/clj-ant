@@ -67,21 +67,34 @@ command — all with `▶`/`✓`/log lines streaming live to the
 console as Ant fires the events.
 
 `babashka.fs` and `babashka.process` cover the small filesystem
-ops they do well. The pod is the right choice for **large file
-operations that need a real pipeline**: filter-chain rewriting
-across thousands of files, `restrict` + selector pruning,
-`replaceregexp` over a tree, archive surgery (`<unzip>` /
-`<zipfileset>` reading entries without extracting), mapper-driven
-mass renames, bulk SSH push of a fileset, parallel chains where
-several independent fileset operations run concurrently.
+ops they do well. The pod is the right choice for **file pipelines
+that need work after the scan**: filter-chain rewriting across
+thousands of files, `restrict` + selector pruning, `replaceregexp`
+over a tree, archive surgery (`<unzip>` / `<zipfileset>` reading
+entries without extracting), mapper-driven mass renames, bulk SSH
+push of a fileset, parallel chains where several independent
+fileset operations run concurrently.
 
-There's also a perf angle worth being honest about: at large
-scale, Ant's file scanner is meaningfully faster than `babashka.fs`.
-It walks directory trees via JDK NIO with primitive include /
-exclude pattern compilation, caches scan results across a session,
-and dispatches per-file work through a real Java task graph rather
-than serial Clojure interop calls. For a tree with tens or hundreds
-of thousands of files, the gap shows.
+A note on raw scan speed: `babashka.fs/glob` is faster than the
+pod for **just listing files** at every realistic scale.
+Bb's glob is JDK NIO direct with no layers; the pod adds bencode
+round-trip on top of Ant's pre-NIO `DirectoryScanner`. Sample
+local benchmarks (matching `**/*.something`):
+
+| tree            | files matched | `babashka.fs/glob` | clj-ant pod |
+|-----------------|---------------|--------------------|-------------|
+| ~7k jars        | ~1k           | 88 ms              | 117 ms      |
+| 16k texts       | ~2k           | 111 ms             | 337 ms      |
+| 84k             | (varies)      | ~195 ms            | ~660 ms     |
+| 140k all match  | 84k           | 1.7 s              | 2.1 s       |
+| 1.1M no match   | 0             | 23.7 s             | 22.9 s      |
+
+So if all you need is *a list of paths*, stay in bb. Reach for the
+pod when the pipeline does something with the matched files —
+which is exactly when Ant's per-file machinery (filterchain,
+mappers, replaceregexp, scp …) earns its keep, because it
+streams that work through the scan rather than allocating a list
+first and looping in bb.
 
 Operations exposed today:
 
@@ -132,27 +145,30 @@ out `{:tag … :attrs …}` by hand.
 
 ## When to skip the pod
 
-For one-off `cp` / `mv` / `glob` work, plain `babashka.fs` is
-lighter — no pod startup, no JVM in the loop. Use it.
+For one-off `cp` / `mv` / `glob` / scan work, plain `babashka.fs`
+is lighter and faster — no pod startup, no JVM bencode crossing,
+no extra layer over JDK NIO. Use it.
 
 Reach for the pod when one or more of these is true:
 
 - **Pipelined file operations.** Filter-chain templating during
   copy, `replaceregexp` across a tree, mapper-driven mass renames,
   selector chains (`restrict` + `modified` + `size` + `contains`).
-  These compose in Ant; in bb they'd be many bespoke loops.
-- **Large filesets.** Ant's NIO-backed scanner with compiled
-  include/exclude patterns outpaces `(fs/glob ...)` once trees
-  reach the tens of thousands of files. Sessions amortise the
-  scan cost across a sequence of operations.
+  These compose in Ant; in bb they'd be many bespoke loops with a
+  scan, then a doseq, then per-file IO. Ant streams the work
+  through the scan, so the marginal cost over a plain `glob` is
+  paid once.
 - **Archive surgery without extracting.** `<zipfileset>` /
   `<tarfileset>` expose archive entries as resources you can
-  iterate, slurp, or selectively `<unzip>`.
+  iterate, slurp, or selectively `<unzip>`. bb has no equivalent.
 - **SSH.** Vanilla bb has no built-in SSH. clj-ant ships
   `<scp>` and `<sshexec>` with the Terrapin-fixed JSch fork.
 - **Parallel pipelines.** `<parallel>` runs independent task
   chains concurrently; useful when several heavyweight scans
   or transforms can overlap.
+
+The honest summary: clj-ant doesn't beat `babashka.fs` at
+finding files. It earns its keep on what happens after.
 
 
 ## Future: a native pod
