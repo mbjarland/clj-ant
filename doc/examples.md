@@ -341,6 +341,51 @@ and `:text` if the element had a text body.
 ```
 
 
+### Tight loops: sessions and prepared plans
+
+For REPL/script workloads making many small Ant calls in a row
+(deploys, watchers, generators), the per-call init dominates. Two
+hooks reduce it dramatically:
+
+```clojure
+;; Reuse one Project across many execute! calls. Properties carry
+;; over, registered tasks stay registered, logger setup happens once.
+(a/with-session [s {:level :info}]
+  (a/ant (t/property :name "v" :value "1.2.3"))
+  (a/ant (t/echo :message "v=${v}"))
+  ...)
+
+;; If the SAME plan runs in a tight loop, prepare it once. The
+;; coercion/validation walks happen once; runs just bind a Project
+;; and execute.
+(a/with-session [s {}]
+  (let [p (a/prepare nodes :validate? true)]
+    (dotimes [_ 100] (a/run p :session s))))
+```
+
+A 50-call benchmark on a 2-task plan:
+
+```
+fresh        575 ms
+session       23 ms     (~25× faster)
+prepared+ses  14 ms     (~40× faster)
+```
+
+The bigger win is session reuse. `prepare` adds another modest
+chunk by skipping per-call coercion / validation walks.
+
+The babashka pod has the same pattern via `open-session` /
+`execute-in` / `close-session`:
+
+```clojure
+(let [sid (a/open-session :level :warn)]
+  (try
+    (dotimes [i 100]
+      (a/execute-in sid [(t/echo :message (str "iter " i))]))
+    (finally (a/close-session sid))))
+```
+
+
 ### Babashka: scriptable Ant in <100 ms steady-state
 
 Once the pod is loaded, the same `t/copy`, `t/get`, `t/unzip`, …

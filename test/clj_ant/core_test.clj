@@ -217,6 +217,31 @@
       (is (= ["x.txt"] (mapv #(.getName %)
                              (.listFiles (File. base "out"))))))))
 
+(deftest session-and-prepare
+  (testing "with-session reuses one Project across calls"
+    (a/with-session [s {:level :warn}]
+      (a/ant (a/element :property :name "v" :value "session-val"))
+      (let [seen (atom nil)]
+        (a/ant :on-event #(when (and (= :message (:phase %))
+                                      (re-find #"v=" (or (:message %) "")))
+                            (reset! seen (:message %)))
+               (a/element :echo :message "v=${v}"))
+        (is (= "v=session-val" @seen)))))
+
+  (testing "(run (prepare ...)) round-trips and reuses prepared work"
+    (a/with-session [s {:level :warn}]
+      (let [n (a/element :echo :message "prepared-call")
+            p (a/prepare [n])
+            evts (atom [])]
+        (a/run p :session s
+                 :on-event #(when (= :task-started (:phase %))
+                              (swap! evts conj (:task %))))
+        (a/run p :session s
+                 :on-event #(when (= :task-started (:phase %))
+                              (swap! evts conj (:task %))))
+        (is (= ["echo" "echo"] @evts)
+            "prepared plan re-runs cleanly under one session")))))
+
 (deftest task-collision-rejection
   (let [v (requiring-resolve 'clj-ant.core/task)]
     (testing "(task :built-in fn) is rejected outright"
