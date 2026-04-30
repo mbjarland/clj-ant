@@ -7,7 +7,8 @@
       clj -T:build clean
       clj -T:build jar
       clj -T:build install"
-  (:require [clojure.tools.build.api :as b]))
+  (:require [clojure.tools.build.api :as b]
+            [deps-deploy.deps-deploy :as dd]))
 
 (def lib 'io.github.mbjarland/clj-ant)
 (def version (format "1.0.%s" (b/git-count-revs nil)))
@@ -25,7 +26,10 @@
   (b/javac {:src-dirs   ["src/java"]
             :class-dir  class-dir
             :basis      @basis
-            :javac-opts ["--release" "11"]})
+            ;; --release 8 keeps the jar usable on JDK 8+ (Ant
+            ;; itself supports JDK 8). Our bridge class uses
+            ;; nothing newer, so there's no cost to staying low.
+            :javac-opts ["--release" "8"]})
   (println "> compiled src/java -> target/classes"))
 
 (defn jar [_]
@@ -50,3 +54,15 @@
               :jar-file  jar-file
               :class-dir class-dir})
   (println "> installed" lib version "to local maven repo"))
+
+(defn deploy
+  "Deploy the jar to Clojars. Requires CLOJARS_USERNAME and
+  CLOJARS_PASSWORD env vars to be set to a deploy token (NOT your
+  Clojars web password)."
+  [_]
+  (jar nil)
+  (dd/deploy {:installer       :remote
+              :sign-releases?  false
+              :artifact        jar-file
+              :pom-file        (b/pom-path {:lib lib :class-dir class-dir})})
+  (println "> deployed" lib version "to clojars"))
