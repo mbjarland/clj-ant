@@ -640,25 +640,53 @@ contributor from re-discovering them.
 ## Public-API cheat sheet
 
 ```
+;; data layer
 Element            user-built data form. Has :tag :attrs :children :text
 JavaChild          wraps a Java DataType for refid injection
 element / element? construct / predicate
 as-child           single coercion point
 ->unknown-element  data → Ant AST
+
+;; execution
 execute!           the runner (low level)
 ant                user-facing wrapper around execute!
+execute-async!     run on a daemon Thread; returns a Run handle
+cancel! / cancelled?  Thread.interrupt + caller-intent flag
 session / with-session  long-lived Project for tight loops
 prepare / run      coerce+validate once, replay cheaply
+watch              re-run nodes on filesystem change
+
+;; structuring
 target / deftarget named targets and dependency resolution
 deftask            global registration of a Clojure fn as a task
 task               inline Clojure thunk as a one-shot task element
+
+;; introspection
 realize            Element → live Java object
 files / resources  Element → seq of File / Resource
 plan               pretty-print an Element tree
 describe           introspect a tag (tag → attrs/nested map)
-from-xml           build.xml → Element tree
 elements           lazy seq of every node in a tree
 transform          rewrite a tree, post-order
+
+;; XML round-trip
+from-xml           build.xml → Element tree
+
+;; validation (clj-ant.spec)
 schema-for         malli schema for a tag
 validate-tree      collect errors from a tree
 ```
+
+
+## Reference
+
+For task / type / nested-element semantics, the canonical source
+is **Apache Ant's manual**:
+
+- [Ant Tasks Reference](https://ant.apache.org/manual/tasks.html)
+- [Ant Types Reference](https://ant.apache.org/manual/types.html)
+- [Ant Concepts and Type Reference](https://ant.apache.org/manual/index.html)
+
+Every wrapper in `clj-ant.tasks` carries a docstring with a direct
+link back to its task or type page; `(doc t/copy)` at the REPL
+gets you the right page in two characters.

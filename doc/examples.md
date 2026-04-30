@@ -386,6 +386,112 @@ The babashka pod has the same pattern via `open-session` /
 ```
 
 
+### Inner-loop watch mode
+
+Edit / save / see-result, like `lein-cljsbuild` but for any
+clj-ant pipeline. Polls the named paths, re-runs on change:
+
+```clojure
+(def s    (a/session {:level :warn}))
+(def stop (a/watch
+            [(t/javac :srcdir "src" :destdir "out"
+                      :includeantruntime "false")
+             (t/copy  :todir "deploy/classes"
+                      (t/fileset :dir "out"))]
+            :paths      ["src"]
+            :poll-ms    300
+            :session    s
+            :on-rebuild (fn [{:keys [error]}]
+                          (if error
+                            (println "✗" (ex-message error))
+                            (println "✓ rebuilt")))))
+;; ...edit, save, watch the loop fire...
+(stop)
+```
+
+Polling rather than `WatchService`-based on purpose: portable
+across Linux / macOS / Windows without the platform-specific
+quirks (macOS `WatchService` is broken for recursive watches;
+Linux inotify has descriptor limits). 300 ms is cheap and feels
+instant in practice. Pair with `:session` so re-runs amortise
+the project init cost.
+
+
+### Async builds and cancellation
+
+For long-running builds (a big `<scp>`, a `<get>` of a slow
+mirror, an `<sshexec>` waiting on a remote restart), run on a
+background thread and cancel on user input:
+
+```clojure
+(let [run (a/execute-async!
+            [(t/get :src  "https://huge.example.com/release.tar.gz"
+                    :dest "/tmp/release.tar.gz")
+             (t/untar :src  "/tmp/release.tar.gz"
+                      :dest "/opt/release"
+                      :compression "gzip")]
+            :on-event (fn [{:keys [phase task]}]
+                        (when (= :task-started phase)
+                          (println "▶" task))))]
+
+  ;; Block on a 30-second deadline, otherwise cancel:
+  (let [r (deref run 30000 :timeout)]
+    (when (= r :timeout)
+      (a/cancel! run)
+      (println "build exceeded 30s, cancelling")
+      ;; cancel! returns immediately; deref again with a smaller
+      ;; deadline to actually wait for the cancel to land:
+      (deref run 5000 :still-running))))
+```
+
+The Run object behaves like any other promise/future:
+
+```clojure
+@run                    ; blocks indefinitely
+(deref run 5000 :tv)    ; bounded wait
+(realized? run)         ; true once finished/failed/cancelled
+(a/cancel! run)         ; interrupts the build thread
+(a/cancelled? run)      ; reflects user intent regardless of build state
+```
+
+Note: Ant tasks vary in how they observe `Thread.interrupt`:
+
+- IO-bound (`<get>`, `<scp>`, `<sshexec>`) — abort cleanly
+- CPU-bound or self-pacing (`<javac>`, big `<copy>`, `<sleep>`) —
+  often run to completion regardless
+
+`:cancelled? true` lands on the result map either way, so callers
+can test for caller intent independently of whether Ant honoured
+the interrupt.
+
+
+### Errors as data
+
+When Ant raises a `BuildException`, the error returned in the
+result map is `ex-info` carrying the element tree you submitted
+plus the unwrapped Ant message:
+
+```clojure
+(let [r (a/ant
+          (t/copy :tdoir "/tmp/out"          ; typo: should be :todir
+                  (t/fileset :dir "src")))]
+  (when-let [err (:error r)]
+    (let [{:keys [clj-ant/elements
+                  clj-ant/targets
+                  ant/exception-class
+                  ant/message]} (ex-data err)]
+      (println "❌" message)
+      (println "   in" (count elements) "top-level element(s)")
+      (println "   targets:" targets)
+      (println "   underlying:" exception-class)
+      ;; Original throwable, if you need the full Ant stack:
+      (println "   stack:" (.getMessage (.getCause err))))))
+```
+
+Useful for tooling — log scrapers, dashboards, retry logic — that
+wants to react to specific build failures without parsing strings.
+
+
 ### Babashka: scriptable Ant in <100 ms steady-state
 
 Once the pod is loaded, the same `t/copy`, `t/get`, `t/unzip`, …
