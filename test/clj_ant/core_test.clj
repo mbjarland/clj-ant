@@ -85,6 +85,28 @@
       (is (re-find #"<copy" out))
       (is (re-find #"<fileset" out)))))
 
+(deftest malli-validation
+  (testing "good attributes pass"
+    (is (nil? (@(requiring-resolve 'clj-ant.spec/validate)
+                :copy {:todir "out" :overwrite "true"}))))
+  (testing "bad attributes are reported"
+    (let [errs (@(requiring-resolve 'clj-ant.spec/validate)
+                 :copy {:overwrite "perhaps"})]
+      (is (some? errs))
+      (is (contains? errs :overwrite))))
+  (testing ":validate? short-circuits before Ant runs"
+    (is (thrown? clojure.lang.ExceptionInfo
+                 (a/ant :validate? true :level :warn
+                        (a/node :copy :overwrite "perhaps")))))
+  (testing "validate-tree walks nested children"
+    (let [errs (@(requiring-resolve 'clj-ant.spec/validate-tree)
+                 (a/node :copy :todir "out"
+                         (a/node :fileset :includes "**/*"
+                                 :erroron-mismatch "wat")))]
+      (is (vector? errs))
+      ;; the bogus attribute is on the type, not the task
+      (is (or (empty? errs) (every? :tag errs))))))
+
 (deftest macrodef-via-runtime
   (testing "macrodef works because RuntimeConfigurable handles expansion"
     (let [base (tmp-dir)

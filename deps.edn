@@ -1,7 +1,8 @@
 {:paths   ["src/clj"]
 
  :deps    {org.clojure/clojure {:mvn/version "1.11.4"}
-           org.apache.ant/ant  {:mvn/version "1.10.15"}}
+           org.apache.ant/ant  {:mvn/version "1.10.15"}
+           metosin/malli       {:mvn/version "0.16.4"}}
 
  :aliases {;; Stub generator. Walks Ant's defaults.properties and the
            ;; bundled Ant manual to produce src/clj/clj_ant/tasks.clj.
