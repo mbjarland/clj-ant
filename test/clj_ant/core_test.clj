@@ -188,6 +188,35 @@
           (a/element :echo :message "after"))
         (is (= ["echo" "test-tap" "echo"] @phases))))))
 
+(deftest from-xml-round-trip
+  (testing "parsing a build.xml string returns a clj-ant element tree"
+    (let [tree (a/from-xml "<project name=\"x\" default=\"go\" basedir=\".\"><property name=\"v\" value=\"7\"/><target name=\"go\"><echo message=\"v is ${v}\"/></target></project>")]
+      (is (a/element? tree))
+      (is (= :project (:tag tree)))
+      (is (= "x" (-> tree :attrs :name)))
+      (is (= ["property" "target"] (mapv (comp clojure.core/name :tag)
+                                         (:children tree))))))
+
+  (testing "executing a parsed build runs top-level tasks before targets"
+    (let [base (tmp-dir)
+          src  (File. base "src")
+          xml (str "<project name=\"t\" default=\"all\" basedir=\""
+                   (.getAbsolutePath base)
+                   "\">"
+                   "<property name=\"dst\" value=\"${basedir}/out\"/>"
+                   "<target name=\"all\">"
+                   "<mkdir dir=\"${dst}\"/>"
+                   "<copy todir=\"${dst}\">"
+                   "<fileset dir=\"" (.getAbsolutePath src)
+                   "\" includes=\"**/*.txt\"/>"
+                   "</copy>"
+                   "</target></project>")]
+      (.mkdirs src)
+      (spit-file src "x.txt" "x")
+      (a/ant :level :warn (a/from-xml xml))
+      (is (= ["x.txt"] (mapv #(.getName %)
+                             (.listFiles (File. base "out"))))))))
+
 (deftest plan-prints-tree
   (testing "plan renders a build tree without executing it"
     (let [n (a/element :copy :todir "out"
