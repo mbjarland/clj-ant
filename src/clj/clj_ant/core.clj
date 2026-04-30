@@ -511,16 +511,28 @@
                                               v))
     :else           (str v)))
 
-;; Per-project monotonic counter for synthetic reference ids. Reset
-;; per execution (each `execute!` makes its own Project). Using a counter
-;; instead of identityHashCode avoids collisions when the user
-;; re-injects the same object across many children.
+;; Per-project monotonic counter for synthetic reference ids. Counter
+;; lives on the project so it survives across calls when the project
+;; is reused via with-session; the *cleanup* of the actual refid
+;; entries happens per execute! (see *execute-ctx* below).
+(def ^:private ^:dynamic *execute-ctx*
+  "Per-execute! mutable context. When bound, calls that allocate
+  per-build state (synthetic refids, named targets we add via
+  addOrReplaceTarget) record their additions here so the `finally`
+  block in execute! can prune them. Without this, reused sessions
+  would accumulate refids and obsolete targets across calls."
+  nil)
+
 (defn- next-ref-id! [^Project project]
   (let [k "_clj-ant.ref-counter"
-        n (or (.getReference project k) (atom 0))]
-    (when-not (.getReference project k)
-      (.addReference project k n))
-    (str "_clj-ant.ref-" (swap! n inc))))
+        n (or (.getReference project k)
+              (let [a (atom 0)]
+                (.addReference project k a)
+                a))
+        ref-id (str "_clj-ant.ref-" (swap! n inc))]
+    (when-some [ctx *execute-ctx*]
+      (swap! (:refs-added ctx) conj ref-id))
+    ref-id))
 
 (defn- java-child->ue
   ^UnknownElement [^JavaChild jc ^Project project ^Target target]
@@ -589,7 +601,9 @@
 
   Plus any options accepted by `make-project`."
   [elements & {:as opts}]
-  (let [elements (cond
+  (binding [*execute-ctx* {:refs-added    (atom #{})
+                           :targets-added (atom #{})}]
+   (let [elements (cond
                    (element? elements)    [elements]
                    (sequential? elements) (vec elements)
                    (map? elements)        [elements]
@@ -631,8 +645,14 @@
                                (str "Validation failed: " (count errs)
                                     " issue(s)")
                                {:errors (vec errs)})))))
-        project ^Project (or (when-some [s (:session opts)] (:project s))
-                             (:project opts) *project*
+        ;; Project resolution precedence (most explicit wins):
+        ;;   :project opt  >  :session opt  >  *project* binding  >
+        ;;   make-project opts (fresh)
+        ;; Matches the docstring promise that an explicit :project on
+        ;; a single call opts out of an enclosing session.
+        project ^Project (or (:project opts)
+                             (when-some [s (:session opts)] (:project s))
+                             *project*
                              (make-project opts))
         ;; Sync deftask registrations only if the global registry has
         ;; changed since this project last saw it. With many calls to
@@ -743,6 +763,8 @@
                              (when-some [v (:if attrs)]     (.setIf t (str v)))
                              (when-some [v (:unless attrs)] (.setUnless t (str v)))
                              (.addOrReplaceTarget project t)
+                             (when-some [ctx *execute-ctx*]
+                               (swap! (:targets-added ctx) conj (.getName t)))
                              (doseq [c children]
                                (.addTask t (->unknown-element c project t)))
                              t))
@@ -779,24 +801,28 @@
                  :tasks   ues}
           events       (assoc :events @events)
           (some? error) (assoc :error error))
-        ;; Detach our listener and any inline-task registrations
-        ;; even on the failure path. Without this, with-project /
-        ;; explicit :project reuse would accumulate listeners
-        ;; across calls and double-deliver events on later runs;
-        ;; inline tasks would pile up forever in the static
-        ;; ClojureTask/REGISTRY.
+        ;; Detach everything we attached to the project during this
+        ;; call -- listener, inline-task definitions, synthetic refids
+        ;; we minted for JavaChild, and named targets we addOrReplace'd.
+        ;; Without this, with-session reuse would grow the project's
+        ;; references and target tables monotonically across calls.
         (finally
           (when rec (.removeBuildListener project rec))
           (doseq [{:keys [tag]} inline-tasks]
             (let [n (clojure.core/name tag)]
               (.remove ClojureTask/REGISTRY n)
-              ;; Restore the prior class binding on the project, or
-              ;; remove ours entirely if there wasn't one. This keeps
-              ;; reused projects in the same shape they were before
-              ;; this execute! call.
               (if-some [prior (get prior-defs n)]
                 (.addTaskDefinition project n prior)
-                (.remove (.getTaskDefinitions project) n)))))))))
+                (.remove (.getTaskDefinitions project) n))))
+          (doseq [ref-id @(:refs-added *execute-ctx*)]
+            (.. project getReferences (remove ref-id)))
+          (doseq [tn @(:targets-added *execute-ctx*)]
+            ;; Skip the implicit unnamed target -- it's just a
+            ;; convenient anchor for top-level tasks; keeping it on
+            ;; the project across calls is harmless and avoids
+            ;; constant rebuilding.
+            (when (not= "" tn)
+              (.. project getTargets (remove tn))))))))))
 
 ;; ---------------------------------------------------------------------------
 ;; Targets
