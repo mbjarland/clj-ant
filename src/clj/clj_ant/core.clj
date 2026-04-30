@@ -24,7 +24,7 @@
   inside Ant's runtime configuration machinery, not its parser."
   (:require [clojure.java.io :as io]
             [clojure.core.protocols :as p])
-  (:import [org.apache.tools.ant Project Target Location
+  (:import [org.apache.tools.ant Project Target Location IntrospectionHelper
                                  UnknownElement RuntimeConfigurable
                                  DefaultLogger BuildListener BuildEvent]
            [org.apache.tools.ant.types Resource ResourceCollection]
@@ -336,6 +336,46 @@
 
 ;; ---------------------------------------------------------------------------
 ;; Plan: print a tree of what would execute, without executing.
+
+;; ---------------------------------------------------------------------------
+;; Runtime introspection. Useful for tooling, REPL exploration, and for
+;; users to discover what attributes a task accepts without hopping out
+;; to the manual.
+
+(defn- entries-of [^java.util.Map m]
+  (into (sorted-map)
+        (map (fn [^java.util.Map$Entry e] [(.getKey e) (.getValue e)]))
+        m))
+
+(defn describe
+  "Return a data description of a task or type by tag. Useful for
+  building UIs, validators, or just satisfying curiosity at the REPL.
+
+      (describe :copy)
+      => {:tag :copy
+          :class \"org.apache.tools.ant.taskdefs.Copy\"
+          :kind  :task
+          :attrs {:todir File, :tofile File, ...}
+          :nested {:fileset FileSet, ...}
+          :text? true|false}"
+  [tag]
+  (let [project (Project.) _ (.init project)
+        n       (name tag)
+        kind    (cond
+                  (.containsKey (.getTaskDefinitions project) n)     :task
+                  (.containsKey (.getDataTypeDefinitions project) n) :type)
+        klass   (case kind
+                  :task (.get (.getTaskDefinitions project) n)
+                  :type (.get (.getDataTypeDefinitions project) n)
+                  nil)]
+    (when klass
+      (let [helper (IntrospectionHelper/getHelper project klass)]
+        {:tag    (keyword n)
+         :class  (.getName klass)
+         :kind   kind
+         :attrs  (entries-of (.getAttributeMap helper))
+         :nested (entries-of (.getNestedElementMap helper))
+         :text?  (.supportsCharacters helper)}))))
 
 (defn plan
   "Pretty-print a node tree to *out*. Useful for sanity-checking a
