@@ -497,6 +497,25 @@ fold:
 ```
 
 
+### Note: Clojure's chunked seqs
+
+If you pass a seq produced by `map`/`filter` (etc.) as a child,
+remember that Clojure's lazy seqs are **chunked** — realising one
+element drags 31 of its neighbours along. For `<first count="5">`
+over a chunked seq of a million files, the iterator pulls 32, not
+5. Functionally fine (32 ≪ 1 000 000), but worth knowing if you've
+got expensive per-element work or want exact bounds.
+
+To get element-by-element realisation, build the seq with
+`lazy-seq`/`cons` directly instead of going through `map`:
+
+```clojure
+(letfn [(go [i] (when (< i n)
+                  (lazy-seq (cons (work i) (go (inc i))))))]
+  (a/lazy-resources (go 0) {:size n}))
+```
+
+
 ### Streaming paths from babashka
 
 ```clojure

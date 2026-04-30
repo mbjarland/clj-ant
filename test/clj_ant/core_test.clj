@@ -283,6 +283,54 @@
       (is (nil? (@(requiring-resolve 'clj-ant.spec/validate)
                   :property {:name "x" :value "1"} {:closed? true}))))))
 
+(deftest lazy-resources-iterate-on-demand
+  (testing "passing a lazy seq of File to <first :count N> realises only N"
+    ;; Create more files than we'll consume, so we can detect
+    ;; whether the lazy seq was forced past the take-bound.
+    (let [base   (tmp-dir)
+          src    (doto (File. base "src") .mkdirs)
+          dst    (File. base "dst")
+          total  100
+          fnames (mapv #(format "f%03d.txt" %) (range total))]
+      (doseq [n fnames] (spit-file src n n))
+      (let [realized   (atom 0)
+            ;; Unchunked lazy-seq: clojure's (map ...) is chunked
+            ;; (32-element chunks), which would defeat the "only N
+            ;; realised" check. Build manually so realisation is
+            ;; element-by-element.
+            mk         (fn mk [i]
+                         (when (< i total)
+                           (lazy-seq
+                             (do (swap! realized inc)
+                                 (cons (File. src (nth fnames i))
+                                       (mk (inc i)))))))
+            file-seq   (mk 0)]
+        (a/ant :level :warn
+          (a/element :copy :todir (.getAbsolutePath dst)
+            (a/element :first :count "5"
+              ;; Use lazy-resources directly so we can pass :size
+              ;; and skip the eager (count files) that the default
+              ;; auto-coercion path would do.
+              (a/lazy-resources file-seq {:size total}))))
+        (is (= 5 (count (.listFiles dst)))
+            "only the first 5 files copied")
+        (is (<= @realized 10)
+            (str "lazy seq realised at most a small handful (got "
+                 @realized "), not all " total)))))
+
+  (testing ":size hint skips the eager count when callers can supply it"
+    (let [realized? (atom false)
+          xs        (lazy-seq (do (reset! realized? true) [(File. "x")]))
+          rc        (a/lazy-resources xs {:size 7
+                                          :filesystem-only? false})]
+      ;; Build the JavaChild but don't iterate -- size should not
+      ;; force the seq when explicitly supplied.
+      (is (instance? clj_ant.core.JavaChild rc))
+      (is (= 7 (.size ^org.apache.tools.ant.types.ResourceCollection
+                       (:object rc))))
+      (is (false? @realized?)
+          ":size opt should skip (count files)"))))
+
 (deftest with-project-shares-state
   (testing "properties set in one call are visible in the next"
     (let [p (a/make-project {:level :warn})
