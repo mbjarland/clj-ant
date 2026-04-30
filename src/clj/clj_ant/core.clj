@@ -22,10 +22,13 @@
   expansion (`${foo}`), `refid`, `macrodef`, `presetdef`, `if`/`unless`
   attributes, etc. all work for free, because they are implemented
   inside Ant's runtime configuration machinery, not its parser."
-  (:require [clojure.java.io :as io])
+  (:require [clojure.java.io :as io]
+            [clojure.core.protocols :as p])
   (:import [org.apache.tools.ant Project Target Location
                                  UnknownElement RuntimeConfigurable
                                  DefaultLogger BuildListener BuildEvent]
+           [org.apache.tools.ant.types Resource ResourceCollection]
+           [org.apache.tools.ant.types.resources FileProvider]
            [java.io File PrintStream]))
 
 ;; ---------------------------------------------------------------------------
@@ -261,3 +264,95 @@
             (recur (assoc opts (first xs) (second xs)) (drop 2 xs))
             [opts xs]))]
     (apply execute! (vec rest-args) (mapcat identity opts))))
+
+;; ---------------------------------------------------------------------------
+;; Realisation: turn data nodes into live Ant objects without executing.
+;;
+;; A few Ant types (FileSet, Path, FileList, Resources, Restrict, ...) are
+;; valuable to Clojure code on their own, independent of any task. We let
+;; users materialise such a node, ask it for its resources, and feed the
+;; result through the normal Clojure seq machinery.
+
+(defn realize
+  "Materialise a node into a live Ant object (Task or DataType) without
+  executing it. Property references are expanded; `refid`s resolve;
+  nested elements are configured. Returns the underlying Ant object
+  (e.g. `org.apache.tools.ant.types.FileSet`).
+
+  Options:
+    :project   an existing Project, or nil to create one. Other keys
+               are forwarded to `make-project`."
+  ^Object [node & {:as opts}]
+  (let [project ^Project (or (:project opts) (make-project (or opts {})))
+        target  (doto (Target.) (.setName "") (.setProject project))
+        ue      (->unknown-element node project target)]
+    (.maybeConfigure ue)
+    (.getRealThing ue)))
+
+(defn- ^File resource->file [^Resource r]
+  (if (instance? FileProvider r)
+    (.getFile ^FileProvider r)
+    (File. (.getName r))))
+
+(defn resources
+  "Lazily realise a resource-collection node and return a seq of
+  `org.apache.tools.ant.types.Resource`. Works on any node whose backing
+  Ant type implements `ResourceCollection` (fileset, filelist, path,
+  files, dirset, restrict, intersect, …)."
+  [node & {:as opts}]
+  (let [obj (apply realize node (mapcat identity opts))]
+    (when-not (instance? ResourceCollection obj)
+      (throw (ex-info (str "Not a resource collection: " (:tag node))
+                      {:tag (:tag node) :class (class obj)})))
+    (iterator-seq (.iterator ^ResourceCollection obj))))
+
+(defn files
+  "Lazy seq of `java.io.File` from a resource-collection node. Resources
+  that don't resolve to a filesystem path (HTTP, zip entry, …) are
+  passed through `clojure.java.io/file` on their name."
+  [node & {:as opts}]
+  (map resource->file (apply resources node (mapcat identity opts))))
+
+;; ---------------------------------------------------------------------------
+;; Datafy: make build results pleasant to inspect at the REPL.
+
+(extend-protocol p/Datafiable
+  Node
+  (datafy [n] (into {} n))
+
+  UnknownElement
+  (datafy [ue] {:tag    (.getTag ue)
+                :line   (.. ue (getLocation) (getLineNumber))
+                :class  (some-> (.getRealThing ue) class .getName)
+                :name   (.getTaskName ue)})
+
+  Resource
+  (datafy [r] (cond-> {:name (.getName r)
+                       :exists? (.isExists r)
+                       :size (.getSize r)
+                       :directory? (.isDirectory r)}
+                (instance? FileProvider r)
+                (assoc :file (.getFile ^FileProvider r)))))
+
+;; ---------------------------------------------------------------------------
+;; Plan: print a tree of what would execute, without executing.
+
+(defn plan
+  "Pretty-print a node tree to *out*. Useful for sanity-checking a
+  build before running it. Returns the node unchanged so it can be
+  threaded into `ant` / `execute!`."
+  ([node] (plan node 0) node)
+  ([node depth]
+   (let [pad (apply str (repeat (* 2 depth) \space))]
+     (println (str pad "<" (name (:tag node))
+                   (apply str
+                          (for [[k v] (:attrs node)]
+                            (str " " (name k) "=" (pr-str (str v)))))
+                   (if (or (seq (:children node)) (:text node)) ">" "/>")))
+     (when-some [t (:text node)]
+       (println (str pad "  " t)))
+     (doseq [c (:children node)]
+       (plan c (inc depth)))
+     (when (or (seq (:children node)) (:text node))
+       (println (str pad "</" (name (:tag node)) ">"))))
+   node))
