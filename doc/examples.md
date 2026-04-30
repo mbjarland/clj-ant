@@ -225,6 +225,41 @@ Clojure side. Pair with `<sshsession>` for sustained sessions that
 multiplex multiple commands and forward ports.
 
 
+### Audit a corpus of `build.xml` files
+
+`from-xml` + `elements` + `transform` is a static-analysis kit for
+every `build.xml` in your org. Find every insecure SCP, every
+`<javac>` without debug info, every taskdef referencing a deleted
+class — without writing parsers:
+
+```clojure
+(require '[babashka.fs :as fs])
+
+;; All <scp> calls with trust="true" across every build file
+(for [^java.io.File f (fs/glob "." "**/build.xml")
+      :let [tree (a/from-xml (.toFile f))]
+      hit  (a/elements tree
+                       #(and (= :scp (:tag %))
+                             (= "true" (-> % :attrs :trust))))]
+  {:file (str f) :file-attr (:file (:attrs hit))})
+
+;; Rewrite every <copy> to add :preservelastmodified="true"
+(let [tree (a/from-xml "build.xml")
+      patched (a/transform tree
+                           (fn [e]
+                             (cond-> e
+                               (= :copy (:tag e))
+                               (assoc-in [:attrs :preservelastmodified] "true"))))]
+  ;; round-trip back: just run the rewritten tree
+  (a/ant patched))
+```
+
+`a/elements` is `(filter pred (tree-seq element? :children tree))`,
+laziness preserved. `a/transform` walks depth-first; children are
+rewritten before parents see them, and returning `nil` from the
+mapper drops the element.
+
+
 ### Read existing `build.xml` files
 
 `from-xml` parses an Ant build file into the same element tree

@@ -76,7 +76,13 @@ long tail (signing, deployment, archive surgery, SSH, XSLT).
 
 ## Medium-leverage
 
-### Element-tree querying via Specter / zippers  💭
+### Element-tree querying  ✅
+
+`(elements tree pred)` and `(transform tree f)` ship in core.clj.
+Specter / zippers turned out to be unnecessary: `tree-seq` over
+`:children` already gives a lazy depth-first walk, and a 7-line
+`transform` covers rewrite. See `doc/examples.md` "Audit a corpus
+of build.xml files".
 
 A `(query tree pred)` helper that walks element trees the way
 Specter walks data. Lets users write linters, refactor scripts,
