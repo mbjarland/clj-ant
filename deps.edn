@@ -12,7 +12,7 @@
            ;; Maintained drop-in for com.jcraft:jsch -- same package name,
            ;; has the Terrapin fix. Lets <scp>/<sshexec> work out of box.
            com.github.mwiede/jsch  {:mvn/version "0.2.25"}
-           metosin/malli           {:mvn/version "0.16.4"}}
+           metosin/malli           {:mvn/version "0.20.1"}}
 
  :aliases {;; Stub generator. Walks Ant's defaults.properties and the
            ;; bundled Ant manual to produce src/clj/clj_ant/tasks.clj.
@@ -24,11 +24,13 @@
            ;; Compile the single Java bridge class into target/classes.
            ;; Required once before tests / development.  clj -T:build javac
            :build {:deps       {io.github.clojure/tools.build
-                                {:git/tag "v0.10.5" :git/sha "2a21b7a"}}
+                                {:mvn/version "0.10.13"}
+                                slipset/deps-deploy
+                                {:mvn/version "0.2.2"}}
                    :ns-default build}
 
            ;; nREPL for editor connections
-           :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "1.3.0"}}
+           :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "1.7.0"}}
                    :main-opts  ["-m" "nrepl.cmdline"]}
 
            ;; Tests:  clj -M:test

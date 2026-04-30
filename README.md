@@ -1,5 +1,9 @@
 # clj-ant
 
+> **Pre-1.0 alpha.** Architecture is stable; surface APIs may shift
+> slightly during the alpha period based on real-world feedback. Once
+> 1.0 lands, semver applies normally.
+
 Fluent Apache Ant from Clojure. Write your build as Clojure data,
 hand it to `ant`, get full Ant power — `${...}` properties, `refid`,
 `macrodef`, fileset resolution, the works — without ever touching XML.
@@ -224,6 +228,21 @@ restart a remote service in one expression:
 ```
 
 See [doc/examples.md](doc/examples.md#ssh-and-scp-from-babashka-without-writing-your-own-ssh).
+
+
+## Getting started in this repo
+
+clj-ant has one Java file (`src/java/cljant/ClojureTask.java`)
+that bridges Ant's `Task` lifecycle to a Clojure fn registry. It
+needs to be compiled once before tests / REPL:
+
+```sh
+clj -T:build javac     # one-time, after a fresh clone
+clj -M:test            # then this works
+```
+
+Released jars on Clojars include the pre-compiled class — downstream
+consumers do **not** need to run `javac` themselves.
 
 
 ## Aliases
