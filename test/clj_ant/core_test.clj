@@ -243,6 +243,28 @@
         (is (every? #(= "false" (-> % :attrs :trust))
                     (a/elements t' #(= :scp (:tag %)))))))))
 
+(deftest with-project-shares-state
+  (testing "properties set in one call are visible in the next"
+    (let [p (a/make-project {:level :warn})
+          seen (atom nil)]
+      (a/with-project p
+        (a/ant (a/element :property :name "v" :value "1.2.3"))
+        (a/ant :on-event #(when (and (= :message (:phase %))
+                                      (re-find #"v=" (or (:message %) "")))
+                            (reset! seen (:message %)))
+               (a/element :echo :message "v=${v}")))
+      (is (= "v=1.2.3" @seen))))
+
+  (testing "explicit :project opt overrides binding for one call"
+    (let [shared  (a/make-project {:level :warn})
+          oneoff  (a/make-project {:level :warn})]
+      (a/with-project shared
+        (a/ant (a/element :property :name "x" :value "shared"))
+        (a/ant :project oneoff
+               (a/element :property :name "x" :value "oneoff")))
+      (is (= "shared" (.getProperty shared "x")))
+      (is (= "oneoff" (.getProperty oneoff "x"))))))
+
 (deftest task-inline-thunk
   (testing "(a/task tag f) runs f and shows up as a task event"
     (let [hits  (atom 0)

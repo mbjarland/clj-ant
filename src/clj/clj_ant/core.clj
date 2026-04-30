@@ -188,6 +188,27 @@
     (.setErrorPrintStream   ^PrintStream err)
     (.setEmacsMode (boolean emacs?))))
 
+(def ^{:doc "If non-nil, `execute!` reuses this Project instead of
+  building a fresh one. Bind via `with-project` for REPL-driven
+  workflows where the ~200 ms project init per call adds up."
+       :dynamic true}
+  *project* nil)
+
+(defmacro with-project
+  "Run body with `project` bound as the default Project for every
+  enclosed `execute!` / `ant` call.
+
+      (let [p (a/make-project {:level :info})]
+        (a/with-project p
+          (a/ant (t/echo :message \"first\"))
+          (a/ant (t/echo :message \"second\"))))   ; same JVM Project
+
+  Properties set in earlier calls remain visible in later ones --
+  that's Ant's normal Project semantics. Pass an explicit
+  `:project` option to override for a single call."
+  [project & body]
+  `(binding [*project* ~project] ~@body))
+
 (defn make-project
   "Build a fresh `org.apache.tools.ant.Project`, attach a logger, and
   call `init` so all built-in tasks/types are registered.
@@ -466,7 +487,13 @@
                                (str "Validation failed: " (count errs)
                                     " issue(s)")
                                {:errors (vec errs)})))))
-        project ^Project (or (:project opts) (make-project opts))
+        project ^Project (or (:project opts) *project* (make-project opts))
+        ;; A cached project (via with-project) was made before some
+        ;; deftasks may have been defined. Sync the registrations
+        ;; cheaply -- addTaskDefinition replaces, so this is safe
+        ;; and idempotent on a fresh project too.
+        _       (doseq [tn (.keySet ClojureTask/REGISTRY)]
+                  (.addTaskDefinition project tn ClojureTask))
         events  (when (:capture? opts) (atom []))
         on-event (:on-event opts)
         emit    (fn [m]
