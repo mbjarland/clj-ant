@@ -44,9 +44,16 @@
 
 ;; A handful of attributes Ant adds to every Task/ProjectComponent. Hide them
 ;; from user-facing schemas — they're not part of the surface API.
+;;
+;; NOTE: we deliberately DO include "name" -- Property/Target/Typedef/
+;; Macrodef/Attribute and many others override setName for their own
+;; use, so it's a real user attribute on those classes. The framework's
+;; Task.setName for build-listener naming is the same setter; if a
+;; concrete class doesn't override it, callers shouldn't be setting
+;; :name there anyway.
 (def ^:private framework-attrs
   #{"description" "id" "location" "owningtarget" "project"
-    "runtimeconfigurablewrapper" "taskname" "tasktype" "name"})
+    "runtimeconfigurablewrapper" "taskname" "tasktype"})
 
 (defn- entries-of [^java.util.Map m]
   (->> m

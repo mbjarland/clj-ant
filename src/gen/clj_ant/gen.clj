@@ -39,10 +39,13 @@
 ;; ---------------------------------------------------------------------------
 ;; Reflection via Ant's own IntrospectionHelper
 
-;; The setters Ant adds to every Task/ProjectComponent — uninteresting noise.
+;; Setters Ant attaches to every Task/ProjectComponent that aren't part
+;; of the user surface. We deliberately keep "name" off this list:
+;; Property/Target/Typedef/Macrodef/Attribute and many others override
+;; setName for their own attribute, so it IS a real user-facing attr.
 (def ^:private framework-attrs
   #{"description" "id" "location" "owningtarget" "project"
-    "runtimeconfigurablewrapper" "taskname" "tasktype" "name"})
+    "runtimeconfigurablewrapper" "taskname" "tasktype"})
 
 (defn- friendly-type
   "Render a parameter Class as the kind of value Ant accepts. Ant's
