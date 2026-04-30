@@ -17,30 +17,32 @@ A bb script can:
 ```clojure
 (require '[babashka.pods :as pods])
 (pods/load-pod ["clojure" "-M:pod"])
-(require '[clj-ant.pod :as a])
+(require '[clj-ant.pod   :as a]
+         '[clj-ant.tasks :as t])     ; same wrappers bb gets via the pod
 
-(a/execute [{:tag :property :attrs {:name "dst" :value "out"}}
-            {:tag :copy
-             :attrs {:todir "${dst}"}
-             :children [{:tag :fileset
-                         :attrs {:dir "src" :includes "**/*.clj"}}]}])
+(a/execute
+  [(t/property :name "dst" :value "out")
+   (t/copy :todir "${dst}"
+     (t/fileset :dir "src" :includes "**/*.clj"))])
 
-(a/files {:tag :fileset
-          :attrs {:dir "src" :includes "**/*.clj"}})
+(a/files (t/fileset :dir "src" :includes "**/*.clj"))
 ;; => ["/abs/path/a.clj" "/abs/path/b.clj" ...]
 ```
 
-Three operations are exposed today:
+Operations exposed today:
 
-| op       | input                       | output                       |
-|----------|-----------------------------|------------------------------|
-| `execute`| `nodes` + opts map          | result map (no JVM objects)  |
-| `files`  | a resource-collection node  | vector of absolute paths     |
-| `plan`   | a node tree                 | XML-ish string               |
+| op               | input                              | output                       |
+|------------------|------------------------------------|------------------------------|
+| `execute`        | elements + opts map                | result map (no JVM objects)  |
+| `execute-stream` | elements + handler + opts          | streams events to handler    |
+| `files`          | a resource-collection element      | vector of absolute paths     |
+| `files-stream`   | element + handler                  | streams paths to handler     |
+| `plan`           | an element tree                    | XML-ish string               |
 
-Inputs are plain edn data: a *node* is exactly the same map
-`clj-ant.core/node` produces on the JVM side
-(`{:tag … :attrs {…} :children […]}`).
+In addition the pod ships the full `clj-ant.tasks` namespace: 252
+thin function wrappers, one per Ant task or type, that build the
+element map for you so bb scripts never have to spell out
+`{:tag … :attrs …}` by hand.
 
 
 ## How it works
@@ -51,14 +53,14 @@ Inputs are plain edn data: a *node* is exactly the same map
       ▼
    stdin → JVM clj-ant.pod → Ant Project
                       │
-                      └─ build messages → stderr
-                      └─ bencode replies  → stdout
+                      └─ task messages → stderr
+                      └─ bencode replies → stdout
 ```
 
 * The pod swaps `System/out` for `System/err` immediately on startup,
-  so Ant's `DefaultLogger` writes build chatter to the parent
+  so Ant's `DefaultLogger` writes task output to the parent
   process's stderr — never onto the bencode wire.
-* All return values are filtered through `clj-ant.pod/node-clean` to
+* All return values are filtered through `clj-ant.pod/element-clean` to
   drop JVM-only objects (`Project`, `Target`, `UnknownElement`) before
   they're serialised to the bb side.
 

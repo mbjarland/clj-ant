@@ -1,27 +1,22 @@
 (ns clj-ant.core
-  "Fluent Ant from Clojure.
+  "Reach Ant's task and type ecosystem from Clojure.
 
-  This namespace exposes a single mental model: an Ant build is a tree
-  of plain Clojure data. Each node is a map of the form
-
-      {:tag :copy
-       :attrs {:todir \"out\"}
-       :children [...]
-       :text \"...\"}
-
-  and is constructed by calling the corresponding task or type
-  function, e.g.
+  This is not a build tool -- it's an interface that lets you call
+  Ant tasks and types as if they were Clojure functions, with the
+  results readable as Clojure data. Each call returns a tree of
+  plain maps:
 
       (copy :todir \"out\"
         (fileset :dir \"src\" :includes \"**/*.clj\"))
+      ;; => a element map -- nothing runs yet
 
-  Nothing executes until the tree is passed to `run!`. `run!` builds
-  Ant's own intermediate representation (`UnknownElement` +
-  `RuntimeConfigurable`) directly — the same tree Ant's XML parser
-  would build — and asks Ant to execute it. This means property
-  expansion (`${foo}`), `refid`, `macrodef`, `presetdef`, `if`/`unless`
-  attributes, etc. all work for free, because they are implemented
-  inside Ant's runtime configuration machinery, not its parser."
+  Pass that tree to `execute!` (or `ant`) to invoke Ant on it. At
+  that point clj-ant assembles Ant's own AST (`UnknownElement` +
+  `RuntimeConfigurable`) directly -- the same tree Ant's XML parser
+  produces -- so property expansion (`${foo}`), `refid`, `macrodef`,
+  `presetdef`, `if`/`unless` attributes etc. all work for free,
+  because they are implemented inside Ant's runtime configuration
+  machinery, not its XML layer."
   (:require [clojure.java.io :as io]
             [clojure.core.protocols :as p])
   (:import [org.apache.tools.ant Project Target Location IntrospectionHelper
@@ -32,26 +27,26 @@
            [java.io File PrintStream]))
 
 ;; ---------------------------------------------------------------------------
-;; Node construction
+;; Element construction
 ;;
 ;; Tasks and types are nothing but functions that return a map. The map is
 ;; opaque data — in particular, calling (copy ...) does NOT trigger any Ant
 ;; activity. That only happens once the tree is handed to `run!`.
 
-(defrecord Node [tag attrs children text])
+(defrecord Element [tag attrs children text])
 
 ;; A JavaChild wraps an actual Ant DataType / ResourceCollection
-;; so it can be inlined as a child of a regular node. The runner
+;; so it can be inlined as a child of a regular element. The runner
 ;; registers `object` on the project under a unique reference id
 ;; and emits a `<tag refid="..."/>` proxy in the AST. This lets us
 ;; hand huge collections (or pre-built FileSets, Paths, Mappers, ...)
 ;; to Ant without rebuilding them as data.
 (defrecord JavaChild [object tag])
 
-(defn node?
-  "Truthy if `x` is a clj-ant node."
+(defn element?
+  "Truthy if `x` is a clj-ant element."
   [x]
-  (instance? Node x))
+  (instance? Element x))
 
 (defn java-child?
   "Truthy if `x` is a `child`-wrapped real Ant object."
@@ -59,11 +54,11 @@
   (instance? JavaChild x))
 
 ;; ---------------------------------------------------------------------------
-;; Child coercion. The runner only ever sees Node / JavaChild instances,
+;; Child coercion. The runner only ever sees Element / JavaChild instances,
 ;; so anything else a user passes as a child gets normalized here once.
 ;;
 ;; The user-facing rule is intentionally one sentence: "you can pass any
-;; clj-ant node, any Java Ant DataType, any File or Resource, or a seq of
+;; clj-ant element, any Java Ant DataType, any File or Resource, or a seq of
 ;; the above as a child." Everything below is the implementation of that
 ;; sentence.
 
@@ -91,17 +86,17 @@
       (isFilesystemOnly [_] true))))
 
 (defn as-child
-  "Coerce `x` to a Node or JavaChild so it can be a child of an Ant
-  node. The rule is:
+  "Coerce `x` to a Element or JavaChild so it can be a child of an Ant
+  element. The rule is:
 
-    Node / JavaChild     -> as is
-    map (node-shaped)    -> as is
+    Element / JavaChild     -> as is
+    map (element-shaped)    -> as is
     org.apache.tools.ant.types.ResourceCollection
                          -> JavaChild (refid proxy at execute time)
     File / Resource      -> single-element ResourceCollection
     seq of the above     -> lazy ResourceCollection over the seq
 
-  You don't usually call this yourself -- `node` (and the generated
+  You don't usually call this yourself -- `element` (and the generated
   task wrappers) call it on every positional arg. So this works
   out of the box:
 
@@ -110,7 +105,7 @@
       (a/ant (t/copy :todir \"out\" (io/file \"x\"))) ; one File"
   [x]
   (cond
-    (or (node? x) (java-child? x))    x
+    (or (element? x) (java-child? x))    x
     (map? x)                          x
     (instance? ResourceCollection x)  (->JavaChild x :resources)
     (or (instance? File x)
@@ -124,7 +119,7 @@
   list, leaving anything else as children. Mirrors hiccup-style calling
   conventions while keeping the data form a plain map.
 
-  Children are coerced via `as-child`, so users can mix data nodes,
+  Children are coerced via `as-child`, so users can mix data elements,
   raw Java DataTypes, Files, and lazy seqs of Files freely."
   [args]
   (loop [attrs {} text nil children [] xs args]
@@ -143,32 +138,32 @@
         (recur attrs text children (rest xs))
 
         (sequential? x)
-        ;; A sequential whose first element looks like a child node
-        ;; splices (the (mapv #(node :file ...) names) idiom). A
+        ;; A sequential whose first element looks like a child element
+        ;; splices (the (mapv #(element :file ...) names) idiom). A
         ;; sequential of anything else (Files, Resources, paths) is
         ;; treated as a single resource-collection child.
         (let [fst (first x)]
-          (if (or (node? fst) (java-child? fst) (map? fst))
+          (if (or (element? fst) (java-child? fst) (map? fst))
             (recur attrs text (into children x) (rest xs))
             (recur attrs text (conj children (as-child x)) (rest xs))))
 
         :else
         (recur attrs text (conj children (as-child x)) (rest xs))))))
 
-(defn node
-  "Build a clj-ant node for tag `tag-kw`. The remaining args follow
+(defn element
+  "Build a clj-ant element for tag `tag-kw`. The remaining args follow
   hiccup-ish positional rules:
 
   * keyword/value pairs are attributes
   * strings concatenate into the element's text body
-  * maps or other nodes become children
+  * maps or other elements become children
   * sequential collections splice their contents in as children
 
-  Returned value is a `Node` record — a plain map you can inspect,
+  Returned value is an `Element` record — a plain map you can inspect,
   walk, diff, transform with `update`, store in an atom, etc."
   [tag-kw & args]
   (let [[attrs text children] (split-args args)]
-    (->Node tag-kw attrs (vec children) text)))
+    (->Element tag-kw attrs (vec children) text)))
 
 ;; ---------------------------------------------------------------------------
 ;; Project lifecycle
@@ -222,7 +217,7 @@
 ;; Data → UnknownElement
 ;;
 ;; This is the whole interop surface. Everything else in clj-ant just feeds
-;; nodes here.
+;; elements here.
 
 (defn- attr->string
   "Coerce a Clojure attribute value to the string form Ant ultimately
@@ -249,7 +244,7 @@
     :else           (str v)))
 
 ;; Per-project monotonic counter for synthetic reference ids. Reset
-;; per build (each `execute!` makes its own Project). Using a counter
+;; per execution (each `execute!` makes its own Project). Using a counter
 ;; instead of identityHashCode avoids collisions when the user
 ;; re-injects the same object across many children.
 (defn- next-ref-id! [^Project project]
@@ -306,11 +301,11 @@
 ;; Execution
 
 (defn execute!
-  "Execute one or more nodes against a fresh (or supplied) project.
+  "Execute one or more elements against a fresh (or supplied) project.
 
   Top-level forms become tasks of an implicit unnamed target which is
   then executed. Returns a map containing the project, the target, the
-  list of UnknownElements that ran, plus any captured build events.
+  list of UnknownElements that ran, plus any captured events.
 
   Options:
 
@@ -320,20 +315,20 @@
                 the captured events under :events. Default false.
 
   Plus any options accepted by `make-project`."
-  [nodes & {:as opts}]
-  (let [nodes   (cond
-                  (node? nodes)       [nodes]
-                  (sequential? nodes) (vec nodes)
-                  (map? nodes)        [nodes]
-                  :else (throw (ex-info "execute! expects a node or seq of nodes"
-                                        {:value nodes})))
+  [elements & {:as opts}]
+  (let [elements   (cond
+                  (element? elements)       [elements]
+                  (sequential? elements) (vec elements)
+                  (map? elements)        [elements]
+                  :else (throw (ex-info "execute! expects an element or seq of elements"
+                                        {:value elements})))
         _       (when (:validate? opts)
                   (let [vt   (requiring-resolve 'clj-ant.spec/validate-tree)
                         vopt (select-keys opts [:closed?])
-                        errs (mapcat #(vt % vopt) nodes)]
+                        errs (mapcat #(vt % vopt) elements)]
                     (when (seq errs)
                       (throw (ex-info
-                               (str "Build failed validation: " (count errs)
+                               (str "Validation failed: " (count errs)
                                     " issue(s)")
                                {:errors (vec errs)})))))
         project ^Project (or (:project opts) (make-project opts))
@@ -345,9 +340,9 @@
                   nil)
         rec     (when (or events on-event)
                   (reify BuildListener
-                    (buildStarted   [_ _] (emit {:phase :build-started}))
+                    (buildStarted   [_ _] (emit {:phase :started}))
                     (buildFinished  [_ e]
-                      (emit {:phase :build-finished
+                      (emit {:phase :finished
                              :error (some-> ^BuildEvent e .getException
                                             .getMessage)}))
                     (targetStarted  [_ e]
@@ -370,11 +365,11 @@
                       (emit {:phase   :message
                              :message (.getMessage  ^BuildEvent e)
                              :level   (.getPriority ^BuildEvent e)}))))
-        ;; Split target nodes from regular task/type nodes. Targets get
-        ;; their own Target instance + addOrReplaceTarget; regular nodes
+        ;; Split target elements from regular task/type elements. Targets get
+        ;; their own Target instance + addOrReplaceTarget; regular elements
         ;; go onto an implicit unnamed target that runs by default.
-        target-nodes (filter #(= :target (:tag %)) nodes)
-        task-nodes   (remove #(= :target (:tag %)) nodes)
+        target-elements (filter #(= :target (:tag %)) elements)
+        task-elements   (remove #(= :target (:tag %)) elements)
         implicit  (doto (Target.)
                     (.setName "")
                     (.setProject project))
@@ -400,8 +395,8 @@
                              (doseq [c children]
                                (.addTask t (->unknown-element c project t)))
                              t))
-                         target-nodes)
-        ues       (mapv #(->unknown-element % project implicit) task-nodes)
+                         target-elements)
+        ues       (mapv #(->unknown-element % project implicit) task-elements)
         _         (doseq [^UnknownElement ue ues] (.addTask implicit ue))
         ;; Pick what to actually run.
         targets-to-run (or (:targets opts)
@@ -432,12 +427,12 @@
 ;; ---------------------------------------------------------------------------
 ;; Targets
 ;;
-;; A target node carries a name, depends list, optional description,
-;; if/unless, and a sequence of child task nodes. The runner above
+;; A target element carries a name, depends list, optional description,
+;; if/unless, and a sequence of child task elements. The runner above
 ;; turns these into real Ant Target instances.
 
 (defn target
-  "Build a target node. The name attribute is required.
+  "Build a target element. The name attribute is required.
 
       (target :name \"compile\"
               :depends [:clean]
@@ -445,10 +440,10 @@
               (mkdir :dir \"classes\")
               (javac :srcdir \"src\" :destdir \"classes\"))"
   [& args]
-  (apply node :target args))
+  (apply element :target args))
 
 (defmacro deftarget
-  "def a target node bound to `nm`, with :name set from the symbol's
+  "def a target element bound to `nm`, with :name set from the symbol's
   name. Body is the same shape as `target` minus the :name attribute.
 
       (deftarget compile
@@ -468,7 +463,7 @@
 ;; Top-level convenience
 
 (defn ant
-  "Run an Ant build defined inline. Each top-level form is added as a
+  "Run a sequence of Ant tasks inline. Each top-level form is added as a
   task of an implicit unnamed target. Keyword options must come first
   and are forwarded to `execute!` / `make-project`.
 
@@ -482,18 +477,18 @@
 
   Note that the task functions like `mkdir`, `copy`, `fileset` live in
   `clj-ant.tasks` (auto-generated). For ad-hoc/unknown elements, use
-  `(node :my-tag ...)` from this namespace."
+  `(element :my-tag ...)` from this namespace."
   [& args]
   (let [[opts rest-args]
         (loop [opts {} xs args]
-          (if (and (keyword? (first xs)) (not (node? (second xs))))
+          (if (and (keyword? (first xs)) (not (element? (second xs))))
             (recur (assoc opts (first xs) (second xs)) (drop 2 xs))
             [opts xs]))]
     (apply execute! (vec rest-args) (mapcat identity opts))))
 
 ;; ---------------------------------------------------------------------------
 ;; Advanced child-injection knobs. The everyday path is to just pass a
-;; value to a node -- the runner calls `as-child` and figures out what
+;; value to a element -- the runner calls `as-child` and figures out what
 ;; to do. These helpers are kept around for the rare case where you
 ;; need to override the default behaviour (e.g. a non-filesystem-only
 ;; resource collection, or a hand-rolled Resources). They are not
@@ -502,7 +497,7 @@
 (defn ^:no-doc lazy-resources
   "Like passing a seq of files directly, but lets you override the
   size hint and the isFilesystemOnly flag. Returns a JavaChild ready
-  to drop into a node.
+  to drop into a element.
 
   Options:
     :size              skip the eager (count files) and use this.
@@ -530,15 +525,15 @@
      (->JavaChild rc :resources))))
 
 ;; ---------------------------------------------------------------------------
-;; Realisation: turn data nodes into live Ant objects without executing.
+;; Realisation: turn data elements into live Ant objects without executing.
 ;;
 ;; A few Ant types (FileSet, Path, FileList, Resources, Restrict, ...) are
 ;; valuable to Clojure code on their own, independent of any task. We let
-;; users materialise such a node, ask it for its resources, and feed the
+;; users materialise such a element, ask it for its resources, and feed the
 ;; result through the normal Clojure seq machinery.
 
 (defn realize
-  "Materialise a node into a live Ant object (Task or DataType) without
+  "Materialise a element into a live Ant object (Task or DataType) without
   executing it. Property references are expanded; `refid`s resolve;
   nested elements are configured. Returns the underlying Ant object
   (e.g. `org.apache.tools.ant.types.FileSet`).
@@ -546,10 +541,10 @@
   Options:
     :project   an existing Project, or nil to create one. Other keys
                are forwarded to `make-project`."
-  ^Object [node & {:as opts}]
+  ^Object [element & {:as opts}]
   (let [project ^Project (or (:project opts) (make-project (or opts {})))
         target  (doto (Target.) (.setName "") (.setProject project))
-        ue      (->unknown-element node project target)]
+        ue      (->unknown-element element project target)]
     (.maybeConfigure ue)
     (.getRealThing ue)))
 
@@ -559,29 +554,29 @@
     (File. (.getName r))))
 
 (defn resources
-  "Lazily realise a resource-collection node and return a seq of
-  `org.apache.tools.ant.types.Resource`. Works on any node whose backing
+  "Lazily realise a resource-collection element and return a seq of
+  `org.apache.tools.ant.types.Resource`. Works on any element whose backing
   Ant type implements `ResourceCollection` (fileset, filelist, path,
   files, dirset, restrict, intersect, …)."
-  [node & {:as opts}]
-  (let [obj (apply realize node (mapcat identity opts))]
+  [element & {:as opts}]
+  (let [obj (apply realize element (mapcat identity opts))]
     (when-not (instance? ResourceCollection obj)
-      (throw (ex-info (str "Not a resource collection: " (:tag node))
-                      {:tag (:tag node) :class (class obj)})))
+      (throw (ex-info (str "Not a resource collection: " (:tag element))
+                      {:tag (:tag element) :class (class obj)})))
     (iterator-seq (.iterator ^ResourceCollection obj))))
 
 (defn files
-  "Lazy seq of `java.io.File` from a resource-collection node. Resources
+  "Lazy seq of `java.io.File` from a resource-collection element. Resources
   that don't resolve to a filesystem path (HTTP, zip entry, …) are
   passed through `clojure.java.io/file` on their name."
-  [node & {:as opts}]
-  (map resource->file (apply resources node (mapcat identity opts))))
+  [element & {:as opts}]
+  (map resource->file (apply resources element (mapcat identity opts))))
 
 ;; ---------------------------------------------------------------------------
-;; Datafy: make build results pleasant to inspect at the REPL.
+;; Datafy: make execution results pleasant to inspect at the REPL.
 
 (extend-protocol p/Datafiable
-  Node
+  Element
   (datafy [n] (into {} n))
 
   UnknownElement
@@ -642,21 +637,21 @@
          :text?  (.supportsCharacters helper)}))))
 
 (defn plan
-  "Pretty-print a node tree to *out*. Useful for sanity-checking a
-  build before running it. Returns the node unchanged so it can be
+  "Pretty-print a element tree to *out*. Useful for sanity-checking a
+  tree before running it. Returns the element unchanged so it can be
   threaded into `ant` / `execute!`."
-  ([node] (plan node 0) node)
-  ([node depth]
+  ([element] (plan element 0) element)
+  ([element depth]
    (let [pad (apply str (repeat (* 2 depth) \space))]
-     (println (str pad "<" (name (:tag node))
+     (println (str pad "<" (name (:tag element))
                    (apply str
-                          (for [[k v] (:attrs node)]
+                          (for [[k v] (:attrs element)]
                             (str " " (name k) "=" (pr-str (str v)))))
-                   (if (or (seq (:children node)) (:text node)) ">" "/>")))
-     (when-some [t (:text node)]
+                   (if (or (seq (:children element)) (:text element)) ">" "/>")))
+     (when-some [t (:text element)]
        (println (str pad "  " t)))
-     (doseq [c (:children node)]
+     (doseq [c (:children element)]
        (plan c (inc depth)))
-     (when (or (seq (:children node)) (:text node))
-       (println (str pad "</" (name (:tag node)) ">"))))
-   node))
+     (when (or (seq (:children element)) (:text element))
+       (println (str pad "</" (name (:tag element)) ">"))))
+   element))

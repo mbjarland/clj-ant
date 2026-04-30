@@ -17,9 +17,10 @@
 
 (deftest node-construction
   (testing "node returns a record with expected shape"
-    (let [n (a/node :copy :todir "out"
-                    (a/node :fileset :dir "src" :includes "**/*.clj"))]
-      (is (a/node? n))
+    (let [n (a/element :copy :todir "out"
+                    (a/element :fileset :dir "src" :includes "**/*.clj"))]
+      (is (a/element? n))
+      (is (a/element? (a/element :copy)))
       (is (= :copy (:tag n)))
       (is (= {:todir "out"} (:attrs n)))
       (is (= 1 (count (:children n))))
@@ -37,9 +38,9 @@
                 :basedir (.getAbsolutePath base)
                 :level :warn
                 :capture? true
-                (a/node :property :name "dst" :value (.getAbsolutePath dst))
-                (a/node :copy :todir "${dst}"
-                        (a/node :fileset
+                (a/element :property :name "dst" :value (.getAbsolutePath dst))
+                (a/element :copy :todir "${dst}"
+                        (a/element :fileset
                                 :dir (.getAbsolutePath src)
                                 :includes "**/*.txt")))]
         (is (nil? (:error r)))
@@ -54,7 +55,7 @@
       (spit-file src "core.clj"  "ns x")
       (spit-file src "tasks.clj" "ns y")
       (spit-file src "ignore.txt" "skip")
-      (let [fs    (a/node :fileset
+      (let [fs    (a/element :fileset
                           :dir (.getAbsolutePath src)
                           :includes "**/*.clj")
             names (sort (map #(.getName %) (a/files fs)))]
@@ -83,12 +84,12 @@
       (a/ant
         :level :warn
         :on-event #(swap! seen conj %)
-        (a/node :echo :message "x"))
+        (a/element :echo :message "x"))
       (let [phases (set (map :phase @seen))]
-        (is (contains? phases :build-started))
+        (is (contains? phases :started))
         (is (contains? phases :task-started))
         (is (contains? phases :task-finished))
-        (is (contains? phases :build-finished))
+        (is (contains? phases :finished))
         (is (some #(and (= :task-started (:phase %)) (= "echo" (:task %)))
                   @seen))))))
 
@@ -96,13 +97,13 @@
   (testing "named targets honour declared dependencies"
     (let [order (atom [])
           t-clean   (a/target :name "clean"
-                              (a/node :echo :message "clean"))
+                              (a/element :echo :message "clean"))
           t-compile (a/target :name "compile"
                               :depends [:clean]
-                              (a/node :echo :message "compile"))
+                              (a/element :echo :message "compile"))
           t-package (a/target :name "package"
                               :depends [:compile]
-                              (a/node :echo :message "package"))]
+                              (a/element :echo :message "package"))]
       (a/ant
         :level :warn
         :on-event (fn [e]
@@ -124,8 +125,8 @@
       (a/ant
         :basedir (.getAbsolutePath base)
         :level :warn
-        (a/node :copy :todir (.getAbsolutePath dst)
-                (a/node :filelist
+        (a/element :copy :todir (.getAbsolutePath dst)
+                (a/element :filelist
                         :dir (.getAbsolutePath src)
                         :files ["a.txt" "b.txt"])))
       (is (= 2 (count (.listFiles dst)))))))
@@ -138,33 +139,33 @@
 
     (testing "pass a real Java FileSet directly (no wrapper fn)"
       (let [dst (doto (File. base "dst1") .mkdirs)
-            fs  (a/realize (a/node :fileset
+            fs  (a/realize (a/element :fileset
                                    :dir (.getAbsolutePath src)
                                    :includes "**/*.txt"))]
-        (a/ant :level :warn (a/node :copy :todir (.getAbsolutePath dst) fs))
+        (a/ant :level :warn (a/element :copy :todir (.getAbsolutePath dst) fs))
         (is (= 4 (count (.listFiles dst))))))
 
     (testing "pass a lazy seq of File directly"
       (let [dst (doto (File. base "dst2") .mkdirs)
-            xs  (->> (a/files (a/node :fileset
+            xs  (->> (a/files (a/element :fileset
                                        :dir (.getAbsolutePath src)
                                        :includes "**/*.txt"))
                      (filter #(re-find #"[bd]" (.getName %))))]
-        (a/ant :level :warn (a/node :copy :todir (.getAbsolutePath dst) xs))
+        (a/ant :level :warn (a/element :copy :todir (.getAbsolutePath dst) xs))
         (is (= #{"b.txt" "d.txt"}
                (set (map #(.getName %) (.listFiles dst)))))))
 
     (testing "pass a single File directly"
       (let [dst (doto (File. base "dst3") .mkdirs)]
         (a/ant :level :warn
-          (a/node :copy :todir (.getAbsolutePath dst)
+          (a/element :copy :todir (.getAbsolutePath dst)
                   (File. src "a.txt")))
         (is (= ["a.txt"] (mapv #(.getName %) (.listFiles dst))))))))
 
 (deftest plan-prints-tree
   (testing "plan renders a build tree without executing it"
-    (let [n (a/node :copy :todir "out"
-                    (a/node :fileset :dir "src" :includes "**/*.clj"))
+    (let [n (a/element :copy :todir "out"
+                    (a/element :fileset :dir "src" :includes "**/*.clj"))
           out (with-out-str (a/plan n))]
       (is (re-find #"<copy" out))
       (is (re-find #"<fileset" out)))))
@@ -181,11 +182,11 @@
   (testing ":validate? short-circuits before Ant runs"
     (is (thrown? clojure.lang.ExceptionInfo
                  (a/ant :validate? true :level :warn
-                        (a/node :copy :overwrite "perhaps")))))
+                        (a/element :copy :overwrite "perhaps")))))
   (testing "validate-tree walks nested children"
     (let [errs (@(requiring-resolve 'clj-ant.spec/validate-tree)
-                 (a/node :copy :todir "out"
-                         (a/node :fileset :includes "**/*"
+                 (a/element :copy :todir "out"
+                         (a/element :fileset :includes "**/*"
                                  :erroron-mismatch "wat")))]
       (is (vector? errs))
       ;; the bogus attribute is on the type, not the task
@@ -199,11 +200,11 @@
               :basedir (.getAbsolutePath base)
               :level :warn
               :capture? true
-              (a/node :macrodef :name "shout"
-                      (a/node :attribute :name "what")
-                      (a/node :sequential
-                              (a/node :echo :message "@{what}!")))
-              (a/node :shout :what "hello"))]
+              (a/element :macrodef :name "shout"
+                      (a/element :attribute :name "what")
+                      (a/element :sequential
+                              (a/element :echo :message "@{what}!")))
+              (a/element :shout :what "hello"))]
       (is (nil? (:error r)))
       (is (some #(and (= :message (:phase %))
                       (= "hello!" (:message %)))

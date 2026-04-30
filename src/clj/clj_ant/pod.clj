@@ -118,7 +118,7 @@
 ;; All ops take and return edn. Keep return values to plain data: the bb
 ;; side cannot dereference JVM objects.
 
-(defn- node-clean
+(defn- element-clean
   "Strip Java objects out of a result map so it can survive the wire."
   [m]
   (-> m
@@ -126,17 +126,17 @@
       (cond->
         (:error m) (update :error #(some-> % .getMessage)))))
 
-(defn ^:no-doc op-execute [{:keys [nodes opts]}]
-  (-> (apply core/execute! nodes (mapcat identity (or opts {})))
-      node-clean))
+(defn ^:no-doc op-execute [{:keys [elements opts]}]
+  (-> (apply core/execute! elements (mapcat identity (or opts {})))
+      element-clean))
 
 (defn ^:no-doc op-execute-stream
   "Streaming variant of execute. Each event is sent as its own pod
   reply (status []). The final result map is the last reply with
   status [done]. `partial!` is called by the pod loop for every
   intermediate value."
-  [{:keys [nodes opts]} partial!]
-  (apply core/execute! nodes
+  [{:keys [elements opts]} partial!]
+  (apply core/execute! elements
          (mapcat identity
                  (-> (or opts {})
                      (assoc :on-event (fn [e] (partial! e))))))
@@ -146,18 +146,18 @@
   "Streaming variant of files: each path is delivered as it's
   discovered. Useful for large filesets where you want to start work
   before the whole scan finishes."
-  [{:keys [node opts]} partial!]
-  (doseq [^java.io.File f (apply core/files node
+  [{:keys [element opts]} partial!]
+  (doseq [^java.io.File f (apply core/files element
                                  (mapcat identity (or opts {})))]
     (partial! (.getAbsolutePath f)))
   {:phase :done})
 
-(defn ^:no-doc op-files [{:keys [node opts]}]
+(defn ^:no-doc op-files [{:keys [element opts]}]
   (mapv #(.getAbsolutePath ^java.io.File %)
-        (apply core/files node (mapcat identity (or opts {})))))
+        (apply core/files element (mapcat identity (or opts {})))))
 
-(defn ^:no-doc op-plan [{:keys [node]}]
-  (with-out-str (core/plan node)))
+(defn ^:no-doc op-plan [{:keys [element]}]
+  (with-out-str (core/plan element)))
 
 (def ops
   {"clj-ant.pod/execute" {:fn #'op-execute}
@@ -171,6 +171,48 @@
 ;; ---------------------------------------------------------------------------
 ;; Pod loop
 
+(defn- task-namespace-payload
+  "Build a `clj-ant.tasks` namespace entry for the pod describe payload.
+
+  Iterates every public var in the JVM-side `clj-ant.tasks` and emits
+  a single bb-side function for each one whose only job is to assemble
+  a clj-ant element map. No docstrings (size), no schema (the JVM
+  side has both). Each wrapper is a one-liner -- bb users get the
+  same `(t/copy :todir ...)` ergonomics they have on the JVM."
+  []
+  (require 'clj-ant.tasks)
+  (let [tasks-ns (the-ns 'clj-ant.tasks)
+        ;; First var: the element builder, used by every wrapper.
+        builder
+        {"name" "element"
+         "code" (str
+                  "(defn element [tag-kw & args] "
+                  "  (loop [attrs {} text nil children [] xs args] "
+                  "    (let [x (first xs)] "
+                  "      (cond "
+                  "        (empty? xs) "
+                  "         {:tag tag-kw :attrs attrs :children children :text text} "
+                  "        (and (keyword? x) (next xs)) "
+                  "         (recur (assoc attrs x (second xs)) text children (drop 2 xs)) "
+                  "        (string? x) "
+                  "         (recur attrs (str (or text \"\") x) children (rest xs)) "
+                  "        (sequential? x) "
+                  "         (recur attrs text (into children x) (rest xs)) "
+                  "        :else "
+                  "         (recur attrs text (conj children x) (rest xs))))))")}
+        ;; Then a thin wrapper per public task/type var.
+        wrappers
+        (for [[sym _] (sort (ns-publics tasks-ns))
+              :let [m   (meta (resolve (symbol "clj-ant.tasks" (name sym))))
+                    tag (get m :clj-ant/tag)]
+              :when tag]
+          {"name" (name sym)
+           "code" (str "(defn " sym " [& args] "
+                       "(clojure.core/apply element "
+                       (pr-str (keyword tag)) " args))")})]
+    {"name" "clj-ant.tasks"
+     "vars" (vec (cons builder wrappers))}))
+
 (def ^:private describe-payload
   {"format"    "edn"
    "namespaces"
@@ -178,35 +220,35 @@
      "vars" [{"name" "execute" "code"
               ;; Client-side stub. Re-shapes args, calls the JVM op.
               (str
-                "(defn execute [nodes & {:as opts}] "
+                "(defn execute [elements & {:as opts}] "
                 "  (babashka.pods/invoke "
                 "    \"clj-ant.pod\" "
                 "    'clj-ant.pod/execute "
-                "    [{:nodes nodes :opts opts}]))")}
+                "    [{:elements elements :opts opts}]))")}
              {"name" "files" "code"
               (str
-                "(defn files [node & {:as opts}] "
+                "(defn files [element & {:as opts}] "
                 "  (babashka.pods/invoke "
                 "    \"clj-ant.pod\" "
                 "    'clj-ant.pod/files "
-                "    [{:node node :opts opts}]))")}
+                "    [{:element element :opts opts}]))")}
              {"name" "plan" "code"
               (str
-                "(defn plan [node] "
+                "(defn plan [element] "
                 "  (babashka.pods/invoke "
                 "    \"clj-ant.pod\" "
                 "    'clj-ant.pod/plan "
-                "    [{:node node}]))")}
+                "    [{:element element}]))")}
              ;; Streaming variant: the supplied handler fn is called
              ;; with each event as it happens, and the final return
              ;; is the result map.
              {"name" "execute-stream" "code"
               (str
-                "(defn execute-stream [nodes handler & {:as opts}] "
+                "(defn execute-stream [elements handler & {:as opts}] "
                 "  (babashka.pods/invoke "
                 "    \"clj-ant.pod\" "
                 "    'clj-ant.pod/execute-stream "
-                "    [{:nodes nodes :opts opts}] "
+                "    [{:elements elements :opts opts}] "
                 "    {:handlers {:success handler "
                 "                :error   (fn [{:keys [ex-message]}] "
                 "                           (throw (ex-info ex-message {})))}}))")}
@@ -215,14 +257,15 @@
              ;; before the iterator is exhausted.
              {"name" "files-stream" "code"
               (str
-                "(defn files-stream [node handler & {:as opts}] "
+                "(defn files-stream [element handler & {:as opts}] "
                 "  (babashka.pods/invoke "
                 "    \"clj-ant.pod\" "
                 "    'clj-ant.pod/files-stream "
-                "    [{:node node :opts opts}] "
+                "    [{:element element :opts opts}] "
                 "    {:handlers {:success handler "
                 "                :error   (fn [{:keys [ex-message]}] "
-                "                           (throw (ex-info ex-message {})))}}))")}]}]
+                "                           (throw (ex-info ex-message {})))}}))")}]}
+    (task-namespace-payload)]
    "ops"
    {"shutdown" {}}})
 
