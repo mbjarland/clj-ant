@@ -46,6 +46,34 @@
         (is (= 2 (count (.listFiles dst))))
         (is (some #(= :task-finished (:phase %)) (:events r)))))))
 
+(deftest fileset-as-seq
+  (testing "a fileset node materialises into a lazy seq of Files"
+    (let [base (tmp-dir)
+          src  (File. base "src")]
+      (.mkdirs src)
+      (spit-file src "core.clj"  "ns x")
+      (spit-file src "tasks.clj" "ns y")
+      (spit-file src "ignore.txt" "skip")
+      (let [fs    (a/node :fileset
+                          :dir (.getAbsolutePath src)
+                          :includes "**/*.clj")
+            names (sort (map #(.getName %) (a/files fs)))]
+        (is (= ["core.clj" "tasks.clj"] names))
+        (testing "and is composable with normal seq operations"
+          (is (= 2 (count (filter #(.isFile %) (a/files fs)))))
+          (is (= ["CORE.CLJ" "TASKS.CLJ"]
+                 (into [] (comp (map #(.getName %))
+                                (map clojure.string/upper-case))
+                       (sort-by #(.getName %) (a/files fs))))))))))
+
+(deftest plan-prints-tree
+  (testing "plan renders a build tree without executing it"
+    (let [n (a/node :copy :todir "out"
+                    (a/node :fileset :dir "src" :includes "**/*.clj"))
+          out (with-out-str (a/plan n))]
+      (is (re-find #"<copy" out))
+      (is (re-find #"<fileset" out)))))
+
 (deftest macrodef-via-runtime
   (testing "macrodef works because RuntimeConfigurable handles expansion"
     (let [base (tmp-dir)
