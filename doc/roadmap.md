@@ -45,7 +45,7 @@ justified — it's a bridge that can't be done any other way without
 AOT or a bytecode-gen library.
 
 
-### `from-xml` — read existing `build.xml` files into clj-ant data  ⏳
+### `from-xml` — read existing `build.xml` files into clj-ant data  ✅
 
 Inverse of execute. Hand it a path or a string, get back a clj-ant
 element tree. Massive migration path for shops with thousands of

@@ -18,6 +18,7 @@
   because they are implemented inside Ant's runtime configuration
   machinery, not its XML layer."
   (:require [clojure.java.io :as io]
+            [clojure.xml :as xml]
             [clojure.core.protocols :as p])
   (:import [org.apache.tools.ant Project Target Location IntrospectionHelper
                                  UnknownElement RuntimeConfigurable
@@ -220,6 +221,46 @@
     p))
 
 ;; ---------------------------------------------------------------------------
+;; build.xml round-trip
+
+(defn- xml->element
+  "Convert one node from clojure.xml's representation to ours."
+  [{:keys [tag attrs content]}]
+  (let [child-maps   (filterv map? content)
+        text-pieces  (filter string? content)
+        text         (when (seq text-pieces)
+                       (let [s (apply str text-pieces)]
+                         ;; Drop whitespace-only inter-element text.
+                         (when (some #(not (Character/isWhitespace %)) s)
+                           s)))]
+    (->Element tag (or attrs {}) (mapv xml->element child-maps) text)))
+
+(defn from-xml
+  "Parse an Ant build file into a clj-ant element tree.
+
+  `src` may be:
+    * a path to a file on disk
+    * a `java.io.File`, `InputStream`, or `Reader`
+    * an XML string (detected by leading `<`)
+
+  Returns the root `:project` element. Pass it to `execute!` or `ant`
+  to run the file -- the runner unwraps it transparently and lifts
+  the project's name/basedir/default attributes into execute options.
+
+      (a/ant (a/from-xml \"build.xml\"))
+      (a/ant :targets [\"clean\"] (a/from-xml \"build.xml\"))
+
+  For static analysis just walk the returned tree like any other
+  element."
+  [src]
+  (let [parsed (cond
+                 (and (string? src) (re-find #"^\s*<" src))
+                 (xml/parse (java.io.ByteArrayInputStream.
+                              (.getBytes ^String src "UTF-8")))
+                 :else (xml/parse src))]
+    (xml->element parsed)))
+
+;; ---------------------------------------------------------------------------
 ;; Clojure-defined tasks
 ;;
 ;; `deftask` registers a Clojure fn as an Ant task. The fn becomes
@@ -365,12 +406,26 @@
 
   Plus any options accepted by `make-project`."
   [elements & {:as opts}]
-  (let [elements   (cond
-                  (element? elements)       [elements]
-                  (sequential? elements) (vec elements)
-                  (map? elements)        [elements]
-                  :else (throw (ex-info "execute! expects an element or seq of elements"
-                                        {:value elements})))
+  (let [elements (cond
+                   (element? elements)    [elements]
+                   (sequential? elements) (vec elements)
+                   (map? elements)        [elements]
+                   :else (throw (ex-info "execute! expects an element or seq of elements"
+                                         {:value elements})))
+        ;; A single :project element (e.g. from `from-xml`) is a
+        ;; syntactic wrapper -- lift its basedir/name/default into
+        ;; execute options and run its children. Caller opts win.
+        [elements opts]
+        (if (and (= 1 (count elements))
+                 (= :project (:tag (first elements))))
+          (let [root (first elements)
+                a    (:attrs root)
+                from-file (cond-> {}
+                            (:basedir a) (assoc :basedir (:basedir a))
+                            (:name a)    (assoc :name    (:name a))
+                            (:default a) (assoc :default (:default a)))]
+            [(vec (:children root)) (merge from-file opts)])
+          [elements opts])
         _       (when (:validate? opts)
                   (let [vt   (requiring-resolve 'clj-ant.spec/validate-tree)
                         vopt (select-keys opts [:closed?])
@@ -447,15 +502,19 @@
                          target-elements)
         ues       (mapv #(->unknown-element % project implicit) task-elements)
         _         (doseq [^UnknownElement ue ues] (.addTask implicit ue))
-        ;; Pick what to actually run.
-        targets-to-run (or (:targets opts)
-                           (if (seq named-tgts)
-                             ;; If user defined targets but didn't pick any,
-                             ;; honour the project's default if given, else
-                             ;; just run the first declared target.
-                             [(or (:default opts)
-                                  (.getName ^Target (first named-tgts)))]
-                             [""]))]
+        ;; Pick what to actually run. Tasks at the top level of a
+        ;; build.xml -- <property>, <typedef>, <import> -- live on
+        ;; the implicit unnamed target. They have to run BEFORE any
+        ;; named target so subsequent targets see their effects.
+        explicit-targets (or (:targets opts)
+                             (when (seq named-tgts)
+                               [(or (:default opts)
+                                    (.getName ^Target (first named-tgts)))]))
+        targets-to-run   (cond
+                           (and (seq ues) (seq explicit-targets))
+                           (cons "" explicit-targets)
+                           (seq explicit-targets) explicit-targets
+                           :else                 [""])]
     (when rec (.addBuildListener project rec))
     (when-some [d (:default opts)] (.setDefault project (str d)))
     (.fireBuildStarted project)

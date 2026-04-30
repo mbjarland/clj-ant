@@ -225,6 +225,35 @@ Clojure side. Pair with `<sshsession>` for sustained sessions that
 multiplex multiple commands and forward ports.
 
 
+### Read existing `build.xml` files
+
+`from-xml` parses an Ant build file into the same element tree
+clj-ant data forms produce. Use it for migration (run, refactor, or
+re-emit), or just to query a corpus of existing builds:
+
+```clojure
+;; Run a legacy build.xml unchanged:
+(a/ant (a/from-xml "build.xml"))
+
+;; Run a specific target:
+(a/ant :targets ["jar"] (a/from-xml "build.xml"))
+
+;; Walk the tree and audit:
+(let [tree (a/from-xml "build.xml")]
+  (->> (tree-seq :children :children tree)
+       (filter #(= :scp (:tag %)))
+       (filter #(= "true" (-> % :attrs :trust)))
+       count))
+;; how many <scp trust="true"/> calls in the corpus
+```
+
+`src` may be a path string, a `File`, an `InputStream`, or an XML
+string (detected by leading `<`). The returned root is a
+`:project` element; the runner unwraps it transparently and lifts
+the project's `name` / `basedir` / `default` attributes into
+execute options.
+
+
 ### Mix Clojure code into the element tree with `deftask`
 
 Sometimes the work is part Ant (copy, scp, jar), part Clojure
