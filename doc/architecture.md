@@ -1,18 +1,17 @@
 # clj-ant — architecture and design decisions
 
-This document is for another AI (or developer new to the project)
-who needs to understand how clj-ant is shaped, **why** it's shaped
-that way, and where to make changes safely.
+This is the doc for someone new to the codebase who wants to know
+*why* it's shaped the way it is, not just *what* the API looks like.
+If you're sending a PR, this is the file to read first.
 
-It pairs with three other docs:
+It pairs with three others:
 
-- `README.md` — user-facing intro and quickstart.
+- `README.md` — quickstart and the user-facing surface.
 - `doc/examples.md` — recipes for real use cases.
-- `doc/babashka.md` — the bb pod (separate process model).
-- `doc/roadmap.md` — open ideas, prioritised.
+- `doc/babashka.md` — the bb pod story.
 
-If you read only one section here, read **The fundamental design
-choice** below. Everything else follows from that.
+If you read only one section here, read the next one. Everything
+else falls out of it.
 
 
 ## What this project is, and isn't
@@ -20,16 +19,16 @@ choice** below. Everything else follows from that.
 clj-ant is a **Clojure interface to Apache Ant's task and type
 ecosystem**. It is *not* a build tool — there's no opinion about
 project layout, no tasks defined "by clj-ant," no replacement for
-`tools.build`. It exists to make Ant's ~250 tasks/types (copy,
-fileset, scp, sshexec, replaceregexp, jar, get, checksum, …)
-callable as fluent Clojure code, with results readable as Clojure
-data.
+`tools.build`. It exists to make Ant's ~470 tasks and types
+(`<copy>`, `<fileset>`, `<scp>`, `<sshexec>`, `<replaceregexp>`,
+`<jar>`, `<get>`, `<checksum>`, …) callable as fluent Clojure code,
+with results readable as Clojure data.
 
 The audience is people who would otherwise:
 
 - write XML build files and shell out via `clojure -X:foo`,
 - hand-roll `ProcessBuilder` over the `ssh` CLI for deployment,
-- `babashka.fs/copy-tree` then realise they need filterchain or
+- `babashka.fs/copy-tree` then realise they need filter chains or
   mappers and there's no clean answer.
 
 
@@ -68,8 +67,8 @@ The previous incarnation of this repo took a different path: emit
 XML, register a custom URL protocol handler so the in-memory XML
 masqueraded as a file, fork `Main.java` (1300 lines!) to suppress
 `System.exit`, subclass `ProjectHelper2`. The new model deletes all
-of that — about 1500 lines of Java plus the XML emit/parse step.
-Replaced by ~150 lines of Clojure walking the data into
+of that — about 1500 lines of Java plus the XML emit/parse step,
+replaced by ~150 lines of Clojure walking the data into
 `UnknownElement` directly.
 
 
@@ -114,37 +113,34 @@ Replaced by ~150 lines of Clojure walking the data into
 
 ```
 src/clj/clj_ant/
-  core.clj      ~750 LOC   the runner: element/Element, as-child,
-                           ->unknown-element, execute!, ant,
-                           target/deftarget, deftask, from-xml,
-                           realize, files, resources, plan,
-                           describe, datafy
-  tasks.clj   GENERATED   one wrapper per Ant task, type, and nested
-                           element (top-level defaults.properties plus
-                           the recursive nested-element graph).
-                           Don't edit; regenerate with clj -X:gen.
-  spec.clj      ~140 LOC   malli schemas built lazily from
-                           IntrospectionHelper. validate!,
-                           validate-tree, schema-for, :closed?.
-  pod.clj       ~330 LOC   babashka pod. Inline bencode (~80 LOC).
-                           Exposes execute / execute-stream / files /
-                           files-stream / plan plus the full
-                           clj-ant.tasks namespace via the
-                           describe payload.
+  core.clj      the runner: element/Element, as-child,
+                ->unknown-element, execute!, ant, sessions,
+                target/deftarget, deftask + task, from-xml,
+                realize, files, resources, plan, describe, datafy
+  tasks.clj    GENERATED -- one wrapper per Ant task, type, and
+                nested element. Don't edit; regenerate via clj -X:gen.
+  spec.clj     runtime validation. Builds malli schemas lazily from
+                IntrospectionHelper. validate, validate-tree,
+                schema-for, :closed?, :parent (context-aware).
+  pod.clj      babashka pod. Inline bencode. Exposes execute,
+                execute-stream, files, files-stream, plan, and
+                open-session/execute-in/close-session, plus the
+                full clj-ant.tasks namespace via the describe
+                payload so bb scripts use t/* directly.
 
 src/gen/clj_ant/
-  gen.clj       ~260 LOC   generator. Walks defaults.properties,
-                           reflects via IntrospectionHelper, parses
-                           the Ant manual HTML for descriptions,
-                           emits src/clj/clj_ant/tasks.clj.
+  gen.clj       the generator. Walks defaults.properties + the
+                recursive nested-element graph, reflects via Ant's
+                IntrospectionHelper, parses the bundled manual
+                HTML for descriptions, and emits the wrappers.
 
 src/java/cljant/
-  ClojureTask.java  94 LOC The only Java in the project. Ant requires
-                           a real Class (not a proxy/reify) for
-                           taskdefs because it calls
-                           Class.getDeclaredConstructor().newInstance().
-                           Bridges from Ant's Task lifecycle to a
-                           Clojure IFn registry keyed by task name.
+  ClojureTask.java   the only Java in the project. Bridges Ant's
+                Task lifecycle to a Clojure IFn registry keyed by
+                task name -- needed because Ant requires a real
+                instantiable Class for taskdefs and uses
+                Class.getDeclaredConstructor().newInstance() to
+                build them.
 ```
 
 Everything user-facing lives in `clj-ant.core`. The other namespaces
@@ -178,8 +174,9 @@ Holds a real Ant DataType (typically a `ResourceCollection`) that
 the user wants to inject *as is* — no rebuilding from data. The
 runner registers `object` on the project under a synthetic refid
 and emits a `<tag refid="…"/>` proxy in the AST. `:tag` defaults to
-`:resources`, which works for any RC because Ant's polymorphic
-`add(ResourceCollection)` adder accepts that proxy.
+`:resources`, which works for any `ResourceCollection` because
+Ant's polymorphic `add(ResourceCollection)` adder accepts that
+proxy.
 
 End users almost never construct one directly — `as-child` does it.
 
@@ -222,8 +219,9 @@ is the same hook `ProjectHelper2.ElementHandler` uses when
 assembling the AST from XML. Both methods are public.
 
 For JavaChild: we register the object under `_clj-ant.ref-N`
-on the project, build a stub UnknownElement with `refid` set, and
-let Ant resolve it at configure time.
+on the project (per call, cleaned up in `finally`), build a stub
+UnknownElement with `refid` set, and let Ant resolve it at
+configure time.
 
 
 ## Why one Java file?
@@ -260,9 +258,6 @@ A 70-line Java file is the lightest answer. The class:
 - on `execute()` looks up its fn via `getTaskName()` and invokes it
   with a map of expanded attrs + `:project` + `:task-name` + `:text`.
 
-`make-project` registers this class for every `deftask` name on
-every fresh Project.
-
 This is the only thing in the project that needs `clj -T:build javac`
 before tests/REPL. The compiled class lives in `target/classes`,
 which is on `:paths` in `deps.edn`. Pre-built `.class` ships in the
@@ -298,6 +293,19 @@ without a single `defmacro` or registry registration. Malli's
 quirk for free. Spec would have meant generating `s/def` forms via
 macros — much more code, less inspectable, harder to extend.
 
+### Context-sensitive validation
+
+Some nested tags are ambiguous: `<attribute>` under `<macrodef>` is
+`MacroDef$Attribute` (with `:default`), under `<manifest>` it's
+`Manifest$Attribute` (with `:value`). The generator records every
+`(parent-class, tag) → child-class` triple it sees during the
+nested-element walk, and emits a `:clj-ant/by-parent` map on the
+wrapper for ambiguous tags. `validate-tree` threads parent context
+down through the walk so each child validates against the right
+class — `(t/attribute :name "x" :default "y")` passes under
+`<macrodef>` and gets rejected under `<manifest>`, matching Ant's
+runtime.
+
 ### `:closed? false` default for validation
 
 Most users pull in custom tasks via `<taskdef>`, whose attributes
@@ -310,12 +318,27 @@ false-positives on user taskdefs. `:closed? true` is opt-in for the
 
 The runner's `as-child` accepts Files, Resources, RC instances, and
 seqs of those, and wraps each appropriately. Earlier versions had
-three named wrappers (`child`, `eager-resources`, `lazy-resources`
-— since collapsed into the single `as-child` rule)
+three named wrappers (`child`, `eager-resources`, `lazy-resources`)
 the user had to pick from. That was five names for one concept; we
-collapsed it. `lazy-resources` is kept as `^:no-doc` for the rare
-case where you need to override the size hint or
-`isFilesystemOnly` flag.
+collapsed it. `lazy-resources` is kept around for the rare case
+where you need to override the size hint or `isFilesystemOnly` flag.
+
+### Sessions, not just `with-project`
+
+`(a/session opts)` returns a Session record holding one Ant Project,
+plus `with-session` for scoped lifetimes. `execute!` accepts
+`:session` directly. The same shape exists in the bb pod
+(`open-session` / `execute-in` / `close-session`). Steady-state
+benchmark on a 50-call loop: 575 ms fresh → 23 ms with session →
+14 ms with `prepare` + session.
+
+The session machinery is also where lifecycle correctness matters
+most: every synthetic refid we mint for a `JavaChild` and every
+named target we `addOrReplace` is tracked per-call in a dynamic
+`*execute-ctx*` and removed in `finally`. Without that, reused
+sessions would grow the Project's reference and target tables
+across every call. With it, properties carry over (intentional)
+but the build-local clutter doesn't.
 
 ### bb pod, not native image
 
@@ -329,9 +352,9 @@ identical so existing scripts wouldn't change.
 ### bb pod ships the full `clj-ant.tasks` namespace
 
 The pod's describe payload synthesises a `clj-ant.tasks` namespace
-at startup (one tiny wrapper per task, plus an `element` builder),
-populated by reflecting over the JVM-side `clj-ant.tasks`. So bb
-scripts use `(t/copy :todir "out" (t/fileset :dir "src"))` —
+at startup (one tiny wrapper per task, plus an `make-element`
+builder), populated by reflecting over the JVM-side `clj-ant.tasks`.
+So bb scripts use `(t/copy :todir "out" (t/fileset :dir "src"))` —
 identical syntax to the JVM. Without this the bb side could only
 construct elements as raw `{:tag … :attrs …}` maps, which made
 recipe code diverge.
@@ -349,8 +372,7 @@ top-level dispatch read as a one-liner `if`.
 
 We could resolve task names at runtime — every `(t/foo …)` call
 delegates to a single `(element :foo …)`. Instead the generator
-emits one explicit `defn` per discoverable tag, with rich docstrings
-and `:arglists`
+emits explicit `defn`s with rich docstrings + `:arglists`
 metadata.
 
 Why: **IDE ergonomics**. Cursive, CIDER, and clojure-lsp read
@@ -358,9 +380,8 @@ Why: **IDE ergonomics**. Cursive, CIDER, and clojure-lsp read
 `(t/copy :` brings up `:todir :tofile :overwrite …` inline. With
 dynamic dispatch the IDE has nothing to introspect.
 
-The cost is `tasks.clj` being a checked-in generated file (~9k
-lines, ~250KB). Worth it. Regen with `clj -X:gen` after an Ant
-version bump.
+The cost is `tasks.clj` being a checked-in generated file (large).
+Worth it. Regen with `clj -X:gen` after an Ant version bump.
 
 ### Keep "tag" names as Ant XML names
 
@@ -390,7 +411,7 @@ anyway. The phases:
 :task-finished  :target-finished       :finished
 ```
 
-(The outermost pair was named `:build-started`/`:build-finished`
+(The outermost pair was named `:build-started` / `:build-finished`
 inheriting from Ant's `BuildListener` method names. Renamed —
 clj-ant isn't a build tool.)
 
@@ -405,8 +426,11 @@ clj-ant isn't a build tool.)
             ▼ ant fn parses leading kw opts, calls execute!
 (execute! [Element copy] :level :info)
             │
+            ▼ binding *execute-ctx* with refs/targets atoms
             ▼ make-project: Project + DefaultLogger, init,
-            │ register all deftask'd names
+            │ register all deftask'd names (or sync if reused)
+            ▼ collect inline tasks (those with :clj-ant/inline-fn)
+            ▼ collision-check + register inline tasks transiently
             ▼ for each top-level Element, ->unknown-element
             │
             │   ->unknown-element(Element copy, project, target)
@@ -416,7 +440,9 @@ clj-ant isn't a build tool.)
             │       recurse into :children:
             │           ->unknown-element(Element fileset, ...)
             │       (or, if a child is a JavaChild:
-            │            register obj on project, emit refid proxy)
+            │            register obj on project with a refid we
+            │            also push into *execute-ctx*, emit refid
+            │            proxy element)
             │       ue.setRuntimeConfigurableWrapper(wrap)
             │
             ▼ implicit Target ""
@@ -426,6 +452,12 @@ clj-ant isn't a build tool.)
                 ▼ Ant evaluates the AST. RuntimeConfigurable
                   expands ${...}, resolves refids, builds the real
                   Task / DataType, calls .execute().
+            │
+            ▼ finally:
+              remove BuildListener
+              restore prior class bindings for inline tasks
+              remove every refid we registered
+              remove every named target we addOrReplace'd
 ```
 
 ### Reading a build.xml (XML → data)
@@ -437,10 +469,11 @@ clj-ant isn't a build tool.)
        ▼ xml->element walk:
        │   {:tag :attrs :content} -> ->Element
        │   text content collapsed; whitespace-only dropped
-       ▼ root :project Element
+       ▼ root :project Element with :clj-ant/source-dir attr
        │
        ▼ pass to (a/ant ...) -- execute! special-cases :project:
-       │   lift basedir/name/default to opts
+       │   resolve relative basedir against source-dir,
+       │   lift name/default into opts
        │   children become elements
        │   if a default target was named, run it (after the
        │   implicit unnamed target, so root <property> declarations
@@ -456,22 +489,26 @@ bb script                       JVM pod
    sends "describe" op           ────►
                                  builds describe payload:
                                    - clj-ant.pod ns (execute, plan,
-                                     files, execute-stream, files-stream)
-                                   - clj-ant.tasks ns (reflected from
-                                     JVM tasks namespace + make-element)
+                                     files, execute-stream,
+                                     files-stream, open/close/in
+                                     session)
+                                   - clj-ant.tasks ns (reflected
+                                     from JVM, one wrapper per
+                                     task + make-element)
                                  returns bencode dict
    ◄──── sci eval'd into bb's runtime
 (t/copy :todir ... (t/fileset ...))
    builds {:tag :copy ...} map  (in bb)
-(a/execute-stream [...] handler)
+(a/execute-in sid [...])
    sends "invoke" with edn args ────►
-                                 op-execute-stream calls core/execute!
-                                 with :on-event that pushes each
-                                 event back as bencode reply with
-                                 status [].
-                                 Final reply with status [done].
+                                 op-execute-in calls
+                                 core/execute! with :session.
+                                 :on-event pushes each event back
+                                 as bencode reply with status [].
+                                 Final reply is the cleaned result
+                                 wrapped in {:clj-ant/result …}.
    ◄──── for each event, success-handler fires
-   ◄──── final reply ends invoke
+   ◄──── final reply is the sentinel; bb stub unwraps & returns
 ```
 
 
@@ -510,9 +547,10 @@ inside it.
 ## Conventions
 
 - **Commit messages**: summary line, blank line, body wrapped at
-  80 columns. No AI/Claude attribution. (See user memory.)
-- **Comments**: explain *why* not *what*. Anti-pattern is "// rename
-  variable for refactor #123" — that belongs in PR description.
+  80 columns. Keep messages focused on the *why*.
+- **Comments**: explain *why*, not *what*. Anti-pattern is
+  "// rename variable for refactor #123" — that belongs in a PR
+  description.
 - **No emoji** in code or commits unless explicitly requested.
 - **Docstrings**: lead with what the function returns, then options.
   Mirror the structure of existing docstrings in `core.clj`.
@@ -549,39 +587,39 @@ inside it.
   work for clj-ant element trees automatically.
 
 
-## Anti-patterns (things you'll be tempted to do; don't)
+## Decisions we'd revisit if we started over
 
-- **"Just generate XML and feed it to ProjectHelper2."** That's
-  what the original repo did. The XML round-trip plus the URL
-  protocol handler plus the Main fork was 1500 lines of Java. Don't.
+A short list of choices that look reasonable but have known
+limitations or open questions. Mostly here to save the next
+contributor from re-discovering them.
 
-- **"Use IntrospectionHelper.setAttribute directly to skip the
-  RuntimeConfigurable wrap."** Doesn't expand `${...}`. Doesn't do
-  refid. Doesn't do macrodef. We tried. The wrap layer is mandatory.
+- **The XML-emit approach.** The previous incarnation of this repo
+  did this, with the `Main.java` fork and the URL handler. ~1500
+  lines of Java. The current direct-AST approach is ~150 lines of
+  Clojure. If you find yourself thinking "let me just generate
+  the XML and hand it to ProjectHelper2" — read the `git log` of
+  what got deleted to make this work.
 
-- **"Make Element splice when it has children — `(t/copy ... fileset
-  fileset)` should mean two filesets."** It already does — but only
-  if both filesets are passed as separate args. A *vector* of
-  filesets passed as a single arg is treated as a sequential and
-  spliced for nodes-of-nodes, OR coerced to a ResourceCollection
-  for files-or-resources. Inspect first element to disambiguate.
-  Don't add more cases.
+- **`IntrospectionHelper.setAttribute` directly.** Skips the
+  RuntimeConfigurable wrap and calls the setter immediately.
+  Doesn't expand `${...}`, doesn't resolve `refid`, doesn't do
+  `macrodef`. The wrap layer is mandatory.
 
-- **"Add a third record type for X."** Two records (`Element` and
-  `JavaChild`) cover the runner's dispatch. A third would mean a
-  third branch in `->unknown-element`. Resist.
+- **A third record type.** Two records (`Element` and `JavaChild`)
+  cover the runner's dispatch. A third would mean a third branch
+  in `->unknown-element`. Resist.
 
-- **"Bundle every Ant optional module."** ant-jsch is bundled
-  because SSH is the killer use case. ant-junit / ant-jmf /
-  ant-commons-net etc. are not bundled — users who need them add
-  them to their own `deps.edn`. The generator picks them up on the
-  next `clj -X:gen` and emits wrappers automatically.
+- **Bundling every Ant optional module.** `ant-jsch` is bundled
+  because SSH is the killer use case. `ant-junit` / `ant-jmf` /
+  `ant-commons-net` etc. are not bundled — users who need them
+  add them to their own `deps.edn`. The generator picks them up
+  on the next `clj -X:gen` and emits wrappers automatically.
 
-- **"Add `:keep-going` / `:fail-on-error` / etc. as top-level opts."**
-  These are Ant attributes on individual targets. Use them as
-  attributes, don't lift them into `execute!`.
+- **Lifting `:keep-going` / `:fail-on-error` / etc. to top-level
+  opts.** These are Ant attributes on individual targets. Use
+  them as attributes; don't lift them into `execute!`.
 
-- **"Touch `tasks.clj` by hand."** It's generated. Edit `gen.clj`
+- **Editing `tasks.clj` by hand.** It's generated. Edit `gen.clj`
   and re-run `clj -X:gen`.
 
 
@@ -596,9 +634,10 @@ inside it.
 | Test passes locally, fails on fresh checkout    | `clj -T:build javac` not run. `target/classes/cljant/ClojureTask.class` missing. |
 | Unknown task at runtime                         | Custom `<taskdef>` loaded the class but `make-project` didn't see it. Or the fn under that name in `ClojureTask/REGISTRY` was cleared. |
 | Stack overflow loading `clj-ant.tasks` in bb    | `apply` (or `concat`/`replace`/...) self-recurses. The bb wrappers must use `clojure.core/apply` (fully qualified). |
+| Reused session leaks references / targets       | `*execute-ctx*` not bound or `finally` not run. |
 
 
-## Glossary cheat sheet
+## Public-API cheat sheet
 
 ```
 Element            user-built data form. Has :tag :attrs :children :text
@@ -608,13 +647,18 @@ as-child           single coercion point
 ->unknown-element  data → Ant AST
 execute!           the runner (low level)
 ant                user-facing wrapper around execute!
+session / with-session  long-lived Project for tight loops
+prepare / run      coerce+validate once, replay cheaply
 target / deftarget named targets and dependency resolution
-deftask            Clojure fn → Ant task class
+deftask            global registration of a Clojure fn as a task
+task               inline Clojure thunk as a one-shot task element
 realize            Element → live Java object
 files / resources  Element → seq of File / Resource
 plan               pretty-print an Element tree
 describe           introspect a tag (tag → attrs/nested map)
 from-xml           build.xml → Element tree
+elements           lazy seq of every node in a tree
+transform          rewrite a tree, post-order
 schema-for         malli schema for a tag
 validate-tree      collect errors from a tree
 ```
