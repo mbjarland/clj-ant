@@ -179,14 +179,27 @@
   Returns the cleaned execute! result map wrapped in a sentinel
   {:clj-ant/result …} so the bb-side stub can tell events apart
   from the final result -- otherwise, since the success handler
-  fires async, callers can't synchronise."
+  fires async, callers can't synchronise.
+
+  Accepts `:session <id>` in opts to run inside a previously-opened
+  session (same id you got back from open-session). Without it, a
+  fresh project is built per call."
   [{:keys [elements opts]} partial!]
-  {:clj-ant/result
-   (-> (apply core/execute! elements
-              (mapcat identity
-                      (-> (or opts {})
-                          (assoc :on-event (fn [e] (partial! e))))))
-       element-clean)})
+  (let [opts*    (or opts {})
+        session  (when-some [id (:session opts*)]
+                   (or (get @sessions id)
+                       (throw (ex-info
+                                (str "Unknown session id: " (pr-str id)
+                                     ". Open one first via "
+                                     "(a/open-session ...).")
+                                {:id id :open-sessions
+                                 (vec (keys @sessions))}))))
+        opts**   (-> opts*
+                     (assoc :on-event (fn [e] (partial! e)))
+                     (cond-> session (assoc :session session)))]
+    {:clj-ant/result
+     (-> (apply core/execute! elements (mapcat identity opts**))
+         element-clean)}))
 
 (defn ^:no-doc op-files-stream
   "Streaming variant of files: each path is delivered as it's

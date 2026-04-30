@@ -12,22 +12,64 @@ it were a local namespace.
 
 ## What you get
 
-A bb script can:
+A bb deploy script. SSH, token substitution, and live event
+output — the parts bb is bad at on its own — become a single
+expression with the pod loaded:
 
 ```clojure
-(require '[babashka.pods :as pods])
+#!/usr/bin/env bb
+(require '[babashka.pods :as pods]
+         '[babashka.fs   :as fs]
+         '[clojure.edn   :as edn])
+
 (pods/load-pod ["clojure" "-M:pod"])
 (require '[clj-ant.pod   :as a]
-         '[clj-ant.tasks :as t])     ; same wrappers bb gets via the pod
+         '[clj-ant.tasks :as t])
 
-(a/execute
-  [(t/property :name "dst" :value "out")
-   (t/copy :todir "${dst}"
-     (t/fileset :dir "src" :includes "**/*.clj"))])
+(let [{:keys [version host user]} (edn/read-string (slurp ".env.edn"))
+      key   (str (fs/home) "/.ssh/id_ed25519")
+      jar   (str "target/app-" version ".jar")
+      print-step (fn [{:keys [phase task message]}]
+                   (case phase
+                     :task-started  (println "▶" task)
+                     :message       (when message (println " " message))
+                     :task-finished (println "✓" task)
+                     nil))]
 
-(a/files (t/fileset :dir "src" :includes "**/*.clj"))
-;; => ["/abs/path/a.clj" "/abs/path/b.clj" ...]
+  (a/execute-stream
+    [;; Stamp @VERSION@ / @HOST@ into every changed config template,
+     ;; streaming through the file -- never fully buffered:
+     (t/copy :todir "deploy/etc"
+       ;; bb-side filter on the fileset, fed back as the source:
+       (->> (a/files (t/fileset :dir "etc/templates"))
+            (filter #(> (fs/last-modified-time %) (fs/last-modified-time
+                                                    "/last-deploy"))))
+       (t/filterchain
+         (t/tokenfilter
+           (t/replacestring :from "@VERSION@" :to version)
+           (t/replacestring :from "@HOST@"    :to host))))
+
+     ;; Verify the artifact, push it, restart the remote service:
+     (t/checksum :file jar :algorithm "SHA-256"
+                 :property "sum" :verifyproperty "ok")
+     (t/fail :unless "ok" :message "checksum mismatch")
+     (t/scp     :file jar :todir (str user "@" host ":/srv/")
+                :keyfile key :trust "true")
+     (t/sshexec :host host :username user :keyfile key :trust "true"
+                :command "systemctl --user restart app")]
+    print-step))
 ```
+
+That's a real CI-shaped script: bb-side mtime filter on an Ant
+fileset, streaming token substitution at copy time, SHA-256
+verification with a `<fail>` short-circuit, SSH push, remote
+command — all with `▶`/`✓`/log lines streaming live to the
+console as Ant fires the events.
+
+bb's `babashka.fs` and `babashka.process` cover the small
+filesystem ops they do well; the pod covers the long tail
+(filter chains, mappers, archives, SSH, replaceregexp, parallel
+…) that bb itself can't host.
 
 Operations exposed today:
 
