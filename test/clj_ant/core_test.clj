@@ -217,6 +217,58 @@
       (is (= ["x.txt"] (mapv #(.getName %)
                              (.listFiles (File. base "out"))))))))
 
+(deftest task-collision-rejection
+  (let [v (requiring-resolve 'clj-ant.core/task)]
+    (testing "(task :built-in fn) is rejected outright"
+      (is (thrown-with-msg?
+            clojure.lang.ExceptionInfo
+            #"collides with an existing task definition"
+            (a/ant :level :error (v :echo (fn [_] :nope))))))
+
+    (testing "(task :existing-deftask fn) is rejected"
+      (a/deftask :collide-deftask (fn [_] :original))
+      (try
+        (is (thrown-with-msg?
+              clojure.lang.ExceptionInfo
+              #"collides with an existing task definition"
+              (a/ant :level :error (v :collide-deftask (fn [_] :wrong)))))
+        ;; deftask still works
+        (a/ant :level :error (a/element :collide-deftask))
+        (finally
+          (.remove cljant.ClojureTask/REGISTRY "collide-deftask")))))
+
+  (testing "after an inline-task build, built-in tasks still work"
+    (a/ant :level :error
+      (a/element :echo :message "first")
+      (a/task #(do nil))
+      (a/element :echo :message "second"))
+    ;; second build, same JVM: echo still resolves correctly
+    (a/ant :level :error (a/element :echo :message "second build"))
+    (is true)))
+
+(deftest parent-context-validation
+  (let [v (requiring-resolve 'clj-ant.spec/validate)]
+    (testing "<attribute> under macrodef accepts :default, rejects :value"
+      (is (nil? (v :attribute {:name "who" :default "world"}
+                   {:closed? true :parent :macrodef})))
+      (is (some? (v :attribute {:name "who" :value "x"}
+                    {:closed? true :parent :macrodef}))))
+
+    (testing "<attribute> under manifest accepts :value, rejects :default"
+      (is (nil? (v :attribute {:name "X" :value "v"}
+                   {:closed? true :parent :manifest})))
+      (is (some? (v :attribute {:name "X" :default "v"}
+                    {:closed? true :parent :manifest})))))
+
+  (testing "validate-tree threads parent context through the walk"
+    (let [vt (requiring-resolve 'clj-ant.spec/validate-tree)
+          bad (a/element :macrodef :name "shout"
+                (a/element :attribute :name "who" :value "x"))
+          good (a/element :macrodef :name "shout"
+                 (a/element :attribute :name "who" :default "x"))]
+      (is (= 1 (count (vt bad {:closed? true}))))
+      (is (zero? (count (vt good {:closed? true})))))))
+
 (deftest plain-map-tree-with-raw-children
   (testing "execute! handles map-shaped trees with raw seq/File children
             (the shape from-xml and the bb pod produce)"

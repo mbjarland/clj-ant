@@ -373,9 +373,13 @@
   reusable named task across many builds."
   ([f] (task nil f))
   ([tag f]
-   (let [tag (or tag
-                 (keyword "clj-ant.run"
-                          (str (System/identityHashCode f))))]
+   (let [;; Anonymous tasks get a distinctively-prefixed name so they
+         ;; cannot collide with any Ant task or user deftask. Explicit
+         ;; tags pass through verbatim; the runner refuses at execute
+         ;; time if they would shadow something.
+         tag (or tag
+                 (keyword (str "clj-ant-inline-"
+                               (System/identityHashCode f))))]
      (with-meta (element tag)
                 {:clj-ant/inline-fn f}))))
 
@@ -561,7 +565,44 @@
         ;; Inline tasks created via `task`. We add their fns to the
         ;; registry just for this run and remove them in `finally`,
         ;; so a long REPL session doesn't leak per-call inline tasks.
+        ;;
+        ;; Collision policy: an explicit tag that already maps to a
+        ;; non-ClojureTask definition (built-in task or some other
+        ;; deftask under a *different* class) is refused outright --
+        ;; better to fail loudly than to silently rebind <echo> for
+        ;; the rest of the build, or to clobber a deftask on cleanup.
+        ;; A tag that already maps to ClojureTask (i.e. an existing
+        ;; deftask of the same name) IS refused too: we would
+        ;; otherwise overwrite its fn during the build and remove its
+        ;; entry on cleanup.
+        ;;
+        ;; Save/restore: anonymous tags use a distinct prefix and
+        ;; can't collide. We still snapshot prior task definitions
+        ;; per inline tag so any future widening of the policy is
+        ;; safe by construction.
         inline-tasks (collect-inline-tasks elements)
+        _ (doseq [{:keys [tag]} inline-tasks]
+            (let [n (clojure.core/name tag)
+                  prior (.get (.getTaskDefinitions project) n)]
+              (when prior
+                (throw
+                  (ex-info
+                    (str "(a/task " (pr-str tag) " ...) collides with an "
+                         "existing task definition (" (.getName ^Class prior)
+                         "). Use a different tag, or `deftask` if you want "
+                         "a permanent named task.")
+                    {:tag tag :existing (.getName ^Class prior)})))
+              (when (.containsKey ClojureTask/REGISTRY n)
+                (throw
+                  (ex-info
+                    (str "(a/task " (pr-str tag) " ...) collides with an "
+                         "existing deftask under the same name.")
+                    {:tag tag})))))
+        prior-defs (reduce (fn [m {:keys [tag]}]
+                             (let [n (clojure.core/name tag)]
+                               (assoc m n (.get (.getTaskDefinitions project) n))))
+                           {}
+                           inline-tasks)
         _ (doseq [{:keys [tag fn]} inline-tasks]
             (let [n (clojure.core/name tag)]
               (.put ClojureTask/REGISTRY n (clojure.core/fn [_] (fn)))
@@ -671,7 +712,15 @@
         (finally
           (when rec (.removeBuildListener project rec))
           (doseq [{:keys [tag]} inline-tasks]
-            (.remove ClojureTask/REGISTRY (clojure.core/name tag))))))))
+            (let [n (clojure.core/name tag)]
+              (.remove ClojureTask/REGISTRY n)
+              ;; Restore the prior class binding on the project, or
+              ;; remove ours entirely if there wasn't one. This keeps
+              ;; reused projects in the same shape they were before
+              ;; this execute! call.
+              (if-some [prior (get prior-defs n)]
+                (.addTaskDefinition project n prior)
+                (.remove (.getTaskDefinitions project) n)))))))))
 
 ;; ---------------------------------------------------------------------------
 ;; Targets
