@@ -83,7 +83,7 @@ Replaced by ~150 lines of Clojure walking the data into
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  Generated wrappers   (clj-ant.tasks, ~252 fns)             │
+│  Generated wrappers   (clj-ant.tasks, ~467 fns)             │
 │  Each is one line: (apply c/element :tag args).             │
 │  Carries rich :doc + :arglists for the IDE.                 │
 └─────────────────────────────────────────────────────────────┘
@@ -119,7 +119,9 @@ src/clj/clj_ant/
                            target/deftarget, deftask, from-xml,
                            realize, files, resources, plan,
                            describe, datafy
-  tasks.clj    ~8800 LOC   GENERATED -- 252 task/type wrappers.
+  tasks.clj   ~16000 LOC   GENERATED -- 467 task / type / nested
+                           wrappers (top-level defaults.properties
+                           plus the recursive nested-element graph).
                            Don't edit; regenerate with clj -X:gen.
   spec.clj      ~140 LOC   malli schemas built lazily from
                            IntrospectionHelper. validate!,
@@ -308,7 +310,8 @@ false-positives on user taskdefs. `:closed? true` is opt-in for the
 
 The runner's `as-child` accepts Files, Resources, RC instances, and
 seqs of those, and wraps each appropriately. Earlier versions had
-three named wrappers (`child`, `eager-resources`, `lazy-resources`)
+three named wrappers (`child`, `eager-resources`, `lazy-resources`
+— since collapsed into the single `as-child` rule)
 the user had to pick from. That was five names for one concept; we
 collapsed it. `lazy-resources` is kept as `^:no-doc` for the rare
 case where you need to override the size hint or
@@ -346,7 +349,7 @@ top-level dispatch read as a one-liner `if`.
 
 We could resolve task names at runtime — every `(t/foo …)` call
 delegates to a single `(element :foo …)`. Instead the generator
-emits 252 explicit `defn`s with rich docstrings + `:arglists`
+emits 467 explicit `defn`s with rich docstrings + `:arglists`
 metadata.
 
 Why: **IDE ergonomics**. Cursive, CIDER, and clojure-lsp read
@@ -454,7 +457,7 @@ bb script                       JVM pod
                                    - clj-ant.pod ns (execute, plan,
                                      files, execute-stream, files-stream)
                                    - clj-ant.tasks ns (reflected from
-                                     JVM, 252 wrappers + element)
+                                     JVM, 467 wrappers + make-element)
                                  returns bencode dict
    ◄──── sci eval'd into bb's runtime
 (t/copy :todir ... (t/fileset ...))

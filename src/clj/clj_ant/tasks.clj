@@ -8796,6 +8796,45 @@
   [& args]
   (clojure.core/apply c/element :add args))
 
+(defn addfiles
+  "Ant nested addfiles. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "addfiles", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :addfiles args))
+
+(defn additionalconfig
+  "Ant nested additionalconfig. (No description bundled.)
+
+  Attributes:
+    :file                      File
+    :key                       String
+    :path                      Path
+    :value                     String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Environment$Variable"
+  {:arglists (quote ([& {:keys [file key path value], :as attrs} & nested])), :clj-ant/tag "additionalconfig", :clj-ant/class "org.apache.tools.ant.types.Environment$Variable"}
+  [& args]
+  (clojure.core/apply c/element :additionalconfig args))
+
 (defn and
   "Ant nested and. (No description bundled.)
 
@@ -8829,6 +8868,11 @@
     :type                      (TypeSelector)
     :windowsjunction           (WindowsJunctionSelector)
     :writable                  (WritableSelector)
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.condition.And
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -8848,6 +8892,11 @@
     :prefix                    String
     :suffix                    String
     :value                     String
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.util.facade.ImplementationSpecificArgument
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -8856,12 +8905,63 @@
   [& args]
   (clojure.core/apply c/element :arg args))
 
+(defn argument
+  "Ant nested argument. (No description bundled.)
+
+  Attributes:
+    :file                      File
+    :line                      String
+    :path                      Path
+    :pathref                   Reference
+    :prefix                    String
+    :suffix                    String
+    :value                     String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Commandline$Argument"
+  {:arglists (quote ([& {:keys [file line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "argument", :clj-ant/class "org.apache.tools.ant.types.Commandline$Argument"}
+  [& args]
+  (clojure.core/apply c/element :argument args))
+
+(defn attachments
+  "Ant nested attachments. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "attachments", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :attachments args))
+
 (defn attribute
   "Ant nested attribute. (No description bundled.)
 
   Attributes:
     :name                      String
     :value                     String
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.optional.extension.ExtraAttribute
+    org.apache.tools.ant.taskdefs.MacroDef$Attribute
+    org.apache.tools.ant.taskdefs.optional.XMLValidateTask$Attribute
+    org.apache.tools.ant.taskdefs.optional.script.ScriptDef$Attribute
+    org.apache.tools.ant.taskdefs.XSLTProcess$Factory$Attribute
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -8869,6 +8969,63 @@
   {:arglists (quote ([& {:keys [name value], :as attrs} & nested])), :clj-ant/tag "attribute", :clj-ant/class "org.apache.tools.ant.taskdefs.Manifest$Attribute"}
   [& args]
   (clojure.core/apply c/element :attribute args))
+
+(defn basedir
+  "Ant nested basedir. (No description bundled.)
+
+  Attributes:
+    :basedir                   File
+    :directory                 boolean
+    :exists                    boolean
+    :file                      File
+    :lastmodified              long
+    :name                      String
+    :refid                     Reference
+    :size                      long
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.resources.FileResource"
+  {:arglists (quote ([& {:keys [basedir directory exists file lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "basedir", :clj-ant/class "org.apache.tools.ant.types.resources.FileResource"}
+  [& args]
+  (clojure.core/apply c/element :basedir args))
+
+(defn bcc
+  "Ant nested bcc. (No description bundled.)
+
+  Attributes:
+    :address                   String
+    :name                      String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.email.EmailAddress"
+  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "bcc", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress"}
+  [& args]
+  (clojure.core/apply c/element :bcc args))
+
+(defn bootclasspath
+  "Ant nested bootclasspath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "bootclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :bootclasspath args))
 
 (defn borland
   "Ant nested borland. (No description bundled.)
@@ -8895,6 +9052,91 @@
   [& args]
   (clojure.core/apply c/element :borland args))
 
+(defn bottom
+  "Ant nested bottom. (No description bundled.)
+
+  Body text: this element accepts a free-form text body.
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.Javadoc$Html"
+  {:arglists (quote ([& nested])), :clj-ant/tag "bottom", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$Html"}
+  [& args]
+  (clojure.core/apply c/element :bottom args))
+
+(defn buildpath
+  "Ant nested buildpath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "buildpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :buildpath args))
+
+(defn buildpathelement
+  "Ant nested buildpathelement. (No description bundled.)
+
+  Attributes:
+    :path                      String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path$PathElement"
+  {:arglists (quote ([& {:keys [path], :as attrs} & nested])), :clj-ant/tag "buildpathelement", :clj-ant/class "org.apache.tools.ant.types.Path$PathElement"}
+  [& args]
+  (clojure.core/apply c/element :buildpathelement args))
+
+(defn catalogpath
+  "Ant nested catalogpath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "catalogpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :catalogpath args))
+
+(defn cc
+  "Ant nested cc. (No description bundled.)
+
+  Attributes:
+    :address                   String
+    :name                      String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.email.EmailAddress"
+  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "cc", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress"}
+  [& args]
+  (clojure.core/apply c/element :cc args))
+
 (defn class
   "Ant nested class. (No description bundled.)
 
@@ -8918,6 +9160,70 @@
   {:arglists (quote ([& nested])), :clj-ant/tag "classconstants", :clj-ant/class "org.apache.tools.ant.filters.ClassConstants"}
   [& args]
   (clojure.core/apply c/element :classconstants args))
+
+(defn classes
+  "Ant nested classes. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :dirmode                   String
+    :encoding                  String
+    :erroronmissingarchive     boolean
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :filemode                  String
+    :followsymlinks            boolean
+    :fullpath                  String
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :prefix                    String
+    :refid                     Reference
+    :src                       File
+    :srcresource               Resource
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.ZipFileSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "classes", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet"}
+  [& args]
+  (clojure.core/apply c/element :classes args))
 
 (defn classpath
   "Ant nested classpath. (No description bundled.)
@@ -8958,6 +9264,29 @@
   [& args]
   (clojure.core/apply c/element :commandline args))
 
+(defn commandpath
+  "Ant nested commandpath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "commandpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :commandpath args))
+
 (defn comment
   "Ant nested comment. (No description bundled.)
 
@@ -8985,6 +9314,11 @@
     :prefix                    String
     :suffix                    String
     :value                     String
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.Rmic$ImplementationSpecificArgument
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -8992,6 +9326,29 @@
   {:arglists (quote ([& {:keys [compiler file implementation line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "compilerarg", :clj-ant/class "org.apache.tools.ant.taskdefs.Javac$ImplementationSpecificArgument"}
   [& args]
   (clojure.core/apply c/element :compilerarg args))
+
+(defn compilerclasspath
+  "Ant nested compilerclasspath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "compilerclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :compilerclasspath args))
 
 (defn compress
   "Ant nested compress. (No description bundled.)
@@ -9009,6 +9366,59 @@
   [& args]
   (clojure.core/apply c/element :compress args))
 
+(defn configpath
+  "Ant nested configpath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "configpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :configpath args))
+
+(defn connectionproperty
+  "Ant nested connectionproperty. (No description bundled.)
+
+  Attributes:
+    :basedir                   File
+    :classpath                 Path
+    :classpathref              Reference
+    :environment               String
+    :file                      File
+    :name                      String
+    :prefix                    String
+    :prefixvalues              boolean
+    :refid                     Reference
+    :relative                  boolean
+    :resource                  String
+    :runtime                   String
+    :url                       URL
+    :userproperty              boolean
+    :value                     Object
+  Nested elements:
+    :classpath                 (Path)
+  Body text: this element accepts a free-form text body.
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.Property"
+  {:arglists (quote ([& {:keys [basedir classpath classpathref environment file name prefix prefixvalues refid relative resource runtime url userproperty value], :as attrs} & nested])), :clj-ant/tag "connectionproperty", :clj-ant/class "org.apache.tools.ant.taskdefs.Property"}
+  [& args]
+  (clojure.core/apply c/element :connectionproperty args))
+
 (defn contains
   "Ant nested contains. (No description bundled.)
 
@@ -9019,6 +9429,12 @@
     :ignorewhitespace          boolean
     :refid                     Reference
     :text                      String
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.filters.LineContains$Contains
+    org.apache.tools.ant.taskdefs.condition.Contains
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -9151,6 +9567,23 @@
   [& args]
   (clojure.core/apply c/element :deletecharacters args))
 
+(defn depends
+  "Ant nested depends. (No description bundled.)
+
+  Attributes:
+    :refid                     Reference
+  Nested elements:
+    :extension                 (ExtensionAdapter)
+    :fileset                   (FileSet)
+    :libfileset                (LibFileSet)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "depends", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"}
+  [& args]
+  (clojure.core/apply c/element :depends args))
+
 (defn depth
   "Ant nested depth. (No description bundled.)
 
@@ -9250,6 +9683,12 @@
   Attributes:
     :base                      URL
     :publicid                  String
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.types.ResourceLocation
+    org.apache.tools.ant.types.DTDLocation
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -9265,6 +9704,11 @@
     :implicit                  boolean
     :name                      String
     :optional                  boolean
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.optional.script.ScriptDef$NestedElement
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -9389,6 +9833,28 @@
   [& args]
   (clojure.core/apply c/element :errorfilterchain args))
 
+(defn errormapper
+  "Ant nested errormapper. (No description bundled.)
+
+  Attributes:
+    :classname                 String
+    :classpath                 Path
+    :classpathref              Reference
+    :from                      String
+    :refid                     Reference
+    :to                        String
+    :type                      MapperType
+  Nested elements:
+    :classpath                 (Path)
+    :mapper                    (Mapper)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Mapper"
+  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "errormapper", :clj-ant/class "org.apache.tools.ant.types.Mapper"}
+  [& args]
+  (clojure.core/apply c/element :errormapper args))
+
 (defn escapeunicode
   "Ant nested escapeunicode. (No description bundled.)
 
@@ -9399,6 +9865,77 @@
   {:arglists (quote ([& nested])), :clj-ant/tag "escapeunicode", :clj-ant/class "org.apache.tools.ant.filters.EscapeUnicode"}
   [& args]
   (clojure.core/apply c/element :escapeunicode args))
+
+(defn exclude
+  "Ant nested exclude. (No description bundled.)
+
+  Attributes:
+    :if                        Object
+    :name                      String
+    :unless                    Object
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.PatternSet$NameEntry"
+  {:arglists (quote ([& {:keys [if name unless], :as attrs} & nested])), :clj-ant/tag "exclude", :clj-ant/class "org.apache.tools.ant.types.PatternSet$NameEntry"}
+  [& args]
+  (clojure.core/apply c/element :exclude args))
+
+(defn excludefiles
+  "Ant nested excludefiles. (No description bundled.)
+
+  Attributes:
+    :listfile                  File
+    :pattern                   String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"
+  {:arglists (quote ([& {:keys [listfile pattern], :as attrs} & nested])), :clj-ant/tag "excludefiles", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"}
+  [& args]
+  (clojure.core/apply c/element :excludefiles args))
+
+(defn excludepackage
+  "Ant nested excludepackage. (No description bundled.)
+
+  Attributes:
+    :name                      String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.Javadoc$PackageName"
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "excludepackage", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$PackageName"}
+  [& args]
+  (clojure.core/apply c/element :excludepackage args))
+
+(defn excluderesources
+  "Ant nested excluderesources. (No description bundled.)
+
+  Attributes:
+    :listfile                  File
+    :pattern                   String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"
+  {:arglists (quote ([& {:keys [listfile pattern], :as attrs} & nested])), :clj-ant/tag "excluderesources", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"}
+  [& args]
+  (clojure.core/apply c/element :excluderesources args))
+
+(defn excludesfile
+  "Ant nested excludesfile. (No description bundled.)
+
+  Attributes:
+    :if                        Object
+    :name                      String
+    :unless                    Object
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.PatternSet$NameEntry"
+  {:arglists (quote ([& {:keys [if name unless], :as attrs} & nested])), :clj-ant/tag "excludesfile", :clj-ant/class "org.apache.tools.ant.types.PatternSet$NameEntry"}
+  [& args]
+  (clojure.core/apply c/element :excludesfile args))
 
 (defn executable
   "Ant nested executable. (No description bundled.)
@@ -9411,6 +9948,29 @@
   [& args]
   (clojure.core/apply c/element :executable args))
 
+(defn existing
+  "Ant nested existing. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "existing", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :existing args))
+
 (defn expandproperties
   "Ant nested expandproperties. (No description bundled.)
 
@@ -9421,6 +9981,29 @@
   {:arglists (quote ([& nested])), :clj-ant/tag "expandproperties", :clj-ant/class "org.apache.tools.ant.filters.ExpandProperties"}
   [& args]
   (clojure.core/apply c/element :expandproperties args))
+
+(defn extdirs
+  "Ant nested extdirs. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "extdirs", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :extdirs args))
 
 (defn extensionset
   "Ant nested extensionset. (No description bundled.)
@@ -9487,6 +10070,29 @@
   [& args]
   (clojure.core/apply c/element :filename args))
 
+(defn filepath
+  "Ant nested filepath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "filepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :filepath args))
+
 (defn filesmatch
   "Ant nested filesmatch. (No description bundled.)
 
@@ -9525,6 +10131,11 @@
     :trim                      boolean
     :trimleading               boolean
   Body text: this element accepts a free-form text body.
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.Javadoc$Html
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -9550,6 +10161,20 @@
   {:arglists (quote ([& {:keys [locale offset pattern property timezone unit], :as attrs} & nested])), :clj-ant/tag "format", :clj-ant/class "org.apache.tools.ant.taskdefs.Tstamp$CustomFormat"}
   [& args]
   (clojure.core/apply c/element :format args))
+
+(defn from
+  "Ant nested from. (No description bundled.)
+
+  Attributes:
+    :address                   String
+    :name                      String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.email.EmailAddress"
+  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "from", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress"}
+  [& args]
+  (clojure.core/apply c/element :from args))
 
 (defn generic
   "Ant nested generic. (No description bundled.)
@@ -9630,15 +10255,48 @@
   "Ant nested header. (No description bundled.)
 
   Attributes:
-    :name                      String
-    :value                     String
+    :encoding                  String
+    :file                      File
+    :filtering                 boolean
+    :trim                      boolean
+    :trimleading               boolean
+  Body text: this element accepts a free-form text body.
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.email.Header
+    org.apache.tools.ant.taskdefs.Javadoc$Html
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
-  Defined by: org.apache.tools.ant.taskdefs.email.Header"
-  {:arglists (quote ([& {:keys [name value], :as attrs} & nested])), :clj-ant/tag "header", :clj-ant/class "org.apache.tools.ant.taskdefs.email.Header"}
+  Defined by: org.apache.tools.ant.taskdefs.Concat$TextElement"
+  {:arglists (quote ([& {:keys [encoding file filtering trim trimleading], :as attrs} & nested])), :clj-ant/tag "header", :clj-ant/class "org.apache.tools.ant.taskdefs.Concat$TextElement"}
   [& args]
   (clojure.core/apply c/element :header args))
+
+(defn headerpath
+  "Ant nested headerpath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "headerpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :headerpath args))
 
 (defn headfilter
   "Ant nested headfilter. (No description bundled.)
@@ -9683,6 +10341,171 @@
   {:arglists (quote ([& {:keys [byline], :as attrs} & nested])), :clj-ant/tag "ignoreblank", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$IgnoreBlank"}
   [& args]
   (clojure.core/apply c/element :ignoreblank args))
+
+(defn implementationclasspath
+  "Ant nested implementationclasspath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "implementationclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :implementationclasspath args))
+
+(defn includesfile
+  "Ant nested includesfile. (No description bundled.)
+
+  Attributes:
+    :if                        Object
+    :name                      String
+    :unless                    Object
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.PatternSet$NameEntry"
+  {:arglists (quote ([& {:keys [if name unless], :as attrs} & nested])), :clj-ant/tag "includesfile", :clj-ant/class "org.apache.tools.ant.types.PatternSet$NameEntry"}
+  [& args]
+  (clojure.core/apply c/element :includesfile args))
+
+(defn indexjars
+  "Ant nested indexjars. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "indexjars", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :indexjars args))
+
+(defn indexjarsmapper
+  "Ant nested indexjarsmapper. (No description bundled.)
+
+  Attributes:
+    :classname                 String
+    :classpath                 Path
+    :classpathref              Reference
+    :from                      String
+    :refid                     Reference
+    :to                        String
+    :type                      MapperType
+  Nested elements:
+    :classpath                 (Path)
+    :mapper                    (Mapper)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Mapper"
+  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "indexjarsmapper", :clj-ant/class "org.apache.tools.ant.types.Mapper"}
+  [& args]
+  (clojure.core/apply c/element :indexjarsmapper args))
+
+(defn inputfilterchain
+  "Ant nested inputfilterchain. (No description bundled.)
+
+  Attributes:
+    :refid                     Reference
+  Nested elements:
+    :classconstants            (ClassConstants)
+    :containsregex             (ContainsRegex)
+    :deletecharacters          (DeleteCharacters)
+    :escapeunicode             (EscapeUnicode)
+    :expandproperties          (ExpandProperties)
+    :filterreader              (AntFilterReader)
+    :headfilter                (HeadFilter)
+    :ignoreblank               (IgnoreBlank)
+    :linecontains              (LineContains)
+    :linecontainsregexp        (LineContainsRegExp)
+    :prefixlines               (PrefixLines)
+    :replaceregex              (ReplaceRegex)
+    :replacestring             (ReplaceString)
+    :replacetokens             (ReplaceTokens)
+    :stripjavacomments         (StripJavaComments)
+    :striplinebreaks           (StripLineBreaks)
+    :striplinecomments         (StripLineComments)
+    :suffixlines               (SuffixLines)
+    :tabstospaces              (TabsToSpaces)
+    :tailfilter                (TailFilter)
+    :tokenfilter               (TokenFilter)
+    :trim                      (Trim)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FilterChain"
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "inputfilterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain"}
+  [& args]
+  (clojure.core/apply c/element :inputfilterchain args))
+
+(defn inputmapper
+  "Ant nested inputmapper. (No description bundled.)
+
+  Attributes:
+    :classname                 String
+    :classpath                 Path
+    :classpathref              Reference
+    :from                      String
+    :refid                     Reference
+    :to                        String
+    :type                      MapperType
+  Nested elements:
+    :classpath                 (Path)
+    :mapper                    (Mapper)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Mapper"
+  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "inputmapper", :clj-ant/class "org.apache.tools.ant.types.Mapper"}
+  [& args]
+  (clojure.core/apply c/element :inputmapper args))
+
+(defn invert
+  "Ant nested invert. (No description bundled.)
+
+  Attributes:
+    :excludes                  String
+    :excludesfile              File
+    :includes                  String
+    :includesfile              File
+    :refid                     Reference
+  Nested elements:
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :invert                    (PatternSet)
+    :patternset                (PatternSet)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.PatternSet"
+  {:arglists (quote ([& {:keys [excludes excludesfile includes includesfile refid], :as attrs} & nested])), :clj-ant/tag "invert", :clj-ant/class "org.apache.tools.ant.types.PatternSet"}
+  [& args]
+  (clojure.core/apply c/element :invert args))
 
 (defn iplanet
   "Ant nested iplanet. (No description bundled.)
@@ -9799,6 +10622,11 @@
     :verbose                   boolean
   Nested elements:
     :classpath                 (Path)
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.optional.j2ee.JonasHotDeploymentTool
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -9806,6 +10634,25 @@
   {:arglists (quote ([& {:keys [additionalargs classpath destdir genericjarsuffix jarsuffix javac javacopts jonasroot keepgenerated keepgeneric nocompil nogenic novalidation orb rmicopts secpropag verbose], :as attrs} & nested])), :clj-ant/tag "jonas", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.JonasDeploymentTool"}
   [& args]
   (clojure.core/apply c/element :jonas args))
+
+(defn jvmarg
+  "Ant nested jvmarg. (No description bundled.)
+
+  Attributes:
+    :file                      File
+    :line                      String
+    :path                      Path
+    :pathref                   Reference
+    :prefix                    String
+    :suffix                    String
+    :value                     String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Commandline$Argument"
+  {:arglists (quote ([& {:keys [file line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "jvmarg", :clj-ant/class "org.apache.tools.ant.types.Commandline$Argument"}
+  [& args]
+  (clojure.core/apply c/element :jvmarg args))
 
 (defn launcher
   "Ant nested launcher. (No description bundled.)
@@ -9821,6 +10668,93 @@
   {:arglists (quote ([& {:keys [mainclass module name], :as attrs} & nested])), :clj-ant/tag "launcher", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$Launcher"}
   [& args]
   (clojure.core/apply c/element :launcher args))
+
+(defn legalpath
+  "Ant nested legalpath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "legalpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :legalpath args))
+
+(defn lib
+  "Ant nested lib. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :dirmode                   String
+    :encoding                  String
+    :erroronmissingarchive     boolean
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :filemode                  String
+    :followsymlinks            boolean
+    :fullpath                  String
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :prefix                    String
+    :refid                     Reference
+    :src                       File
+    :srcresource               Resource
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.ZipFileSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "lib", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet"}
+  [& args]
+  (clojure.core/apply c/element :lib args))
 
 (defn linecontains
   "Ant nested linecontains. (No description bundled.)
@@ -9936,6 +10870,29 @@
   [& args]
   (clojure.core/apply c/element :majority args))
 
+(defn manpath
+  "Ant nested manpath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "manpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :manpath args))
+
 (defn map
   "Ant nested map. (No description bundled.)
 
@@ -9949,6 +10906,43 @@
   {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "map", :clj-ant/class "org.apache.tools.ant.taskdefs.PathConvert$MapEntry"}
   [& args]
   (clojure.core/apply c/element :map args))
+
+(defn marker
+  "Ant nested marker. (No description bundled.)
+
+  Attributes:
+    :prefix                    String
+    :suffix                    String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Commandline$Marker"
+  {:arglists (quote ([& {:keys [prefix suffix], :as attrs} & nested])), :clj-ant/tag "marker", :clj-ant/class "org.apache.tools.ant.types.Commandline$Marker"}
+  [& args]
+  (clojure.core/apply c/element :marker args))
+
+(defn mergefiles
+  "Ant nested mergefiles. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "mergefiles", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :mergefiles args))
 
 (defn message
   "Ant nested message. (No description bundled.)
@@ -10064,6 +11058,12 @@
 
   Attributes:
     :name                      String
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.Javadoc$PackageName
+    org.apache.tools.ant.taskdefs.modules.Link$ModuleSpec
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -10071,6 +11071,52 @@
   {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "module", :clj-ant/class "org.apache.tools.ant.taskdefs.AbstractCvsTask$Module"}
   [& args]
   (clojure.core/apply c/element :module args))
+
+(defn modulepath
+  "Ant nested modulepath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "modulepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :modulepath args))
+
+(defn modulesourcepath
+  "Ant nested modulesourcepath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "modulesourcepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :modulesourcepath args))
 
 (defn modulewarning
   "Ant nested modulewarning. (No description bundled.)
@@ -10096,6 +11142,29 @@
   {:arglists (quote ([& nested])), :clj-ant/tag "name", :clj-ant/class "org.apache.tools.ant.taskdefs.Local$Name"}
   [& args]
   (clojure.core/apply c/element :name args))
+
+(defn nativelibpath
+  "Ant nested nativelibpath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "nativelibpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :nativelibpath args))
 
 (defn none
   "Ant nested none. (No description bundled.)
@@ -10171,6 +11240,11 @@
     :type                      (TypeSelector)
     :windowsjunction           (WindowsJunctionSelector)
     :writable                  (WritableSelector)
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.condition.Not
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -10178,6 +11252,36 @@
   {:arglists (quote ([& {:keys [error refid], :as attrs} & nested])), :clj-ant/tag "not", :clj-ant/class "org.apache.tools.ant.types.selectors.NotSelector"}
   [& args]
   (clojure.core/apply c/element :not args))
+
+(defn observablemodule
+  "Ant nested observablemodule. (No description bundled.)
+
+  Attributes:
+    :name                      String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.modules.Link$ModuleSpec"
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "observablemodule", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$ModuleSpec"}
+  [& args]
+  (clojure.core/apply c/element :observablemodule args))
+
+(defn options
+  "Ant nested options. (No description bundled.)
+
+  Attributes:
+    :refid                     Reference
+  Nested elements:
+    :extension                 (ExtensionAdapter)
+    :fileset                   (FileSet)
+    :libfileset                (LibFileSet)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "options", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"}
+  [& args]
+  (clojure.core/apply c/element :options args))
 
 (defn or
   "Ant nested or. (No description bundled.)
@@ -10212,6 +11316,11 @@
     :type                      (TypeSelector)
     :windowsjunction           (WindowsJunctionSelector)
     :writable                  (WritableSelector)
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.condition.Or
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -10253,6 +11362,64 @@
   [& args]
   (clojure.core/apply c/element :os args))
 
+(defn outputfilterchain
+  "Ant nested outputfilterchain. (No description bundled.)
+
+  Attributes:
+    :refid                     Reference
+  Nested elements:
+    :classconstants            (ClassConstants)
+    :containsregex             (ContainsRegex)
+    :deletecharacters          (DeleteCharacters)
+    :escapeunicode             (EscapeUnicode)
+    :expandproperties          (ExpandProperties)
+    :filterreader              (AntFilterReader)
+    :headfilter                (HeadFilter)
+    :ignoreblank               (IgnoreBlank)
+    :linecontains              (LineContains)
+    :linecontainsregexp        (LineContainsRegExp)
+    :prefixlines               (PrefixLines)
+    :replaceregex              (ReplaceRegex)
+    :replacestring             (ReplaceString)
+    :replacetokens             (ReplaceTokens)
+    :stripjavacomments         (StripJavaComments)
+    :striplinebreaks           (StripLineBreaks)
+    :striplinecomments         (StripLineComments)
+    :suffixlines               (SuffixLines)
+    :tabstospaces              (TabsToSpaces)
+    :tailfilter                (TailFilter)
+    :tokenfilter               (TokenFilter)
+    :trim                      (Trim)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FilterChain"
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "outputfilterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain"}
+  [& args]
+  (clojure.core/apply c/element :outputfilterchain args))
+
+(defn outputmapper
+  "Ant nested outputmapper. (No description bundled.)
+
+  Attributes:
+    :classname                 String
+    :classpath                 Path
+    :classpathref              Reference
+    :from                      String
+    :refid                     Reference
+    :to                        String
+    :type                      MapperType
+  Nested elements:
+    :classpath                 (Path)
+    :mapper                    (Mapper)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Mapper"
+  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "outputmapper", :clj-ant/class "org.apache.tools.ant.types.Mapper"}
+  [& args]
+  (clojure.core/apply c/element :outputmapper args))
+
 (defn outputproperty
   "Ant nested outputproperty. (No description bundled.)
 
@@ -10281,6 +11448,75 @@
   [& args]
   (clojure.core/apply c/element :ownedby args))
 
+(defn package
+  "Ant nested package. (No description bundled.)
+
+  Attributes:
+    :name                      String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.Javadoc$PackageName"
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "package", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$PackageName"}
+  [& args]
+  (clojure.core/apply c/element :package args))
+
+(defn packageset
+  "Ant nested packageset. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :followsymlinks            boolean
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :refid                     Reference
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.DirSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "packageset", :clj-ant/class "org.apache.tools.ant.types.DirSet"}
+  [& args]
+  (clojure.core/apply c/element :packageset args))
+
 (defn param
   "Ant nested param. (No description bundled.)
 
@@ -10288,6 +11524,14 @@
     :name                      String
     :type                      String
     :value                     String
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.Property
+    java.lang.Object
+    org.apache.tools.ant.taskdefs.Javadoc$DocletParam
+    org.apache.tools.ant.taskdefs.XSLTProcess$Param
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -10618,6 +11862,20 @@
   [& args]
   (clojure.core/apply c/element :replacetokens args))
 
+(defn replacevalue
+  "Ant nested replacevalue. (No description bundled.)
+
+  Attributes:
+    :expandproperties          boolean
+  Body text: this element accepts a free-form text body.
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.Replace$NestedString"
+  {:arglists (quote ([& {:keys [expandproperties], :as attrs} & nested])), :clj-ant/tag "replacevalue", :clj-ant/class "org.apache.tools.ant.taskdefs.Replace$NestedString"}
+  [& args]
+  (clojure.core/apply c/element :replacevalue args))
+
 (defn replyto
   "Ant nested replyto. (No description bundled.)
 
@@ -10632,6 +11890,35 @@
   [& args]
   (clojure.core/apply c/element :replyto args))
 
+(defn resourceorder
+  "Ant nested resourceorder. (No description bundled.)
+
+  Attributes:
+    :listfile                  File
+    :pattern                   String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"
+  {:arglists (quote ([& {:keys [listfile pattern], :as attrs} & nested])), :clj-ant/tag "resourceorder", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"}
+  [& args]
+  (clojure.core/apply c/element :resourceorder args))
+
+(defn revoke
+  "Ant nested revoke. (No description bundled.)
+
+  Attributes:
+    :actions                   String
+    :class                     String
+    :name                      String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Permissions$Permission"
+  {:arglists (quote ([& {:keys [actions class name], :as attrs} & nested])), :clj-ant/tag "revoke", :clj-ant/class "org.apache.tools.ant.types.Permissions$Permission"}
+  [& args]
+  (clojure.core/apply c/element :revoke args))
+
 (defn root
   "Ant nested root. (No description bundled.)
 
@@ -10644,6 +11931,62 @@
   {:arglists (quote ([& {:keys [classname], :as attrs} & nested])), :clj-ant/tag "root", :clj-ant/class "org.apache.tools.ant.types.optional.depend.ClassfileSet$ClassRoot"}
   [& args]
   (clojure.core/apply c/element :root args))
+
+(defn rootfileset
+  "Ant nested rootfileset. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :followsymlinks            boolean
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :refid                     Reference
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FileSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "rootfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  [& args]
+  (clojure.core/apply c/element :rootfileset args))
 
 (defn schema
   "Ant nested schema. (No description bundled.)
@@ -10746,6 +12089,66 @@
   [& args]
   (clojure.core/apply c/element :sourcefiles args))
 
+(defn sourcepath
+  "Ant nested sourcepath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "sourcepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :sourcepath args))
+
+(defn sources
+  "Ant nested sources. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :refid                     Reference
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.resources.Union"
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "sources", :clj-ant/class "org.apache.tools.ant.types.resources.Union"}
+  [& args]
+  (clojure.core/apply c/element :sources args))
+
+(defn src
+  "Ant nested src. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "src", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :src args))
+
 (defn srcfile
   "Ant nested srcfile. (No description bundled.)
 
@@ -10759,6 +12162,135 @@
   {:arglists (quote ([& {:keys [prefix suffix], :as attrs} & nested])), :clj-ant/tag "srcfile", :clj-ant/class "org.apache.tools.ant.types.Commandline$Marker"}
   [& args]
   (clojure.core/apply c/element :srcfile args))
+
+(defn srcfilelist
+  "Ant nested srcfilelist. (No description bundled.)
+
+  Attributes:
+    :dir                       File
+    :files                     String
+    :refid                     Reference
+  Nested elements:
+    :file                      (FileName)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FileList"
+  {:arglists (quote ([& {:keys [dir files refid], :as attrs} & nested])), :clj-ant/tag "srcfilelist", :clj-ant/class "org.apache.tools.ant.types.FileList"}
+  [& args]
+  (clojure.core/apply c/element :srcfilelist args))
+
+(defn srcfiles
+  "Ant nested srcfiles. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :followsymlinks            boolean
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :refid                     Reference
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FileSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "srcfiles", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  [& args]
+  (clojure.core/apply c/element :srcfiles args))
+
+(defn srcfileset
+  "Ant nested srcfileset. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :followsymlinks            boolean
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :refid                     Reference
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FileSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "srcfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  [& args]
+  (clojure.core/apply c/element :srcfileset args))
 
 (defn srcresources
   "Ant nested srcresources. (No description bundled.)
@@ -10823,6 +12355,97 @@
   {:arglists (quote ([& {:keys [suffix], :as attrs} & nested])), :clj-ant/tag "suffixlines", :clj-ant/class "org.apache.tools.ant.filters.SuffixLines"}
   [& args]
   (clojure.core/apply c/element :suffixlines args))
+
+(defn support
+  "Ant nested support. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :followsymlinks            boolean
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :refid                     Reference
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FileSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "support", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  [& args]
+  (clojure.core/apply c/element :support args))
+
+(defn sysproperty
+  "Ant nested sysproperty. (No description bundled.)
+
+  Attributes:
+    :file                      File
+    :key                       String
+    :path                      Path
+    :value                     String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Environment$Variable"
+  {:arglists (quote ([& {:keys [file key path value], :as attrs} & nested])), :clj-ant/tag "sysproperty", :clj-ant/class "org.apache.tools.ant.types.Environment$Variable"}
+  [& args]
+  (clojure.core/apply c/element :sysproperty args))
+
+(defn syspropertyset
+  "Ant nested syspropertyset. (No description bundled.)
+
+  Attributes:
+    :dynamic                   boolean
+    :negate                    boolean
+    :refid                     Reference
+  Nested elements:
+    :mapper                    (Mapper)
+    :propertyref               (PropertyRef)
+    :propertyset               (PropertySet)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.PropertySet"
+  {:arglists (quote ([& {:keys [dynamic negate refid], :as attrs} & nested])), :clj-ant/tag "syspropertyset", :clj-ant/class "org.apache.tools.ant.types.PropertySet"}
+  [& args]
+  (clojure.core/apply c/element :syspropertyset args))
 
 (defn tabstospaces
   "Ant nested tabstospaces. (No description bundled.)
@@ -10940,6 +12563,130 @@
   [& args]
   (clojure.core/apply c/element :target args))
 
+(defn targetfile
+  "Ant nested targetfile. (No description bundled.)
+
+  Attributes:
+    :prefix                    String
+    :suffix                    String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Commandline$Marker"
+  {:arglists (quote ([& {:keys [prefix suffix], :as attrs} & nested])), :clj-ant/tag "targetfile", :clj-ant/class "org.apache.tools.ant.types.Commandline$Marker"}
+  [& args]
+  (clojure.core/apply c/element :targetfile args))
+
+(defn targetfilelist
+  "Ant nested targetfilelist. (No description bundled.)
+
+  Attributes:
+    :dir                       File
+    :files                     String
+    :refid                     Reference
+  Nested elements:
+    :file                      (FileName)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FileList"
+  {:arglists (quote ([& {:keys [dir files refid], :as attrs} & nested])), :clj-ant/tag "targetfilelist", :clj-ant/class "org.apache.tools.ant.types.FileList"}
+  [& args]
+  (clojure.core/apply c/element :targetfilelist args))
+
+(defn targetfileset
+  "Ant nested targetfileset. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :followsymlinks            boolean
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :refid                     Reference
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FileSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "targetfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  [& args]
+  (clojure.core/apply c/element :targetfileset args))
+
+(defn targets
+  "Ant nested targets. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "targets", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :targets args))
+
+(defn tars
+  "Ant nested tars. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :refid                     Reference
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.resources.Union"
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "tars", :clj-ant/class "org.apache.tools.ant.types.resources.Union"}
+  [& args]
+  (clojure.core/apply c/element :tars args))
+
 (defn task
   "Ant nested task. (No description bundled.)
 
@@ -10966,6 +12713,32 @@
   {:arglists (quote ([& {:keys [default name optional trim], :as attrs} & nested])), :clj-ant/tag "text", :clj-ant/class "org.apache.tools.ant.taskdefs.MacroDef$Text"}
   [& args]
   (clojure.core/apply c/element :text args))
+
+(defn title
+  "Ant nested title. (No description bundled.)
+
+  Body text: this element accepts a free-form text body.
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.Javadoc$Html"
+  {:arglists (quote ([& nested])), :clj-ant/tag "title", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$Html"}
+  [& args]
+  (clojure.core/apply c/element :title args))
+
+(defn to
+  "Ant nested to. (No description bundled.)
+
+  Attributes:
+    :address                   String
+    :name                      String
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.taskdefs.email.EmailAddress"
+  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "to", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress"}
+  [& args]
+  (clojure.core/apply c/element :to args))
 
 (defn token
   "Ant nested token. (No description bundled.)
@@ -11065,6 +12838,29 @@
   [& args]
   (clojure.core/apply c/element :type args))
 
+(defn upgrademodulepath
+  "Ant nested upgrademodulepath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "upgrademodulepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :upgrademodulepath args))
+
 (defn user
   "Ant nested user. (No description bundled.)
 
@@ -11094,6 +12890,29 @@
   [& args]
   (clojure.core/apply c/element :version args))
 
+(defn wasclasspath
+  "Ant nested wasclasspath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "wasclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :wasclasspath args))
+
 (defn webapp
   "Ant nested webapp. (No description bundled.)
 
@@ -11106,6 +12925,70 @@
   {:arglists (quote ([& {:keys [basedir], :as attrs} & nested])), :clj-ant/tag "webapp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.jsp.JspC$WebAppParameter"}
   [& args]
   (clojure.core/apply c/element :webapp args))
+
+(defn webinf
+  "Ant nested webinf. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :dirmode                   String
+    :encoding                  String
+    :erroronmissingarchive     boolean
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :filemode                  String
+    :followsymlinks            boolean
+    :fullpath                  String
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :prefix                    String
+    :refid                     Reference
+    :src                       File
+    :srcresource               Resource
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.ZipFileSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "webinf", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet"}
+  [& args]
+  (clojure.core/apply c/element :webinf args))
 
 (defn weblogic
   "Ant nested weblogic. (No description bundled.)
@@ -11135,6 +13018,11 @@
     :classpath                 (Path)
     :sysproperty               (Variable)
     :wlclasspath               (Path)
+  Note: this tag has multiple meanings depending
+  on parent context. Other classes seen:
+    org.apache.tools.ant.taskdefs.optional.j2ee.WebLogicHotDeploymentTool
+  The runner picks the right class at execute time;
+  attribute docs above are for the first one.
 
   Nested-only element discovered via introspection.
 
@@ -11230,6 +13118,29 @@
   [& args]
   (clojure.core/apply c/element :windowsjunction args))
 
+(defn wlclasspath
+  "Ant nested wlclasspath. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :path                      String
+    :refid                     Reference
+  Nested elements:
+    :dirset                    (DirSet)
+    :existing                  (Path)
+    :extdirs                   (Path)
+    :filelist                  (FileList)
+    :fileset                   (FileSet)
+    :path                      (Path)
+    :pathelement               (PathElement)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.Path"
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "wlclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  [& args]
+  (clojure.core/apply c/element :wlclasspath args))
+
 (defn writable
   "Ant nested writable. (No description bundled.)
 
@@ -11240,4 +13151,74 @@
   {:arglists (quote ([& nested])), :clj-ant/tag "writable", :clj-ant/class "org.apache.tools.ant.types.selectors.WritableSelector"}
   [& args]
   (clojure.core/apply c/element :writable args))
+
+(defn zipgroupfileset
+  "Ant nested zipgroupfileset. (No description bundled.)
+
+  Attributes:
+    :casesensitive             boolean
+    :defaultexcludes           boolean
+    :dir                       File
+    :erroronmissingdir         boolean
+    :excludes                  String
+    :excludesfile              File
+    :file                      File
+    :followsymlinks            boolean
+    :includes                  String
+    :includesfile              File
+    :maxlevelsofsymlinks       int
+    :refid                     Reference
+  Nested elements:
+    :and                       (AndSelector)
+    :contains                  (ContainsSelector)
+    :containsregexp            (ContainsRegexpSelector)
+    :custom                    (ExtendSelector)
+    :date                      (DateSelector)
+    :depend                    (DependSelector)
+    :depth                     (DepthSelector)
+    :different                 (DifferentSelector)
+    :exclude                   (NameEntry)
+    :excludesfile              (NameEntry)
+    :executable                (ExecutableSelector)
+    :filename                  (FilenameSelector)
+    :include                   (NameEntry)
+    :includesfile              (NameEntry)
+    :majority                  (MajoritySelector)
+    :modified                  (ModifiedSelector)
+    :none                      (NoneSelector)
+    :not                       (NotSelector)
+    :or                        (OrSelector)
+    :ownedby                   (OwnedBySelector)
+    :patternset                (PatternSet)
+    :posixgroup                (PosixGroupSelector)
+    :posixpermissions          (PosixPermissionsSelector)
+    :present                   (PresentSelector)
+    :readable                  (ReadableSelector)
+    :selector                  (SelectSelector)
+    :size                      (SizeSelector)
+    :symlink                   (SymlinkSelector)
+    :type                      (TypeSelector)
+    :windowsjunction           (WindowsJunctionSelector)
+    :writable                  (WritableSelector)
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.FileSet"
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "zipgroupfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  [& args]
+  (clojure.core/apply c/element :zipgroupfileset args))
+
+(defn zips
+  "Ant nested zips. (No description bundled.)
+
+  Attributes:
+    :cache                     boolean
+    :refid                     Reference
+
+  Nested-only element discovered via introspection.
+
+  Defined by: org.apache.tools.ant.types.resources.Union"
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "zips", :clj-ant/class "org.apache.tools.ant.types.resources.Union"}
+  [& args]
+  (clojure.core/apply c/element :zips args))
 
