@@ -154,16 +154,22 @@
     id))
 
 (defn ^:no-doc op-close-session [{:keys [id]}]
-  (when-some [s (get @sessions id)]
-    (core/close-session s)
-    (swap! sessions dissoc id))
-  nil)
+  (if-some [s (get @sessions id)]
+    (do (core/close-session s)
+        (swap! sessions dissoc id)
+        nil)
+    (throw (ex-info (str "Unknown session id: " (pr-str id))
+                    {:id id :open-sessions (vec (keys @sessions))}))))
 
 (defn ^:no-doc op-execute-in [{:keys [id elements opts]}]
-  (when-some [s (get @sessions id)]
+  (if-some [s (get @sessions id)]
     (-> (apply core/execute! elements
                (mapcat identity (assoc (or opts {}) :session s)))
-        element-clean)))
+        element-clean)
+    (throw (ex-info
+             (str "Unknown session id: " (pr-str id)
+                  ". Open one first via (a/open-session ...).")
+             {:id id :open-sessions (vec (keys @sessions))}))))
 
 (defn ^:no-doc op-execute-stream
   "Streaming variant of execute. Each event is sent as its own pod

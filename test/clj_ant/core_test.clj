@@ -3,7 +3,8 @@
             [clojure.java.io :as io]
             [clj-ant.core :as a])
   (:import [java.io File]
-           [java.nio.file Files]))
+           [java.nio.file Files]
+           [org.apache.tools.ant Project]))
 
 (defn- tmp-dir []
   (let [d (Files/createTempDirectory "cljant-test" (make-array java.nio.file.attribute.FileAttribute 0))]
@@ -216,6 +217,42 @@
       (a/ant :level :warn (a/from-xml xml))
       (is (= ["x.txt"] (mapv #(.getName %)
                              (.listFiles (File. base "out"))))))))
+
+(deftest session-state-stays-bounded
+  (testing "synthetic refids don't accumulate across reused-session calls"
+    (a/with-session [s {:level :error}]
+      (let [p ^Project (:project s)
+            before (count (.getReferences p))]
+        (dotimes [_ 30]
+          (a/ant :session s
+                 (a/element :copy :todir (.getAbsolutePath (tmp-dir))
+                            (java.io.File. "/etc/hosts"))))
+        (let [delta (- (count (.getReferences p)) before)]
+          (is (<= delta 5)
+              (str "ref count grew by " delta
+                   " across 30 calls -- expected only internal bookkeeping atoms"))))))
+
+  (testing "named targets are removed after each call"
+    (a/with-session [s {:level :error}]
+      (let [p ^Project (:project s)]
+        (dotimes [i 10]
+          (a/ant :session s :targets [(str "tgt-" i)]
+                 (a/target :name (str "tgt-" i)
+                   (a/element :echo :message (str i)))))
+        (let [remaining (->> (.getTargets p) keys
+                             (remove #{""})
+                             count)]
+          (is (zero? remaining)
+              "user-named targets should not survive past the call"))))))
+
+(deftest project-opt-overrides-session
+  (testing ":project on a single execute! call wins over :session"
+    (let [s         (a/session {:level :error})
+          one-off   (a/make-project {:level :error})]
+      (a/ant :session s :project one-off
+             (a/element :property :name "k" :value "in-oneoff"))
+      (is (= "in-oneoff" (.getProperty one-off "k")))
+      (is (nil? (.getProperty (:project s) "k"))))))
 
 (deftest session-and-prepare
   (testing "with-session reuses one Project across calls"
