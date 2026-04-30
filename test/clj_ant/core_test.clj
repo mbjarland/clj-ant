@@ -331,6 +331,54 @@
       (is (= 1 (count (vt bad {:closed? true}))))
       (is (zero? (count (vt good {:closed? true})))))))
 
+(deftest async-execute-and-cancel
+  (testing "execute-async! returns a Run, deref blocks for the result"
+    (let [r (a/execute-async! [(a/element :echo :message "x")] :level :error)
+          v @r]
+      (is (realized? r))
+      (is (some? (:tasks v)))))
+
+  (testing "cancel! sets the flag; result reflects user intent"
+    (let [r (a/execute-async! [(a/element :sleep :seconds "1")] :level :error)]
+      (Thread/sleep 50)
+      (a/cancel! r)
+      (is (a/cancelled? r))
+      (let [v (deref r 3000 :timeout)]
+        (is (not= :timeout v))
+        ;; Ant's <sleep> swallows interrupts so the build finishes,
+        ;; but :cancelled? on the result reflects that the caller
+        ;; asked for cancel.
+        (is (true? (:cancelled? v)))))))
+
+(deftest watch-fires-on-change
+  (testing "watch runs once initially, then on every change"
+    (let [base   (tmp-dir)
+          probe  (File. base "probe.txt")
+          _      (spit probe "v1")
+          hits   (atom 0)
+          stop   (a/watch [(a/element :echo :message "fired")]
+                          :paths   [(.getAbsolutePath base)]
+                          :poll-ms 50
+                          :level   :error
+                          :on-rebuild (fn [_] (swap! hits inc)))]
+      (try
+        (Thread/sleep 200)              ; pick up initial run
+        (spit probe "v2") (Thread/sleep 200)
+        (spit probe "v3") (Thread/sleep 200)
+        ;; one initial + at least 2 change-driven rebuilds
+        (is (>= @hits 3))
+        (finally (stop))))))
+
+(deftest error-context-wraps-build-exceptions
+  (testing "BuildException bubbles up as ex-info with the input tree"
+    (let [r (a/ant :level :error (a/element :copy :tdoir "/tmp"))]
+      (is (instance? clojure.lang.ExceptionInfo (:error r)))
+      (let [ed (ex-data (:error r))]
+        (is (true? (:clj-ant/error ed)))
+        (is (vector? (:clj-ant/elements ed)))
+        (is (= 1 (count (:clj-ant/elements ed))))
+        (is (re-find #"tdoir" (:ant/message ed)))))))
+
 (deftest plain-map-tree-with-raw-children
   (testing "execute! handles map-shaped trees with raw seq/File children
             (the shape from-xml and the bb pod produce)"
