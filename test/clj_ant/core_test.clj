@@ -113,6 +113,23 @@
         t-clean t-compile t-package)
       (is (= ["clean" "compile" "package"] @order)))))
 
+(deftest sequential-attrs-auto-join
+  (testing "vector/list attribute values join with commas"
+    (let [base (tmp-dir)
+          src  (File. base "src")
+          dst  (File. base "dst")]
+      (.mkdirs src)
+      (doseq [n ["a.txt" "b.txt" "c.txt"]]
+        (spit-file src n n))
+      (a/ant
+        :basedir (.getAbsolutePath base)
+        :level :warn
+        (a/node :copy :todir (.getAbsolutePath dst)
+                (a/node :filelist
+                        :dir (.getAbsolutePath src)
+                        :files ["a.txt" "b.txt"])))
+      (is (= 2 (count (.listFiles dst)))))))
+
 (deftest plan-prints-tree
   (testing "plan renders a build tree without executing it"
     (let [n (a/node :copy :todir "out"

@@ -144,6 +144,30 @@
 ;; This is the whole interop surface. Everything else in clj-ant just feeds
 ;; nodes here.
 
+(defn- attr->string
+  "Coerce a Clojure attribute value to the string form Ant ultimately
+  consumes. Conventions:
+
+    - String: identity (the common case; `${...}` expansion runs at
+      configure time as long as we hand Ant a String).
+    - Keyword/Symbol: name (so `:depends [:clean]` works without
+      manual stringification).
+    - Sequential: comma-join of element names (Ant's convention for
+      list attributes like `<filelist files=\"a,b,c\"/>`).
+    - File / anything else: `(str v)`."
+  ^String [v]
+  (cond
+    (string? v)     v
+    (keyword? v)    (name v)
+    (symbol? v)     (name v)
+    (sequential? v) (clojure.string/join ","
+                                         (map #(cond
+                                                 (keyword? %) (name %)
+                                                 (symbol? %)  (name %)
+                                                 :else        (str %))
+                                              v))
+    :else           (str v)))
+
 (defn- ->unknown-element
   ^UnknownElement [{:keys [tag attrs children text]}
                    ^Project project ^Target target]
@@ -156,7 +180,7 @@
                    (.setLocation Location/UNKNOWN_LOCATION))
         wrap     (RuntimeConfigurable. ue tag-name)]
     (doseq [[k v] attrs]
-      (.setAttribute wrap (name k) (str v)))
+      (.setAttribute wrap (name k) (attr->string v)))
     (when text
       (.addText wrap (str text)))
     (doseq [c children]
