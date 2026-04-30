@@ -256,6 +256,17 @@
                            s)))]
     (->Element tag (or attrs {}) (mapv xml->element child-maps) text)))
 
+(defn- ^File ->source-dir
+  "If `src` is a file/path on disk, return its parent directory.
+  Returns nil for streams, readers, or XML strings -- there's no
+  source to anchor on."
+  [src]
+  (cond
+    (instance? File src) (.getAbsoluteFile (.getParentFile (.getAbsoluteFile ^File src)))
+    (and (string? src) (not (re-find #"^\s*<" src)))
+    (recur (io/file src))
+    :else nil))
+
 (defn from-xml
   "Parse an Ant build file into a clj-ant element tree.
 
@@ -271,15 +282,26 @@
       (a/ant (a/from-xml \"build.xml\"))
       (a/ant :targets [\"clean\"] (a/from-xml \"build.xml\"))
 
+  Relative paths inside the build file resolve from the **source
+  file's directory**, matching Ant's own semantics. (For string and
+  stream sources the source dir is unknown, so paths fall back to
+  the process cwd.) The captured source dir is exposed under
+  `:clj-ant/source-dir` on the returned element's attrs map, so
+  static analysers can tell on-disk roots apart from
+  string-literal ones.
+
   For static analysis just walk the returned tree like any other
   element."
   [src]
-  (let [parsed (cond
+  (let [src-dir (->source-dir src)
+        parsed (cond
                  (and (string? src) (re-find #"^\s*<" src))
                  (xml/parse (java.io.ByteArrayInputStream.
                               (.getBytes ^String src "UTF-8")))
-                 :else (xml/parse src))]
-    (xml->element parsed)))
+                 :else (xml/parse src))
+        elt (xml->element parsed)]
+    (cond-> elt
+      src-dir (update :attrs assoc :clj-ant/source-dir src-dir))))
 
 ;; ---------------------------------------------------------------------------
 ;; Clojure-defined tasks
@@ -467,15 +489,28 @@
         ;; A single :project element (e.g. from `from-xml`) is a
         ;; syntactic wrapper -- lift its basedir/name/default into
         ;; execute options and run its children. Caller opts win.
+        ;;
+        ;; Basedir resolution matches Ant: relative basedir attrs are
+        ;; resolved against :clj-ant/source-dir (the directory of
+        ;; the on-disk build.xml, captured by from-xml). Missing
+        ;; basedir falls back to the source-dir. Without a source
+        ;; dir we keep the legacy "process cwd" behaviour.
         [elements opts]
         (if (and (= 1 (count elements))
                  (= :project (:tag (first elements))))
-          (let [root (first elements)
-                a    (:attrs root)
+          (let [root    (first elements)
+                a       (:attrs root)
+                src-dir (:clj-ant/source-dir a)
+                resolved-basedir
+                (when-some [bd (or (:basedir a) (and src-dir (.getPath ^File src-dir)))]
+                  (let [f (io/file bd)]
+                    (if (or (.isAbsolute f) (nil? src-dir))
+                      f
+                      (io/file src-dir bd))))
                 from-file (cond-> {}
-                            (:basedir a) (assoc :basedir (:basedir a))
-                            (:name a)    (assoc :name    (:name a))
-                            (:default a) (assoc :default (:default a)))]
+                            resolved-basedir (assoc :basedir resolved-basedir)
+                            (:name a)        (assoc :name    (:name a))
+                            (:default a)     (assoc :default (:default a)))]
             [(vec (:children root)) (merge from-file opts)])
           [elements opts])
         _       (when (:validate? opts)

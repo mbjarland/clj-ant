@@ -119,12 +119,21 @@
 ;; side cannot dereference JVM objects.
 
 (defn- element-clean
-  "Strip Java objects out of a result map so it can survive the wire."
+  "Strip Java objects out of a result map so it can survive the wire.
+
+  The keys :project / :target / :tasks / :targets all hold live JVM
+  references (Project, Target, UnknownElement) that have no
+  meaningful edn representation. We replace them with plain data:
+  :tasks / :targets become a count, :error becomes its message
+  string."
   [m]
   (-> m
-      (dissoc :project :target :tasks)
-      (cond->
-        (:error m) (update :error #(some-> % .getMessage)))))
+      (dissoc :project :target)
+      (cond-> (:tasks m)   (update :tasks   count))
+      (cond-> (:targets m) (update :targets (fn [ts]
+                                              (mapv #(.getName ^org.apache.tools.ant.Target %)
+                                                    ts))))
+      (cond-> (:error m)   (update :error   #(some-> % .getMessage)))))
 
 (defn ^:no-doc op-execute [{:keys [elements opts]}]
   (-> (apply core/execute! elements (mapcat identity (or opts {})))
@@ -132,15 +141,20 @@
 
 (defn ^:no-doc op-execute-stream
   "Streaming variant of execute. Each event is sent as its own pod
-  reply (status []). The final result map is the last reply with
-  status [done]. `partial!` is called by the pod loop for every
-  intermediate value."
+  reply (status []); `partial!` is called by the pod loop for every
+  intermediate value.
+
+  Returns the cleaned execute! result map wrapped in a sentinel
+  {:clj-ant/result …} so the bb-side stub can tell events apart
+  from the final result -- otherwise, since the success handler
+  fires async, callers can't synchronise."
   [{:keys [elements opts]} partial!]
-  (apply core/execute! elements
-         (mapcat identity
-                 (-> (or opts {})
-                     (assoc :on-event (fn [e] (partial! e))))))
-  {:phase :result})
+  {:clj-ant/result
+   (-> (apply core/execute! elements
+              (mapcat identity
+                      (-> (or opts {})
+                          (assoc :on-event (fn [e] (partial! e))))))
+       element-clean)})
 
 (defn ^:no-doc op-files-stream
   "Streaming variant of files: each path is delivered as it's
@@ -183,23 +197,45 @@
   (require 'clj-ant.tasks)
   (let [tasks-ns (the-ns 'clj-ant.tasks)
         ;; First var: the element builder, used by every wrapper.
+        ;; Mirrors core/split-args: a sequential whose first item LOOKS
+        ;; like an element (a map with :tag) is spliced; anything else is
+        ;; treated as a single child (the JVM-side as-child handles
+        ;; coercion of paths/Files at execute time).
+        ;;
+        ;; Named `make-element` so it doesn't collide with the generated
+        ;; `t/element` wrapper -- recursive nested-element discovery now
+        ;; finds <element> as a child of macrodef and emits a wrapper for
+        ;; it. The wrapper would shadow our builder (and call itself
+        ;; through clojure.core/apply) without this rename.
         builder
-        {"name" "element"
+        {"name" "make-element"
          "code" (str
-                  "(defn element [tag-kw & args] "
-                  "  (loop [attrs {} text nil children [] xs args] "
-                  "    (let [x (first xs)] "
-                  "      (cond "
-                  "        (empty? xs) "
-                  "         {:tag tag-kw :attrs attrs :children children :text text} "
-                  "        (and (keyword? x) (next xs)) "
-                  "         (recur (assoc attrs x (second xs)) text children (drop 2 xs)) "
-                  "        (string? x) "
-                  "         (recur attrs (str (or text \"\") x) children (rest xs)) "
-                  "        (sequential? x) "
-                  "         (recur attrs text (into children x) (rest xs)) "
-                  "        :else "
-                  "         (recur attrs text (conj children x) (rest xs))))))")}
+                  "(defn make-element "
+                  "  ([tag-kw] {:tag tag-kw :attrs {} :children [] :text nil}) "
+                  "  ([tag-kw & args] "
+                  "    (let [step "
+                  "          (fn step [attrs text children xs] "
+                  "            (if (empty? xs) "
+                  "              {:tag tag-kw :attrs attrs "
+                  "               :children children :text text} "
+                  "              (let [x (first xs)] "
+                  "                (cond "
+                  "                  (and (keyword? x) (next xs)) "
+                  "                   (step (assoc attrs x (second xs)) text "
+                  "                         children (nthrest xs 2)) "
+                  "                  (string? x) "
+                  "                   (step attrs (str (or text \"\") x) "
+                  "                         children (rest xs)) "
+                  "                  (nil? x) "
+                  "                   (step attrs text children (rest xs)) "
+                  "                  (sequential? x) "
+                  "                   (let [fst (first x)] "
+                  "                     (if (and (map? fst) (:tag fst)) "
+                  "                       (step attrs text (into children x) (rest xs)) "
+                  "                       (step attrs text (conj children x) (rest xs)))) "
+                  "                  :else "
+                  "                   (step attrs text (conj children x) (rest xs))))))] "
+                  "      (step {} nil [] args))))")}
         ;; Then a thin wrapper per public task/type var.
         wrappers
         (for [[sym _] (sort (ns-publics tasks-ns))
@@ -208,7 +244,7 @@
               :when tag]
           {"name" (name sym)
            "code" (str "(defn " sym " [& args] "
-                       "(clojure.core/apply element "
+                       "(clojure.core/apply make-element "
                        (pr-str (keyword tag)) " args))")})]
     {"name" "clj-ant.tasks"
      "vars" (vec (cons builder wrappers))}))
@@ -245,13 +281,22 @@
              {"name" "execute-stream" "code"
               (str
                 "(defn execute-stream [elements handler & {:as opts}] "
-                "  (babashka.pods/invoke "
-                "    \"clj-ant.pod\" "
-                "    'clj-ant.pod/execute-stream "
-                "    [{:elements elements :opts opts}] "
-                "    {:handlers {:success handler "
-                "                :error   (fn [{:keys [ex-message]}] "
-                "                           (throw (ex-info ex-message {})))}}))")}
+                "  (let [done (promise)] "
+                "    (babashka.pods/invoke "
+                "      \"clj-ant.pod\" "
+                "      'clj-ant.pod/execute-stream "
+                "      [{:elements elements :opts opts}] "
+                "      {:handlers {:success "
+                "                  (fn [v] "
+                "                    (if (and (map? v) (contains? v :clj-ant/result)) "
+                "                      (deliver done (:clj-ant/result v)) "
+                "                      (handler v))) "
+                "                  :error "
+                "                  (fn [{:keys [ex-message]}] "
+                "                    (deliver done (ex-info ex-message {})) "
+                "                    (throw (ex-info ex-message {})))}}) "
+                "    (let [r (deref done 60000 :clj-ant/timeout)] "
+                "      (if (instance? Throwable r) (throw r) r))))")}
              ;; Stream resolved paths from a fileset/path/etc. Useful
              ;; for very large scans where you want to start work
              ;; before the iterator is exhausted.
@@ -286,7 +331,12 @@
                                      "value" (pr-str v)
                                      "status" []}))
               final    (apply f (conj args partial!))]
-          (send! out {"id" id "value" (pr-str final) "status" ["done"]}))
+          ;; Bb's :done reply does NOT pass through the success
+          ;; handler -- only intermediate values do. So we deliver
+          ;; the final result as one more partial!, then signal
+          ;; completion with an empty done reply.
+          (partial! final)
+          (send! out {"id" id "status" ["done"]}))
         (let [v (apply f args)]
           (send! out {"id" id "value" (pr-str v) "status" ["done"]})))
       (catch Throwable t

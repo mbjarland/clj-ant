@@ -243,6 +243,46 @@
         (is (every? #(= "false" (-> % :attrs :trust))
                     (a/elements t' #(= :scp (:tag %)))))))))
 
+(deftest from-xml-basedir-fidelity
+  (testing "build.xml with basedir=. resolves relative to the FILE, not cwd"
+    (let [base (tmp-dir)
+          src  (File. base "src")]
+      (.mkdirs src)
+      (spit-file src "x.txt" "x")
+      (spit (File. base "build.xml")
+            (str "<project name=\"t\" default=\"all\" basedir=\".\">"
+                 "<target name=\"all\">"
+                 "<copy todir=\"dst\">"
+                 "<fileset dir=\"src\" includes=\"**/*.txt\"/>"
+                 "</copy>"
+                 "</target></project>"))
+      ;; Note: we do NOT pass :basedir as an opt -- the build file's
+      ;; basedir="." should resolve to (.getParent build.xml), not
+      ;; the JVM's cwd.
+      (a/ant :level :warn (a/from-xml (File. base "build.xml")))
+      (is (.exists (File. base "dst/x.txt"))
+          "files should land relative to the build.xml's directory"))))
+
+(deftest deftask-with-explicit-project
+  (testing "supplied :project sees deftasks defined before AND after make-project"
+    (let [hits (atom 0)]
+      (a/deftask :early-task (fn [_] (swap! hits inc)))
+      (let [p (a/make-project {:level :warn})]
+        (a/deftask :late-task (fn [_] (swap! hits inc)))
+        (a/ant :project p
+               (a/element :early-task)
+               (a/element :late-task))
+        (is (= 2 @hits))))))
+
+(deftest property-name-attr-not-filtered
+  (testing ":name is exposed as a real attribute on tags that override setName"
+    (let [s (@(requiring-resolve 'clj-ant.spec/schema-for) :property)]
+      ;; The schema should mention :name
+      (is (some #(= :name (first %)) (rest s)))
+      ;; Closed validation should accept :name
+      (is (nil? (@(requiring-resolve 'clj-ant.spec/validate)
+                  :property {:name "x" :value "1"} {:closed? true}))))))
+
 (deftest with-project-shares-state
   (testing "properties set in one call are visible in the next"
     (let [p (a/make-project {:level :warn})

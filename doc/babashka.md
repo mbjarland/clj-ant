@@ -67,13 +67,12 @@ element map for you so bb scripts never have to spell out
 
 ## Limitations to be aware of
 
-1. **No streamed events yet.** The current pod returns a value once the
-   build is finished. Real-time event streaming would require switching
-   to the bb-pods `transit+json` async/streaming protocol — open work.
-2. **No JVM objects round-trip.** A `(a/execute …)` call from bb returns
-   a plain map; if you need the underlying `Project` you have to do
-   that work in JVM-land.
-3. **Latency.** Each `execute` reuses the same long-lived JVM, so cold
+1. **No JVM objects round-trip.** `(a/execute …)` from bb returns a
+   plain map; live `Project`/`Target`/`UnknownElement` references are
+   stripped (`:targets` becomes a vector of names; `:tasks` becomes a
+   count). If you need the underlying object you have to do that work
+   in JVM-land.
+2. **Latency.** Each pod call reuses the same long-lived JVM, so cold
    startup happens once. Subsequent calls are JVM-quick.
 
 
