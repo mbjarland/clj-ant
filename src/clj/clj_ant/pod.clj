@@ -136,16 +136,21 @@
   status [done]. `partial!` is called by the pod loop for every
   intermediate value."
   [{:keys [nodes opts]} partial!]
-  (let [done (promise)]
-    (apply core/execute! nodes
-           (mapcat identity
-                   (-> (or opts {})
-                       (assoc :on-event
-                              (fn [e] (partial! e))))))
-    ;; The build has finished synchronously. Anything we want to send
-    ;; as the *final* value goes back through the normal return path.
-    (deliver done :ok)
-    {:phase :result}))
+  (apply core/execute! nodes
+         (mapcat identity
+                 (-> (or opts {})
+                     (assoc :on-event (fn [e] (partial! e))))))
+  {:phase :result})
+
+(defn ^:no-doc op-files-stream
+  "Streaming variant of files: each path is delivered as it's
+  discovered. Useful for large filesets where you want to start work
+  before the whole scan finishes."
+  [{:keys [node opts]} partial!]
+  (doseq [^java.io.File f (apply core/files node
+                                 (mapcat identity (or opts {})))]
+    (partial! (.getAbsolutePath f)))
+  {:phase :done})
 
 (defn ^:no-doc op-files [{:keys [node opts]}]
   (mapv #(.getAbsolutePath ^java.io.File %)
@@ -159,7 +164,9 @@
    "clj-ant.pod/files"   {:fn #'op-files}
    "clj-ant.pod/plan"    {:fn #'op-plan}
    "clj-ant.pod/execute-stream"
-   {:fn #'op-execute-stream :stream? true}})
+   {:fn #'op-execute-stream :stream? true}
+   "clj-ant.pod/files-stream"
+   {:fn #'op-files-stream :stream? true}})
 
 ;; ---------------------------------------------------------------------------
 ;; Pod loop
@@ -200,6 +207,19 @@
                 "    \"clj-ant.pod\" "
                 "    'clj-ant.pod/execute-stream "
                 "    [{:nodes nodes :opts opts}] "
+                "    {:handlers {:success handler "
+                "                :error   (fn [{:keys [ex-message]}] "
+                "                           (throw (ex-info ex-message {})))}}))")}
+             ;; Stream resolved paths from a fileset/path/etc. Useful
+             ;; for very large scans where you want to start work
+             ;; before the iterator is exhausted.
+             {"name" "files-stream" "code"
+              (str
+                "(defn files-stream [node handler & {:as opts}] "
+                "  (babashka.pods/invoke "
+                "    \"clj-ant.pod\" "
+                "    'clj-ant.pod/files-stream "
+                "    [{:node node :opts opts}] "
                 "    {:handlers {:success handler "
                 "                :error   (fn [{:keys [ex-message]}] "
                 "                           (throw (ex-info ex-message {})))}}))")}]}]

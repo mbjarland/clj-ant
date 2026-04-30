@@ -63,14 +63,14 @@
 
 (def ^:private schema-cache (atom {}))
 
-(defn- build-schema [tag]
+(defn- build-schema [tag closed?]
   (let [project (Project.) _ (.init project)
         klass   (klass-for-tag project tag)]
     (when klass
       (let [helper (IntrospectionHelper/getHelper project klass)
             attrs  (->> (entries-of (.getAttributeMap helper))
                         (remove (fn [[k _]] (framework-attrs (str k)))))]
-        (into [:map {:closed false}]
+        (into [:map {:closed (boolean closed?)}]
               (for [[^String k ^Class c] attrs]
                 ;; XML attribute names are case-insensitive in Ant. Keep the
                 ;; lowercased key as canonical and tolerate either form.
@@ -80,12 +80,15 @@
 
 (defn schema-for
   "Return a cached malli schema for a tag (e.g. `:copy`). Returns nil
-  for unknown tags."
-  [tag]
-  (or (get @schema-cache tag)
-      (when-some [s (build-schema tag)]
-        (swap! schema-cache assoc tag s)
-        s)))
+  for unknown tags. With `:closed? true`, the schema rejects unknown
+  attributes (useful for catching typos like `:tdoir`)."
+  ([tag] (schema-for tag {}))
+  ([tag {:keys [closed?] :as opts}]
+   (let [k [tag (boolean closed?)]]
+     (or (get @schema-cache k)
+         (when-some [s (build-schema tag closed?)]
+           (swap! schema-cache assoc k s)
+           s)))))
 
 ;; ---------------------------------------------------------------------------
 ;; Validation surface
@@ -99,32 +102,40 @@
   "Validate an attribute map against the schema for `tag`. Returns nil
   if valid, a humanized error map otherwise. Returns nil if the tag is
   unknown -- we don't want validation to refuse to run for tasks
-  loaded via `<taskdef>`."
-  [tag attrs]
-  (when-some [schema (schema-for tag)]
-    (let [attrs* (->> attrs
-                      (map (fn [[k v]] [(keyword (.toLowerCase (name k))) v]))
-                      (into {}))
-          coerced (m/decode schema attrs* string-coercer)]
-      (when-not (m/validate schema coerced)
-        (me/humanize (m/explain schema coerced))))))
+  loaded via `<taskdef>`.
+
+  Options:
+    :closed?  reject unknown attributes too (default false)."
+  ([tag attrs] (validate tag attrs {}))
+  ([tag attrs opts]
+   (when-some [schema (schema-for tag opts)]
+     (let [attrs* (->> attrs
+                       (map (fn [[k v]] [(keyword (.toLowerCase (name k))) v]))
+                       (into {}))
+           coerced (m/decode schema attrs* string-coercer)]
+       (when-not (m/validate schema coerced)
+         (me/humanize (m/explain schema coerced)))))))
 
 (defn validate!
   "Like `validate`, but throws when invalid. Returns nil on success."
-  [tag attrs]
-  (when-some [errs (validate tag attrs)]
-    (throw (ex-info (str "Invalid attributes for <" (name tag) ">: " errs)
-                    {:tag tag :errors errs :attrs attrs}))))
+  ([tag attrs] (validate! tag attrs {}))
+  ([tag attrs opts]
+   (when-some [errs (validate tag attrs opts)]
+     (throw (ex-info (str "Invalid attributes for <" (name tag) ">: " errs)
+                     {:tag tag :errors errs :attrs attrs})))))
 
 (defn validate-tree
   "Walk a node tree and collect all validation errors as a vector of
   `{:tag :path :errors}` maps. Empty vector means everything checks
-  out."
-  [node]
-  (letfn [(walk [path n]
-            (let [here (when-some [e (validate (:tag n) (:attrs n))]
-                         [{:tag (:tag n) :path (vec path) :errors e}])]
-              (concat
-                here
-                (mapcat #(walk (conj path (:tag n)) %) (:children n)))))]
-    (vec (walk [] node))))
+  out.
+
+  Options forwarded to `validate` (notably `:closed?`)."
+  ([node] (validate-tree node {}))
+  ([node opts]
+   (letfn [(walk [path n]
+             (let [here (when-some [e (validate (:tag n) (:attrs n) opts)]
+                          [{:tag (:tag n) :path (vec path) :errors e}])]
+               (concat
+                 here
+                 (mapcat #(walk (conj path (:tag n)) %) (:children n)))))]
+     (vec (walk [] node)))))

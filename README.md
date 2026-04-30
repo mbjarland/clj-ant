@@ -68,7 +68,100 @@ through `a/resources` (yields `Resource`) and `a/files` (yields
 
 You can round-trip: pull a fileset into Clojure, filter it
 arbitrarily, then drive a `(t/copy …)` with the surviving names via
-`(t/filelist …)`.
+`(t/filelist …)`. See **[doc/examples.md](doc/examples.md)** for
+deeper patterns — set algebra (`union`/`intersect`/`difference`),
+sort + first, archive contents, mapped resources, token streams.
+
+
+## Validation (malli)
+
+Schemas are produced on demand from Ant's `IntrospectionHelper`. No
+hand-written specs, no macros — just data, cached per tag:
+
+```clojure
+(require '[clj-ant.spec :as s])
+
+(s/schema-for :copy)
+;; => [:map {:closed false}
+;;     [:todir       {:optional true} [:or [:fn ...] :string]]
+;;     [:overwrite   {:optional true} [:or :boolean [:enum "true" "false" ...]]]
+;;     ...]
+```
+
+Two ways to surface errors:
+
+```clojure
+(s/validate :copy {:overwrite "perhaps"})
+;; => {:overwrite ["should be a boolean"
+;;                 "should be either \"true\" \"false\" \"yes\" ..."]}
+
+(a/ant :validate? true (t/copy :overwrite "perhaps"))
+;; ExceptionInfo: Build failed validation: 1 issue(s)
+```
+
+Add `:closed? true` to also reject unknown attributes (catches typos
+like `:tdoir`). Off by default — your build may load custom taskdefs
+whose attributes vanilla Ant can't introspect.
+
+```clojure
+(a/ant :validate? true :closed? true (t/copy :tdoir "out"))
+;; => :tdoir ["disallowed key"]
+```
+
+
+## Streaming events
+
+`:on-event` fires synchronously per `BuildEvent`:
+
+```clojure
+(a/ant
+  :on-event (fn [{:keys [phase task message level]}]
+              (when (= :message phase)
+                (println " >>" message)))
+  (t/javac :srcdir "src" :destdir "out"))
+```
+
+Phases the listener emits: `:build-started` `:target-started`
+`:task-started` `:message` `:task-finished` `:target-finished`
+`:build-finished`. Composes with `:capture? true` if you want both
+live updates and a final list.
+
+The babashka pod ships an `execute-stream` and `files-stream` op that
+relay each event / each path through bb's multi-reply protocol — see
+[doc/babashka.md](doc/babashka.md).
+
+
+## Targets and dependencies
+
+For real builds you want named targets with declared dependencies, a
+default target, and dispatch by name. clj-ant treats targets as data
+nodes too:
+
+```clojure
+(a/deftarget clean
+  (t/delete :dir "out" :failonerror "false"))
+
+(a/deftarget compile
+  :depends [:clean]
+  :description "compile sources"
+  (t/mkdir :dir "out")
+  (t/javac :srcdir "src" :destdir "out"))
+
+(a/deftarget package
+  :depends [:compile]
+  (t/jar :destfile "app.jar" :basedir "out"))
+
+;; Run with explicit target:
+(a/ant :targets ["package"] clean compile package)
+;; clean and compile fire automatically as declared dependencies.
+
+;; Or with :default for the project default target:
+(a/ant :default "package" clean compile package)
+```
+
+`:depends` accepts a string, a list of strings, or a list of
+keywords/symbols. `:if` and `:unless` work the same way they do in
+`build.xml`.
 
 
 ## REPL ergonomics
@@ -116,13 +209,15 @@ clj -M:pod          ; entry point used by the babashka pod
 ## Project layout
 
 ```
-src/clj/clj_ant/core.clj   the runner: ~250 LOC
-src/clj/clj_ant/tasks.clj  auto-generated, 248 wrappers
-src/clj/clj_ant/pod.clj    babashka pod
-src/gen/clj_ant/gen.clj    the generator
+src/clj/clj_ant/core.clj    the runner + targets + execute! + ant
+src/clj/clj_ant/spec.clj    malli schemas from IntrospectionHelper
+src/clj/clj_ant/tasks.clj   auto-generated, 248 wrappers
+src/clj/clj_ant/pod.clj     babashka pod
+src/gen/clj_ant/gen.clj     the generator
 test/clj_ant/core_test.clj
-doc/babashka.md
-build.clj                  tools.build entry points
+doc/babashka.md             pod design + bb usage
+doc/examples.md             resource-collection cookbook
+build.clj                   tools.build entry points
 deps.edn
 ```
 
