@@ -29,7 +29,8 @@ whose backing class implements
 
 A fileset can't express "files modified in the last 24 h" directly,
 but Clojure can. Pull the names, filter, hand the survivors to
-`<filelist>`:
+`<filelist>`. Sequential attribute values are joined with commas
+automatically — no `str/join` needed:
 
 ```clojure
 (let [src   "src"
@@ -42,8 +43,21 @@ but Clojure can. Pull the names, filter, hand the survivors to
   (a/ant
     (t/mkdir   :dir out)
     (t/copy    :todir out
-      (t/filelist :dir src :files (str/join "," hits)))))
+      (t/filelist :dir src :files hits))))   ; vector, not string
 ```
+
+The fully Ant-XML-shaped equivalent uses nested `<file>` elements
+instead of a comma-list — useful when names contain commas, or just
+to match the structure of a hand-written `build.xml`:
+
+```clojure
+(t/copy :todir out
+  (t/filelist :dir src
+    (mapv #(a/node :file :name %) hits)))   ; one <file> per entry
+```
+
+Both forms produce the same `FileList` instance at runtime — pick
+whichever reads better.
 
 
 ## 3. Set operations with `union`, `intersect`, `difference`
