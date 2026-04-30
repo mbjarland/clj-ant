@@ -163,50 +163,44 @@ differ from sources, but you still want to verify the destination
 list in Clojure first.
 
 
-## 9. Scale: `child`, `eager-resources`, `lazy-resources`
+## 9. Pass anything as a child
 
-Comma-strings and nested `<file>` elements are fine for hundreds of
-names. They're the wrong choice for a million. Three escape hatches
-let you hand Ant a real `ResourceCollection` instead, without
-reshaping it through XML-flavoured intermediates:
+The runner coerces non-node children automatically. There is one
+rule: **pass the value, the runner does the right thing**.
 
 ```clojure
-;; A) eager-resources -- known seq of File -> real Ant Resources.
-;;    O(n) memory but skips the per-element UnknownElement /
-;;    RuntimeConfigurable wrappers a (filelist + nested <file>) tree
-;;    would build.
-(a/ant (t/copy :todir "out"
-               (a/eager-resources (filter recent? all-files))))
-
-;; B) lazy-resources -- reify ResourceCollection over a (possibly
-;;    lazy) seq. The iterator pulls FileResource instances on demand,
-;;    so a 10-million-entry seq becomes 10 million file-walks, not
-;;    10 million live objects sitting in memory.
-(let [files (lazy-seq (find-files-from-some-source))]
-  (a/ant (t/copy :todir "out"
-                 (a/lazy-resources files {:size 10000000}))))
-
-;; C) child -- if you already hold a real Ant DataType (handed in
-;;    from a Java library, constructed by hand, or shared across
-;;    several tasks), wrap it as-is without rebuilding it as data.
-(let [fs ^FileSet (some-fn-that-returns-a-fileset)]
-  (a/ant (t/copy :todir "out"   (a/child fs))
-         (t/jar  :destfile "x"  (a/child fs))))   ; reused, not rebuilt
-```
-
-Note on the simple case: if you're *constructing* a fileset yourself,
-you don't need `child` at all -- just use the data form directly,
-which is shorter, lazier, and prints nicer:
-
-```clojure
+;; A clj-ant data node -- the everyday case.
 (a/ant (t/copy :todir "out"
                (t/fileset :dir "src" :includes "**/*.clj")))
+
+;; A real Ant DataType (returned by a/realize, handed in from a Java
+;; library, constructed by hand). Goes through Ant's project-reference
+;; mechanism -- no rebuilding as data.
+(let [fs (some-fn-that-returns-a-fileset)]
+  (a/ant (t/copy :todir "out" fs)))
+
+;; A lazy seq of File / Resource / path-string. Wrapped as a reified
+;; ResourceCollection so Ant pulls one FileResource at a time. This
+;; is the path that scales to millions of entries -- nothing is
+;; materialised up front.
+(let [files (lazy-seq (find-files-from-some-source))]
+  (a/ant (t/copy :todir "out" files)))
+
+;; A single File or Resource.
+(a/ant (t/copy :todir "out" (io/file "x.clj")))
 ```
 
-`a/realize` exists for the inverse use case: when you want the live
-Ant object *out* (to inspect, to hand to other Java code, to slurp
-its iterator into a Clojure seq via `a/files`). It's not needed to
-go back into another `ant` build -- nodes already do that natively.
+Under the covers this is one mechanism: anything that is or becomes
+a `ResourceCollection` is registered on the project under a
+synthetic refid and an `<resources refid=\"…\"/>` proxy slots in as
+the child. It works from any task that accepts a resource collection
+(`copy`, `jar`, `zip`, `tar`, …) because that's already Ant's own
+polymorphism story.
+
+For the rare case where you need to override the size hint or the
+`isFilesystemOnly` flag of the reified collection, there's an
+escape-hatch helper `a/lazy-resources` that takes those options.
+Day-to-day code never reaches for it.
 
 All three register the underlying object as a project reference and
 emit a tiny `<resources refid=\"…\"/>` proxy node in the AST. Ant's

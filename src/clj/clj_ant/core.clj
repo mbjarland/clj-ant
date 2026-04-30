@@ -58,10 +58,74 @@
   [x]
   (instance? JavaChild x))
 
+;; ---------------------------------------------------------------------------
+;; Child coercion. The runner only ever sees Node / JavaChild instances,
+;; so anything else a user passes as a child gets normalized here once.
+;;
+;; The user-facing rule is intentionally one sentence: "you can pass any
+;; clj-ant node, any Java Ant DataType, any File or Resource, or a seq of
+;; the above as a child." Everything below is the implementation of that
+;; sentence.
+
+(defn- ^:private build-lazy-rc
+  "Reify a ResourceCollection over a (possibly lazy) Clojure seq of File
+  / Resource / path-string. Pulls FileResource instances on demand."
+  [files]
+  (let [->res (fn [x]
+                (cond
+                  (instance? Resource x) x
+                  (instance? File x)
+                  (org.apache.tools.ant.types.resources.FileResource. ^File x)
+                  :else
+                  (org.apache.tools.ant.types.resources.FileResource.
+                    ^File (io/file x))))
+        size-cache (delay (count files))]
+    (reify ResourceCollection
+      (iterator [_]
+        (let [s (atom (seq files))]
+          (reify java.util.Iterator
+            (hasNext [_] (boolean (seq @s)))
+            (next    [_] (let [v (->res (first @s))]
+                           (swap! s next) v)))))
+      (size [_] @size-cache)
+      (isFilesystemOnly [_] true))))
+
+(defn as-child
+  "Coerce `x` to a Node or JavaChild so it can be a child of an Ant
+  node. The rule is:
+
+    Node / JavaChild     -> as is
+    map (node-shaped)    -> as is
+    org.apache.tools.ant.types.ResourceCollection
+                         -> JavaChild (refid proxy at execute time)
+    File / Resource      -> single-element ResourceCollection
+    seq of the above     -> lazy ResourceCollection over the seq
+
+  You don't usually call this yourself -- `node` (and the generated
+  task wrappers) call it on every positional arg. So this works
+  out of the box:
+
+      (a/ant (t/copy :todir \"out\" my-fileset))      ; FileSet
+      (a/ant (t/copy :todir \"out\" (find-files)))    ; lazy seq of File
+      (a/ant (t/copy :todir \"out\" (io/file \"x\"))) ; one File"
+  [x]
+  (cond
+    (or (node? x) (java-child? x))    x
+    (map? x)                          x
+    (instance? ResourceCollection x)  (->JavaChild x :resources)
+    (or (instance? File x)
+        (instance? Resource x))       (->JavaChild (build-lazy-rc [x]) :resources)
+    (sequential? x)                   (->JavaChild (build-lazy-rc x) :resources)
+    :else (throw (ex-info (str "Cannot use as child: " (pr-str x))
+                          {:value x :type (class x)}))))
+
 (defn- split-args
   "Pulls keyword/value attribute pairs off the front of a positional arg
   list, leaving anything else as children. Mirrors hiccup-style calling
-  conventions while keeping the data form a plain map."
+  conventions while keeping the data form a plain map.
+
+  Children are coerced via `as-child`, so users can mix data nodes,
+  raw Java DataTypes, Files, and lazy seqs of Files freely."
   [args]
   (loop [attrs {} text nil children [] xs args]
     (let [x (first xs)]
@@ -75,18 +139,21 @@
         (string? x)
         (recur attrs (str (or text "") x) children (rest xs))
 
-        (or (node? x) (java-child? x) (map? x))
-        (recur attrs text (conj children x) (rest xs))
-
-        (sequential? x)
-        (recur attrs text (into children x) (rest xs))
-
         (nil? x)
         (recur attrs text children (rest xs))
 
+        (sequential? x)
+        ;; A sequential whose first element looks like a child node
+        ;; splices (the (mapv #(node :file ...) names) idiom). A
+        ;; sequential of anything else (Files, Resources, paths) is
+        ;; treated as a single resource-collection child.
+        (let [fst (first x)]
+          (if (or (node? fst) (java-child? fst) (map? fst))
+            (recur attrs text (into children x) (rest xs))
+            (recur attrs text (conj children (as-child x)) (rest xs))))
+
         :else
-        (throw (ex-info (str "Unsupported child of an Ant node: " (pr-str x))
-                        {:value x}))))))
+        (recur attrs text (conj children (as-child x)) (rest xs))))))
 
 (defn node
   "Build a clj-ant node for tag `tag-kw`. The remaining args follow
@@ -425,84 +492,42 @@
     (apply execute! (vec rest-args) (mapcat identity opts))))
 
 ;; ---------------------------------------------------------------------------
-;; Real Ant objects as children
-;;
-;; Turning every entry in a million-file collection into its own
-;; `<file name="..."/>` UnknownElement is wasteful: we'd allocate
-;; millions of wrapper records. The cheap path is a real Ant
-;; ResourceCollection, attached to the parent task by `refid`. The
-;; helpers below give you three flavours, in increasing magic order:
-;;
-;;   `child`             -- wrap any pre-built DataType, RC, etc.
-;;   `eager-resources`   -- build a Resources from a known seq of File
-;;   `lazy-resources`    -- reify a ResourceCollection over a lazy seq
+;; Advanced child-injection knobs. The everyday path is to just pass a
+;; value to a node -- the runner calls `as-child` and figures out what
+;; to do. These helpers are kept around for the rare case where you
+;; need to override the default behaviour (e.g. a non-filesystem-only
+;; resource collection, or a hand-rolled Resources). They are not
+;; documented in the README on purpose.
 
-(defn child
-  "Inject a real Ant DataType (typically a ResourceCollection) as a
-  child of a task node. The runner registers `obj` on the project
-  under a unique refid and emits a `<tag refid=\"...\"/>` proxy.
-
-      (let [^FileSet fs (a/realize (t/fileset :dir \"src\"))]
-        (a/ant (t/copy :todir \"out\" (a/child fs))))
-
-  `tag` defaults to `:resources`, which works for any
-  `ResourceCollection` because `<resources refid=\"...\"/>` resolves
-  through Ant's polymorphic ResourceCollection cast. Override `tag`
-  for non-RC types (e.g. `:mapper`)."
-  ([obj] (child obj :resources))
-  ([obj tag] (->JavaChild obj tag)))
-
-(defn eager-resources
-  "Build a populated `org.apache.tools.ant.types.resources.Resources`
-  out of a seq of `java.io.File` (or `Resource`) and wrap it as a
-  child. O(n) memory but skips the per-element UnknownElement /
-  RuntimeConfigurable overhead, so it's much cheaper than
-  `(map #(node :file :name (.getName %)) files)` for large sets."
-  [files]
-  (let [rc (org.apache.tools.ant.types.resources.Resources.)]
-    (doseq [f files]
-      (.add rc (if (instance? org.apache.tools.ant.types.Resource f)
-                 f
-                 (org.apache.tools.ant.types.resources.FileResource.
-                   ^File (io/file f)))))
-    (child rc)))
-
-(defn lazy-resources
-  "Reify a `ResourceCollection` over a Clojure seq. Each element of
-  the seq is wrapped in a `FileResource` on demand by the iterator,
-  so a 10M-file scan doesn't materialise into 10M Java objects up
-  front. Pass the result anywhere a child resource collection is
-  accepted (copy, jar, zip, …).
+(defn ^:no-doc lazy-resources
+  "Like passing a seq of files directly, but lets you override the
+  size hint and the isFilesystemOnly flag. Returns a JavaChild ready
+  to drop into a node.
 
   Options:
-    :size              size hint, returned by ResourceCollection.size().
-                       If omitted, size is computed by counting the seq
-                       on first call (forcing realisation).
-    :filesystem-only?  default true. Set false for non-File resources."
-  ([files] (lazy-resources files {}))
+    :size              skip the eager (count files) and use this.
+    :filesystem-only?  default true. Set false for HTTP/zip/etc."
+  ([files] (as-child files))
   ([files {:keys [size filesystem-only?]
            :or   {filesystem-only? true}}]
    (let [->res (fn [x]
                  (cond
-                   (instance? org.apache.tools.ant.types.Resource x) x
+                   (instance? Resource x) x
                    (instance? File x)
                    (org.apache.tools.ant.types.resources.FileResource. ^File x)
                    :else
                    (org.apache.tools.ant.types.resources.FileResource.
                      ^File (io/file x))))
-         size-cache (delay (or size (count files)))
-         rc (reify org.apache.tools.ant.types.ResourceCollection
+         rc (reify ResourceCollection
               (iterator [_]
                 (let [s (atom (seq files))]
                   (reify java.util.Iterator
                     (hasNext [_] (boolean (seq @s)))
-                    (next    [_]
-                      (let [v (->res (first @s))]
-                        (swap! s next)
-                        v)))))
-              (size [_] @size-cache)
+                    (next    [_] (let [v (->res (first @s))]
+                                   (swap! s next) v)))))
+              (size [_] (or size (count files)))
               (isFilesystemOnly [_] (boolean filesystem-only?)))]
-     (child rc))))
+     (->JavaChild rc :resources))))
 
 ;; ---------------------------------------------------------------------------
 ;; Realisation: turn data nodes into live Ant objects without executing.

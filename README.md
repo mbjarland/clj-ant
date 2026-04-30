@@ -67,10 +67,23 @@ through `a/resources` (yields `Resource`) and `a/files` (yields
 `into`, `reduce`, and friends compose normally.
 
 You can round-trip: pull a fileset into Clojure, filter it
-arbitrarily, then drive a `(t/copy …)` with the surviving names via
-`(t/filelist …)`. See **[doc/examples.md](doc/examples.md)** for
-deeper patterns — set algebra (`union`/`intersect`/`difference`),
-sort + first, archive contents, mapped resources, token streams.
+arbitrarily, then hand the surviving files **straight back as a
+child of any task**. The runner accepts whatever you have — a clj-ant
+node, a real Ant `FileSet`, a single `File`, or a (lazy) seq of
+`File`/`Resource`/path-string — and wraps it through Ant's project
+reference machinery as needed. So you never write `(str/join "," xs)`
+or build a tree of nested `<file>` elements, even at million-file
+scale:
+
+```clojure
+(let [recent (->> (a/files (t/fileset :dir "src"))
+                  (filter #(> (.lastModified %) cutoff)))]
+  (a/ant (t/copy :todir "out" recent)))   ; raw seq, no wrapper
+```
+
+See **[doc/examples.md](doc/examples.md)** for the full set —
+set algebra (`union`/`intersect`/`difference`), sort + first, archive
+contents, mapped resources, token streams, and the scale path.
 
 
 ## Validation (malli)
