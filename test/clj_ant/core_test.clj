@@ -130,35 +130,36 @@
                         :files ["a.txt" "b.txt"])))
       (is (= 2 (count (.listFiles dst)))))))
 
-(deftest java-child-injection
-  (testing "(child fs) wraps a real Ant FileSet and copies its files"
-    (let [base (tmp-dir)
-          src  (File. base "src") dst (File. base "dst")]
-      (.mkdirs src)
-      (doseq [n ["a.txt" "b.txt" "c.txt"]] (spit-file src n n))
-      (let [fs (a/realize (a/node :fileset
-                                  :dir (.getAbsolutePath src)
-                                  :includes "**/*.txt"))]
-        (a/ant :level :warn
-          (a/node :copy :todir (.getAbsolutePath dst)
-                  (a/child fs)))
-        (is (= 3 (count (.listFiles dst))))))))
+(deftest pass-anything-as-child
+  (let [base (tmp-dir)
+        src  (File. base "src")]
+    (.mkdirs src)
+    (doseq [n ["a.txt" "b.txt" "c.txt" "d.txt"]] (spit-file src n n))
 
-(deftest lazy-resources-from-seq
-  (testing "lazy-resources iterates a Clojure seq through Ant"
-    (let [base (tmp-dir)
-          src  (File. base "src") dst (File. base "dst")]
-      (.mkdirs src)
-      (doseq [n ["1.txt" "2.txt" "3.txt" "4.txt"]] (spit-file src n n))
-      (let [picked (->> (a/files (a/node :fileset
-                                          :dir (.getAbsolutePath src)
-                                          :includes "**/*.txt"))
-                        (filter #(re-find #"[24]" (.getName %))))]
+    (testing "pass a real Java FileSet directly (no wrapper fn)"
+      (let [dst (doto (File. base "dst1") .mkdirs)
+            fs  (a/realize (a/node :fileset
+                                   :dir (.getAbsolutePath src)
+                                   :includes "**/*.txt"))]
+        (a/ant :level :warn (a/node :copy :todir (.getAbsolutePath dst) fs))
+        (is (= 4 (count (.listFiles dst))))))
+
+    (testing "pass a lazy seq of File directly"
+      (let [dst (doto (File. base "dst2") .mkdirs)
+            xs  (->> (a/files (a/node :fileset
+                                       :dir (.getAbsolutePath src)
+                                       :includes "**/*.txt"))
+                     (filter #(re-find #"[bd]" (.getName %))))]
+        (a/ant :level :warn (a/node :copy :todir (.getAbsolutePath dst) xs))
+        (is (= #{"b.txt" "d.txt"}
+               (set (map #(.getName %) (.listFiles dst)))))))
+
+    (testing "pass a single File directly"
+      (let [dst (doto (File. base "dst3") .mkdirs)]
         (a/ant :level :warn
           (a/node :copy :todir (.getAbsolutePath dst)
-                  (a/lazy-resources picked)))
-        (is (= #{"2.txt" "4.txt"}
-               (set (map #(.getName %) (.listFiles dst)))))))))
+                  (File. src "a.txt")))
+        (is (= ["a.txt"] (mapv #(.getName %) (.listFiles dst))))))))
 
 (deftest plan-prints-tree
   (testing "plan renders a build tree without executing it"
