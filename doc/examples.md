@@ -1,226 +1,332 @@
-# File / resource collections
+# clj-ant cookbook
 
-Ant's resource-collection abstraction is one of its most useful
-ideas, and the Clojure surface here surfaces it cleanly: any node
-whose backing class implements
-`org.apache.tools.ant.types.ResourceCollection` flows through
-`(a/resources …)` (yields `Resource`) and `(a/files …)` (yields
-`java.io.File`) as a lazy seq.
+Two halves:
+
+* **[Recipes](#recipes)** — problems Clojure devs hit where Ant
+  has a much sharper tool than what's in the standard kit.
+* **[File-collection reference](#file-collection-reference)** — the
+  full grammar of the resource-collection abstraction.
+
+Setup for every snippet:
 
 ```clojure
 (require '[clj-ant.core  :as a]
          '[clj-ant.tasks :as t]
-         '[clojure.string :as str])
+         '[clojure.java.io :as io])
 ```
 
 
-## 1. Plain fileset → seq
+## Recipes
+
+### Stamp variables into config files
+
+Common at deploy time: take a template, substitute environment-driven
+values, write the result to a target directory. Vanilla Clojure does
+this with hand-rolled string replacement; Ant has `<filterchain>` +
+`<tokenfilter>`, which streams through the file at copy time:
 
 ```clojure
-(->> (t/fileset :dir "src" :includes "**/*.clj")
-     a/files
-     (map #(.getName %))
-     sort)
-;; => ("core.clj" "gen.clj" "pod.clj" "spec.clj" "tasks.clj")
+(a/ant :level :warn
+  (t/copy :todir "deploy/etc"
+    (t/fileset :dir "etc/templates" :includes "**/*.conf")
+    (a/node :filterchain
+      (a/node :tokenfilter
+        (a/node :replacestring :from "@VERSION@" :to (:version env))
+        (a/node :replacestring :from "@HOST@"    :to (:host env))
+        (a/node :replacestring :from "@DB_URL@"  :to (:db env))))))
 ```
 
+Drop in `(a/node :replaceregex :pattern …)` instead of `:replacestring`
+for regex tokens, or `:expandproperties` to substitute every `${name}`
+from the project properties in one shot. Streaming-style: the file is
+never fully buffered.
 
-## 2. Filter Clojure-side, then drive an Ant copy
 
-A fileset can't express "files modified in the last 24 h" directly,
-but Clojure can. Pull the names, filter, hand the survivors to
-`<filelist>`. Sequential attribute values are joined with commas
-automatically — no `str/join` needed:
+### Bulk find-and-replace across a tree
+
+Refactoring across hundreds of files. `<replaceregexp>` walks a fileset
+and edits in place, with `byline` for line-anchored regex and `flags`
+for the usual `g`/`i`/`m`/`s`:
 
 ```clojure
-(let [src   "src"
-      out   "out/recent"
-      since (- (System/currentTimeMillis) (* 24 60 60 1000))
-      hits  (->> (t/fileset :dir src :includes "**/*")
-                 a/files
-                 (filter #(>= (.lastModified %) since))
-                 (mapv #(.getName %)))]
-  (a/ant
-    (t/mkdir   :dir out)
-    (t/copy    :todir out
-      (t/filelist :dir src :files hits))))   ; vector, not string
+(a/ant :level :warn
+  (t/replaceregexp
+    :match   "old\\.namespace" :replace "new.namespace"
+    :flags   "g" :byline "true"
+    (t/fileset :dir "src" :includes "**/*.{clj,cljc,cljs}")))
 ```
 
-The fully Ant-XML-shaped equivalent uses nested `<file>` elements
-instead of a comma-list — useful when names contain commas, or just
-to match the structure of a hand-written `build.xml`:
+The same task accepts `<substitution expression="…"/>` for backref
+patterns (`$1`/`$2`/etc.) when the replacement depends on captures.
+
+
+### Smart copy (skip if destination is newer)
+
+`<copy>` honours mtimes by default — pass `:overwrite "false"` plus
+`:granularity` to express "only re-copy if the source is newer by at
+least N millis." Useful in bb scripts that re-run periodically:
 
 ```clojure
-(t/copy :todir out
-  (t/filelist :dir src
-    (mapv #(a/node :file :name %) hits)))   ; one <file> per entry
+(a/ant :level :warn
+  (t/copy :todir "build/classes"
+          :overwrite "false"
+          :granularity "2000"           ; FAT-tolerance
+          :preservelastmodified "true"
+    (t/fileset :dir "src" :includes "**/*.clj")))
 ```
 
-Both forms produce the same `FileList` instance at runtime — pick
-whichever reads better.
+Layer a `<modified>` selector on the fileset for content-aware
+"changed" detection (Ant hashes each file, caches the hashes, and
+skips by content rather than mtime).
 
 
-## 3. Set operations with `union`, `intersect`, `difference`
+### Mass file rename via mapper
 
-Ant gives you set algebra over collections:
+"Move every `*.clj` to `*.cljc`" without a manual loop. The mapper +
+`<move>` combo does this atomically per file:
 
 ```clojure
-(def clj-files
-  (t/fileset :dir "src" :includes "**/*.clj"))
-(def edn-files
-  (t/fileset :dir "src" :includes "**/*.edn"))
-
-(a/files (t/union clj-files edn-files))
-;; all .clj and .edn files
-
-(a/files (t/intersect clj-files
-                       (t/fileset :dir "src" :includes "**/core*")))
-;; .clj files whose name matches core*
+(a/ant :level :warn
+  (t/move :todir "src"
+    (t/fileset :dir "src" :includes "**/*.clj")
+    (a/node :globmapper :from "*.clj" :to "*.cljc")))
 ```
 
-`t/difference`, `t/sort`, `t/first`, `t/last` work the same way.
+Mappers come in many flavours — `glob`, `regexp`, `package` (for
+`com.foo.Bar` → `com/foo/Bar.class`-style mappings), `flatten`,
+`merge`, `composite`, `chained`. Combine with `<copy>` for a non-
+destructive transform.
 
 
-## 4. Sort by name, take 2
+### Selective archive extraction
 
-`<sort>` accepts a selector child. Pair with `<first>` to take the
-top N:
+Pull only certain entries out of a zip/tar/jar without unpacking the
+rest. `<unzip>` + `<patternset>`:
+
+```clojure
+(a/ant :level :warn
+  (t/unzip :src "deps/big.jar" :dest "extracted/"
+    (a/node :patternset
+            :includes "**/*.properties,META-INF/services/**"
+            :excludes "**/test/**")))
+```
+
+If you only need to *read* an entry without writing it to disk, the
+inverse pattern is `(a/files (t/zipfileset :src "x.jar" :includes "**/*.properties"))`
+and then `slurp` over the resources — see the file-collection reference
+below.
+
+
+### Download + verify + extract
+
+A common bootstrap: fetch a tarball, check its SHA-256, unpack only
+what's needed. Three Ant tasks, one expression:
+
+```clojure
+(a/ant :level :warn
+  (t/get :src  "https://example.com/release-1.2.3.zip"
+         :dest "/tmp/release.zip"
+         :usetimestamp "true")
+  (t/checksum :file "/tmp/release.zip"
+              :algorithm "SHA-256"
+              :property  "actual"
+              :verifyproperty "ok")
+  (t/fail :unless "ok"
+          :message "checksum mismatch on release.zip")
+  (t/unzip :src "/tmp/release.zip" :dest "/opt/app"))
+```
+
+The `:verifyproperty` form is the magic bit: `<checksum>` sets `ok`
+to true/false based on a sibling `release.zip.SHA-256` file, and
+`<fail unless="…">` short-circuits the build with a message.
+
+
+### Run a shell command for each file
+
+The find/-exec idiom. `<apply>` spawns the executable per matched
+file (or, with `:parallel "true"`, in parallel):
+
+```clojure
+(a/ant :level :info
+  (t/apply :executable "convert" :parallel "true"
+           :dest "build/thumbs"
+    (t/fileset :dir "src/img" :includes "**/*.png")
+    (a/node :globmapper :from "*.png" :to "*.thumb.png")
+    (a/node :arg :value "-resize")
+    (a/node :arg :value "120x120")
+    (a/node :srcfile)
+    (a/node :targetfile)))
+```
+
+Mapper-driven `<apply>` is the part that's actually painful from raw
+`ProcessBuilder`: matching each input to its mapped output, threading
+arg lists, propagating non-zero exit codes.
+
+
+### Parallel pipelines
+
+`<parallel>` runs its child tasks concurrently. Useful when you've
+composed several independent build phases:
+
+```clojure
+(let [t0 (System/currentTimeMillis)]
+  (a/ant :level :warn
+    (a/node :parallel
+      (t/sleep :seconds "2")            ; pretend: javac main
+      (t/sleep :seconds "2")            ; pretend: javac test
+      (t/sleep :seconds "2")))          ; pretend: docs
+  (println "wall:" (- (System/currentTimeMillis) t0) "ms"))
+;; => wall: ~2100 ms (not 6 s)
+```
+
+`<parallel>` accepts `:threadCount`, `:timeout`, and a `:failonany`
+flag if you want the first failure to abort the rest.
+
+
+### Babashka: scriptable Ant in <100 ms steady-state
+
+Once the pod is loaded, individual ops are just function calls. The
+JVM stays warm across calls in the same script run:
+
+```clojure
+(require '[babashka.pods :as pods])
+(pods/load-pod ["clojure" "-M:pod"])
+(require '[clj-ant.pod :as a])
+
+;; live-stream events to the bb console as a build runs
+(a/execute-stream
+  [{:tag :get   :attrs {:src "https://…/v1.zip" :dest "/tmp/v.zip"}}
+   {:tag :unzip :attrs {:src "/tmp/v.zip"      :dest "/opt/v"}}]
+  (fn [{:keys [phase task message] :as e}]
+    (case phase
+      :task-started (println "[start]" task)
+      :message      (when message (println " " message))
+      :task-finished (println "[done] " task)
+      nil)))
+```
+
+Pair with `babashka.fs` for the small filesystem ops bb already does
+well, and reach for the pod when you need the heavyweight tasks
+(filter chains, mappers, replaceregexp, archive entry-level access,
+parallel, …) that bb itself can't host.
+
+
+## File-collection reference
+
+The single rule for getting files **into** an Ant task: pass anything.
+The runner figures out the wrapping.
+
+```clojure
+(a/ant (t/copy :todir "out" (t/fileset :dir "src")))     ; node
+(a/ant (t/copy :todir "out" my-real-fileset))            ; Java FileSet
+(a/ant (t/copy :todir "out" (filter recent? files)))     ; lazy seq
+(a/ant (t/copy :todir "out" (io/file "x.clj")))          ; one File
+```
+
+The single shape for getting files **out**: `a/files` (or `a/resources`
+for non-File data, or `a/realize` for the live Java object).
+
+
+### Set algebra
+
+```clojure
+(def clj-files (t/fileset :dir "src" :includes "**/*.clj"))
+(def edn-files (t/fileset :dir "src" :includes "**/*.edn"))
+
+(a/files (t/union     clj-files edn-files))
+(a/files (t/intersect clj-files (t/fileset :dir "src" :includes "core*")))
+(a/files (t/difference clj-files (t/fileset :dir "src" :includes "**/*_test.clj")))
+```
+
+
+### Sorted scans, take-N
 
 ```clojure
 (a/files
-  (t/first :count "2"
-    (t/sort
-      (t/fileset :dir "logs" :includes "*.log")
-      (a/node :name))))
-;; first 2 .log files in alphabetical order
+  (t/first :count "10"
+    (t/sort (t/fileset :dir "logs" :includes "*.log")
+            (a/node :date))))         ; or :name, :size, :type, ...
 ```
 
-Selectors available out of the box include `:name`, `:date`, `:size`,
-`:content`, `:type`, `:exists`. Ant's manual lists more under
-**Resource Comparators**.
 
+### Selectors via `restrict`
 
-## 5. Reach into archives without extracting
-
-`zipfileset` exposes the entries of a zip as resources:
-
-```clojure
-(->> (t/zipfileset :src "lib/something.jar" :includes "**/*.class")
-     a/resources
-     (map #(.getName %)))
-;; ("META-INF/MANIFEST.MF" "com/.../Foo.class" ...)
-```
-
-`tarfileset` does the same for `.tar.*`. Combined with `union` and
-`restrict` you can write a single resource-collection that spans
-several archives plus the local filesystem.
-
-
-## 6. `restrict` + selectors for DSL-flavoured filtering
+Selectors are richer than glob includes — depth, modified-since,
+content match, file signature, "present in another tree", and so on.
 
 ```clojure
 (a/files
   (t/restrict
     (t/fileset :dir "src")
-    (a/node :size :when "more" :size "1024")))      ; > 1024 bytes
+    (a/node :size :when "more" :size "1024")            ; > 1KiB
+    (a/node :modified :seconds "86400")))               ; modified in last day
 ```
 
-Ant ships dozens of selectors (size, depth, modified, signature,
-present, contains, regex, …) that the data form composes the same
-way.
 
+### Archive entries as resources
 
-## 7. Token streams: split a file into resources
-
-`<tokens>` turns a resource into one resource per token. With a
-linetokenizer it gives you a resource per line:
+`zipfileset` / `tarfileset` expose archive contents *without
+extracting*:
 
 ```clojure
-(->> (t/tokens
-       (t/file :file "TODO.md")
-       (a/node :linetokenizer))
+(->> (t/zipfileset :src "lib/foo.jar" :includes "**/*.class")
      a/resources
-     (map (fn [r] (slurp (.getInputStream r)))))
-;; (\"line 1 contents\" \"line 2 contents\" ...)
+     (map #(.getName %)))           ; "com/foo/A.class" "com/foo/B.class" ...
 ```
 
-Pair with `<concat>` or `<echoxml>` to stream-process line-by-line
-files entirely from Clojure data.
+Each `Resource` has `(.getInputStream r)` so you can `slurp` archive
+entries from Clojure without ever writing them to disk.
 
 
-## 8. Mapped resources: rename on the fly
+### Token streams
+
+Turn a single file into one resource per token. With a line tokenizer
+you get a resource per line, slurpable individually:
+
+```clojure
+(->> (t/tokens (t/file :file "TODO.md")
+               (a/node :linetokenizer))
+     a/resources
+     (map #(slurp (.getInputStream %)))
+     (filter #(re-find #"^- \[ \]" %)))
+;; pending TODO bullets, line-by-line
+```
+
+
+### Mapper-driven renaming
+
+`mappedresources` virtually renames a collection without copying:
 
 ```clojure
 (a/files
   (t/mappedresources
     (t/fileset :dir "src" :includes "**/*.clj")
     (a/node :globmapper :from "*.clj" :to "*.cljc")))
-;; same files, but reported under .cljc names
+;; same files reported under .cljc names
 ```
 
-Useful when you want to drive a `<copy>` whose destination names
-differ from sources, but you still want to verify the destination
-list in Clojure first.
 
+### Scale: lazy seq → real ResourceCollection
 
-## 9. Pass anything as a child
-
-The runner coerces non-node children automatically. There is one
-rule: **pass the value, the runner does the right thing**.
+Comma-strings and nested `<file>` elements don't scale to millions of
+entries. The runner auto-wraps any seq you pass into a reified
+`ResourceCollection`, so this just works:
 
 ```clojure
-;; A clj-ant data node -- the everyday case.
-(a/ant (t/copy :todir "out"
-               (t/fileset :dir "src" :includes "**/*.clj")))
-
-;; A real Ant DataType (returned by a/realize, handed in from a Java
-;; library, constructed by hand). Goes through Ant's project-reference
-;; mechanism -- no rebuilding as data.
-(let [fs (some-fn-that-returns-a-fileset)]
-  (a/ant (t/copy :todir "out" fs)))
-
-;; A lazy seq of File / Resource / path-string. Wrapped as a reified
-;; ResourceCollection so Ant pulls one FileResource at a time. This
-;; is the path that scales to millions of entries -- nothing is
-;; materialised up front.
-(let [files (lazy-seq (find-files-from-some-source))]
+(let [files (lazy-seq (find-millions-of-files))]
   (a/ant (t/copy :todir "out" files)))
-
-;; A single File or Resource.
-(a/ant (t/copy :todir "out" (io/file "x.clj")))
 ```
 
-Under the covers this is one mechanism: anything that is or becomes
-a `ResourceCollection` is registered on the project under a
-synthetic refid and an `<resources refid=\"…\"/>` proxy slots in as
-the child. It works from any task that accepts a resource collection
-(`copy`, `jar`, `zip`, `tar`, …) because that's already Ant's own
-polymorphism story.
+Iteration is on demand: Ant pulls one `FileResource` at a time. For
+the rare case where you want to override the size hint or the
+filesystem-only flag, `a/lazy-resources` accepts both.
 
-For the rare case where you need to override the size hint or the
-`isFilesystemOnly` flag of the reified collection, there's an
-escape-hatch helper `a/lazy-resources` that takes those options.
-Day-to-day code never reaches for it.
 
-All three register the underlying object as a project reference and
-emit a tiny `<resources refid=\"…\"/>` proxy node in the AST. Ant's
-own `add(ResourceCollection)` adder picks it up polymorphically -- so
-this works as a child of `copy`, `jar`, `zip`, `tar`, `manifestmap`,
-and every other task that accepts a resource collection.
+### Realize once, reduce many
 
-## 10. Realize once, iterate many times
-
-`a/files` materialises a fresh project per call. If you're iterating
-a large fileset many times, build it once:
-
-```clojure
-(let [files (vec (a/files my-fileset-node))]
-  (println "found" (count files))
-  (doseq [f files] (process f)))
-```
-
-For sources where the collection is huge, prefer `transduce` /
-`reduce` so the lazy seq isn't fully realised:
+Per-call materialisation is fine for normal sizes. For tight loops or
+huge collections, realise once with `a/files` (or `a/realize`) and
+fold:
 
 ```clojure
 (transduce (comp (filter #(.isFile %))
@@ -231,40 +337,12 @@ For sources where the collection is huge, prefer `transduce` /
 ```
 
 
-## 11. Babashka: stream paths as they're discovered
-
-Long scans benefit from streaming on the bb side:
+### Streaming paths from babashka
 
 ```clojure
-(require '[babashka.pods :as pods])
-(pods/load-pod ["clojure" "-M:pod"])
-(require '[clj-ant.pod :as a])
-
 (a/files-stream
   {:tag :fileset :attrs {:dir "/big/data" :includes "**/*"}}
   (fn [path]
-    (when (string? path)               ; skip the final {:phase :done}
-      (println "scanning" path)
-      ;; do work as paths arrive, no need to wait for the full scan
-      )))
+    (when (string? path)               ; :phase :done is the sentinel
+      (handle path))))
 ```
-
-
-## What's underneath
-
-```
-node (data)         -> ->unknown-element       -> UnknownElement
-                                                   ↓ maybeConfigure
-                                                  (the real Ant type)
-                                                   ↓ .iterator
-                                                  Iterator<Resource>
-                                                   ↓ iterator-seq
-                                                  lazy Clojure seq
-                                                   ↓ map FileProvider.getFile
-                                                  lazy seq of File
-```
-
-Everything past `maybeConfigure` is Ant's own behaviour — pattern
-matching, refid resolution, archive handling, mapper application —
-which is why Clojure-only seq tooling and Ant's resource-collection
-zoo plug into one pipeline without us writing scanning code.
