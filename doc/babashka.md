@@ -39,10 +39,10 @@ Operations exposed today:
 | `files-stream`   | element + handler                  | streams paths to handler     |
 | `plan`           | an element tree                    | XML-ish string               |
 
-In addition the pod ships the full `clj-ant.tasks` namespace: 252
-thin function wrappers, one per Ant task or type, that build the
-element map for you so bb scripts never have to spell out
-`{:tag … :attrs …}` by hand.
+In addition the pod ships the full `clj-ant.tasks` namespace: a
+thin function wrapper per Ant task, type, and nested element, that
+builds the element map for you so bb scripts never have to spell
+out `{:tag … :attrs …}` by hand.
 
 
 ## How it works

@@ -242,7 +242,8 @@ clj -M:pod          ; entry point used by the babashka pod
 ```
 src/clj/clj_ant/core.clj    the runner + targets + execute! + ant
 src/clj/clj_ant/spec.clj    malli schemas from IntrospectionHelper
-src/clj/clj_ant/tasks.clj   auto-generated, 390 wrappers
+src/clj/clj_ant/tasks.clj   auto-generated wrappers (one per Ant
+                            task, type, and nested element)
 src/clj/clj_ant/pod.clj     babashka pod
 src/gen/clj_ant/gen.clj     the generator
 test/clj_ant/core_test.clj

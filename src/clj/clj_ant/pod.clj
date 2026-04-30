@@ -159,12 +159,16 @@
 (defn ^:no-doc op-files-stream
   "Streaming variant of files: each path is delivered as it's
   discovered. Useful for large filesets where you want to start work
-  before the whole scan finishes."
+  before the whole scan finishes.
+
+  Returns the same {:clj-ant/result …} sentinel execute-stream uses,
+  so the bb-side stub can detect end-of-stream and unblock without
+  the caller's handler ever seeing a non-path payload."
   [{:keys [element opts]} partial!]
   (doseq [^java.io.File f (apply core/files element
                                  (mapcat identity (or opts {})))]
     (partial! (.getAbsolutePath f)))
-  {:phase :done})
+  {:clj-ant/result :done})
 
 (defn ^:no-doc op-files [{:keys [element opts]}]
   (mapv #(.getAbsolutePath ^java.io.File %)
@@ -303,13 +307,23 @@
              {"name" "files-stream" "code"
               (str
                 "(defn files-stream [element handler & {:as opts}] "
-                "  (babashka.pods/invoke "
-                "    \"clj-ant.pod\" "
-                "    'clj-ant.pod/files-stream "
-                "    [{:element element :opts opts}] "
-                "    {:handlers {:success handler "
-                "                :error   (fn [{:keys [ex-message]}] "
-                "                           (throw (ex-info ex-message {})))}}))")}]}
+                "  (let [done (promise)] "
+                "    (babashka.pods/invoke "
+                "      \"clj-ant.pod\" "
+                "      'clj-ant.pod/files-stream "
+                "      [{:element element :opts opts}] "
+                "      {:handlers {:success "
+                "                  (fn [v] "
+                "                    (if (and (map? v) "
+                "                             (contains? v :clj-ant/result)) "
+                "                      (deliver done :ok) "
+                "                      (handler v))) "
+                "                  :error "
+                "                  (fn [{:keys [ex-message]}] "
+                "                    (deliver done (ex-info ex-message {})) "
+                "                    (throw (ex-info ex-message {})))}}) "
+                "    (let [r (deref done 60000 :clj-ant/timeout)] "
+                "      (if (instance? Throwable r) (throw r) nil))))")}]}
     (task-namespace-payload)]
    "ops"
    {"shutdown" {}}})

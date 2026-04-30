@@ -59,7 +59,7 @@
   https://ant.apache.org/manual/Tasks/ant.html
 
   Defined by: org.apache.tools.ant.taskdefs.Ant"
-  {:arglists (quote ([& {:keys [antfile dir inheritall inheritrefs output target usenativebasedir], :as attrs} & nested])), :clj-ant/tag "ant", :clj-ant/class "org.apache.tools.ant.taskdefs.Ant"}
+  {:arglists (quote ([& {:keys [antfile dir inheritall inheritrefs output target usenativebasedir], :as attrs} & nested])), :clj-ant/tag "ant", :clj-ant/class "org.apache.tools.ant.taskdefs.Ant", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Ant"]}
   [& args]
   (clojure.core/apply c/element :ant args))
 
@@ -109,7 +109,7 @@
   https://ant.apache.org/manual/Tasks/antcall.html
 
   Defined by: org.apache.tools.ant.taskdefs.CallTarget"
-  {:arglists (quote ([& {:keys [inheritall inheritrefs target], :as attrs} & nested])), :clj-ant/tag "antcall", :clj-ant/class "org.apache.tools.ant.taskdefs.CallTarget"}
+  {:arglists (quote ([& {:keys [inheritall inheritrefs target], :as attrs} & nested])), :clj-ant/tag "antcall", :clj-ant/class "org.apache.tools.ant.taskdefs.CallTarget", :clj-ant/classes ["org.apache.tools.ant.taskdefs.CallTarget"]}
   [& args]
   (clojure.core/apply c/element :antcall args))
 
@@ -136,7 +136,7 @@
   https://ant.apache.org/manual/Tasks/antstructure.html
 
   Defined by: org.apache.tools.ant.taskdefs.AntStructure"
-  {:arglists (quote ([& {:keys [output], :as attrs} & nested])), :clj-ant/tag "antstructure", :clj-ant/class "org.apache.tools.ant.taskdefs.AntStructure"}
+  {:arglists (quote ([& {:keys [output], :as attrs} & nested])), :clj-ant/tag "antstructure", :clj-ant/class "org.apache.tools.ant.taskdefs.AntStructure", :clj-ant/classes ["org.apache.tools.ant.taskdefs.AntStructure"]}
   [& args]
   (clojure.core/apply c/element :antstructure args))
 
@@ -156,7 +156,7 @@
   https://ant.apache.org/manual/Tasks/antversion.html
 
   Defined by: org.apache.tools.ant.taskdefs.condition.AntVersion"
-  {:arglists (quote ([& {:keys [atleast exactly property], :as attrs} & nested])), :clj-ant/tag "antversion", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.AntVersion"}
+  {:arglists (quote ([& {:keys [atleast exactly property], :as attrs} & nested])), :clj-ant/tag "antversion", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.AntVersion", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.AntVersion"]}
   [& args]
   (clojure.core/apply c/element :antversion args))
 
@@ -210,7 +210,7 @@
     :searchpath                boolean
     :skipemptyfilesets         boolean
     :spawn                     boolean
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
     :verbose                   boolean
     :vmlauncher                boolean
@@ -228,7 +228,7 @@
   https://ant.apache.org/manual/Tasks/apply.html
 
   Defined by: org.apache.tools.ant.taskdefs.Transform"
-  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror force forwardslash ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "apply", :clj-ant/class "org.apache.tools.ant.taskdefs.Transform"}
+  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror force forwardslash ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "apply", :clj-ant/class "org.apache.tools.ant.taskdefs.Transform", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Transform"]}
   [& args]
   (clojure.core/apply c/element :apply args))
 
@@ -288,7 +288,7 @@
     :skipemptyfilesets         boolean
     :spawn                     boolean
     :system                    boolean
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
     :verbose                   boolean
     :vmlauncher                boolean
@@ -306,7 +306,7 @@
   https://ant.apache.org/manual/Tasks/attrib.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.windows.Attrib"
-  {:arglists (quote ([& {:keys [addsourcefile append archive command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror file force forwardslash hidden ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel readonly relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn system timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "attrib", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.windows.Attrib"}
+  {:arglists (quote ([& {:keys [addsourcefile append archive command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror file force forwardslash hidden ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel readonly relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn system timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "attrib", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.windows.Attrib", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.windows.Attrib"]}
   [& args]
   (clojure.core/apply c/element :attrib args))
 
@@ -319,7 +319,7 @@
   https://ant.apache.org/manual/Tasks/attributenamespacedef.html
 
   Defined by: org.apache.tools.ant.taskdefs.AttributeNamespaceDef"
-  {:arglists (quote ([& {:keys [uri], :as attrs} & nested])), :clj-ant/tag "attributenamespacedef", :clj-ant/class "org.apache.tools.ant.taskdefs.AttributeNamespaceDef"}
+  {:arglists (quote ([& {:keys [uri], :as attrs} & nested])), :clj-ant/tag "attributenamespacedef", :clj-ant/class "org.apache.tools.ant.taskdefs.AttributeNamespaceDef", :clj-ant/classes ["org.apache.tools.ant.taskdefs.AttributeNamespaceDef"]}
   [& args]
   (clojure.core/apply c/element :attributenamespacedef args))
 
@@ -336,7 +336,7 @@
   https://ant.apache.org/manual/Tasks/augment.html
 
   Defined by: org.apache.tools.ant.taskdefs.AugmentReference"
-  {:arglists (quote ([& {:keys [proxy], :as attrs} & nested])), :clj-ant/tag "augment", :clj-ant/class "org.apache.tools.ant.taskdefs.AugmentReference"}
+  {:arglists (quote ([& {:keys [proxy], :as attrs} & nested])), :clj-ant/tag "augment", :clj-ant/class "org.apache.tools.ant.taskdefs.AugmentReference", :clj-ant/classes ["org.apache.tools.ant.taskdefs.AugmentReference"]}
   [& args]
   (clojure.core/apply c/element :augment args))
 
@@ -370,7 +370,7 @@
   https://ant.apache.org/manual/Tasks/available.html
 
   Defined by: org.apache.tools.ant.taskdefs.Available"
-  {:arglists (quote ([& {:keys [classname classpath classpathref file filepath ignoresystemclasses property resource searchparents type value], :as attrs} & nested])), :clj-ant/tag "available", :clj-ant/class "org.apache.tools.ant.taskdefs.Available"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref file filepath ignoresystemclasses property resource searchparents type value], :as attrs} & nested])), :clj-ant/tag "available", :clj-ant/class "org.apache.tools.ant.taskdefs.Available", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Available"]}
   [& args]
   (clojure.core/apply c/element :available args))
 
@@ -390,7 +390,7 @@
   https://ant.apache.org/manual/Tasks/basename.html
 
   Defined by: org.apache.tools.ant.taskdefs.Basename"
-  {:arglists (quote ([& {:keys [file property suffix], :as attrs} & nested])), :clj-ant/tag "basename", :clj-ant/class "org.apache.tools.ant.taskdefs.Basename"}
+  {:arglists (quote ([& {:keys [file property suffix], :as attrs} & nested])), :clj-ant/tag "basename", :clj-ant/class "org.apache.tools.ant.taskdefs.Basename", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Basename"]}
   [& args]
   (clojure.core/apply c/element :basename args))
 
@@ -421,7 +421,7 @@
   https://ant.apache.org/manual/Tasks/bindtargets.html
 
   Defined by: org.apache.tools.ant.taskdefs.BindTargets"
-  {:arglists (quote ([& {:keys [extensionpoint onmissingextensionpoint targets], :as attrs} & nested])), :clj-ant/tag "bindtargets", :clj-ant/class "org.apache.tools.ant.taskdefs.BindTargets"}
+  {:arglists (quote ([& {:keys [extensionpoint onmissingextensionpoint targets], :as attrs} & nested])), :clj-ant/tag "bindtargets", :clj-ant/class "org.apache.tools.ant.taskdefs.BindTargets", :clj-ant/classes ["org.apache.tools.ant.taskdefs.BindTargets"]}
   [& args]
   (clojure.core/apply c/element :bindtargets args))
 
@@ -442,7 +442,7 @@
   https://ant.apache.org/manual/Tasks/blgenclient.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.BorlandGenerateClient"
-  {:arglists (quote ([& {:keys [classpath classpathref clientjar debug ejbjar mode version], :as attrs} & nested])), :clj-ant/tag "blgenclient", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.BorlandGenerateClient"}
+  {:arglists (quote ([& {:keys [classpath classpathref clientjar debug ejbjar mode version], :as attrs} & nested])), :clj-ant/tag "blgenclient", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.BorlandGenerateClient", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.BorlandGenerateClient"]}
   [& args]
   (clojure.core/apply c/element :blgenclient args))
 
@@ -461,7 +461,7 @@
   https://ant.apache.org/manual/Tasks/buildnumber.html
 
   Defined by: org.apache.tools.ant.taskdefs.BuildNumber"
-  {:arglists (quote ([& {:keys [file], :as attrs} & nested])), :clj-ant/tag "buildnumber", :clj-ant/class "org.apache.tools.ant.taskdefs.BuildNumber"}
+  {:arglists (quote ([& {:keys [file], :as attrs} & nested])), :clj-ant/tag "buildnumber", :clj-ant/class "org.apache.tools.ant.taskdefs.BuildNumber", :clj-ant/classes ["org.apache.tools.ant.taskdefs.BuildNumber"]}
   [& args]
   (clojure.core/apply c/element :buildnumber args))
 
@@ -476,7 +476,7 @@
   https://ant.apache.org/manual/Tasks/bunzip2.html
 
   Defined by: org.apache.tools.ant.taskdefs.BUnzip2"
-  {:arglists (quote ([& {:keys [dest src srcresource], :as attrs} & nested])), :clj-ant/tag "bunzip2", :clj-ant/class "org.apache.tools.ant.taskdefs.BUnzip2"}
+  {:arglists (quote ([& {:keys [dest src srcresource], :as attrs} & nested])), :clj-ant/tag "bunzip2", :clj-ant/class "org.apache.tools.ant.taskdefs.BUnzip2", :clj-ant/classes ["org.apache.tools.ant.taskdefs.BUnzip2"]}
   [& args]
   (clojure.core/apply c/element :bunzip2 args))
 
@@ -492,7 +492,7 @@
   https://ant.apache.org/manual/Tasks/bzip2.html
 
   Defined by: org.apache.tools.ant.taskdefs.BZip2"
-  {:arglists (quote ([& {:keys [destfile src srcresource zipfile], :as attrs} & nested])), :clj-ant/tag "bzip2", :clj-ant/class "org.apache.tools.ant.taskdefs.BZip2"}
+  {:arglists (quote ([& {:keys [destfile src srcresource zipfile], :as attrs} & nested])), :clj-ant/tag "bzip2", :clj-ant/class "org.apache.tools.ant.taskdefs.BZip2", :clj-ant/classes ["org.apache.tools.ant.taskdefs.BZip2"]}
   [& args]
   (clojure.core/apply c/element :bzip2 args))
 
@@ -551,7 +551,7 @@
   https://ant.apache.org/manual/Tasks/cab.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.Cab"
-  {:arglists (quote ([& {:keys [basedir cabfile casesensitive compress defaultexcludes excludes excludesfile followsymlinks includes includesfile options verbose], :as attrs} & nested])), :clj-ant/tag "cab", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Cab"}
+  {:arglists (quote ([& {:keys [basedir cabfile casesensitive compress defaultexcludes excludes excludesfile followsymlinks includes includesfile options verbose], :as attrs} & nested])), :clj-ant/tag "cab", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Cab", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.Cab"]}
   [& args]
   (clojure.core/apply c/element :cab args))
 
@@ -573,7 +573,7 @@
   https://ant.apache.org/manual/Tasks/cccheckin.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr identical keepcopy nowarn objselect preservetime viewpath], :as attrs} & nested])), :clj-ant/tag "cccheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin"}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr identical keepcopy nowarn objselect preservetime viewpath], :as attrs} & nested])), :clj-ant/tag "cccheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin"]}
   [& args]
   (clojure.core/apply c/element :cccheckin args))
 
@@ -598,7 +598,7 @@
   https://ant.apache.org/manual/Tasks/cccheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckout"
-  {:arglists (quote ([& {:keys [branch cleartooldir comment commentfile failonerr nodata notco nowarn objselect out reserved version viewpath], :as attrs} & nested])), :clj-ant/tag "cccheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckout"}
+  {:arglists (quote ([& {:keys [branch cleartooldir comment commentfile failonerr nodata notco nowarn objselect out reserved version viewpath], :as attrs} & nested])), :clj-ant/tag "cccheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckout"]}
   [& args]
   (clojure.core/apply c/element :cccheckout args))
 
@@ -620,7 +620,7 @@
   https://ant.apache.org/manual/Tasks/cclock.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCLock"
-  {:arglists (quote ([& {:keys [cleartooldir comment failonerr nusers objsel objselect obsolete pname replace viewpath], :as attrs} & nested])), :clj-ant/tag "cclock", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCLock"}
+  {:arglists (quote ([& {:keys [cleartooldir comment failonerr nusers objsel objselect obsolete pname replace viewpath], :as attrs} & nested])), :clj-ant/tag "cclock", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCLock", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCLock"]}
   [& args]
   (clojure.core/apply c/element :cclock args))
 
@@ -639,7 +639,7 @@
   https://ant.apache.org/manual/Tasks/ccmcheckin.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckin"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckin"}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckin", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckin"]}
   [& args]
   (clojure.core/apply c/element :ccmcheckin args))
 
@@ -658,7 +658,7 @@
   https://ant.apache.org/manual/Tasks/ccmcheckintask.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckinDefault"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckintask", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckinDefault"}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckintask", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckinDefault", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckinDefault"]}
   [& args]
   (clojure.core/apply c/element :ccmcheckintask args))
 
@@ -677,7 +677,7 @@
   https://ant.apache.org/manual/Tasks/ccmcheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckout"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckout"}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckout"]}
   [& args]
   (clojure.core/apply c/element :ccmcheckout args))
 
@@ -697,7 +697,7 @@
   https://ant.apache.org/manual/Tasks/ccmcreatetask.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMCreateTask"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir comment platform release resolver subsystem task], :as attrs} & nested])), :clj-ant/tag "ccmcreatetask", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCreateTask"}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir comment platform release resolver subsystem task], :as attrs} & nested])), :clj-ant/tag "ccmcreatetask", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCreateTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCreateTask"]}
   [& args]
   (clojure.core/apply c/element :ccmcreatetask args))
 
@@ -720,7 +720,7 @@
   https://ant.apache.org/manual/Tasks/ccmkattr.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMkattr"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr objselect recurse replace typename typevalue version viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkattr", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkattr"}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr objselect recurse replace typename typevalue version viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkattr", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkattr", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkattr"]}
   [& args]
   (clojure.core/apply c/element :ccmkattr args))
 
@@ -743,7 +743,7 @@
   https://ant.apache.org/manual/Tasks/ccmkbl.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMkbl"
-  {:arglists (quote ([& {:keys [baselinerootname cleartooldir comment commentfile failonerr full identical nlabel nowarn objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkbl", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkbl"}
+  {:arglists (quote ([& {:keys [baselinerootname cleartooldir comment commentfile failonerr full identical nlabel nowarn objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkbl", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkbl", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkbl"]}
   [& args]
   (clojure.core/apply c/element :ccmkbl args))
 
@@ -762,7 +762,7 @@
   https://ant.apache.org/manual/Tasks/ccmkdir.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMkdir"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr nocheckout objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkdir", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkdir"}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr nocheckout objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkdir", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkdir", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkdir"]}
   [& args]
   (clojure.core/apply c/element :ccmkdir args))
 
@@ -786,7 +786,7 @@
   https://ant.apache.org/manual/Tasks/ccmkelem.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMkelem"
-  {:arglists (quote ([& {:keys [checkin cleartooldir comment commentfile eltype failonerr master nocheckout nowarn objselect preservetime viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkelem", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkelem"}
+  {:arglists (quote ([& {:keys [checkin cleartooldir comment commentfile eltype failonerr master nocheckout nowarn objselect preservetime viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkelem", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkelem", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkelem"]}
   [& args]
   (clojure.core/apply c/element :ccmkelem args))
 
@@ -809,7 +809,7 @@
   https://ant.apache.org/manual/Tasks/ccmklabel.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMklabel"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr objselect recurse replace typename version viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccmklabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMklabel"}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr objselect recurse replace typename version viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccmklabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMklabel", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMklabel"]}
   [& args]
   (clojure.core/apply c/element :ccmklabel args))
 
@@ -834,7 +834,7 @@
   https://ant.apache.org/manual/Tasks/ccmklbtype.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMklbtype"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr global objselect ordinary pbranch replace shared typename viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccmklbtype", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMklbtype"}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr global objselect ordinary pbranch replace shared typename viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccmklbtype", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMklbtype", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMklbtype"]}
   [& args]
   (clojure.core/apply c/element :ccmklbtype args))
 
@@ -851,7 +851,7 @@
   https://ant.apache.org/manual/Tasks/ccmreconfigure.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMReconfigure"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir ccmproject recurse verbose], :as attrs} & nested])), :clj-ant/tag "ccmreconfigure", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMReconfigure"}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir ccmproject recurse verbose], :as attrs} & nested])), :clj-ant/tag "ccmreconfigure", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMReconfigure", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMReconfigure"]}
   [& args]
   (clojure.core/apply c/element :ccmreconfigure args))
 
@@ -874,7 +874,7 @@
   https://ant.apache.org/manual/Tasks/ccrmtype.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCRmtype"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr ignore objselect rmall typekind typename viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccrmtype", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCRmtype"}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr ignore objselect rmall typekind typename viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccrmtype", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCRmtype", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCRmtype"]}
   [& args]
   (clojure.core/apply c/element :ccrmtype args))
 
@@ -891,7 +891,7 @@
   https://ant.apache.org/manual/Tasks/ccuncheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCUnCheckout"
-  {:arglists (quote ([& {:keys [cleartooldir failonerr keepcopy objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccuncheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUnCheckout"}
+  {:arglists (quote ([& {:keys [cleartooldir failonerr keepcopy objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccuncheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUnCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCUnCheckout"]}
   [& args]
   (clojure.core/apply c/element :ccuncheckout args))
 
@@ -910,7 +910,7 @@
   https://ant.apache.org/manual/Tasks/ccunlock.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCUnlock"
-  {:arglists (quote ([& {:keys [cleartooldir comment failonerr objsel objselect pname viewpath], :as attrs} & nested])), :clj-ant/tag "ccunlock", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUnlock"}
+  {:arglists (quote ([& {:keys [cleartooldir comment failonerr objsel objselect pname viewpath], :as attrs} & nested])), :clj-ant/tag "ccunlock", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUnlock", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCUnlock"]}
   [& args]
   (clojure.core/apply c/element :ccunlock args))
 
@@ -932,7 +932,7 @@
   https://ant.apache.org/manual/Tasks/ccupdate.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCUpdate"
-  {:arglists (quote ([& {:keys [cleartooldir currenttime failonerr graphical log objselect overwrite preservetime rename viewpath], :as attrs} & nested])), :clj-ant/tag "ccupdate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUpdate"}
+  {:arglists (quote ([& {:keys [cleartooldir currenttime failonerr graphical log objselect overwrite preservetime rename viewpath], :as attrs} & nested])), :clj-ant/tag "ccupdate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUpdate", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCUpdate"]}
   [& args]
   (clojure.core/apply c/element :ccupdate args))
 
@@ -1002,7 +1002,7 @@
   https://ant.apache.org/manual/Tasks/checksum.html
 
   Defined by: org.apache.tools.ant.taskdefs.Checksum"
-  {:arglists (quote ([& {:keys [algorithm casesensitive defaultexcludes excludes excludesfile file fileext followsymlinks forceoverwrite format includes includesfile pattern property provider readbuffersize todir totalproperty verifyproperty], :as attrs} & nested])), :clj-ant/tag "checksum", :clj-ant/class "org.apache.tools.ant.taskdefs.Checksum"}
+  {:arglists (quote ([& {:keys [algorithm casesensitive defaultexcludes excludes excludesfile file fileext followsymlinks forceoverwrite format includes includesfile pattern property provider readbuffersize todir totalproperty verifyproperty], :as attrs} & nested])), :clj-ant/tag "checksum", :clj-ant/class "org.apache.tools.ant.taskdefs.Checksum", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Checksum"]}
   [& args]
   (clojure.core/apply c/element :checksum args))
 
@@ -1061,7 +1061,7 @@
     :searchpath                boolean
     :skipemptyfilesets         boolean
     :spawn                     boolean
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
     :verbose                   boolean
     :vmlauncher                boolean
@@ -1079,7 +1079,7 @@
   https://ant.apache.org/manual/Tasks/chgrp.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.unix.Chgrp"
-  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror file force forwardslash group ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "chgrp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.unix.Chgrp"}
+  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror file force forwardslash group ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "chgrp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.unix.Chgrp", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.unix.Chgrp"]}
   [& args]
   (clojure.core/apply c/element :chgrp args))
 
@@ -1146,7 +1146,7 @@
     :searchpath                boolean
     :skipemptyfilesets         boolean
     :spawn                     boolean
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
     :verbose                   boolean
     :vmlauncher                boolean
@@ -1167,7 +1167,7 @@
   https://ant.apache.org/manual/Tasks/chmod.html
 
   Defined by: org.apache.tools.ant.taskdefs.Chmod"
-  {:arglists (quote ([& {:keys [addsourcefile append command defaultexcludes dest dir discarderror discardoutput error errorproperty excludes executable failifexecutionfails failonerror file force forwardslash ignoremissing includes input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel perm relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "chmod", :clj-ant/class "org.apache.tools.ant.taskdefs.Chmod"}
+  {:arglists (quote ([& {:keys [addsourcefile append command defaultexcludes dest dir discarderror discardoutput error errorproperty excludes executable failifexecutionfails failonerror file force forwardslash ignoremissing includes input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel perm relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "chmod", :clj-ant/class "org.apache.tools.ant.taskdefs.Chmod", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Chmod"]}
   [& args]
   (clojure.core/apply c/element :chmod args))
 
@@ -1226,7 +1226,7 @@
     :searchpath                boolean
     :skipemptyfilesets         boolean
     :spawn                     boolean
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
     :verbose                   boolean
     :vmlauncher                boolean
@@ -1244,7 +1244,7 @@
   https://ant.apache.org/manual/Tasks/chown.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.unix.Chown"
-  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror file force forwardslash ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty owner parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "chown", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.unix.Chown"}
+  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror file force forwardslash ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty owner parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "chown", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.unix.Chown", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.unix.Chown"]}
   [& args]
   (clojure.core/apply c/element :chown args))
 
@@ -1265,7 +1265,7 @@
   https://ant.apache.org/manual/Tasks/classloader.html
 
   Defined by: org.apache.tools.ant.taskdefs.Classloader"
-  {:arglists (quote ([& {:keys [classpath classpathref name parentfirst parentname reset reverse], :as attrs} & nested])), :clj-ant/tag "classloader", :clj-ant/class "org.apache.tools.ant.taskdefs.Classloader"}
+  {:arglists (quote ([& {:keys [classpath classpathref name parentfirst parentname reset reverse], :as attrs} & nested])), :clj-ant/tag "classloader", :clj-ant/class "org.apache.tools.ant.taskdefs.Classloader", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Classloader"]}
   [& args]
   (clojure.core/apply c/element :classloader args))
 
@@ -1278,7 +1278,7 @@
   https://ant.apache.org/manual/Tasks/commandlauncher.html
 
   Defined by: org.apache.tools.ant.taskdefs.CommandLauncherTask"
-  {:arglists (quote ([& {:keys [vmlauncher], :as attrs} & nested])), :clj-ant/tag "commandlauncher", :clj-ant/class "org.apache.tools.ant.taskdefs.CommandLauncherTask"}
+  {:arglists (quote ([& {:keys [vmlauncher], :as attrs} & nested])), :clj-ant/tag "commandlauncher", :clj-ant/class "org.apache.tools.ant.taskdefs.CommandLauncherTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.CommandLauncherTask"]}
   [& args]
   (clojure.core/apply c/element :commandlauncher args))
 
@@ -1311,7 +1311,7 @@
   https://ant.apache.org/manual/Tasks/componentdef.html
 
   Defined by: org.apache.tools.ant.taskdefs.Componentdef"
-  {:arglists (quote ([& {:keys [adapter adaptto antlib classname classpath classpathref file format loaderref name onerror resource reverseloader uri], :as attrs} & nested])), :clj-ant/tag "componentdef", :clj-ant/class "org.apache.tools.ant.taskdefs.Componentdef"}
+  {:arglists (quote ([& {:keys [adapter adaptto antlib classname classpath classpathref file format loaderref name onerror resource reverseloader uri], :as attrs} & nested])), :clj-ant/tag "componentdef", :clj-ant/class "org.apache.tools.ant.taskdefs.Componentdef", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Componentdef"]}
   [& args]
   (clojure.core/apply c/element :componentdef args))
 
@@ -1351,7 +1351,7 @@
   https://ant.apache.org/manual/Tasks/concat.html
 
   Defined by: org.apache.tools.ant.taskdefs.Concat"
-  {:arglists (quote ([& {:keys [append binary dest destfile encoding eol filterbeforeconcat fixlastline force forcereadonly ignoreempty outputencoding overwrite resourcename], :as attrs} & nested])), :clj-ant/tag "concat", :clj-ant/class "org.apache.tools.ant.taskdefs.Concat"}
+  {:arglists (quote ([& {:keys [append binary dest destfile encoding eol filterbeforeconcat fixlastline force forcereadonly ignoreempty outputencoding overwrite resourcename], :as attrs} & nested])), :clj-ant/tag "concat", :clj-ant/class "org.apache.tools.ant.taskdefs.Concat", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Concat"]}
   [& args]
   (clojure.core/apply c/element :concat args))
 
@@ -1389,7 +1389,7 @@
   https://ant.apache.org/manual/Tasks/condition.html
 
   Defined by: org.apache.tools.ant.taskdefs.ConditionTask"
-  {:arglists (quote ([& {:keys [else property value], :as attrs} & nested])), :clj-ant/tag "condition", :clj-ant/class "org.apache.tools.ant.taskdefs.ConditionTask"}
+  {:arglists (quote ([& {:keys [else property value], :as attrs} & nested])), :clj-ant/tag "condition", :clj-ant/class "org.apache.tools.ant.taskdefs.ConditionTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ConditionTask"]}
   [& args]
   (clojure.core/apply c/element :condition args))
 
@@ -1434,7 +1434,7 @@
   https://ant.apache.org/manual/Tasks/copy.html
 
   Defined by: org.apache.tools.ant.taskdefs.Copy"
-  {:arglists (quote ([& {:keys [enablemultiplemappings encoding failonerror file filtering flatten force granularity includeemptydirs outputencoding overwrite preservelastmodified quiet todir tofile verbose], :as attrs} & nested])), :clj-ant/tag "copy", :clj-ant/class "org.apache.tools.ant.taskdefs.Copy"}
+  {:arglists (quote ([& {:keys [enablemultiplemappings encoding failonerror file filtering flatten force granularity includeemptydirs outputencoding overwrite preservelastmodified quiet todir tofile verbose], :as attrs} & nested])), :clj-ant/tag "copy", :clj-ant/class "org.apache.tools.ant.taskdefs.Copy", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Copy"]}
   [& args]
   (clojure.core/apply c/element :copy args))
 
@@ -1494,7 +1494,7 @@
   https://ant.apache.org/manual/Tasks/copydir.html
 
   Defined by: org.apache.tools.ant.taskdefs.Copydir"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dest excludes excludesfile filtering flatten followsymlinks forceoverwrite includes includesfile src], :as attrs} & nested])), :clj-ant/tag "copydir", :clj-ant/class "org.apache.tools.ant.taskdefs.Copydir"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dest excludes excludesfile filtering flatten followsymlinks forceoverwrite includes includesfile src], :as attrs} & nested])), :clj-ant/tag "copydir", :clj-ant/class "org.apache.tools.ant.taskdefs.Copydir", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Copydir"]}
   [& args]
   (clojure.core/apply c/element :copydir args))
 
@@ -1512,7 +1512,7 @@
   https://ant.apache.org/manual/Tasks/copyfile.html
 
   Defined by: org.apache.tools.ant.taskdefs.Copyfile"
-  {:arglists (quote ([& {:keys [dest filtering forceoverwrite src], :as attrs} & nested])), :clj-ant/tag "copyfile", :clj-ant/class "org.apache.tools.ant.taskdefs.Copyfile"}
+  {:arglists (quote ([& {:keys [dest filtering forceoverwrite src], :as attrs} & nested])), :clj-ant/tag "copyfile", :clj-ant/class "org.apache.tools.ant.taskdefs.Copyfile", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Copyfile"]}
   [& args]
   (clojure.core/apply c/element :copyfile args))
 
@@ -1531,7 +1531,7 @@
   https://ant.apache.org/manual/Tasks/copypath.html
 
   Defined by: org.apache.tools.ant.taskdefs.CopyPath"
-  {:arglists (quote ([& {:keys [destdir granularity path pathref preservelastmodified], :as attrs} & nested])), :clj-ant/tag "copypath", :clj-ant/class "org.apache.tools.ant.taskdefs.CopyPath"}
+  {:arglists (quote ([& {:keys [destdir granularity path pathref preservelastmodified], :as attrs} & nested])), :clj-ant/tag "copypath", :clj-ant/class "org.apache.tools.ant.taskdefs.CopyPath", :clj-ant/classes ["org.apache.tools.ant.taskdefs.CopyPath"]}
   [& args]
   (clojure.core/apply c/element :copypath args))
 
@@ -1575,7 +1575,7 @@
   https://ant.apache.org/manual/Tasks/cvs.html
 
   Defined by: org.apache.tools.ant.taskdefs.Cvs"
-  {:arglists (quote ([& {:keys [append command compression compressionlevel cvsroot cvsrsh date dest error failonerror noexec output package passfile port quiet reallyquiet tag], :as attrs} & nested])), :clj-ant/tag "cvs", :clj-ant/class "org.apache.tools.ant.taskdefs.Cvs"}
+  {:arglists (quote ([& {:keys [append command compression compressionlevel cvsroot cvsrsh date dest error failonerror noexec output package passfile port quiet reallyquiet tag], :as attrs} & nested])), :clj-ant/tag "cvs", :clj-ant/class "org.apache.tools.ant.taskdefs.Cvs", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Cvs"]}
   [& args]
   (clojure.core/apply c/element :cvs args))
 
@@ -1619,7 +1619,7 @@
   https://ant.apache.org/manual/Tasks/cvschangelog.html
 
   Defined by: org.apache.tools.ant.taskdefs.cvslib.ChangeLogTask"
-  {:arglists (quote ([& {:keys [append command compression compressionlevel cvsroot cvsrsh date daysinpast dest destfile dir end endtag error failonerror noexec output package passfile port quiet reallyquiet remote start starttag tag usersfile], :as attrs} & nested])), :clj-ant/tag "cvschangelog", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.ChangeLogTask"}
+  {:arglists (quote ([& {:keys [append command compression compressionlevel cvsroot cvsrsh date daysinpast dest destfile dir end endtag error failonerror noexec output package passfile port quiet reallyquiet remote start starttag tag usersfile], :as attrs} & nested])), :clj-ant/tag "cvschangelog", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.ChangeLogTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.cvslib.ChangeLogTask"]}
   [& args]
   (clojure.core/apply c/element :cvschangelog args))
 
@@ -1638,7 +1638,7 @@
   https://ant.apache.org/manual/Tasks/cvspass.html
 
   Defined by: org.apache.tools.ant.taskdefs.CVSPass"
-  {:arglists (quote ([& {:keys [cvsroot passfile password], :as attrs} & nested])), :clj-ant/tag "cvspass", :clj-ant/class "org.apache.tools.ant.taskdefs.CVSPass"}
+  {:arglists (quote ([& {:keys [cvsroot passfile password], :as attrs} & nested])), :clj-ant/tag "cvspass", :clj-ant/class "org.apache.tools.ant.taskdefs.CVSPass", :clj-ant/classes ["org.apache.tools.ant.taskdefs.CVSPass"]}
   [& args]
   (clojure.core/apply c/element :cvspass args))
 
@@ -1686,7 +1686,7 @@
   https://ant.apache.org/manual/Tasks/cvstagdiff.html
 
   Defined by: org.apache.tools.ant.taskdefs.cvslib.CvsTagDiff"
-  {:arglists (quote ([& {:keys [append command compression compressionlevel cvsroot cvsrsh date dest destfile enddate endtag error failonerror ignoreremoved noexec output package passfile port quiet reallyquiet startdate starttag tag], :as attrs} & nested])), :clj-ant/tag "cvstagdiff", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.CvsTagDiff"}
+  {:arglists (quote ([& {:keys [append command compression compressionlevel cvsroot cvsrsh date dest destfile enddate endtag error failonerror ignoreremoved noexec output package passfile port quiet reallyquiet startdate starttag tag], :as attrs} & nested])), :clj-ant/tag "cvstagdiff", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.CvsTagDiff", :clj-ant/classes ["org.apache.tools.ant.taskdefs.cvslib.CvsTagDiff"]}
   [& args]
   (clojure.core/apply c/element :cvstagdiff args))
 
@@ -1721,7 +1721,7 @@
   https://ant.apache.org/manual/Tasks/cvsversion.html
 
   Defined by: org.apache.tools.ant.taskdefs.cvslib.CvsVersion"
-  {:arglists (quote ([& {:keys [append clientversionproperty command compression compressionlevel cvsroot cvsrsh date dest error failonerror noexec output package passfile port quiet reallyquiet serverversionproperty tag], :as attrs} & nested])), :clj-ant/tag "cvsversion", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.CvsVersion"}
+  {:arglists (quote ([& {:keys [append clientversionproperty command compression compressionlevel cvsroot cvsrsh date dest error failonerror noexec output package passfile port quiet reallyquiet serverversionproperty tag], :as attrs} & nested])), :clj-ant/tag "cvsversion", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.CvsVersion", :clj-ant/classes ["org.apache.tools.ant.taskdefs.cvslib.CvsVersion"]}
   [& args]
   (clojure.core/apply c/element :cvsversion args))
 
@@ -1738,7 +1738,7 @@
   https://ant.apache.org/manual/Tasks/defaultexcludes.html
 
   Defined by: org.apache.tools.ant.taskdefs.DefaultExcludes"
-  {:arglists (quote ([& {:keys [add default echo remove], :as attrs} & nested])), :clj-ant/tag "defaultexcludes", :clj-ant/class "org.apache.tools.ant.taskdefs.DefaultExcludes"}
+  {:arglists (quote ([& {:keys [add default echo remove], :as attrs} & nested])), :clj-ant/tag "defaultexcludes", :clj-ant/class "org.apache.tools.ant.taskdefs.DefaultExcludes", :clj-ant/classes ["org.apache.tools.ant.taskdefs.DefaultExcludes"]}
   [& args]
   (clojure.core/apply c/element :defaultexcludes args))
 
@@ -1808,7 +1808,7 @@
   https://ant.apache.org/manual/Tasks/delete.html
 
   Defined by: org.apache.tools.ant.taskdefs.Delete"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes deleteonexit dir excludes excludesfile failonerror file followsymlinks includeemptydirs includes includesfile link performgconfaileddelete quiet removenotfollowedsymlinks verbose], :as attrs} & nested])), :clj-ant/tag "delete", :clj-ant/class "org.apache.tools.ant.taskdefs.Delete"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes deleteonexit dir excludes excludesfile failonerror file followsymlinks includeemptydirs includes includesfile link performgconfaileddelete quiet removenotfollowedsymlinks verbose], :as attrs} & nested])), :clj-ant/tag "delete", :clj-ant/class "org.apache.tools.ant.taskdefs.Delete", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Delete"]}
   [& args]
   (clojure.core/apply c/element :delete args))
 
@@ -1821,7 +1821,7 @@
   https://ant.apache.org/manual/Tasks/deltree.html
 
   Defined by: org.apache.tools.ant.taskdefs.Deltree"
-  {:arglists (quote ([& {:keys [dir], :as attrs} & nested])), :clj-ant/tag "deltree", :clj-ant/class "org.apache.tools.ant.taskdefs.Deltree"}
+  {:arglists (quote ([& {:keys [dir], :as attrs} & nested])), :clj-ant/tag "deltree", :clj-ant/class "org.apache.tools.ant.taskdefs.Deltree", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Deltree"]}
   [& args]
   (clojure.core/apply c/element :deltree args))
 
@@ -1912,7 +1912,7 @@
   https://ant.apache.org/manual/Tasks/depend.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.depend.Depend"
-  {:arglists (quote ([& {:keys [cache casesensitive classpath classpathref closure defaultexcludes destdir dump excludes excludesfile followsymlinks includes includesfile srcdir warnonrmistubs], :as attrs} & nested])), :clj-ant/tag "depend", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.depend.Depend"}
+  {:arglists (quote ([& {:keys [cache casesensitive classpath classpathref closure defaultexcludes destdir dump excludes excludesfile followsymlinks includes includesfile srcdir warnonrmistubs], :as attrs} & nested])), :clj-ant/tag "depend", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.depend.Depend", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.depend.Depend"]}
   [& args]
   (clojure.core/apply c/element :depend args))
 
@@ -1977,7 +1977,7 @@
   https://ant.apache.org/manual/Tasks/dependset.html
 
   Defined by: org.apache.tools.ant.taskdefs.DependSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes excludes excludesfile followsymlinks includes includesfile verbose], :as attrs} & nested])), :clj-ant/tag "dependset", :clj-ant/class "org.apache.tools.ant.taskdefs.DependSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes excludes excludesfile followsymlinks includes includesfile verbose], :as attrs} & nested])), :clj-ant/tag "dependset", :clj-ant/class "org.apache.tools.ant.taskdefs.DependSet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.DependSet"]}
   [& args]
   (clojure.core/apply c/element :dependset args))
 
@@ -1989,7 +1989,7 @@
   https://ant.apache.org/manual/Tasks/diagnostics.html
 
   Defined by: org.apache.tools.ant.taskdefs.DiagnosticsTask"
-  {:arglists (quote ([& nested])), :clj-ant/tag "diagnostics", :clj-ant/class "org.apache.tools.ant.taskdefs.DiagnosticsTask"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "diagnostics", :clj-ant/class "org.apache.tools.ant.taskdefs.DiagnosticsTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.DiagnosticsTask"]}
   [& args]
   (clojure.core/apply c/element :diagnostics args))
 
@@ -2010,7 +2010,7 @@
   https://ant.apache.org/manual/Tasks/dirname.html
 
   Defined by: org.apache.tools.ant.taskdefs.Dirname"
-  {:arglists (quote ([& {:keys [file property], :as attrs} & nested])), :clj-ant/tag "dirname", :clj-ant/class "org.apache.tools.ant.taskdefs.Dirname"}
+  {:arglists (quote ([& {:keys [file property], :as attrs} & nested])), :clj-ant/tag "dirname", :clj-ant/class "org.apache.tools.ant.taskdefs.Dirname", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Dirname"]}
   [& args]
   (clojure.core/apply c/element :dirname args))
 
@@ -2104,7 +2104,7 @@
   https://ant.apache.org/manual/Tasks/ear.html
 
   Defined by: org.apache.tools.ant.taskdefs.Ear"
-  {:arglists (quote ([& {:keys [appxml basedir casesensitive comment compress createunicodeextrafields defaultexcludes destfile duplicate earfile encoding excludes excludesfile fallbacktoutf8 file filesetmanifest filesonly flattenattributes followsymlinks includes includesfile index indexmetainf jarfile keepcompression level manifest manifestencoding mergeclasspathattributes modificationtime preserve0permissions roundup strict update uselanguageencodingflag whenempty whenmanifestonly zip64mode zipfile], :as attrs} & nested])), :clj-ant/tag "ear", :clj-ant/class "org.apache.tools.ant.taskdefs.Ear"}
+  {:arglists (quote ([& {:keys [appxml basedir casesensitive comment compress createunicodeextrafields defaultexcludes destfile duplicate earfile encoding excludes excludesfile fallbacktoutf8 file filesetmanifest filesonly flattenattributes followsymlinks includes includesfile index indexmetainf jarfile keepcompression level manifest manifestencoding mergeclasspathattributes modificationtime preserve0permissions roundup strict update uselanguageencodingflag whenempty whenmanifestonly zip64mode zipfile], :as attrs} & nested])), :clj-ant/tag "ear", :clj-ant/class "org.apache.tools.ant.taskdefs.Ear", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Ear"]}
   [& args]
   (clojure.core/apply c/element :ear args))
 
@@ -2128,7 +2128,7 @@
   https://ant.apache.org/manual/Tasks/echo.html
 
   Defined by: org.apache.tools.ant.taskdefs.Echo"
-  {:arglists (quote ([& {:keys [append encoding file force level message output], :as attrs} & nested])), :clj-ant/tag "echo", :clj-ant/class "org.apache.tools.ant.taskdefs.Echo"}
+  {:arglists (quote ([& {:keys [append encoding file force level message output], :as attrs} & nested])), :clj-ant/tag "echo", :clj-ant/class "org.apache.tools.ant.taskdefs.Echo", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Echo"]}
   [& args]
   (clojure.core/apply c/element :echo args))
 
@@ -2151,7 +2151,7 @@
   https://ant.apache.org/manual/Tasks/echoproperties.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.EchoProperties"
-  {:arglists (quote ([& {:keys [destfile failonerror format prefix regex srcfile], :as attrs} & nested])), :clj-ant/tag "echoproperties", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.EchoProperties"}
+  {:arglists (quote ([& {:keys [destfile failonerror format prefix regex srcfile], :as attrs} & nested])), :clj-ant/tag "echoproperties", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.EchoProperties", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.EchoProperties"]}
   [& args]
   (clojure.core/apply c/element :echoproperties args))
 
@@ -2167,7 +2167,7 @@
   https://ant.apache.org/manual/Tasks/echoxml.html
 
   Defined by: org.apache.tools.ant.taskdefs.EchoXML"
-  {:arglists (quote ([& {:keys [append file namespacepolicy], :as attrs} & nested])), :clj-ant/tag "echoxml", :clj-ant/class "org.apache.tools.ant.taskdefs.EchoXML"}
+  {:arglists (quote ([& {:keys [append file namespacepolicy], :as attrs} & nested])), :clj-ant/tag "echoxml", :clj-ant/class "org.apache.tools.ant.taskdefs.EchoXML", :clj-ant/classes ["org.apache.tools.ant.taskdefs.EchoXML"]}
   [& args]
   (clojure.core/apply c/element :echoxml args))
 
@@ -2233,7 +2233,7 @@
   https://ant.apache.org/manual/Tasks/ejbjar.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.EjbJar"
-  {:arglists (quote ([& {:keys [basejarname basenameterminator casesensitive classpath cmpversion defaultexcludes dependency descriptordir destdir excludes excludesfile flatdestdir followsymlinks genericjarsuffix includes includesfile manifest naming srcdir], :as attrs} & nested])), :clj-ant/tag "ejbjar", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.EjbJar"}
+  {:arglists (quote ([& {:keys [basejarname basenameterminator casesensitive classpath cmpversion defaultexcludes dependency descriptordir destdir excludes excludesfile flatdestdir followsymlinks genericjarsuffix includes includesfile manifest naming srcdir], :as attrs} & nested])), :clj-ant/tag "ejbjar", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.EjbJar", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.EjbJar"]}
   [& args]
   (clojure.core/apply c/element :ejbjar args))
 
@@ -2317,7 +2317,7 @@
     :resultproperty            String
     :searchpath                boolean
     :spawn                     boolean
-    :timeout                   Long
+    :timeout                   Integer
     :vmlauncher                boolean
   Nested elements:
     :arg                       (Argument)
@@ -2327,7 +2327,7 @@
   https://ant.apache.org/manual/Tasks/exec.html
 
   Defined by: org.apache.tools.ant.taskdefs.ExecTask"
-  {:arglists (quote ([& {:keys [append command dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror input inputstring logerror newenvironment os osfamily output outputproperty resolveexecutable resultproperty searchpath spawn timeout vmlauncher], :as attrs} & nested])), :clj-ant/tag "exec", :clj-ant/class "org.apache.tools.ant.taskdefs.ExecTask"}
+  {:arglists (quote ([& {:keys [append command dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror input inputstring logerror newenvironment os osfamily output outputproperty resolveexecutable resultproperty searchpath spawn timeout vmlauncher], :as attrs} & nested])), :clj-ant/tag "exec", :clj-ant/class "org.apache.tools.ant.taskdefs.ExecTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ExecTask"]}
   [& args]
   (clojure.core/apply c/element :exec args))
 
@@ -2366,7 +2366,7 @@
     :searchpath                boolean
     :skipemptyfilesets         boolean
     :spawn                     boolean
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
     :verbose                   boolean
     :vmlauncher                boolean
@@ -2384,7 +2384,7 @@
   https://ant.apache.org/manual/Tasks/execon.html
 
   Defined by: org.apache.tools.ant.taskdefs.ExecuteOn"
-  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror force forwardslash ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "execon", :clj-ant/class "org.apache.tools.ant.taskdefs.ExecuteOn"}
+  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror force forwardslash ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "execon", :clj-ant/class "org.apache.tools.ant.taskdefs.ExecuteOn", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ExecuteOn"]}
   [& args]
   (clojure.core/apply c/element :execon args))
 
@@ -2405,7 +2405,7 @@
   https://ant.apache.org/manual/Tasks/fail.html
 
   Defined by: org.apache.tools.ant.taskdefs.Exit"
-  {:arglists (quote ([& {:keys [if message status unless], :as attrs} & nested])), :clj-ant/tag "fail", :clj-ant/class "org.apache.tools.ant.taskdefs.Exit"}
+  {:arglists (quote ([& {:keys [if message status unless], :as attrs} & nested])), :clj-ant/tag "fail", :clj-ant/class "org.apache.tools.ant.taskdefs.Exit", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Exit"]}
   [& args]
   (clojure.core/apply c/element :fail args))
 
@@ -2424,7 +2424,7 @@
   https://ant.apache.org/manual/Tasks/filter.html
 
   Defined by: org.apache.tools.ant.taskdefs.Filter"
-  {:arglists (quote ([& {:keys [filtersfile token value], :as attrs} & nested])), :clj-ant/tag "filter", :clj-ant/class "org.apache.tools.ant.taskdefs.Filter"}
+  {:arglists (quote ([& {:keys [filtersfile token value], :as attrs} & nested])), :clj-ant/tag "filter", :clj-ant/class "org.apache.tools.ant.taskdefs.Filter", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Filter"]}
   [& args]
   (clojure.core/apply c/element :filter args))
 
@@ -2495,7 +2495,7 @@
   https://ant.apache.org/manual/Tasks/fixcrlf.html
 
   Defined by: org.apache.tools.ant.taskdefs.FixCRLF"
-  {:arglists (quote ([& {:keys [casesensitive cr defaultexcludes destdir encoding eof eol excludes excludesfile file fixlast followsymlinks includes includesfile javafiles outputencoding preservelastmodified srcdir tab tablength], :as attrs} & nested])), :clj-ant/tag "fixcrlf", :clj-ant/class "org.apache.tools.ant.taskdefs.FixCRLF"}
+  {:arglists (quote ([& {:keys [casesensitive cr defaultexcludes destdir encoding eof eol excludes excludesfile file fixlast followsymlinks includes includesfile javafiles outputencoding preservelastmodified srcdir tab tablength], :as attrs} & nested])), :clj-ant/tag "fixcrlf", :clj-ant/class "org.apache.tools.ant.taskdefs.FixCRLF", :clj-ant/classes ["org.apache.tools.ant.taskdefs.FixCRLF"]}
   [& args]
   (clojure.core/apply c/element :fixcrlf args))
 
@@ -2521,7 +2521,7 @@
   https://ant.apache.org/manual/Tasks/genkey.html
 
   Defined by: org.apache.tools.ant.taskdefs.GenerateKey"
-  {:arglists (quote ([& {:keys [alias dname keyalg keypass keysize keystore saname sigalg storepass storetype validity verbose], :as attrs} & nested])), :clj-ant/tag "genkey", :clj-ant/class "org.apache.tools.ant.taskdefs.GenerateKey"}
+  {:arglists (quote ([& {:keys [alias dname keyalg keypass keysize keystore saname sigalg storepass storetype validity verbose], :as attrs} & nested])), :clj-ant/tag "genkey", :clj-ant/class "org.apache.tools.ant.taskdefs.GenerateKey", :clj-ant/classes ["org.apache.tools.ant.taskdefs.GenerateKey"]}
   [& args]
   (clojure.core/apply c/element :genkey args))
 
@@ -2565,7 +2565,7 @@
   https://ant.apache.org/manual/Tasks/get.html
 
   Defined by: org.apache.tools.ant.taskdefs.Get"
-  {:arglists (quote ([& {:keys [authenticateonredirect dest httpusecaches ignoreerrors maxtime password quiet retries skipexisting src trygzipencoding useragent username usetimestamp verbose], :as attrs} & nested])), :clj-ant/tag "get", :clj-ant/class "org.apache.tools.ant.taskdefs.Get"}
+  {:arglists (quote ([& {:keys [authenticateonredirect dest httpusecaches ignoreerrors maxtime password quiet retries skipexisting src trygzipencoding useragent username usetimestamp verbose], :as attrs} & nested])), :clj-ant/tag "get", :clj-ant/class "org.apache.tools.ant.taskdefs.Get", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Get"]}
   [& args]
   (clojure.core/apply c/element :get args))
 
@@ -2580,7 +2580,7 @@
   https://ant.apache.org/manual/Tasks/gunzip.html
 
   Defined by: org.apache.tools.ant.taskdefs.GUnzip"
-  {:arglists (quote ([& {:keys [dest src srcresource], :as attrs} & nested])), :clj-ant/tag "gunzip", :clj-ant/class "org.apache.tools.ant.taskdefs.GUnzip"}
+  {:arglists (quote ([& {:keys [dest src srcresource], :as attrs} & nested])), :clj-ant/tag "gunzip", :clj-ant/class "org.apache.tools.ant.taskdefs.GUnzip", :clj-ant/classes ["org.apache.tools.ant.taskdefs.GUnzip"]}
   [& args]
   (clojure.core/apply c/element :gunzip args))
 
@@ -2596,7 +2596,7 @@
   https://ant.apache.org/manual/Tasks/gzip.html
 
   Defined by: org.apache.tools.ant.taskdefs.GZip"
-  {:arglists (quote ([& {:keys [destfile src srcresource zipfile], :as attrs} & nested])), :clj-ant/tag "gzip", :clj-ant/class "org.apache.tools.ant.taskdefs.GZip"}
+  {:arglists (quote ([& {:keys [destfile src srcresource zipfile], :as attrs} & nested])), :clj-ant/tag "gzip", :clj-ant/class "org.apache.tools.ant.taskdefs.GZip", :clj-ant/classes ["org.apache.tools.ant.taskdefs.GZip"]}
   [& args]
   (clojure.core/apply c/element :gzip args))
 
@@ -2626,7 +2626,7 @@
   https://ant.apache.org/manual/Tasks/hostinfo.html
 
   Defined by: org.apache.tools.ant.taskdefs.HostInfo"
-  {:arglists (quote ([& {:keys [host prefix], :as attrs} & nested])), :clj-ant/tag "hostinfo", :clj-ant/class "org.apache.tools.ant.taskdefs.HostInfo"}
+  {:arglists (quote ([& {:keys [host prefix], :as attrs} & nested])), :clj-ant/tag "hostinfo", :clj-ant/class "org.apache.tools.ant.taskdefs.HostInfo", :clj-ant/classes ["org.apache.tools.ant.taskdefs.HostInfo"]}
   [& args]
   (clojure.core/apply c/element :hostinfo args))
 
@@ -2708,7 +2708,7 @@
   https://ant.apache.org/manual/Tasks/import.html
 
   Defined by: org.apache.tools.ant.taskdefs.ImportTask"
-  {:arglists (quote ([& {:keys [as file optional prefixseparator], :as attrs} & nested])), :clj-ant/tag "import", :clj-ant/class "org.apache.tools.ant.taskdefs.ImportTask"}
+  {:arglists (quote ([& {:keys [as file optional prefixseparator], :as attrs} & nested])), :clj-ant/tag "import", :clj-ant/class "org.apache.tools.ant.taskdefs.ImportTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ImportTask"]}
   [& args]
   (clojure.core/apply c/element :import args))
 
@@ -2783,7 +2783,7 @@
   https://ant.apache.org/manual/Tasks/include.html
 
   Defined by: org.apache.tools.ant.taskdefs.ImportTask"
-  {:arglists (quote ([& {:keys [as file optional prefixseparator], :as attrs} & nested])), :clj-ant/tag "include", :clj-ant/class "org.apache.tools.ant.taskdefs.ImportTask"}
+  {:arglists (quote ([& {:keys [as file optional prefixseparator], :as attrs} & nested])), :clj-ant/tag "include", :clj-ant/class "org.apache.tools.ant.taskdefs.ImportTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ImportTask"]}
   [& args]
   (clojure.core/apply c/element :include args))
 
@@ -2821,7 +2821,7 @@
   https://ant.apache.org/manual/Tasks/input.html
 
   Defined by: org.apache.tools.ant.taskdefs.Input"
-  {:arglists (quote ([& {:keys [addproperty defaultvalue message validargs], :as attrs} & nested])), :clj-ant/tag "input", :clj-ant/class "org.apache.tools.ant.taskdefs.Input"}
+  {:arglists (quote ([& {:keys [addproperty defaultvalue message validargs], :as attrs} & nested])), :clj-ant/tag "input", :clj-ant/class "org.apache.tools.ant.taskdefs.Input", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Input"]}
   [& args]
   (clojure.core/apply c/element :input args))
 
@@ -2842,7 +2842,7 @@
   https://ant.apache.org/manual/Tasks/iplanet-ejbc.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.IPlanetEjbcTask"
-  {:arglists (quote ([& {:keys [classpath debug dest ejbdescriptor iasdescriptor iashome keepgenerated], :as attrs} & nested])), :clj-ant/tag "iplanet-ejbc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.IPlanetEjbcTask"}
+  {:arglists (quote ([& {:keys [classpath debug dest ejbdescriptor iasdescriptor iashome keepgenerated], :as attrs} & nested])), :clj-ant/tag "iplanet-ejbc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.IPlanetEjbcTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.IPlanetEjbcTask"]}
   [& args]
   (clojure.core/apply c/element :iplanet-ejbc args))
 
@@ -2971,7 +2971,7 @@
   https://ant.apache.org/manual/Tasks/jar.html
 
   Defined by: org.apache.tools.ant.taskdefs.Jar"
-  {:arglists (quote ([& {:keys [basedir casesensitive comment compress createunicodeextrafields defaultexcludes destfile duplicate encoding excludes excludesfile fallbacktoutf8 file filesetmanifest filesonly flattenattributes followsymlinks includes includesfile index indexmetainf jarfile keepcompression level manifest manifestencoding mergeclasspathattributes modificationtime preserve0permissions roundup strict update uselanguageencodingflag whenempty whenmanifestonly zip64mode zipfile], :as attrs} & nested])), :clj-ant/tag "jar", :clj-ant/class "org.apache.tools.ant.taskdefs.Jar"}
+  {:arglists (quote ([& {:keys [basedir casesensitive comment compress createunicodeextrafields defaultexcludes destfile duplicate encoding excludes excludesfile fallbacktoutf8 file filesetmanifest filesonly flattenattributes followsymlinks includes includesfile index indexmetainf jarfile keepcompression level manifest manifestencoding mergeclasspathattributes modificationtime preserve0permissions roundup strict update uselanguageencodingflag whenempty whenmanifestonly zip64mode zipfile], :as attrs} & nested])), :clj-ant/tag "jar", :clj-ant/class "org.apache.tools.ant.taskdefs.Jar", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Jar"]}
   [& args]
   (clojure.core/apply c/element :jar args))
 
@@ -2994,7 +2994,7 @@
   https://ant.apache.org/manual/Tasks/jarlib-available.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.JarLibAvailableTask"
-  {:arglists (quote ([& {:keys [file property], :as attrs} & nested])), :clj-ant/tag "jarlib-available", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.JarLibAvailableTask"}
+  {:arglists (quote ([& {:keys [file property], :as attrs} & nested])), :clj-ant/tag "jarlib-available", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.JarLibAvailableTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.JarLibAvailableTask"]}
   [& args]
   (clojure.core/apply c/element :jarlib-available args))
 
@@ -3015,7 +3015,7 @@
   https://ant.apache.org/manual/Tasks/jarlib-display.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.JarLibDisplayTask"
-  {:arglists (quote ([& {:keys [file], :as attrs} & nested])), :clj-ant/tag "jarlib-display", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.JarLibDisplayTask"}
+  {:arglists (quote ([& {:keys [file], :as attrs} & nested])), :clj-ant/tag "jarlib-display", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.JarLibDisplayTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.JarLibDisplayTask"]}
   [& args]
   (clojure.core/apply c/element :jarlib-display args))
 
@@ -3041,7 +3041,7 @@
   https://ant.apache.org/manual/Tasks/jarlib-manifest.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.JarLibManifestTask"
-  {:arglists (quote ([& {:keys [destfile], :as attrs} & nested])), :clj-ant/tag "jarlib-manifest", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.JarLibManifestTask"}
+  {:arglists (quote ([& {:keys [destfile], :as attrs} & nested])), :clj-ant/tag "jarlib-manifest", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.JarLibManifestTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.JarLibManifestTask"]}
   [& args]
   (clojure.core/apply c/element :jarlib-manifest args))
 
@@ -3071,7 +3071,7 @@
   https://ant.apache.org/manual/Tasks/jarlib-resolve.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.JarLibResolveTask"
-  {:arglists (quote ([& {:keys [checkextension failonerror property], :as attrs} & nested])), :clj-ant/tag "jarlib-resolve", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.JarLibResolveTask"}
+  {:arglists (quote ([& {:keys [checkextension failonerror property], :as attrs} & nested])), :clj-ant/tag "jarlib-resolve", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.JarLibResolveTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.JarLibResolveTask"]}
   [& args]
   (clojure.core/apply c/element :jarlib-resolve args))
 
@@ -3137,7 +3137,7 @@
   https://ant.apache.org/manual/Tasks/java.html
 
   Defined by: org.apache.tools.ant.taskdefs.Java"
-  {:arglists (quote ([& {:keys [append args classname classpath classpathref clonevm dir discarderror discardoutput error errorproperty failonerror fork input inputstring jar jvm jvmargs jvmversion logerror maxmemory module modulepath modulepathref newenvironment output outputproperty resultproperty sourcefile spawn timeout], :as attrs} & nested])), :clj-ant/tag "java", :clj-ant/class "org.apache.tools.ant.taskdefs.Java"}
+  {:arglists (quote ([& {:keys [append args classname classpath classpathref clonevm dir discarderror discardoutput error errorproperty failonerror fork input inputstring jar jvm jvmargs jvmversion logerror maxmemory module modulepath modulepathref newenvironment output outputproperty resultproperty sourcefile spawn timeout], :as attrs} & nested])), :clj-ant/tag "java", :clj-ant/class "org.apache.tools.ant.taskdefs.Java", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Java"]}
   [& args]
   (clojure.core/apply c/element :java args))
 
@@ -3293,7 +3293,7 @@
   https://ant.apache.org/manual/Tasks/javac.html
 
   Defined by: org.apache.tools.ant.taskdefs.Javac"
-  {:arglists (quote ([& {:keys [bootclasspath bootclasspathref casesensitive classpath classpathref compiler createmissingpackageinfoclass debug debuglevel defaultexcludes depend deprecation destdir encoding errorproperty excludes excludesfile executable extdirs failonerror followsymlinks fork includeantruntime includedestclasses includejavaruntime includes includesfile listfiles memoryinitialsize memorymaximumsize modulepath modulepathref modulesourcepath modulesourcepathref nativeheaderdir nowarn optimize proceed release source sourcepath sourcepathref srcdir target tempdir updatedproperty upgrademodulepath upgrademodulepathref verbose], :as attrs} & nested])), :clj-ant/tag "javac", :clj-ant/class "org.apache.tools.ant.taskdefs.Javac"}
+  {:arglists (quote ([& {:keys [bootclasspath bootclasspathref casesensitive classpath classpathref compiler createmissingpackageinfoclass debug debuglevel defaultexcludes depend deprecation destdir encoding errorproperty excludes excludesfile executable extdirs failonerror followsymlinks fork includeantruntime includedestclasses includejavaruntime includes includesfile listfiles memoryinitialsize memorymaximumsize modulepath modulepathref modulesourcepath modulesourcepathref nativeheaderdir nowarn optimize proceed release source sourcepath sourcepathref srcdir target tempdir updatedproperty upgrademodulepath upgrademodulepathref verbose], :as attrs} & nested])), :clj-ant/tag "javac", :clj-ant/class "org.apache.tools.ant.taskdefs.Javac", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javac"]}
   [& args]
   (clojure.core/apply c/element :javac args))
 
@@ -3342,7 +3342,7 @@
   https://ant.apache.org/manual/Tasks/javacc.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.javacc.JavaCC"
-  {:arglists (quote ([& {:keys [buildparser buildtokenmanager cachetokens choiceambiguitycheck commontokenaction debuglookahead debugparser debugtokenmanager errorreporting forcelacheck ignorecase javacchome javaunicodeescape jdkversion keeplinecolumn lookahead maxmemory optimizetokenmanager otherambiguitycheck outputdirectory sanitycheck static target unicodeinput usercharstream usertokenmanager], :as attrs} & nested])), :clj-ant/tag "javacc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.javacc.JavaCC"}
+  {:arglists (quote ([& {:keys [buildparser buildtokenmanager cachetokens choiceambiguitycheck commontokenaction debuglookahead debugparser debugtokenmanager errorreporting forcelacheck ignorecase javacchome javaunicodeescape jdkversion keeplinecolumn lookahead maxmemory optimizetokenmanager otherambiguitycheck outputdirectory sanitycheck static target unicodeinput usercharstream usertokenmanager], :as attrs} & nested])), :clj-ant/tag "javacc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.javacc.JavaCC", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.javacc.JavaCC"]}
   [& args]
   (clojure.core/apply c/element :javacc args))
 
@@ -3479,7 +3479,7 @@
   https://ant.apache.org/manual/Tasks/javadoc.html
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc"
-  {:arglists (quote ([& {:keys [access additionalparam author bootclasspath bootclasspathref bottom breakiterator charset classpath classpathref defaultexcludes destdir docencoding docfilessubdirs doclet docletpath docletpathref doctitle encoding excludedocfilessubdir excludepackagenames executable extdirs failonerror failonwarning footer group header helpfile includenosourcepackages link linkoffline linksource locale maxmemory modulenames modulepath modulepathref modulesourcepath modulesourcepathref nodeprecated nodeprecatedlist nohelp noindex nonavbar noqualifier notree old overview package packagelist packagenames postprocessgeneratedjavadocs private protected public serialwarn source sourcefiles sourcepath sourcepathref splitindex stylesheetfile use useexternalfile verbose version windowtitle], :as attrs} & nested])), :clj-ant/tag "javadoc", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc"}
+  {:arglists (quote ([& {:keys [access additionalparam author bootclasspath bootclasspathref bottom breakiterator charset classpath classpathref defaultexcludes destdir docencoding docfilessubdirs doclet docletpath docletpathref doctitle encoding excludedocfilessubdir excludepackagenames executable extdirs failonerror failonwarning footer group header helpfile includenosourcepackages link linkoffline linksource locale maxmemory modulenames modulepath modulepathref modulesourcepath modulesourcepathref nodeprecated nodeprecatedlist nohelp noindex nonavbar noqualifier notree old overview package packagelist packagenames postprocessgeneratedjavadocs private protected public serialwarn source sourcefiles sourcepath sourcepathref splitindex stylesheetfile use useexternalfile verbose version windowtitle], :as attrs} & nested])), :clj-ant/tag "javadoc", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc"]}
   [& args]
   (clojure.core/apply c/element :javadoc args))
 
@@ -3582,7 +3582,7 @@
   https://ant.apache.org/manual/Tasks/javadoc2.html
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc"
-  {:arglists (quote ([& {:keys [access additionalparam author bootclasspath bootclasspathref bottom breakiterator charset classpath classpathref defaultexcludes destdir docencoding docfilessubdirs doclet docletpath docletpathref doctitle encoding excludedocfilessubdir excludepackagenames executable extdirs failonerror failonwarning footer group header helpfile includenosourcepackages link linkoffline linksource locale maxmemory modulenames modulepath modulepathref modulesourcepath modulesourcepathref nodeprecated nodeprecatedlist nohelp noindex nonavbar noqualifier notree old overview package packagelist packagenames postprocessgeneratedjavadocs private protected public serialwarn source sourcefiles sourcepath sourcepathref splitindex stylesheetfile use useexternalfile verbose version windowtitle], :as attrs} & nested])), :clj-ant/tag "javadoc2", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc"}
+  {:arglists (quote ([& {:keys [access additionalparam author bootclasspath bootclasspathref bottom breakiterator charset classpath classpathref defaultexcludes destdir docencoding docfilessubdirs doclet docletpath docletpathref doctitle encoding excludedocfilessubdir excludepackagenames executable extdirs failonerror failonwarning footer group header helpfile includenosourcepackages link linkoffline linksource locale maxmemory modulenames modulepath modulepathref modulesourcepath modulesourcepathref nodeprecated nodeprecatedlist nohelp noindex nonavbar noqualifier notree old overview package packagelist packagenames postprocessgeneratedjavadocs private protected public serialwarn source sourcefiles sourcepath sourcepathref splitindex stylesheetfile use useexternalfile verbose version windowtitle], :as attrs} & nested])), :clj-ant/tag "javadoc2", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc"]}
   [& args]
   (clojure.core/apply c/element :javadoc2 args))
 
@@ -3630,7 +3630,7 @@
   https://ant.apache.org/manual/Tasks/javah.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.Javah"
-  {:arglists (quote ([& {:keys [bootclasspath bootclasspathref class classpath classpathref destdir force implementation old outputfile stubs verbose], :as attrs} & nested])), :clj-ant/tag "javah", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Javah"}
+  {:arglists (quote ([& {:keys [bootclasspath bootclasspathref class classpath classpathref destdir force implementation old outputfile stubs verbose], :as attrs} & nested])), :clj-ant/tag "javah", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Javah", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.Javah"]}
   [& args]
   (clojure.core/apply c/element :javah args))
 
@@ -3658,7 +3658,7 @@
   https://ant.apache.org/manual/Tasks/jjdoc.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.javacc.JJDoc"
-  {:arglists (quote ([& {:keys [javacchome maxmemory onetable outputfile target text], :as attrs} & nested])), :clj-ant/tag "jjdoc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.javacc.JJDoc"}
+  {:arglists (quote ([& {:keys [javacchome maxmemory onetable outputfile target text], :as attrs} & nested])), :clj-ant/tag "jjdoc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.javacc.JJDoc", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.javacc.JJDoc"]}
   [& args]
   (clojure.core/apply c/element :jjdoc args))
 
@@ -3699,7 +3699,7 @@
   https://ant.apache.org/manual/Tasks/jjtree.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.javacc.JJTree"
-  {:arglists (quote ([& {:keys [buildnodefiles javacchome maxmemory multi nodedefaultvoid nodefactory nodepackage nodeprefix nodescopehook nodeusesparser outputdirectory outputfile static target visitor visitorexception], :as attrs} & nested])), :clj-ant/tag "jjtree", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.javacc.JJTree"}
+  {:arglists (quote ([& {:keys [buildnodefiles javacchome maxmemory multi nodedefaultvoid nodefactory nodepackage nodeprefix nodescopehook nodeusesparser outputdirectory outputfile static target visitor visitorexception], :as attrs} & nested])), :clj-ant/tag "jjtree", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.javacc.JJTree", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.javacc.JJTree"]}
   [& args]
   (clojure.core/apply c/element :jjtree args))
 
@@ -3775,7 +3775,7 @@
   https://ant.apache.org/manual/Tasks/jlink.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.jlink.JlinkTask"
-  {:arglists (quote ([& {:keys [addfiles casesensitive compress defaultexcludes excludes excludesfile followsymlinks includes includesfile mergefiles outfile], :as attrs} & nested])), :clj-ant/tag "jlink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.jlink.JlinkTask"}
+  {:arglists (quote ([& {:keys [addfiles casesensitive compress defaultexcludes excludes excludesfile followsymlinks includes includesfile mergefiles outfile], :as attrs} & nested])), :clj-ant/tag "jlink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.jlink.JlinkTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.jlink.JlinkTask"]}
   [& args]
   (clojure.core/apply c/element :jlink args))
 
@@ -3823,7 +3823,7 @@
   https://ant.apache.org/manual/Tasks/jmod.html
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Jmod"
-  {:arglists (quote ([& {:keys [classpath classpathref commandpath commandpathref configpath configpathref destfile hashmodulespattern headerpath headerpathref legalpath legalpathref mainclass manpath manpathref modulepath modulepathref modulewarnings nativelibpath nativelibpathref platform resolvebydefault version], :as attrs} & nested])), :clj-ant/tag "jmod", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Jmod"}
+  {:arglists (quote ([& {:keys [classpath classpathref commandpath commandpathref configpath configpathref destfile hashmodulespattern headerpath headerpathref legalpath legalpathref mainclass manpath manpathref modulepath modulepathref modulewarnings nativelibpath nativelibpathref platform resolvebydefault version], :as attrs} & nested])), :clj-ant/tag "jmod", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Jmod", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Jmod"]}
   [& args]
   (clojure.core/apply c/element :jmod args))
 
@@ -3905,7 +3905,7 @@
   https://ant.apache.org/manual/Tasks/jspc.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.jsp.JspC"
-  {:arglists (quote ([& {:keys [casesensitive classpath classpathref compiler compilerclasspath defaultexcludes destdir excludes excludesfile failonerror followsymlinks ieplugin includes includesfile mapped package srcdir uribase uriroot verbose webinc webxml], :as attrs} & nested])), :clj-ant/tag "jspc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.jsp.JspC"}
+  {:arglists (quote ([& {:keys [casesensitive classpath classpathref compiler compilerclasspath defaultexcludes destdir excludes excludesfile failonerror followsymlinks ieplugin includes includesfile mapped package srcdir uribase uriroot verbose webinc webxml], :as attrs} & nested])), :clj-ant/tag "jspc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.jsp.JspC", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.jsp.JspC"]}
   [& args]
   (clojure.core/apply c/element :jspc args))
 
@@ -3927,7 +3927,7 @@
   https://ant.apache.org/manual/Tasks/length.html
 
   Defined by: org.apache.tools.ant.taskdefs.Length"
-  {:arglists (quote ([& {:keys [file length mode property resource string trim when], :as attrs} & nested])), :clj-ant/tag "length", :clj-ant/class "org.apache.tools.ant.taskdefs.Length"}
+  {:arglists (quote ([& {:keys [file length mode property resource string trim when], :as attrs} & nested])), :clj-ant/tag "length", :clj-ant/class "org.apache.tools.ant.taskdefs.Length", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Length"]}
   [& args]
   (clojure.core/apply c/element :length args))
 
@@ -3972,7 +3972,7 @@
   https://ant.apache.org/manual/Tasks/link.html
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link"
-  {:arglists (quote ([& {:keys [bindservices checkduplicatelegal compress debug destdir endianness excludefiles excluderesources ignoresigning includeheaders includemanpages includenativecommands launchers locales modulepath modulepathref modules observablemodules resourceorder verboselevel vmtype], :as attrs} & nested])), :clj-ant/tag "link", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link"}
+  {:arglists (quote ([& {:keys [bindservices checkduplicatelegal compress debug destdir endianness excludefiles excluderesources ignoresigning includeheaders includemanpages includenativecommands launchers locales modulepath modulepathref modules observablemodules resourceorder verboselevel vmtype], :as attrs} & nested])), :clj-ant/tag "link", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link"]}
   [& args]
   (clojure.core/apply c/element :link args))
 
@@ -3994,7 +3994,7 @@
   https://ant.apache.org/manual/Tasks/loadfile.html
 
   Defined by: org.apache.tools.ant.taskdefs.LoadFile"
-  {:arglists (quote ([& {:keys [encoding failonerror property quiet srcfile], :as attrs} & nested])), :clj-ant/tag "loadfile", :clj-ant/class "org.apache.tools.ant.taskdefs.LoadFile"}
+  {:arglists (quote ([& {:keys [encoding failonerror property quiet srcfile], :as attrs} & nested])), :clj-ant/tag "loadfile", :clj-ant/class "org.apache.tools.ant.taskdefs.LoadFile", :clj-ant/classes ["org.apache.tools.ant.taskdefs.LoadFile"]}
   [& args]
   (clojure.core/apply c/element :loadfile args))
 
@@ -4021,7 +4021,7 @@
   https://ant.apache.org/manual/Tasks/loadproperties.html
 
   Defined by: org.apache.tools.ant.taskdefs.LoadProperties"
-  {:arglists (quote ([& {:keys [classpath classpathref encoding prefix prefixvalues resource srcfile], :as attrs} & nested])), :clj-ant/tag "loadproperties", :clj-ant/class "org.apache.tools.ant.taskdefs.LoadProperties"}
+  {:arglists (quote ([& {:keys [classpath classpathref encoding prefix prefixvalues resource srcfile], :as attrs} & nested])), :clj-ant/tag "loadproperties", :clj-ant/class "org.apache.tools.ant.taskdefs.LoadProperties", :clj-ant/classes ["org.apache.tools.ant.taskdefs.LoadProperties"]}
   [& args]
   (clojure.core/apply c/element :loadproperties args))
 
@@ -4044,7 +4044,7 @@
   https://ant.apache.org/manual/Tasks/loadresource.html
 
   Defined by: org.apache.tools.ant.taskdefs.LoadResource"
-  {:arglists (quote ([& {:keys [encoding failonerror property quiet], :as attrs} & nested])), :clj-ant/tag "loadresource", :clj-ant/class "org.apache.tools.ant.taskdefs.LoadResource"}
+  {:arglists (quote ([& {:keys [encoding failonerror property quiet], :as attrs} & nested])), :clj-ant/tag "loadresource", :clj-ant/class "org.apache.tools.ant.taskdefs.LoadResource", :clj-ant/classes ["org.apache.tools.ant.taskdefs.LoadResource"]}
   [& args]
   (clojure.core/apply c/element :loadresource args))
 
@@ -4067,7 +4067,7 @@
   https://ant.apache.org/manual/Tasks/local.html
 
   Defined by: org.apache.tools.ant.taskdefs.Local"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "local", :clj-ant/class "org.apache.tools.ant.taskdefs.Local"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "local", :clj-ant/class "org.apache.tools.ant.taskdefs.Local", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Local"]}
   [& args]
   (clojure.core/apply c/element :local args))
 
@@ -4090,7 +4090,7 @@
   https://ant.apache.org/manual/Tasks/macrodef.html
 
   Defined by: org.apache.tools.ant.taskdefs.MacroDef"
-  {:arglists (quote ([& {:keys [backtrace name uri], :as attrs} & nested])), :clj-ant/tag "macrodef", :clj-ant/class "org.apache.tools.ant.taskdefs.MacroDef"}
+  {:arglists (quote ([& {:keys [backtrace name uri], :as attrs} & nested])), :clj-ant/tag "macrodef", :clj-ant/class "org.apache.tools.ant.taskdefs.MacroDef", :clj-ant/classes ["org.apache.tools.ant.taskdefs.MacroDef"]}
   [& args]
   (clojure.core/apply c/element :macrodef args))
 
@@ -4147,7 +4147,7 @@
   https://ant.apache.org/manual/Tasks/mail.html
 
   Defined by: org.apache.tools.ant.taskdefs.email.EmailTask"
-  {:arglists (quote ([& {:keys [bcclist cclist charset checkserveridentity enablestarttls encoding failonerror files from ignoreinvalidrecipients includefilenames mailhost mailport message messagefile messagefileinputencoding messagemimetype password replyto requirestarttls ssl subject tolist user], :as attrs} & nested])), :clj-ant/tag "mail", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailTask"}
+  {:arglists (quote ([& {:keys [bcclist cclist charset checkserveridentity enablestarttls encoding failonerror files from ignoreinvalidrecipients includefilenames mailhost mailport message messagefile messagefileinputencoding messagemimetype password replyto requirestarttls ssl subject tolist user], :as attrs} & nested])), :clj-ant/tag "mail", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.email.EmailTask"]}
   [& args]
   (clojure.core/apply c/element :mail args))
 
@@ -4169,7 +4169,7 @@
   https://ant.apache.org/manual/Tasks/makeurl.html
 
   Defined by: org.apache.tools.ant.taskdefs.MakeUrl"
-  {:arglists (quote ([& {:keys [file property separator validate], :as attrs} & nested])), :clj-ant/tag "makeurl", :clj-ant/class "org.apache.tools.ant.taskdefs.MakeUrl"}
+  {:arglists (quote ([& {:keys [file property separator validate], :as attrs} & nested])), :clj-ant/tag "makeurl", :clj-ant/class "org.apache.tools.ant.taskdefs.MakeUrl", :clj-ant/classes ["org.apache.tools.ant.taskdefs.MakeUrl"]}
   [& args]
   (clojure.core/apply c/element :makeurl args))
 
@@ -4204,7 +4204,7 @@
   https://ant.apache.org/manual/Tasks/manifest.html
 
   Defined by: org.apache.tools.ant.taskdefs.ManifestTask"
-  {:arglists (quote ([& {:keys [encoding file flattenattributes mergeclasspathattributes mode], :as attrs} & nested])), :clj-ant/tag "manifest", :clj-ant/class "org.apache.tools.ant.taskdefs.ManifestTask"}
+  {:arglists (quote ([& {:keys [encoding file flattenattributes mergeclasspathattributes mode], :as attrs} & nested])), :clj-ant/tag "manifest", :clj-ant/class "org.apache.tools.ant.taskdefs.ManifestTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ManifestTask"]}
   [& args]
   (clojure.core/apply c/element :manifest args))
 
@@ -4237,7 +4237,7 @@
   https://ant.apache.org/manual/Tasks/manifestclasspath.html
 
   Defined by: org.apache.tools.ant.taskdefs.ManifestClassPath"
-  {:arglists (quote ([& {:keys [jarfile maxparentlevels property], :as attrs} & nested])), :clj-ant/tag "manifestclasspath", :clj-ant/class "org.apache.tools.ant.taskdefs.ManifestClassPath"}
+  {:arglists (quote ([& {:keys [jarfile maxparentlevels property], :as attrs} & nested])), :clj-ant/tag "manifestclasspath", :clj-ant/class "org.apache.tools.ant.taskdefs.ManifestClassPath", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ManifestClassPath"]}
   [& args]
   (clojure.core/apply c/element :manifestclasspath args))
 
@@ -4290,7 +4290,7 @@
   https://ant.apache.org/manual/Tasks/mimemail.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.net.MimeMail"
-  {:arglists (quote ([& {:keys [bcclist cclist charset checkserveridentity enablestarttls encoding failonerror files from ignoreinvalidrecipients includefilenames mailhost mailport message messagefile messagefileinputencoding messagemimetype password replyto requirestarttls ssl subject tolist user], :as attrs} & nested])), :clj-ant/tag "mimemail", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.net.MimeMail"}
+  {:arglists (quote ([& {:keys [bcclist cclist charset checkserveridentity enablestarttls encoding failonerror files from ignoreinvalidrecipients includefilenames mailhost mailport message messagefile messagefileinputencoding messagemimetype password replyto requirestarttls ssl subject tolist user], :as attrs} & nested])), :clj-ant/tag "mimemail", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.net.MimeMail", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.net.MimeMail"]}
   [& args]
   (clojure.core/apply c/element :mimemail args))
 
@@ -4304,7 +4304,7 @@
   https://ant.apache.org/manual/Tasks/mkdir.html
 
   Defined by: org.apache.tools.ant.taskdefs.Mkdir"
-  {:arglists (quote ([& {:keys [dir], :as attrs} & nested])), :clj-ant/tag "mkdir", :clj-ant/class "org.apache.tools.ant.taskdefs.Mkdir"}
+  {:arglists (quote ([& {:keys [dir], :as attrs} & nested])), :clj-ant/tag "mkdir", :clj-ant/class "org.apache.tools.ant.taskdefs.Mkdir", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Mkdir"]}
   [& args]
   (clojure.core/apply c/element :mkdir args))
 
@@ -4321,7 +4321,7 @@
   https://ant.apache.org/manual/Tasks/mklink.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.windows.Mklink"
-  {:arglists (quote ([& {:keys [link linktype overwrite targetfile targettext], :as attrs} & nested])), :clj-ant/tag "mklink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.windows.Mklink"}
+  {:arglists (quote ([& {:keys [link linktype overwrite targetfile targettext], :as attrs} & nested])), :clj-ant/tag "mklink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.windows.Mklink", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.windows.Mklink"]}
   [& args]
   (clojure.core/apply c/element :mklink args))
 
@@ -4366,7 +4366,7 @@
   https://ant.apache.org/manual/Tasks/move.html
 
   Defined by: org.apache.tools.ant.taskdefs.Move"
-  {:arglists (quote ([& {:keys [enablemultiplemappings encoding failonerror file filtering flatten force granularity includeemptydirs outputencoding overwrite performgconfaileddelete preservelastmodified quiet todir tofile verbose], :as attrs} & nested])), :clj-ant/tag "move", :clj-ant/class "org.apache.tools.ant.taskdefs.Move"}
+  {:arglists (quote ([& {:keys [enablemultiplemappings encoding failonerror file filtering flatten force granularity includeemptydirs outputencoding overwrite performgconfaileddelete preservelastmodified quiet todir tofile verbose], :as attrs} & nested])), :clj-ant/tag "move", :clj-ant/class "org.apache.tools.ant.taskdefs.Move", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Move"]}
   [& args]
   (clojure.core/apply c/element :move args))
 
@@ -4452,7 +4452,7 @@
   https://ant.apache.org/manual/Tasks/native2ascii.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.Native2Ascii"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dest encoding excludes excludesfile ext followsymlinks implementation includes includesfile reverse src], :as attrs} & nested])), :clj-ant/tag "native2ascii", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Native2Ascii"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dest encoding excludes excludesfile ext followsymlinks implementation includes includesfile reverse src], :as attrs} & nested])), :clj-ant/tag "native2ascii", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Native2Ascii", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.Native2Ascii"]}
   [& args]
   (clojure.core/apply c/element :native2ascii args))
 
@@ -4466,7 +4466,7 @@
   https://ant.apache.org/manual/Tasks/nice.html
 
   Defined by: org.apache.tools.ant.taskdefs.Nice"
-  {:arglists (quote ([& {:keys [currentpriority newpriority], :as attrs} & nested])), :clj-ant/tag "nice", :clj-ant/class "org.apache.tools.ant.taskdefs.Nice"}
+  {:arglists (quote ([& {:keys [currentpriority newpriority], :as attrs} & nested])), :clj-ant/tag "nice", :clj-ant/class "org.apache.tools.ant.taskdefs.Nice", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Nice"]}
   [& args]
   (clojure.core/apply c/element :nice args))
 
@@ -4500,7 +4500,7 @@
   https://ant.apache.org/manual/Tasks/parallel.html
 
   Defined by: org.apache.tools.ant.taskdefs.Parallel"
-  {:arglists (quote ([& {:keys [failonany pollinterval threadcount threadsperprocessor timeout], :as attrs} & nested])), :clj-ant/tag "parallel", :clj-ant/class "org.apache.tools.ant.taskdefs.Parallel"}
+  {:arglists (quote ([& {:keys [failonany pollinterval threadcount threadsperprocessor timeout], :as attrs} & nested])), :clj-ant/tag "parallel", :clj-ant/class "org.apache.tools.ant.taskdefs.Parallel", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Parallel"]}
   [& args]
   (clojure.core/apply c/element :parallel args))
 
@@ -4523,7 +4523,7 @@
   https://ant.apache.org/manual/Tasks/patch.html
 
   Defined by: org.apache.tools.ant.taskdefs.Patch"
-  {:arglists (quote ([& {:keys [backups destfile dir failonerror ignorewhitespace originalfile patchfile quiet reverse strip], :as attrs} & nested])), :clj-ant/tag "patch", :clj-ant/class "org.apache.tools.ant.taskdefs.Patch"}
+  {:arglists (quote ([& {:keys [backups destfile dir failonerror ignorewhitespace originalfile patchfile quiet reverse strip], :as attrs} & nested])), :clj-ant/tag "patch", :clj-ant/class "org.apache.tools.ant.taskdefs.Patch", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Patch"]}
   [& args]
   (clojure.core/apply c/element :patch args))
 
@@ -4555,7 +4555,7 @@
   https://ant.apache.org/manual/Tasks/pathconvert.html
 
   Defined by: org.apache.tools.ant.taskdefs.PathConvert"
-  {:arglists (quote ([& {:keys [dest dirsep pathsep preserveduplicates property refid setonempty targetos], :as attrs} & nested])), :clj-ant/tag "pathconvert", :clj-ant/class "org.apache.tools.ant.taskdefs.PathConvert"}
+  {:arglists (quote ([& {:keys [dest dirsep pathsep preserveduplicates property refid setonempty targetos], :as attrs} & nested])), :clj-ant/tag "pathconvert", :clj-ant/class "org.apache.tools.ant.taskdefs.PathConvert", :clj-ant/classes ["org.apache.tools.ant.taskdefs.PathConvert"]}
   [& args]
   (clojure.core/apply c/element :pathconvert args))
 
@@ -4572,7 +4572,7 @@
   https://ant.apache.org/manual/Tasks/presetdef.html
 
   Defined by: org.apache.tools.ant.taskdefs.PreSetDef"
-  {:arglists (quote ([& {:keys [name uri], :as attrs} & nested])), :clj-ant/tag "presetdef", :clj-ant/class "org.apache.tools.ant.taskdefs.PreSetDef"}
+  {:arglists (quote ([& {:keys [name uri], :as attrs} & nested])), :clj-ant/tag "presetdef", :clj-ant/class "org.apache.tools.ant.taskdefs.PreSetDef", :clj-ant/classes ["org.apache.tools.ant.taskdefs.PreSetDef"]}
   [& args]
   (clojure.core/apply c/element :presetdef args))
 
@@ -4586,7 +4586,7 @@
   https://ant.apache.org/manual/Tasks/projecthelper.html
 
   Defined by: org.apache.tools.ant.taskdefs.ProjectHelperTask"
-  {:arglists (quote ([& nested])), :clj-ant/tag "projecthelper", :clj-ant/class "org.apache.tools.ant.taskdefs.ProjectHelperTask"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "projecthelper", :clj-ant/class "org.apache.tools.ant.taskdefs.ProjectHelperTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ProjectHelperTask"]}
   [& args]
   (clojure.core/apply c/element :projecthelper args))
 
@@ -4645,7 +4645,7 @@
   https://ant.apache.org/manual/Tasks/property.html
 
   Defined by: org.apache.tools.ant.taskdefs.Property"
-  {:arglists (quote ([& {:keys [basedir classpath classpathref environment file name prefix prefixvalues refid relative resource runtime url userproperty value], :as attrs} & nested])), :clj-ant/tag "property", :clj-ant/class "org.apache.tools.ant.taskdefs.Property"}
+  {:arglists (quote ([& {:keys [basedir classpath classpathref environment file name prefix prefixvalues refid relative resource runtime url userproperty value], :as attrs} & nested])), :clj-ant/tag "property", :clj-ant/class "org.apache.tools.ant.taskdefs.Property", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Property"]}
   [& args]
   (clojure.core/apply c/element :property args))
 
@@ -4662,7 +4662,7 @@
   https://ant.apache.org/manual/Tasks/propertyfile.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.PropertyFile"
-  {:arglists (quote ([& {:keys [comment file jdkproperties], :as attrs} & nested])), :clj-ant/tag "propertyfile", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.PropertyFile"}
+  {:arglists (quote ([& {:keys [comment file jdkproperties], :as attrs} & nested])), :clj-ant/tag "propertyfile", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.PropertyFile", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.PropertyFile"]}
   [& args]
   (clojure.core/apply c/element :propertyfile args))
 
@@ -4680,7 +4680,7 @@
   https://ant.apache.org/manual/Tasks/propertyhelper.html
 
   Defined by: org.apache.tools.ant.taskdefs.PropertyHelperTask"
-  {:arglists (quote ([& nested])), :clj-ant/tag "propertyhelper", :clj-ant/class "org.apache.tools.ant.taskdefs.PropertyHelperTask"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "propertyhelper", :clj-ant/class "org.apache.tools.ant.taskdefs.PropertyHelperTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.PropertyHelperTask"]}
   [& args]
   (clojure.core/apply c/element :propertyhelper args))
 
@@ -4708,7 +4708,7 @@
   https://ant.apache.org/manual/Tasks/pvcs.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.pvcs.Pvcs"
-  {:arglists (quote ([& {:keys [config filenameformat force ignorereturncode label linestart promotiongroup pvcsbin pvcsproject repository revision updateonly userid workspace], :as attrs} & nested])), :clj-ant/tag "pvcs", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.pvcs.Pvcs"}
+  {:arglists (quote ([& {:keys [config filenameformat force ignorereturncode label linestart promotiongroup pvcsbin pvcsproject repository revision updateonly userid workspace], :as attrs} & nested])), :clj-ant/tag "pvcs", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.pvcs.Pvcs", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.pvcs.Pvcs"]}
   [& args]
   (clojure.core/apply c/element :pvcs args))
 
@@ -4725,7 +4725,7 @@
   https://ant.apache.org/manual/Tasks/record.html
 
   Defined by: org.apache.tools.ant.taskdefs.Recorder"
-  {:arglists (quote ([& {:keys [action append emacsmode loglevel name], :as attrs} & nested])), :clj-ant/tag "record", :clj-ant/class "org.apache.tools.ant.taskdefs.Recorder"}
+  {:arglists (quote ([& {:keys [action append emacsmode loglevel name], :as attrs} & nested])), :clj-ant/tag "record", :clj-ant/class "org.apache.tools.ant.taskdefs.Recorder", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Recorder"]}
   [& args]
   (clojure.core/apply c/element :record args))
 
@@ -4740,7 +4740,7 @@
   https://ant.apache.org/manual/Tasks/rename.html
 
   Defined by: org.apache.tools.ant.taskdefs.Rename"
-  {:arglists (quote ([& {:keys [dest replace src], :as attrs} & nested])), :clj-ant/tag "rename", :clj-ant/class "org.apache.tools.ant.taskdefs.Rename"}
+  {:arglists (quote ([& {:keys [dest replace src], :as attrs} & nested])), :clj-ant/tag "rename", :clj-ant/class "org.apache.tools.ant.taskdefs.Rename", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Rename"]}
   [& args]
   (clojure.core/apply c/element :rename args))
 
@@ -4787,7 +4787,7 @@
   https://ant.apache.org/manual/Tasks/renameext.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.RenameExtensions"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes excludes excludesfile followsymlinks fromextension includes includesfile replace srcdir toextension], :as attrs} & nested])), :clj-ant/tag "renameext", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.RenameExtensions"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes excludes excludesfile followsymlinks fromextension includes includesfile replace srcdir toextension], :as attrs} & nested])), :clj-ant/tag "renameext", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.RenameExtensions", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.RenameExtensions"]}
   [& args]
   (clojure.core/apply c/element :renameext args))
 
@@ -4850,7 +4850,7 @@
   https://ant.apache.org/manual/Tasks/replace.html
 
   Defined by: org.apache.tools.ant.taskdefs.Replace"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir encoding excludes excludesfile failonnoreplacements file followsymlinks includes includesfile preservelastmodified propertyfile propertyresource replacefilterfile replacefilterresource summary token value], :as attrs} & nested])), :clj-ant/tag "replace", :clj-ant/class "org.apache.tools.ant.taskdefs.Replace"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir encoding excludes excludesfile failonnoreplacements file followsymlinks includes includesfile preservelastmodified propertyfile propertyresource replacefilterfile replacefilterresource summary token value], :as attrs} & nested])), :clj-ant/tag "replace", :clj-ant/class "org.apache.tools.ant.taskdefs.Replace", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Replace"]}
   [& args]
   (clojure.core/apply c/element :replace args))
 
@@ -4883,7 +4883,7 @@
   https://ant.apache.org/manual/Tasks/replaceregexp.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ReplaceRegExp"
-  {:arglists (quote ([& {:keys [byline encoding failonerror file flags match preservelastmodified replace], :as attrs} & nested])), :clj-ant/tag "replaceregexp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ReplaceRegExp"}
+  {:arglists (quote ([& {:keys [byline encoding failonerror file flags match preservelastmodified replace], :as attrs} & nested])), :clj-ant/tag "replaceregexp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ReplaceRegExp", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ReplaceRegExp"]}
   [& args]
   (clojure.core/apply c/element :replaceregexp args))
 
@@ -4900,7 +4900,7 @@
   https://ant.apache.org/manual/Tasks/resourcecount.html
 
   Defined by: org.apache.tools.ant.taskdefs.ResourceCount"
-  {:arglists (quote ([& {:keys [count property refid when], :as attrs} & nested])), :clj-ant/tag "resourcecount", :clj-ant/class "org.apache.tools.ant.taskdefs.ResourceCount"}
+  {:arglists (quote ([& {:keys [count property refid when], :as attrs} & nested])), :clj-ant/tag "resourcecount", :clj-ant/class "org.apache.tools.ant.taskdefs.ResourceCount", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ResourceCount"]}
   [& args]
   (clojure.core/apply c/element :resourcecount args))
 
@@ -4916,7 +4916,7 @@
   https://ant.apache.org/manual/Tasks/retry.html
 
   Defined by: org.apache.tools.ant.taskdefs.Retry"
-  {:arglists (quote ([& {:keys [retrycount retrydelay], :as attrs} & nested])), :clj-ant/tag "retry", :clj-ant/class "org.apache.tools.ant.taskdefs.Retry"}
+  {:arglists (quote ([& {:keys [retrycount retrydelay], :as attrs} & nested])), :clj-ant/tag "retry", :clj-ant/class "org.apache.tools.ant.taskdefs.Retry", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Retry"]}
   [& args]
   (clojure.core/apply c/element :retry args))
 
@@ -5020,7 +5020,7 @@
   https://ant.apache.org/manual/Tasks/rmic.html
 
   Defined by: org.apache.tools.ant.taskdefs.Rmic"
-  {:arglists (quote ([& {:keys [base casesensitive classname classpath classpathref compiler debug defaultexcludes destdir excludes excludesfile executable extdirs filtering followsymlinks idl idlopts iiop iiopopts includeantruntime includejavaruntime includes includesfile listfiles sourcebase stubversion verify], :as attrs} & nested])), :clj-ant/tag "rmic", :clj-ant/class "org.apache.tools.ant.taskdefs.Rmic"}
+  {:arglists (quote ([& {:keys [base casesensitive classname classpath classpathref compiler debug defaultexcludes destdir excludes excludesfile executable extdirs filtering followsymlinks idl idlopts iiop iiopopts includeantruntime includejavaruntime includes includesfile listfiles sourcebase stubversion verify], :as attrs} & nested])), :clj-ant/tag "rmic", :clj-ant/class "org.apache.tools.ant.taskdefs.Rmic", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Rmic"]}
   [& args]
   (clojure.core/apply c/element :rmic args))
 
@@ -5045,7 +5045,7 @@
   https://ant.apache.org/manual/Tasks/rpm.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.Rpm"
-  {:arglists (quote ([& {:keys [cleanbuilddir command error failonerror output quiet removesource removespec rpmbuildcommand specfile topdir], :as attrs} & nested])), :clj-ant/tag "rpm", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Rpm"}
+  {:arglists (quote ([& {:keys [cleanbuilddir command error failonerror output quiet removesource removespec rpmbuildcommand specfile topdir], :as attrs} & nested])), :clj-ant/tag "rpm", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Rpm", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.Rpm"]}
   [& args]
   (clojure.core/apply c/element :rpm args))
 
@@ -5091,7 +5091,7 @@
   https://ant.apache.org/manual/Tasks/schemavalidate.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.SchemaValidate"
-  {:arglists (quote ([& {:keys [classname classpath classpathref disabledtd failonerror file fullchecking lenient nonamespacefile nonamespaceurl warn], :as attrs} & nested])), :clj-ant/tag "schemavalidate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.SchemaValidate"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref disabledtd failonerror file fullchecking lenient nonamespacefile nonamespaceurl warn], :as attrs} & nested])), :clj-ant/tag "schemavalidate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.SchemaValidate", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.SchemaValidate"]}
   [& args]
   (clojure.core/apply c/element :schemavalidate args))
 
@@ -5136,7 +5136,7 @@
   https://ant.apache.org/manual/Tasks/scp.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ssh.Scp"
-  {:arglists (quote ([& {:keys [compressed dirmode failonerror file filemode host keyfile knownhosts localfile localtodir localtofile passphrase password port preservelastmodified remotefile remotetodir remotetofile serveralivecountmax serveraliveintervalseconds sftp sshconfig todir trust username verbose], :as attrs} & nested])), :clj-ant/tag "scp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.Scp"}
+  {:arglists (quote ([& {:keys [compressed dirmode failonerror file filemode host keyfile knownhosts localfile localtodir localtofile passphrase password port preservelastmodified remotefile remotetodir remotetofile serveralivecountmax serveraliveintervalseconds sftp sshconfig todir trust username verbose], :as attrs} & nested])), :clj-ant/tag "scp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.Scp", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ssh.Scp"]}
   [& args]
   (clojure.core/apply c/element :scp args))
 
@@ -5181,7 +5181,7 @@
   https://ant.apache.org/manual/Tasks/script.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.Script"
-  {:arglists (quote ([& {:keys [classpath classpathref encoding language manager setbeans src], :as attrs} & nested])), :clj-ant/tag "script", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Script"}
+  {:arglists (quote ([& {:keys [classpath classpathref encoding language manager setbeans src], :as attrs} & nested])), :clj-ant/tag "script", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Script", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.Script"]}
   [& args]
   (clojure.core/apply c/element :script args))
 
@@ -5238,7 +5238,7 @@
   https://ant.apache.org/manual/Tasks/scriptdef.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.script.ScriptDef"
-  {:arglists (quote ([& {:keys [classpath classpathref compiled encoding language loaderref manager name reverseloader setbeans src uri], :as attrs} & nested])), :clj-ant/tag "scriptdef", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.script.ScriptDef"}
+  {:arglists (quote ([& {:keys [classpath classpathref compiled encoding language loaderref manager name reverseloader setbeans src uri], :as attrs} & nested])), :clj-ant/tag "scriptdef", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.script.ScriptDef", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.script.ScriptDef"]}
   [& args]
   (clojure.core/apply c/element :scriptdef args))
 
@@ -5254,7 +5254,7 @@
   https://ant.apache.org/manual/Tasks/sequential.html
 
   Defined by: org.apache.tools.ant.taskdefs.Sequential"
-  {:arglists (quote ([& nested])), :clj-ant/tag "sequential", :clj-ant/class "org.apache.tools.ant.taskdefs.Sequential"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "sequential", :clj-ant/class "org.apache.tools.ant.taskdefs.Sequential", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Sequential"]}
   [& args]
   (clojure.core/apply c/element :sequential args))
 
@@ -5276,7 +5276,7 @@
   https://ant.apache.org/manual/Tasks/serverdeploy.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.j2ee.ServerDeploy"
-  {:arglists (quote ([& {:keys [action source], :as attrs} & nested])), :clj-ant/tag "serverdeploy", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.j2ee.ServerDeploy"}
+  {:arglists (quote ([& {:keys [action source], :as attrs} & nested])), :clj-ant/tag "serverdeploy", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.j2ee.ServerDeploy", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.j2ee.ServerDeploy"]}
   [& args]
   (clojure.core/apply c/element :serverdeploy args))
 
@@ -5303,7 +5303,7 @@
   https://ant.apache.org/manual/Tasks/setpermissions.html
 
   Defined by: org.apache.tools.ant.taskdefs.SetPermissions"
-  {:arglists (quote ([& {:keys [actonlinktargets failonerror mode nonposixmode permissions], :as attrs} & nested])), :clj-ant/tag "setpermissions", :clj-ant/class "org.apache.tools.ant.taskdefs.SetPermissions"}
+  {:arglists (quote ([& {:keys [actonlinktargets failonerror mode nonposixmode permissions], :as attrs} & nested])), :clj-ant/tag "setpermissions", :clj-ant/class "org.apache.tools.ant.taskdefs.SetPermissions", :clj-ant/classes ["org.apache.tools.ant.taskdefs.SetPermissions"]}
   [& args]
   (clojure.core/apply c/element :setpermissions args))
 
@@ -5325,7 +5325,7 @@
   https://ant.apache.org/manual/Tasks/setproxy.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.net.SetProxy"
-  {:arglists (quote ([& {:keys [nonproxyhosts proxyhost proxypassword proxyport proxyuser socksproxyhost socksproxyport], :as attrs} & nested])), :clj-ant/tag "setproxy", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.net.SetProxy"}
+  {:arglists (quote ([& {:keys [nonproxyhosts proxyhost proxypassword proxyport proxyuser socksproxyhost socksproxyport], :as attrs} & nested])), :clj-ant/tag "setproxy", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.net.SetProxy", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.net.SetProxy"]}
   [& args]
   (clojure.core/apply c/element :setproxy args))
 
@@ -5379,7 +5379,7 @@
   https://ant.apache.org/manual/Tasks/signjar.html
 
   Defined by: org.apache.tools.ant.taskdefs.SignJar"
-  {:arglists (quote ([& {:keys [alias destdir digestalg executable force internalsf jar keypass keystore lazy maxmemory preservelastmodified providerarg providerclass providername sectionsonly sigalg sigfile signedjar storepass storetype strict tsacert tsadigestalg tsaproxyhost tsaproxyport tsaurl verbose], :as attrs} & nested])), :clj-ant/tag "signjar", :clj-ant/class "org.apache.tools.ant.taskdefs.SignJar"}
+  {:arglists (quote ([& {:keys [alias destdir digestalg executable force internalsf jar keypass keystore lazy maxmemory preservelastmodified providerarg providerclass providername sectionsonly sigalg sigfile signedjar storepass storetype strict tsacert tsadigestalg tsaproxyhost tsaproxyport tsaurl verbose], :as attrs} & nested])), :clj-ant/tag "signjar", :clj-ant/class "org.apache.tools.ant.taskdefs.SignJar", :clj-ant/classes ["org.apache.tools.ant.taskdefs.SignJar"]}
   [& args]
   (clojure.core/apply c/element :signjar args))
 
@@ -5397,7 +5397,7 @@
   https://ant.apache.org/manual/Tasks/sleep.html
 
   Defined by: org.apache.tools.ant.taskdefs.Sleep"
-  {:arglists (quote ([& {:keys [failonerror hours milliseconds minutes seconds], :as attrs} & nested])), :clj-ant/tag "sleep", :clj-ant/class "org.apache.tools.ant.taskdefs.Sleep"}
+  {:arglists (quote ([& {:keys [failonerror hours milliseconds minutes seconds], :as attrs} & nested])), :clj-ant/tag "sleep", :clj-ant/class "org.apache.tools.ant.taskdefs.Sleep", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Sleep"]}
   [& args]
   (clojure.core/apply c/element :sleep args))
 
@@ -5423,7 +5423,7 @@
   https://ant.apache.org/manual/Tasks/soscheckin.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.sos.SOSCheckin"
-  {:arglists (quote ([& {:keys [comment file localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose vssserverpath], :as attrs} & nested])), :clj-ant/tag "soscheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSCheckin"}
+  {:arglists (quote ([& {:keys [comment file localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose vssserverpath], :as attrs} & nested])), :clj-ant/tag "soscheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSCheckin", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSCheckin"]}
   [& args]
   (clojure.core/apply c/element :soscheckin args))
 
@@ -5448,7 +5448,7 @@
   https://ant.apache.org/manual/Tasks/soscheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.sos.SOSCheckout"
-  {:arglists (quote ([& {:keys [file localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose vssserverpath], :as attrs} & nested])), :clj-ant/tag "soscheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSCheckout"}
+  {:arglists (quote ([& {:keys [file localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose vssserverpath], :as attrs} & nested])), :clj-ant/tag "soscheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSCheckout"]}
   [& args]
   (clojure.core/apply c/element :soscheckout args))
 
@@ -5475,7 +5475,7 @@
   https://ant.apache.org/manual/Tasks/sosget.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.sos.SOSGet"
-  {:arglists (quote ([& {:keys [file label localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose version vssserverpath], :as attrs} & nested])), :clj-ant/tag "sosget", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSGet"}
+  {:arglists (quote ([& {:keys [file label localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose version vssserverpath], :as attrs} & nested])), :clj-ant/tag "sosget", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSGet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSGet"]}
   [& args]
   (clojure.core/apply c/element :sosget args))
 
@@ -5501,7 +5501,7 @@
   https://ant.apache.org/manual/Tasks/soslabel.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.sos.SOSLabel"
-  {:arglists (quote ([& {:keys [comment label localpath nocache nocompress password projectpath soscmd soshome sosserverpath username verbose version vssserverpath], :as attrs} & nested])), :clj-ant/tag "soslabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSLabel"}
+  {:arglists (quote ([& {:keys [comment label localpath nocache nocompress password projectpath soscmd soshome sosserverpath username verbose version vssserverpath], :as attrs} & nested])), :clj-ant/tag "soslabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSLabel", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSLabel"]}
   [& args]
   (clojure.core/apply c/element :soslabel args))
 
@@ -5571,7 +5571,7 @@
   https://ant.apache.org/manual/Tasks/sql.html
 
   Defined by: org.apache.tools.ant.taskdefs.SQLExec"
-  {:arglists (quote ([& {:keys [append autocommit caching classpath classpathref csvcolumnseparator csvquotecharacter delimiter delimitertype driver encoding errorproperty escapeprocessing expandproperties failonconnectionerror forcecsvquotechar keepformat onerror output outputencoding password print rawblobs rdbms rowcountproperty showheaders showtrailers showwarnings src strictdelimitermatching treatwarningsaserrors url userid version warningproperty], :as attrs} & nested])), :clj-ant/tag "sql", :clj-ant/class "org.apache.tools.ant.taskdefs.SQLExec"}
+  {:arglists (quote ([& {:keys [append autocommit caching classpath classpathref csvcolumnseparator csvquotecharacter delimiter delimitertype driver encoding errorproperty escapeprocessing expandproperties failonconnectionerror forcecsvquotechar keepformat onerror output outputencoding password print rawblobs rdbms rowcountproperty showheaders showtrailers showwarnings src strictdelimitermatching treatwarningsaserrors url userid version warningproperty], :as attrs} & nested])), :clj-ant/tag "sql", :clj-ant/class "org.apache.tools.ant.taskdefs.SQLExec", :clj-ant/classes ["org.apache.tools.ant.taskdefs.SQLExec"]}
   [& args]
   (clojure.core/apply c/element :sql args))
 
@@ -5623,7 +5623,7 @@
   https://ant.apache.org/manual/Tasks/sshexec.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"
-  {:arglists (quote ([& {:keys [append bindsensitive command commandresource errappend erroroutput errorproperty failonerror hidesensitive host input inputproperty inputstring keyfile knownhosts output outputproperty passphrase password placeholderbrackets port resultproperty sensitivedelimiter serveralivecountmax serveraliveintervalseconds sshconfig suppresssystemerr suppresssystemout timeout trust usepty username usesystemin verbose], :as attrs} & nested])), :clj-ant/tag "sshexec", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"}
+  {:arglists (quote ([& {:keys [append bindsensitive command commandresource errappend erroroutput errorproperty failonerror hidesensitive host input inputproperty inputstring keyfile knownhosts output outputproperty passphrase password placeholderbrackets port resultproperty sensitivedelimiter serveralivecountmax serveraliveintervalseconds sshconfig suppresssystemerr suppresssystemout timeout trust usepty username usesystemin verbose], :as attrs} & nested])), :clj-ant/tag "sshexec", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHExec", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"]}
   [& args]
   (clojure.core/apply c/element :sshexec args))
 
@@ -5663,7 +5663,7 @@
   https://ant.apache.org/manual/Tasks/sshsession.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ssh.SSHSession"
-  {:arglists (quote ([& {:keys [failonerror host keyfile knownhosts localtunnels passphrase password port remotetunnels serveralivecountmax serveraliveintervalseconds sshconfig timeout trust username verbose], :as attrs} & nested])), :clj-ant/tag "sshsession", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHSession"}
+  {:arglists (quote ([& {:keys [failonerror host keyfile knownhosts localtunnels passphrase password port remotetunnels serveralivecountmax serveraliveintervalseconds sshconfig timeout trust username verbose], :as attrs} & nested])), :clj-ant/tag "sshsession", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHSession", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ssh.SSHSession"]}
   [& args]
   (clojure.core/apply c/element :sshsession args))
 
@@ -5774,7 +5774,7 @@
   https://ant.apache.org/manual/Tasks/style.html
 
   Defined by: org.apache.tools.ant.taskdefs.XSLTProcess"
-  {:arglists (quote ([& {:keys [basedir casesensitive classpath classpathref defaultexcludes destdir excludes excludesfile extension failonerror failonnoresources failontransformationerror filedirparameter filenameparameter followsymlinks force granularity in includes includesfile out processor reloadstylesheet scanincludeddirectories style suppresswarnings useimplicitfileset xslresource], :as attrs} & nested])), :clj-ant/tag "style", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess"}
+  {:arglists (quote ([& {:keys [basedir casesensitive classpath classpathref defaultexcludes destdir excludes excludesfile extension failonerror failonnoresources failontransformationerror filedirparameter filenameparameter followsymlinks force granularity in includes includesfile out processor reloadstylesheet scanincludeddirectories style suppresswarnings useimplicitfileset xslresource], :as attrs} & nested])), :clj-ant/tag "style", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess"]}
   [& args]
   (clojure.core/apply c/element :style args))
 
@@ -5809,7 +5809,7 @@
   https://ant.apache.org/manual/Tasks/subant.html
 
   Defined by: org.apache.tools.ant.taskdefs.SubAnt"
-  {:arglists (quote ([& {:keys [antfile buildpath buildpathref failonerror genericantfile inheritall inheritrefs output target verbose], :as attrs} & nested])), :clj-ant/tag "subant", :clj-ant/class "org.apache.tools.ant.taskdefs.SubAnt"}
+  {:arglists (quote ([& {:keys [antfile buildpath buildpathref failonerror genericantfile inheritall inheritrefs output target verbose], :as attrs} & nested])), :clj-ant/tag "subant", :clj-ant/class "org.apache.tools.ant.taskdefs.SubAnt", :clj-ant/classes ["org.apache.tools.ant.taskdefs.SubAnt"]}
   [& args]
   (clojure.core/apply c/element :subant args))
 
@@ -5834,7 +5834,7 @@
   https://ant.apache.org/manual/Tasks/symlink.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.unix.Symlink"
-  {:arglists (quote ([& {:keys [action failonerror link linkfilename overwrite resource], :as attrs} & nested])), :clj-ant/tag "symlink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.unix.Symlink"}
+  {:arglists (quote ([& {:keys [action failonerror link linkfilename overwrite resource], :as attrs} & nested])), :clj-ant/tag "symlink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.unix.Symlink", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.unix.Symlink"]}
   [& args]
   (clojure.core/apply c/element :symlink args))
 
@@ -5859,7 +5859,7 @@
   https://ant.apache.org/manual/Tasks/sync.html
 
   Defined by: org.apache.tools.ant.taskdefs.Sync"
-  {:arglists (quote ([& {:keys [failonerror granularity includeemptydirs overwrite todir verbose], :as attrs} & nested])), :clj-ant/tag "sync", :clj-ant/class "org.apache.tools.ant.taskdefs.Sync"}
+  {:arglists (quote ([& {:keys [failonerror granularity includeemptydirs overwrite todir verbose], :as attrs} & nested])), :clj-ant/tag "sync", :clj-ant/class "org.apache.tools.ant.taskdefs.Sync", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Sync"]}
   [& args]
   (clojure.core/apply c/element :sync args))
 
@@ -5947,7 +5947,7 @@
   https://ant.apache.org/manual/Tasks/tar.html
 
   Defined by: org.apache.tools.ant.taskdefs.Tar"
-  {:arglists (quote ([& {:keys [basedir casesensitive compression defaultexcludes destfile encoding excludes excludesfile followsymlinks includes includesfile longfile tarfile], :as attrs} & nested])), :clj-ant/tag "tar", :clj-ant/class "org.apache.tools.ant.taskdefs.Tar"}
+  {:arglists (quote ([& {:keys [basedir casesensitive compression defaultexcludes destfile encoding excludes excludesfile followsymlinks includes includesfile longfile tarfile], :as attrs} & nested])), :clj-ant/tag "tar", :clj-ant/class "org.apache.tools.ant.taskdefs.Tar", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Tar"]}
   [& args]
   (clojure.core/apply c/element :tar args))
 
@@ -5979,7 +5979,7 @@
   https://ant.apache.org/manual/Tasks/taskdef.html
 
   Defined by: org.apache.tools.ant.taskdefs.Taskdef"
-  {:arglists (quote ([& {:keys [adapter adaptto antlib classname classpath classpathref file format loaderref name onerror resource reverseloader uri], :as attrs} & nested])), :clj-ant/tag "taskdef", :clj-ant/class "org.apache.tools.ant.taskdefs.Taskdef"}
+  {:arglists (quote ([& {:keys [adapter adaptto antlib classname classpath classpathref file format loaderref name onerror resource reverseloader uri], :as attrs} & nested])), :clj-ant/tag "taskdef", :clj-ant/class "org.apache.tools.ant.taskdefs.Taskdef", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Taskdef"]}
   [& args]
   (clojure.core/apply c/element :taskdef args))
 
@@ -6000,7 +6000,7 @@
   https://ant.apache.org/manual/Tasks/tempfile.html
 
   Defined by: org.apache.tools.ant.taskdefs.TempFile"
-  {:arglists (quote ([& {:keys [createfile deleteonexit destdir prefix property suffix], :as attrs} & nested])), :clj-ant/tag "tempfile", :clj-ant/class "org.apache.tools.ant.taskdefs.TempFile"}
+  {:arglists (quote ([& {:keys [createfile deleteonexit destdir prefix property suffix], :as attrs} & nested])), :clj-ant/tag "tempfile", :clj-ant/class "org.apache.tools.ant.taskdefs.TempFile", :clj-ant/classes ["org.apache.tools.ant.taskdefs.TempFile"]}
   [& args]
   (clojure.core/apply c/element :tempfile args))
 
@@ -6033,7 +6033,7 @@
   https://ant.apache.org/manual/Tasks/touch.html
 
   Defined by: org.apache.tools.ant.taskdefs.Touch"
-  {:arglists (quote ([& {:keys [datetime file millis mkdirs pattern verbose], :as attrs} & nested])), :clj-ant/tag "touch", :clj-ant/class "org.apache.tools.ant.taskdefs.Touch"}
+  {:arglists (quote ([& {:keys [datetime file millis mkdirs pattern verbose], :as attrs} & nested])), :clj-ant/tag "touch", :clj-ant/class "org.apache.tools.ant.taskdefs.Touch", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Touch"]}
   [& args]
   (clojure.core/apply c/element :touch args))
 
@@ -6112,7 +6112,7 @@
   https://ant.apache.org/manual/Tasks/translate.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.i18n.Translate"
-  {:arglists (quote ([& {:keys [bundle bundlecountry bundleencoding bundlelanguage bundlevariant casesensitive defaultexcludes destencoding endtoken excludes excludesfile followsymlinks forceoverwrite includes includesfile srcencoding starttoken todir], :as attrs} & nested])), :clj-ant/tag "translate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.i18n.Translate"}
+  {:arglists (quote ([& {:keys [bundle bundlecountry bundleencoding bundlelanguage bundlevariant casesensitive defaultexcludes destencoding endtoken excludes excludesfile followsymlinks forceoverwrite includes includesfile srcencoding starttoken todir], :as attrs} & nested])), :clj-ant/tag "translate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.i18n.Translate", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.i18n.Translate"]}
   [& args]
   (clojure.core/apply c/element :translate args))
 
@@ -6131,7 +6131,7 @@
   https://ant.apache.org/manual/Tasks/truncate.html
 
   Defined by: org.apache.tools.ant.taskdefs.Truncate"
-  {:arglists (quote ([& {:keys [adjust create file length mkdirs], :as attrs} & nested])), :clj-ant/tag "truncate", :clj-ant/class "org.apache.tools.ant.taskdefs.Truncate"}
+  {:arglists (quote ([& {:keys [adjust create file length mkdirs], :as attrs} & nested])), :clj-ant/tag "truncate", :clj-ant/class "org.apache.tools.ant.taskdefs.Truncate", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Truncate"]}
   [& args]
   (clojure.core/apply c/element :truncate args))
 
@@ -6162,7 +6162,7 @@
   https://ant.apache.org/manual/Tasks/tstamp.html
 
   Defined by: org.apache.tools.ant.taskdefs.Tstamp"
-  {:arglists (quote ([& {:keys [prefix], :as attrs} & nested])), :clj-ant/tag "tstamp", :clj-ant/class "org.apache.tools.ant.taskdefs.Tstamp"}
+  {:arglists (quote ([& {:keys [prefix], :as attrs} & nested])), :clj-ant/tag "tstamp", :clj-ant/class "org.apache.tools.ant.taskdefs.Tstamp", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Tstamp"]}
   [& args]
   (clojure.core/apply c/element :tstamp args))
 
@@ -6217,7 +6217,7 @@
   https://ant.apache.org/manual/Tasks/typedef.html
 
   Defined by: org.apache.tools.ant.taskdefs.Typedef"
-  {:arglists (quote ([& {:keys [adapter adaptto antlib classname classpath classpathref file format loaderref name onerror resource reverseloader uri], :as attrs} & nested])), :clj-ant/tag "typedef", :clj-ant/class "org.apache.tools.ant.taskdefs.Typedef"}
+  {:arglists (quote ([& {:keys [adapter adaptto antlib classname classpath classpathref file format loaderref name onerror resource reverseloader uri], :as attrs} & nested])), :clj-ant/tag "typedef", :clj-ant/class "org.apache.tools.ant.taskdefs.Typedef", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Typedef"]}
   [& args]
   (clojure.core/apply c/element :typedef args))
 
@@ -6241,7 +6241,7 @@
   https://ant.apache.org/manual/Tasks/unjar.html
 
   Defined by: org.apache.tools.ant.taskdefs.Expand"
-  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unjar", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand"}
+  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unjar", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Expand"]}
   [& args]
   (clojure.core/apply c/element :unjar args))
 
@@ -6266,7 +6266,7 @@
   https://ant.apache.org/manual/Tasks/untar.html
 
   Defined by: org.apache.tools.ant.taskdefs.Untar"
-  {:arglists (quote ([& {:keys [allowfilestoescapedest compression dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "untar", :clj-ant/class "org.apache.tools.ant.taskdefs.Untar"}
+  {:arglists (quote ([& {:keys [allowfilestoescapedest compression dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "untar", :clj-ant/class "org.apache.tools.ant.taskdefs.Untar", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Untar"]}
   [& args]
   (clojure.core/apply c/element :untar args))
 
@@ -6290,7 +6290,7 @@
   https://ant.apache.org/manual/Tasks/unwar.html
 
   Defined by: org.apache.tools.ant.taskdefs.Expand"
-  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unwar", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand"}
+  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unwar", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Expand"]}
   [& args]
   (clojure.core/apply c/element :unwar args))
 
@@ -6335,7 +6335,7 @@
   https://ant.apache.org/manual/Tasks/unzip.html
 
   Defined by: org.apache.tools.ant.taskdefs.Expand"
-  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unzip", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand"}
+  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unzip", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Expand"]}
   [& args]
   (clojure.core/apply c/element :unzip args))
 
@@ -6367,7 +6367,7 @@
   https://ant.apache.org/manual/Tasks/uptodate.html
 
   Defined by: org.apache.tools.ant.taskdefs.UpToDate"
-  {:arglists (quote ([& {:keys [property srcfile targetfile value], :as attrs} & nested])), :clj-ant/tag "uptodate", :clj-ant/class "org.apache.tools.ant.taskdefs.UpToDate"}
+  {:arglists (quote ([& {:keys [property srcfile targetfile value], :as attrs} & nested])), :clj-ant/tag "uptodate", :clj-ant/class "org.apache.tools.ant.taskdefs.UpToDate", :clj-ant/classes ["org.apache.tools.ant.taskdefs.UpToDate"]}
   [& args]
   (clojure.core/apply c/element :uptodate args))
 
@@ -6399,7 +6399,7 @@
   https://ant.apache.org/manual/Tasks/verifyjar.html
 
   Defined by: org.apache.tools.ant.taskdefs.VerifyJar"
-  {:arglists (quote ([& {:keys [alias certificates executable jar keypass keystore maxmemory providerarg providerclass providername storepass storetype strict verbose], :as attrs} & nested])), :clj-ant/tag "verifyjar", :clj-ant/class "org.apache.tools.ant.taskdefs.VerifyJar"}
+  {:arglists (quote ([& {:keys [alias certificates executable jar keypass keystore maxmemory providerarg providerclass providername storepass storetype strict verbose], :as attrs} & nested])), :clj-ant/tag "verifyjar", :clj-ant/class "org.apache.tools.ant.taskdefs.VerifyJar", :clj-ant/classes ["org.apache.tools.ant.taskdefs.VerifyJar"]}
   [& args]
   (clojure.core/apply c/element :verifyjar args))
 
@@ -6421,7 +6421,7 @@
   https://ant.apache.org/manual/Tasks/vssadd.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSADD"
-  {:arglists (quote ([& {:keys [autoresponse comment failonerror localpath login recursive serverpath ssdir vsspath writable], :as attrs} & nested])), :clj-ant/tag "vssadd", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSADD"}
+  {:arglists (quote ([& {:keys [autoresponse comment failonerror localpath login recursive serverpath ssdir vsspath writable], :as attrs} & nested])), :clj-ant/tag "vssadd", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSADD", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSADD"]}
   [& args]
   (clojure.core/apply c/element :vssadd args))
 
@@ -6443,7 +6443,7 @@
   https://ant.apache.org/manual/Tasks/vsscheckin.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKIN"
-  {:arglists (quote ([& {:keys [autoresponse comment failonerror localpath login recursive serverpath ssdir vsspath writable], :as attrs} & nested])), :clj-ant/tag "vsscheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKIN"}
+  {:arglists (quote ([& {:keys [autoresponse comment failonerror localpath login recursive serverpath ssdir vsspath writable], :as attrs} & nested])), :clj-ant/tag "vsscheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKIN", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKIN"]}
   [& args]
   (clojure.core/apply c/element :vsscheckin args))
 
@@ -6469,7 +6469,7 @@
   https://ant.apache.org/manual/Tasks/vsscheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKOUT"
-  {:arglists (quote ([& {:keys [autoresponse date failonerror filetimestamp getlocalcopy label localpath login recursive serverpath ssdir version vsspath writablefiles], :as attrs} & nested])), :clj-ant/tag "vsscheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKOUT"}
+  {:arglists (quote ([& {:keys [autoresponse date failonerror filetimestamp getlocalcopy label localpath login recursive serverpath ssdir version vsspath writablefiles], :as attrs} & nested])), :clj-ant/tag "vsscheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKOUT", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKOUT"]}
   [& args]
   (clojure.core/apply c/element :vsscheckout args))
 
@@ -6487,7 +6487,7 @@
   https://ant.apache.org/manual/Tasks/vsscp.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSCP"
-  {:arglists (quote ([& {:keys [autoresponse failonerror login serverpath ssdir vsspath], :as attrs} & nested])), :clj-ant/tag "vsscp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCP"}
+  {:arglists (quote ([& {:keys [autoresponse failonerror login serverpath ssdir vsspath], :as attrs} & nested])), :clj-ant/tag "vsscp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCP", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCP"]}
   [& args]
   (clojure.core/apply c/element :vsscp args))
 
@@ -6507,7 +6507,7 @@
   https://ant.apache.org/manual/Tasks/vsscreate.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSCREATE"
-  {:arglists (quote ([& {:keys [autoresponse comment failonerror login quiet serverpath ssdir vsspath], :as attrs} & nested])), :clj-ant/tag "vsscreate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCREATE"}
+  {:arglists (quote ([& {:keys [autoresponse comment failonerror login quiet serverpath ssdir vsspath], :as attrs} & nested])), :clj-ant/tag "vsscreate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCREATE", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCREATE"]}
   [& args]
   (clojure.core/apply c/element :vsscreate args))
 
@@ -6534,7 +6534,7 @@
   https://ant.apache.org/manual/Tasks/vssget.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSGET"
-  {:arglists (quote ([& {:keys [autoresponse date failonerror filetimestamp label localpath login quiet recursive serverpath ssdir version vsspath writable writablefiles], :as attrs} & nested])), :clj-ant/tag "vssget", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSGET"}
+  {:arglists (quote ([& {:keys [autoresponse date failonerror filetimestamp label localpath login quiet recursive serverpath ssdir version vsspath writable writablefiles], :as attrs} & nested])), :clj-ant/tag "vssget", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSGET", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSGET"]}
   [& args]
   (clojure.core/apply c/element :vssget args))
 
@@ -6561,7 +6561,7 @@
   https://ant.apache.org/manual/Tasks/vsshistory.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSHISTORY"
-  {:arglists (quote ([& {:keys [dateformat failonerror fromdate fromlabel login numdays output recursive serverpath ssdir style todate tolabel user vsspath], :as attrs} & nested])), :clj-ant/tag "vsshistory", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSHISTORY"}
+  {:arglists (quote ([& {:keys [dateformat failonerror fromdate fromlabel login numdays output recursive serverpath ssdir style todate tolabel user vsspath], :as attrs} & nested])), :clj-ant/tag "vsshistory", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSHISTORY", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSHISTORY"]}
   [& args]
   (clojure.core/apply c/element :vsshistory args))
 
@@ -6582,7 +6582,7 @@
   https://ant.apache.org/manual/Tasks/vsslabel.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSLABEL"
-  {:arglists (quote ([& {:keys [autoresponse comment failonerror label login serverpath ssdir version vsspath], :as attrs} & nested])), :clj-ant/tag "vsslabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSLABEL"}
+  {:arglists (quote ([& {:keys [autoresponse comment failonerror label login serverpath ssdir version vsspath], :as attrs} & nested])), :clj-ant/tag "vsslabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSLABEL", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSLABEL"]}
   [& args]
   (clojure.core/apply c/element :vsslabel args))
 
@@ -6624,7 +6624,7 @@
   https://ant.apache.org/manual/Tasks/waitfor.html
 
   Defined by: org.apache.tools.ant.taskdefs.WaitFor"
-  {:arglists (quote ([& {:keys [checkevery checkeveryunit maxwait maxwaitunit timeoutproperty], :as attrs} & nested])), :clj-ant/tag "waitfor", :clj-ant/class "org.apache.tools.ant.taskdefs.WaitFor"}
+  {:arglists (quote ([& {:keys [checkevery checkeveryunit maxwait maxwaitunit timeoutproperty], :as attrs} & nested])), :clj-ant/tag "waitfor", :clj-ant/class "org.apache.tools.ant.taskdefs.WaitFor", :clj-ant/classes ["org.apache.tools.ant.taskdefs.WaitFor"]}
   [& args]
   (clojure.core/apply c/element :waitfor args))
 
@@ -6730,7 +6730,7 @@
   https://ant.apache.org/manual/Tasks/war.html
 
   Defined by: org.apache.tools.ant.taskdefs.War"
-  {:arglists (quote ([& {:keys [basedir casesensitive comment compress createunicodeextrafields defaultexcludes destfile duplicate encoding excludes excludesfile fallbacktoutf8 file filesetmanifest filesonly flattenattributes followsymlinks includes includesfile index indexmetainf jarfile keepcompression level manifest manifestencoding mergeclasspathattributes modificationtime needxmlfile preserve0permissions roundup strict update uselanguageencodingflag warfile webxml whenempty whenmanifestonly zip64mode zipfile], :as attrs} & nested])), :clj-ant/tag "war", :clj-ant/class "org.apache.tools.ant.taskdefs.War"}
+  {:arglists (quote ([& {:keys [basedir casesensitive comment compress createunicodeextrafields defaultexcludes destfile duplicate encoding excludes excludesfile fallbacktoutf8 file filesetmanifest filesonly flattenattributes followsymlinks includes includesfile index indexmetainf jarfile keepcompression level manifest manifestencoding mergeclasspathattributes modificationtime needxmlfile preserve0permissions roundup strict update uselanguageencodingflag warfile webxml whenempty whenmanifestonly zip64mode zipfile], :as attrs} & nested])), :clj-ant/tag "war", :clj-ant/class "org.apache.tools.ant.taskdefs.War", :clj-ant/classes ["org.apache.tools.ant.taskdefs.War"]}
   [& args]
   (clojure.core/apply c/element :war args))
 
@@ -6751,7 +6751,7 @@
   https://ant.apache.org/manual/Tasks/whichresource.html
 
   Defined by: org.apache.tools.ant.taskdefs.WhichResource"
-  {:arglists (quote ([& {:keys [class classpath classpathref property resource], :as attrs} & nested])), :clj-ant/tag "whichresource", :clj-ant/class "org.apache.tools.ant.taskdefs.WhichResource"}
+  {:arglists (quote ([& {:keys [class classpath classpathref property resource], :as attrs} & nested])), :clj-ant/tag "whichresource", :clj-ant/class "org.apache.tools.ant.taskdefs.WhichResource", :clj-ant/classes ["org.apache.tools.ant.taskdefs.WhichResource"]}
   [& args]
   (clojure.core/apply c/element :whichresource args))
 
@@ -6800,7 +6800,7 @@
   https://ant.apache.org/manual/Tasks/wljspc.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.jsp.WLJspc"
-  {:arglists (quote ([& {:keys [casesensitive classpath defaultexcludes dest excludes excludesfile followsymlinks includes includesfile package src], :as attrs} & nested])), :clj-ant/tag "wljspc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.jsp.WLJspc"}
+  {:arglists (quote ([& {:keys [casesensitive classpath defaultexcludes dest excludes excludesfile followsymlinks includes includesfile package src], :as attrs} & nested])), :clj-ant/tag "wljspc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.jsp.WLJspc", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.jsp.WLJspc"]}
   [& args]
   (clojure.core/apply c/element :wljspc args))
 
@@ -6830,7 +6830,7 @@
   https://ant.apache.org/manual/Tasks/xmlproperty.html
 
   Defined by: org.apache.tools.ant.taskdefs.XmlProperty"
-  {:arglists (quote ([& {:keys [collapseattributes delimiter file includesemanticattribute keeproot prefix rootdirectory semanticattributes srcresource validate], :as attrs} & nested])), :clj-ant/tag "xmlproperty", :clj-ant/class "org.apache.tools.ant.taskdefs.XmlProperty"}
+  {:arglists (quote ([& {:keys [collapseattributes delimiter file includesemanticattribute keeproot prefix rootdirectory semanticattributes srcresource validate], :as attrs} & nested])), :clj-ant/tag "xmlproperty", :clj-ant/class "org.apache.tools.ant.taskdefs.XmlProperty", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XmlProperty"]}
   [& args]
   (clojure.core/apply c/element :xmlproperty args))
 
@@ -6872,7 +6872,7 @@
   https://ant.apache.org/manual/Tasks/xmlvalidate.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.XMLValidateTask"
-  {:arglists (quote ([& {:keys [classname classpath classpathref failonerror file lenient warn], :as attrs} & nested])), :clj-ant/tag "xmlvalidate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.XMLValidateTask"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref failonerror file lenient warn], :as attrs} & nested])), :clj-ant/tag "xmlvalidate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.XMLValidateTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.XMLValidateTask"]}
   [& args]
   (clojure.core/apply c/element :xmlvalidate args))
 
@@ -6946,7 +6946,7 @@
   https://ant.apache.org/manual/Tasks/xslt.html
 
   Defined by: org.apache.tools.ant.taskdefs.XSLTProcess"
-  {:arglists (quote ([& {:keys [basedir casesensitive classpath classpathref defaultexcludes destdir excludes excludesfile extension failonerror failonnoresources failontransformationerror filedirparameter filenameparameter followsymlinks force granularity in includes includesfile out processor reloadstylesheet scanincludeddirectories style suppresswarnings useimplicitfileset xslresource], :as attrs} & nested])), :clj-ant/tag "xslt", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess"}
+  {:arglists (quote ([& {:keys [basedir casesensitive classpath classpathref defaultexcludes destdir excludes excludesfile extension failonerror failonnoresources failontransformationerror filedirparameter filenameparameter followsymlinks force granularity in includes includesfile out processor reloadstylesheet scanincludeddirectories style suppresswarnings useimplicitfileset xslresource], :as attrs} & nested])), :clj-ant/tag "xslt", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess"]}
   [& args]
   (clojure.core/apply c/element :xslt args))
 
@@ -7074,7 +7074,7 @@
   https://ant.apache.org/manual/Tasks/zip.html
 
   Defined by: org.apache.tools.ant.taskdefs.Zip"
-  {:arglists (quote ([& {:keys [basedir casesensitive comment compress createunicodeextrafields defaultexcludes destfile duplicate encoding excludes excludesfile fallbacktoutf8 file filesonly followsymlinks includes includesfile keepcompression level modificationtime preserve0permissions roundup update uselanguageencodingflag whenempty zip64mode zipfile], :as attrs} & nested])), :clj-ant/tag "zip", :clj-ant/class "org.apache.tools.ant.taskdefs.Zip"}
+  {:arglists (quote ([& {:keys [basedir casesensitive comment compress createunicodeextrafields defaultexcludes destfile duplicate encoding excludes excludesfile fallbacktoutf8 file filesonly followsymlinks includes includesfile keepcompression level modificationtime preserve0permissions roundup update uselanguageencodingflag whenempty zip64mode zipfile], :as attrs} & nested])), :clj-ant/tag "zip", :clj-ant/class "org.apache.tools.ant.taskdefs.Zip", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Zip"]}
   [& args]
   (clojure.core/apply c/element :zip args))
 
@@ -7089,7 +7089,7 @@
   https://ant.apache.org/manual/Types/allbutfirst.html
 
   Defined by: org.apache.tools.ant.types.resources.AllButFirst"
-  {:arglists (quote ([& {:keys [cache count refid], :as attrs} & nested])), :clj-ant/tag "allbutfirst", :clj-ant/class "org.apache.tools.ant.types.resources.AllButFirst"}
+  {:arglists (quote ([& {:keys [cache count refid], :as attrs} & nested])), :clj-ant/tag "allbutfirst", :clj-ant/class "org.apache.tools.ant.types.resources.AllButFirst", :clj-ant/classes ["org.apache.tools.ant.types.resources.AllButFirst"]}
   [& args]
   (clojure.core/apply c/element :allbutfirst args))
 
@@ -7104,7 +7104,7 @@
   https://ant.apache.org/manual/Types/allbutlast.html
 
   Defined by: org.apache.tools.ant.types.resources.AllButLast"
-  {:arglists (quote ([& {:keys [cache count refid], :as attrs} & nested])), :clj-ant/tag "allbutlast", :clj-ant/class "org.apache.tools.ant.types.resources.AllButLast"}
+  {:arglists (quote ([& {:keys [cache count refid], :as attrs} & nested])), :clj-ant/tag "allbutlast", :clj-ant/class "org.apache.tools.ant.types.resources.AllButLast", :clj-ant/classes ["org.apache.tools.ant.types.resources.AllButLast"]}
   [& args]
   (clojure.core/apply c/element :allbutlast args))
 
@@ -7120,7 +7120,7 @@
   https://ant.apache.org/manual/Types/archives.html
 
   Defined by: org.apache.tools.ant.types.resources.Archives"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "archives", :clj-ant/class "org.apache.tools.ant.types.resources.Archives"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "archives", :clj-ant/class "org.apache.tools.ant.types.resources.Archives", :clj-ant/classes ["org.apache.tools.ant.types.resources.Archives"]}
   [& args]
   (clojure.core/apply c/element :archives args))
 
@@ -7137,7 +7137,7 @@
   https://ant.apache.org/manual/Types/assertions.html
 
   Defined by: org.apache.tools.ant.types.Assertions"
-  {:arglists (quote ([& {:keys [enablesystemassertions refid], :as attrs} & nested])), :clj-ant/tag "assertions", :clj-ant/class "org.apache.tools.ant.types.Assertions"}
+  {:arglists (quote ([& {:keys [enablesystemassertions refid], :as attrs} & nested])), :clj-ant/tag "assertions", :clj-ant/class "org.apache.tools.ant.types.Assertions", :clj-ant/classes ["org.apache.tools.ant.types.Assertions"]}
   [& args]
   (clojure.core/apply c/element :assertions args))
 
@@ -7155,7 +7155,7 @@
   https://ant.apache.org/manual/Types/bzip2resource.html
 
   Defined by: org.apache.tools.ant.types.resources.BZip2Resource"
-  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "bzip2resource", :clj-ant/class "org.apache.tools.ant.types.resources.BZip2Resource"}
+  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "bzip2resource", :clj-ant/class "org.apache.tools.ant.types.resources.BZip2Resource", :clj-ant/classes ["org.apache.tools.ant.types.resources.BZip2Resource"]}
   [& args]
   (clojure.core/apply c/element :bzip2resource args))
 
@@ -7171,7 +7171,7 @@
   https://ant.apache.org/manual/Types/chainedmapper.html
 
   Defined by: org.apache.tools.ant.util.ChainedMapper"
-  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "chainedmapper", :clj-ant/class "org.apache.tools.ant.util.ChainedMapper"}
+  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "chainedmapper", :clj-ant/class "org.apache.tools.ant.util.ChainedMapper", :clj-ant/classes ["org.apache.tools.ant.util.ChainedMapper"]}
   [& args]
   (clojure.core/apply c/element :chainedmapper args))
 
@@ -7230,7 +7230,7 @@
   https://ant.apache.org/manual/Types/classfileset.html
 
   Defined by: org.apache.tools.ant.types.optional.depend.ClassfileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid rootclass], :as attrs} & nested])), :clj-ant/tag "classfileset", :clj-ant/class "org.apache.tools.ant.types.optional.depend.ClassfileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid rootclass], :as attrs} & nested])), :clj-ant/tag "classfileset", :clj-ant/class "org.apache.tools.ant.types.optional.depend.ClassfileSet", :clj-ant/classes ["org.apache.tools.ant.types.optional.depend.ClassfileSet"]}
   [& args]
   (clojure.core/apply c/element :classfileset args))
 
@@ -7246,7 +7246,7 @@
   https://ant.apache.org/manual/Types/compositemapper.html
 
   Defined by: org.apache.tools.ant.util.CompositeMapper"
-  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "compositemapper", :clj-ant/class "org.apache.tools.ant.util.CompositeMapper"}
+  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "compositemapper", :clj-ant/class "org.apache.tools.ant.util.CompositeMapper", :clj-ant/classes ["org.apache.tools.ant.util.CompositeMapper"]}
   [& args]
   (clojure.core/apply c/element :compositemapper args))
 
@@ -7260,7 +7260,7 @@
   https://ant.apache.org/manual/Types/concatfilter.html
 
   Defined by: org.apache.tools.ant.filters.ConcatFilter"
-  {:arglists (quote ([& {:keys [append prepend], :as attrs} & nested])), :clj-ant/tag "concatfilter", :clj-ant/class "org.apache.tools.ant.filters.ConcatFilter"}
+  {:arglists (quote ([& {:keys [append prepend], :as attrs} & nested])), :clj-ant/tag "concatfilter", :clj-ant/class "org.apache.tools.ant.filters.ConcatFilter", :clj-ant/classes ["org.apache.tools.ant.filters.ConcatFilter"]}
   [& args]
   (clojure.core/apply c/element :concatfilter args))
 
@@ -7275,7 +7275,7 @@
   https://ant.apache.org/manual/Types/cutdirsmapper.html
 
   Defined by: org.apache.tools.ant.types.mappers.CutDirsMapper"
-  {:arglists (quote ([& {:keys [dirs from to], :as attrs} & nested])), :clj-ant/tag "cutdirsmapper", :clj-ant/class "org.apache.tools.ant.types.mappers.CutDirsMapper"}
+  {:arglists (quote ([& {:keys [dirs from to], :as attrs} & nested])), :clj-ant/tag "cutdirsmapper", :clj-ant/class "org.apache.tools.ant.types.mappers.CutDirsMapper", :clj-ant/classes ["org.apache.tools.ant.types.mappers.CutDirsMapper"]}
   [& args]
   (clojure.core/apply c/element :cutdirsmapper args))
 
@@ -7290,7 +7290,7 @@
   https://ant.apache.org/manual/Types/description.html
 
   Defined by: org.apache.tools.ant.types.Description"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "description", :clj-ant/class "org.apache.tools.ant.types.Description"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "description", :clj-ant/class "org.apache.tools.ant.types.Description", :clj-ant/classes ["org.apache.tools.ant.types.Description"]}
   [& args]
   (clojure.core/apply c/element :description args))
 
@@ -7304,7 +7304,7 @@
   https://ant.apache.org/manual/Types/difference.html
 
   Defined by: org.apache.tools.ant.types.resources.Difference"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "difference", :clj-ant/class "org.apache.tools.ant.types.resources.Difference"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "difference", :clj-ant/class "org.apache.tools.ant.types.resources.Difference", :clj-ant/classes ["org.apache.tools.ant.types.resources.Difference"]}
   [& args]
   (clojure.core/apply c/element :difference args))
 
@@ -7360,7 +7360,7 @@
   https://ant.apache.org/manual/Types/dirset.html
 
   Defined by: org.apache.tools.ant.types.DirSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "dirset", :clj-ant/class "org.apache.tools.ant.types.DirSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "dirset", :clj-ant/class "org.apache.tools.ant.types.DirSet", :clj-ant/classes ["org.apache.tools.ant.types.DirSet"]}
   [& args]
   (clojure.core/apply c/element :dirset args))
 
@@ -7380,7 +7380,7 @@
   https://ant.apache.org/manual/Types/extension.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.ExtensionAdapter"
-  {:arglists (quote ([& {:keys [extensionname implementationurl implementationvendor implementationvendorid implementationversion refid specificationvendor specificationversion], :as attrs} & nested])), :clj-ant/tag "extension", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionAdapter"}
+  {:arglists (quote ([& {:keys [extensionname implementationurl implementationvendor implementationvendorid implementationversion refid specificationvendor specificationversion], :as attrs} & nested])), :clj-ant/tag "extension", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionAdapter", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.ExtensionAdapter"]}
   [& args]
   (clojure.core/apply c/element :extension args))
 
@@ -7397,7 +7397,7 @@
   https://ant.apache.org/manual/Types/extensionSet.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "extensionSet", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "extensionSet", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"]}
   [& args]
   (clojure.core/apply c/element :extensionSet args))
 
@@ -7417,7 +7417,7 @@
   https://ant.apache.org/manual/Types/file.html
 
   Defined by: org.apache.tools.ant.types.resources.FileResource"
-  {:arglists (quote ([& {:keys [basedir directory exists file lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "file", :clj-ant/class "org.apache.tools.ant.types.resources.FileResource"}
+  {:arglists (quote ([& {:keys [basedir directory exists file lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "file", :clj-ant/class "org.apache.tools.ant.types.resources.FileResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.FileResource"]}
   [& args]
   (clojure.core/apply c/element :file args))
 
@@ -7434,7 +7434,7 @@
   https://ant.apache.org/manual/Types/filelist.html
 
   Defined by: org.apache.tools.ant.types.FileList"
-  {:arglists (quote ([& {:keys [dir files refid], :as attrs} & nested])), :clj-ant/tag "filelist", :clj-ant/class "org.apache.tools.ant.types.FileList"}
+  {:arglists (quote ([& {:keys [dir files refid], :as attrs} & nested])), :clj-ant/tag "filelist", :clj-ant/class "org.apache.tools.ant.types.FileList", :clj-ant/classes ["org.apache.tools.ant.types.FileList"]}
   [& args]
   (clojure.core/apply c/element :filelist args))
 
@@ -7486,7 +7486,7 @@
   https://ant.apache.org/manual/Types/files.html
 
   Defined by: org.apache.tools.ant.types.resources.Files"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes excludes excludesfile followsymlinks includes includesfile refid], :as attrs} & nested])), :clj-ant/tag "files", :clj-ant/class "org.apache.tools.ant.types.resources.Files"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes excludes excludesfile followsymlinks includes includesfile refid], :as attrs} & nested])), :clj-ant/tag "files", :clj-ant/class "org.apache.tools.ant.types.resources.Files", :clj-ant/classes ["org.apache.tools.ant.types.resources.Files"]}
   [& args]
   (clojure.core/apply c/element :files args))
 
@@ -7542,7 +7542,7 @@
   https://ant.apache.org/manual/Types/fileset.html
 
   Defined by: org.apache.tools.ant.types.FileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "fileset", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "fileset", :clj-ant/class "org.apache.tools.ant.types.FileSet", :clj-ant/classes ["org.apache.tools.ant.types.FileSet"]}
   [& args]
   (clojure.core/apply c/element :fileset args))
 
@@ -7553,7 +7553,7 @@
   https://ant.apache.org/manual/Types/filetokenizer.html
 
   Defined by: org.apache.tools.ant.util.FileTokenizer"
-  {:arglists (quote ([& nested])), :clj-ant/tag "filetokenizer", :clj-ant/class "org.apache.tools.ant.util.FileTokenizer"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "filetokenizer", :clj-ant/class "org.apache.tools.ant.util.FileTokenizer", :clj-ant/classes ["org.apache.tools.ant.util.FileTokenizer"]}
   [& args]
   (clojure.core/apply c/element :filetokenizer args))
 
@@ -7589,7 +7589,7 @@
   https://ant.apache.org/manual/Types/filterchain.html
 
   Defined by: org.apache.tools.ant.types.FilterChain"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "filterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "filterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain", :clj-ant/classes ["org.apache.tools.ant.types.FilterChain"]}
   [& args]
   (clojure.core/apply c/element :filterchain args))
 
@@ -7627,7 +7627,7 @@
   https://ant.apache.org/manual/Types/filtermapper.html
 
   Defined by: org.apache.tools.ant.types.mappers.FilterMapper"
-  {:arglists (quote ([& {:keys [from refid to], :as attrs} & nested])), :clj-ant/tag "filtermapper", :clj-ant/class "org.apache.tools.ant.types.mappers.FilterMapper"}
+  {:arglists (quote ([& {:keys [from refid to], :as attrs} & nested])), :clj-ant/tag "filtermapper", :clj-ant/class "org.apache.tools.ant.types.mappers.FilterMapper", :clj-ant/classes ["org.apache.tools.ant.types.mappers.FilterMapper"]}
   [& args]
   (clojure.core/apply c/element :filtermapper args))
 
@@ -7646,7 +7646,7 @@
   https://ant.apache.org/manual/Types/filterreader.html
 
   Defined by: org.apache.tools.ant.types.AntFilterReader"
-  {:arglists (quote ([& {:keys [classname classpath classpathref refid], :as attrs} & nested])), :clj-ant/tag "filterreader", :clj-ant/class "org.apache.tools.ant.types.AntFilterReader"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref refid], :as attrs} & nested])), :clj-ant/tag "filterreader", :clj-ant/class "org.apache.tools.ant.types.AntFilterReader", :clj-ant/classes ["org.apache.tools.ant.types.AntFilterReader"]}
   [& args]
   (clojure.core/apply c/element :filterreader args))
 
@@ -7669,7 +7669,7 @@
   https://ant.apache.org/manual/Types/filterset.html
 
   Defined by: org.apache.tools.ant.types.FilterSet"
-  {:arglists (quote ([& {:keys [begintoken endtoken filtersfile onmissingfiltersfile recurse refid], :as attrs} & nested])), :clj-ant/tag "filterset", :clj-ant/class "org.apache.tools.ant.types.FilterSet"}
+  {:arglists (quote ([& {:keys [begintoken endtoken filtersfile onmissingfiltersfile recurse refid], :as attrs} & nested])), :clj-ant/tag "filterset", :clj-ant/class "org.apache.tools.ant.types.FilterSet", :clj-ant/classes ["org.apache.tools.ant.types.FilterSet"]}
   [& args]
   (clojure.core/apply c/element :filterset args))
 
@@ -7684,7 +7684,7 @@
   https://ant.apache.org/manual/Types/first.html
 
   Defined by: org.apache.tools.ant.types.resources.First"
-  {:arglists (quote ([& {:keys [cache count refid], :as attrs} & nested])), :clj-ant/tag "first", :clj-ant/class "org.apache.tools.ant.types.resources.First"}
+  {:arglists (quote ([& {:keys [cache count refid], :as attrs} & nested])), :clj-ant/tag "first", :clj-ant/class "org.apache.tools.ant.types.resources.First", :clj-ant/classes ["org.apache.tools.ant.types.resources.First"]}
   [& args]
   (clojure.core/apply c/element :first args))
 
@@ -7700,7 +7700,7 @@
   https://ant.apache.org/manual/Types/firstmatchmapper.html
 
   Defined by: org.apache.tools.ant.util.FirstMatchMapper"
-  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "firstmatchmapper", :clj-ant/class "org.apache.tools.ant.util.FirstMatchMapper"}
+  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "firstmatchmapper", :clj-ant/class "org.apache.tools.ant.util.FirstMatchMapper", :clj-ant/classes ["org.apache.tools.ant.util.FirstMatchMapper"]}
   [& args]
   (clojure.core/apply c/element :firstmatchmapper args))
 
@@ -7714,7 +7714,7 @@
   https://ant.apache.org/manual/Types/flattenmapper.html
 
   Defined by: org.apache.tools.ant.util.FlatFileNameMapper"
-  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "flattenmapper", :clj-ant/class "org.apache.tools.ant.util.FlatFileNameMapper"}
+  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "flattenmapper", :clj-ant/class "org.apache.tools.ant.util.FlatFileNameMapper", :clj-ant/classes ["org.apache.tools.ant.util.FlatFileNameMapper"]}
   [& args]
   (clojure.core/apply c/element :flattenmapper args))
 
@@ -7730,7 +7730,7 @@
   https://ant.apache.org/manual/Types/globmapper.html
 
   Defined by: org.apache.tools.ant.util.GlobPatternMapper"
-  {:arglists (quote ([& {:keys [casesensitive from handledirsep to], :as attrs} & nested])), :clj-ant/tag "globmapper", :clj-ant/class "org.apache.tools.ant.util.GlobPatternMapper"}
+  {:arglists (quote ([& {:keys [casesensitive from handledirsep to], :as attrs} & nested])), :clj-ant/tag "globmapper", :clj-ant/class "org.apache.tools.ant.util.GlobPatternMapper", :clj-ant/classes ["org.apache.tools.ant.util.GlobPatternMapper"]}
   [& args]
   (clojure.core/apply c/element :globmapper args))
 
@@ -7748,7 +7748,7 @@
   https://ant.apache.org/manual/Types/gzipresource.html
 
   Defined by: org.apache.tools.ant.types.resources.GZipResource"
-  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "gzipresource", :clj-ant/class "org.apache.tools.ant.types.resources.GZipResource"}
+  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "gzipresource", :clj-ant/class "org.apache.tools.ant.types.resources.GZipResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.GZipResource"]}
   [& args]
   (clojure.core/apply c/element :gzipresource args))
 
@@ -7762,7 +7762,7 @@
   https://ant.apache.org/manual/Types/identitymapper.html
 
   Defined by: org.apache.tools.ant.util.IdentityMapper"
-  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "identitymapper", :clj-ant/class "org.apache.tools.ant.util.IdentityMapper"}
+  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "identitymapper", :clj-ant/class "org.apache.tools.ant.util.IdentityMapper", :clj-ant/classes ["org.apache.tools.ant.util.IdentityMapper"]}
   [& args]
   (clojure.core/apply c/element :identitymapper args))
 
@@ -7776,7 +7776,7 @@
   https://ant.apache.org/manual/Types/intersect.html
 
   Defined by: org.apache.tools.ant.types.resources.Intersect"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "intersect", :clj-ant/class "org.apache.tools.ant.types.resources.Intersect"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "intersect", :clj-ant/class "org.apache.tools.ant.types.resources.Intersect", :clj-ant/classes ["org.apache.tools.ant.types.resources.Intersect"]}
   [& args]
   (clojure.core/apply c/element :intersect args))
 
@@ -7818,7 +7818,7 @@
   https://ant.apache.org/manual/Types/isfileselected.html
 
   Defined by: org.apache.tools.ant.taskdefs.condition.IsFileSelected"
-  {:arglists (quote ([& {:keys [basedir file refid], :as attrs} & nested])), :clj-ant/tag "isfileselected", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsFileSelected"}
+  {:arglists (quote ([& {:keys [basedir file refid], :as attrs} & nested])), :clj-ant/tag "isfileselected", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsFileSelected", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.IsFileSelected"]}
   [& args]
   (clojure.core/apply c/element :isfileselected args))
 
@@ -7842,7 +7842,7 @@
   https://ant.apache.org/manual/Types/javaconstant.html
 
   Defined by: org.apache.tools.ant.types.resources.JavaConstantResource"
-  {:arglists (quote ([& {:keys [classpath classpathref directory exists lastmodified loaderref name parentfirst refid size], :as attrs} & nested])), :clj-ant/tag "javaconstant", :clj-ant/class "org.apache.tools.ant.types.resources.JavaConstantResource"}
+  {:arglists (quote ([& {:keys [classpath classpathref directory exists lastmodified loaderref name parentfirst refid size], :as attrs} & nested])), :clj-ant/tag "javaconstant", :clj-ant/class "org.apache.tools.ant.types.resources.JavaConstantResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.JavaConstantResource"]}
   [& args]
   (clojure.core/apply c/element :javaconstant args))
 
@@ -7866,7 +7866,7 @@
   https://ant.apache.org/manual/Types/javaresource.html
 
   Defined by: org.apache.tools.ant.types.resources.JavaResource"
-  {:arglists (quote ([& {:keys [classpath classpathref directory exists lastmodified loaderref name parentfirst refid size], :as attrs} & nested])), :clj-ant/tag "javaresource", :clj-ant/class "org.apache.tools.ant.types.resources.JavaResource"}
+  {:arglists (quote ([& {:keys [classpath classpathref directory exists lastmodified loaderref name parentfirst refid size], :as attrs} & nested])), :clj-ant/tag "javaresource", :clj-ant/class "org.apache.tools.ant.types.resources.JavaResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.JavaResource"]}
   [& args]
   (clojure.core/apply c/element :javaresource args))
 
@@ -7881,7 +7881,7 @@
   https://ant.apache.org/manual/Types/last.html
 
   Defined by: org.apache.tools.ant.types.resources.Last"
-  {:arglists (quote ([& {:keys [cache count refid], :as attrs} & nested])), :clj-ant/tag "last", :clj-ant/class "org.apache.tools.ant.types.resources.Last"}
+  {:arglists (quote ([& {:keys [cache count refid], :as attrs} & nested])), :clj-ant/tag "last", :clj-ant/class "org.apache.tools.ant.types.resources.Last", :clj-ant/classes ["org.apache.tools.ant.types.resources.Last"]}
   [& args]
   (clojure.core/apply c/element :last args))
 
@@ -7940,7 +7940,7 @@
   https://ant.apache.org/manual/Types/libfileset.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.LibFileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includeimpl includes includesfile includeurl maxlevelsofsymlinks refid urlbase], :as attrs} & nested])), :clj-ant/tag "libfileset", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.LibFileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includeimpl includes includesfile includeurl maxlevelsofsymlinks refid urlbase], :as attrs} & nested])), :clj-ant/tag "libfileset", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.LibFileSet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.LibFileSet"]}
   [& args]
   (clojure.core/apply c/element :libfileset args))
 
@@ -7953,7 +7953,7 @@
   https://ant.apache.org/manual/Types/linetokenizer.html
 
   Defined by: org.apache.tools.ant.util.LineTokenizer"
-  {:arglists (quote ([& {:keys [includedelims], :as attrs} & nested])), :clj-ant/tag "linetokenizer", :clj-ant/class "org.apache.tools.ant.util.LineTokenizer"}
+  {:arglists (quote ([& {:keys [includedelims], :as attrs} & nested])), :clj-ant/tag "linetokenizer", :clj-ant/class "org.apache.tools.ant.util.LineTokenizer", :clj-ant/classes ["org.apache.tools.ant.util.LineTokenizer"]}
   [& args]
   (clojure.core/apply c/element :linetokenizer args))
 
@@ -7970,7 +7970,7 @@
   https://ant.apache.org/manual/Types/mappedresources.html
 
   Defined by: org.apache.tools.ant.types.resources.MappedResourceCollection"
-  {:arglists (quote ([& {:keys [cache enablemultiplemappings refid], :as attrs} & nested])), :clj-ant/tag "mappedresources", :clj-ant/class "org.apache.tools.ant.types.resources.MappedResourceCollection"}
+  {:arglists (quote ([& {:keys [cache enablemultiplemappings refid], :as attrs} & nested])), :clj-ant/tag "mappedresources", :clj-ant/class "org.apache.tools.ant.types.resources.MappedResourceCollection", :clj-ant/classes ["org.apache.tools.ant.types.resources.MappedResourceCollection"]}
   [& args]
   (clojure.core/apply c/element :mappedresources args))
 
@@ -7992,7 +7992,7 @@
   https://ant.apache.org/manual/Types/mapper.html
 
   Defined by: org.apache.tools.ant.types.Mapper"
-  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "mapper", :clj-ant/class "org.apache.tools.ant.types.Mapper"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "mapper", :clj-ant/class "org.apache.tools.ant.types.Mapper", :clj-ant/classes ["org.apache.tools.ant.types.Mapper"]}
   [& args]
   (clojure.core/apply c/element :mapper args))
 
@@ -8006,7 +8006,7 @@
   https://ant.apache.org/manual/Types/mergemapper.html
 
   Defined by: org.apache.tools.ant.util.MergingMapper"
-  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "mergemapper", :clj-ant/class "org.apache.tools.ant.util.MergingMapper"}
+  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "mergemapper", :clj-ant/class "org.apache.tools.ant.util.MergingMapper", :clj-ant/classes ["org.apache.tools.ant.util.MergingMapper"]}
   [& args]
   (clojure.core/apply c/element :mergemapper args))
 
@@ -8066,7 +8066,7 @@
   https://ant.apache.org/manual/Types/multirootfileset.html
 
   Defined by: org.apache.tools.ant.types.resources.MultiRootFileSet"
-  {:arglists (quote ([& {:keys [basedirs cache casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid type], :as attrs} & nested])), :clj-ant/tag "multirootfileset", :clj-ant/class "org.apache.tools.ant.types.resources.MultiRootFileSet"}
+  {:arglists (quote ([& {:keys [basedirs cache casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid type], :as attrs} & nested])), :clj-ant/tag "multirootfileset", :clj-ant/class "org.apache.tools.ant.types.resources.MultiRootFileSet", :clj-ant/classes ["org.apache.tools.ant.types.resources.MultiRootFileSet"]}
   [& args]
   (clojure.core/apply c/element :multirootfileset args))
 
@@ -8082,7 +8082,7 @@
   https://ant.apache.org/manual/Types/packagemapper.html
 
   Defined by: org.apache.tools.ant.util.PackageNameMapper"
-  {:arglists (quote ([& {:keys [casesensitive from handledirsep to], :as attrs} & nested])), :clj-ant/tag "packagemapper", :clj-ant/class "org.apache.tools.ant.util.PackageNameMapper"}
+  {:arglists (quote ([& {:keys [casesensitive from handledirsep to], :as attrs} & nested])), :clj-ant/tag "packagemapper", :clj-ant/class "org.apache.tools.ant.util.PackageNameMapper", :clj-ant/classes ["org.apache.tools.ant.util.PackageNameMapper"]}
   [& args]
   (clojure.core/apply c/element :packagemapper args))
 
@@ -8105,7 +8105,7 @@
   https://ant.apache.org/manual/Types/path.html
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "path", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "path", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :path args))
 
@@ -8129,7 +8129,7 @@
   https://ant.apache.org/manual/Types/patternset.html
 
   Defined by: org.apache.tools.ant.types.PatternSet"
-  {:arglists (quote ([& {:keys [excludes excludesfile includes includesfile refid], :as attrs} & nested])), :clj-ant/tag "patternset", :clj-ant/class "org.apache.tools.ant.types.PatternSet"}
+  {:arglists (quote ([& {:keys [excludes excludesfile includes includesfile refid], :as attrs} & nested])), :clj-ant/tag "patternset", :clj-ant/class "org.apache.tools.ant.types.PatternSet", :clj-ant/classes ["org.apache.tools.ant.types.PatternSet"]}
   [& args]
   (clojure.core/apply c/element :patternset args))
 
@@ -8147,7 +8147,7 @@
   https://ant.apache.org/manual/Types/propertyresource.html
 
   Defined by: org.apache.tools.ant.types.resources.PropertyResource"
-  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "propertyresource", :clj-ant/class "org.apache.tools.ant.types.resources.PropertyResource"}
+  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "propertyresource", :clj-ant/class "org.apache.tools.ant.types.resources.PropertyResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.PropertyResource"]}
   [& args]
   (clojure.core/apply c/element :propertyresource args))
 
@@ -8166,7 +8166,7 @@
   https://ant.apache.org/manual/Types/propertyset.html
 
   Defined by: org.apache.tools.ant.types.PropertySet"
-  {:arglists (quote ([& {:keys [dynamic negate refid], :as attrs} & nested])), :clj-ant/tag "propertyset", :clj-ant/class "org.apache.tools.ant.types.PropertySet"}
+  {:arglists (quote ([& {:keys [dynamic negate refid], :as attrs} & nested])), :clj-ant/tag "propertyset", :clj-ant/class "org.apache.tools.ant.types.PropertySet", :clj-ant/classes ["org.apache.tools.ant.types.PropertySet"]}
   [& args]
   (clojure.core/apply c/element :propertyset args))
 
@@ -8201,7 +8201,7 @@
   https://ant.apache.org/manual/Types/redirector.html
 
   Defined by: org.apache.tools.ant.types.RedirectorElement"
-  {:arglists (quote ([& {:keys [alwayslog append binaryoutput createemptyfiles error errorencoding errorproperty input inputencoding inputstring logerror loginputstring output outputencoding outputproperty refid], :as attrs} & nested])), :clj-ant/tag "redirector", :clj-ant/class "org.apache.tools.ant.types.RedirectorElement"}
+  {:arglists (quote ([& {:keys [alwayslog append binaryoutput createemptyfiles error errorencoding errorproperty input inputencoding inputstring logerror loginputstring output outputencoding outputproperty refid], :as attrs} & nested])), :clj-ant/tag "redirector", :clj-ant/class "org.apache.tools.ant.types.RedirectorElement", :clj-ant/classes ["org.apache.tools.ant.types.RedirectorElement"]}
   [& args]
   (clojure.core/apply c/element :redirector args))
 
@@ -8215,7 +8215,7 @@
   https://ant.apache.org/manual/Types/regexp.html
 
   Defined by: org.apache.tools.ant.types.RegularExpression"
-  {:arglists (quote ([& {:keys [pattern refid], :as attrs} & nested])), :clj-ant/tag "regexp", :clj-ant/class "org.apache.tools.ant.types.RegularExpression"}
+  {:arglists (quote ([& {:keys [pattern refid], :as attrs} & nested])), :clj-ant/tag "regexp", :clj-ant/class "org.apache.tools.ant.types.RegularExpression", :clj-ant/classes ["org.apache.tools.ant.types.RegularExpression"]}
   [& args]
   (clojure.core/apply c/element :regexp args))
 
@@ -8231,7 +8231,7 @@
   https://ant.apache.org/manual/Types/regexpmapper.html
 
   Defined by: org.apache.tools.ant.util.RegexpPatternMapper"
-  {:arglists (quote ([& {:keys [casesensitive from handledirsep to], :as attrs} & nested])), :clj-ant/tag "regexpmapper", :clj-ant/class "org.apache.tools.ant.util.RegexpPatternMapper"}
+  {:arglists (quote ([& {:keys [casesensitive from handledirsep to], :as attrs} & nested])), :clj-ant/tag "regexpmapper", :clj-ant/class "org.apache.tools.ant.util.RegexpPatternMapper", :clj-ant/classes ["org.apache.tools.ant.util.RegexpPatternMapper"]}
   [& args]
   (clojure.core/apply c/element :regexpmapper args))
 
@@ -8249,7 +8249,7 @@
   https://ant.apache.org/manual/Types/resource.html
 
   Defined by: org.apache.tools.ant.types.Resource"
-  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "resource", :clj-ant/class "org.apache.tools.ant.types.Resource"}
+  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "resource", :clj-ant/class "org.apache.tools.ant.types.Resource", :clj-ant/classes ["org.apache.tools.ant.types.Resource"]}
   [& args]
   (clojure.core/apply c/element :resource args))
 
@@ -8267,7 +8267,7 @@
   https://ant.apache.org/manual/Types/resourcelist.html
 
   Defined by: org.apache.tools.ant.types.resources.ResourceList"
-  {:arglists (quote ([& {:keys [basedir encoding preserveduplicates refid], :as attrs} & nested])), :clj-ant/tag "resourcelist", :clj-ant/class "org.apache.tools.ant.types.resources.ResourceList"}
+  {:arglists (quote ([& {:keys [basedir encoding preserveduplicates refid], :as attrs} & nested])), :clj-ant/tag "resourcelist", :clj-ant/class "org.apache.tools.ant.types.resources.ResourceList", :clj-ant/classes ["org.apache.tools.ant.types.resources.ResourceList"]}
   [& args]
   (clojure.core/apply c/element :resourcelist args))
 
@@ -8281,7 +8281,7 @@
   https://ant.apache.org/manual/Types/resources.html
 
   Defined by: org.apache.tools.ant.types.resources.Resources"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "resources", :clj-ant/class "org.apache.tools.ant.types.resources.Resources"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "resources", :clj-ant/class "org.apache.tools.ant.types.resources.Resources", :clj-ant/classes ["org.apache.tools.ant.types.resources.Resources"]}
   [& args]
   (clojure.core/apply c/element :resources args))
 
@@ -8295,7 +8295,7 @@
   https://ant.apache.org/manual/Types/restrict.html
 
   Defined by: org.apache.tools.ant.types.resources.Restrict"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "restrict", :clj-ant/class "org.apache.tools.ant.types.resources.Restrict"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "restrict", :clj-ant/class "org.apache.tools.ant.types.resources.Restrict", :clj-ant/classes ["org.apache.tools.ant.types.resources.Restrict"]}
   [& args]
   (clojure.core/apply c/element :restrict args))
 
@@ -8318,7 +8318,7 @@
   https://ant.apache.org/manual/Types/scriptcondition.html
 
   Defined by: org.apache.tools.ant.types.optional.ScriptCondition"
-  {:arglists (quote ([& {:keys [classpath classpathref encoding language manager setbeans src value], :as attrs} & nested])), :clj-ant/tag "scriptcondition", :clj-ant/class "org.apache.tools.ant.types.optional.ScriptCondition"}
+  {:arglists (quote ([& {:keys [classpath classpathref encoding language manager setbeans src value], :as attrs} & nested])), :clj-ant/tag "scriptcondition", :clj-ant/class "org.apache.tools.ant.types.optional.ScriptCondition", :clj-ant/classes ["org.apache.tools.ant.types.optional.ScriptCondition"]}
   [& args]
   (clojure.core/apply c/element :scriptcondition args))
 
@@ -8342,7 +8342,7 @@
   https://ant.apache.org/manual/Types/scriptfilter.html
 
   Defined by: org.apache.tools.ant.types.optional.ScriptFilter"
-  {:arglists (quote ([& {:keys [byline classpath classpathref encoding language manager setbeans src token], :as attrs} & nested])), :clj-ant/tag "scriptfilter", :clj-ant/class "org.apache.tools.ant.types.optional.ScriptFilter"}
+  {:arglists (quote ([& {:keys [byline classpath classpathref encoding language manager setbeans src token], :as attrs} & nested])), :clj-ant/tag "scriptfilter", :clj-ant/class "org.apache.tools.ant.types.optional.ScriptFilter", :clj-ant/classes ["org.apache.tools.ant.types.optional.ScriptFilter"]}
   [& args]
   (clojure.core/apply c/element :scriptfilter args))
 
@@ -8366,7 +8366,7 @@
   https://ant.apache.org/manual/Types/scriptmapper.html
 
   Defined by: org.apache.tools.ant.types.optional.ScriptMapper"
-  {:arglists (quote ([& {:keys [classpath classpathref encoding from language manager setbeans src to], :as attrs} & nested])), :clj-ant/tag "scriptmapper", :clj-ant/class "org.apache.tools.ant.types.optional.ScriptMapper"}
+  {:arglists (quote ([& {:keys [classpath classpathref encoding from language manager setbeans src to], :as attrs} & nested])), :clj-ant/tag "scriptmapper", :clj-ant/class "org.apache.tools.ant.types.optional.ScriptMapper", :clj-ant/classes ["org.apache.tools.ant.types.optional.ScriptMapper"]}
   [& args]
   (clojure.core/apply c/element :scriptmapper args))
 
@@ -8391,7 +8391,7 @@
   https://ant.apache.org/manual/Types/scriptselector.html
 
   Defined by: org.apache.tools.ant.types.optional.ScriptSelector"
-  {:arglists (quote ([& {:keys [classpath classpathref encoding error language manager refid selected setbeans src], :as attrs} & nested])), :clj-ant/tag "scriptselector", :clj-ant/class "org.apache.tools.ant.types.optional.ScriptSelector"}
+  {:arglists (quote ([& {:keys [classpath classpathref encoding error language manager refid selected setbeans src], :as attrs} & nested])), :clj-ant/tag "scriptselector", :clj-ant/class "org.apache.tools.ant.types.optional.ScriptSelector", :clj-ant/classes ["org.apache.tools.ant.types.optional.ScriptSelector"]}
   [& args]
   (clojure.core/apply c/element :scriptselector args))
 
@@ -8434,7 +8434,7 @@
   https://ant.apache.org/manual/Types/selector.html
 
   Defined by: org.apache.tools.ant.types.selectors.SelectSelector"
-  {:arglists (quote ([& {:keys [error if refid unless], :as attrs} & nested])), :clj-ant/tag "selector", :clj-ant/class "org.apache.tools.ant.types.selectors.SelectSelector"}
+  {:arglists (quote ([& {:keys [error if refid unless], :as attrs} & nested])), :clj-ant/tag "selector", :clj-ant/class "org.apache.tools.ant.types.selectors.SelectSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.SelectSelector"]}
   [& args]
   (clojure.core/apply c/element :selector args))
 
@@ -8448,7 +8448,7 @@
   https://ant.apache.org/manual/Types/signedselector.html
 
   Defined by: org.apache.tools.ant.types.selectors.SignedSelector"
-  {:arglists (quote ([& {:keys [name refid], :as attrs} & nested])), :clj-ant/tag "signedselector", :clj-ant/class "org.apache.tools.ant.types.selectors.SignedSelector"}
+  {:arglists (quote ([& {:keys [name refid], :as attrs} & nested])), :clj-ant/tag "signedselector", :clj-ant/class "org.apache.tools.ant.types.selectors.SignedSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.SignedSelector"]}
   [& args]
   (clojure.core/apply c/element :signedselector args))
 
@@ -8462,7 +8462,7 @@
   https://ant.apache.org/manual/Types/sort.html
 
   Defined by: org.apache.tools.ant.types.resources.Sort"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "sort", :clj-ant/class "org.apache.tools.ant.types.resources.Sort"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "sort", :clj-ant/class "org.apache.tools.ant.types.resources.Sort", :clj-ant/classes ["org.apache.tools.ant.types.resources.Sort"]}
   [& args]
   (clojure.core/apply c/element :sort args))
 
@@ -8483,7 +8483,7 @@
   https://ant.apache.org/manual/Types/string.html
 
   Defined by: org.apache.tools.ant.types.resources.StringResource"
-  {:arglists (quote ([& {:keys [directory encoding exists lastmodified name refid size value], :as attrs} & nested])), :clj-ant/tag "string", :clj-ant/class "org.apache.tools.ant.types.resources.StringResource"}
+  {:arglists (quote ([& {:keys [directory encoding exists lastmodified name refid size value], :as attrs} & nested])), :clj-ant/tag "string", :clj-ant/class "org.apache.tools.ant.types.resources.StringResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.StringResource"]}
   [& args]
   (clojure.core/apply c/element :string args))
 
@@ -8499,7 +8499,7 @@
   https://ant.apache.org/manual/Types/stringtokenizer.html
 
   Defined by: org.apache.tools.ant.util.StringTokenizer"
-  {:arglists (quote ([& {:keys [delims delimsaretokens includedelims suppressdelims], :as attrs} & nested])), :clj-ant/tag "stringtokenizer", :clj-ant/class "org.apache.tools.ant.util.StringTokenizer"}
+  {:arglists (quote ([& {:keys [delims delimsaretokens includedelims suppressdelims], :as attrs} & nested])), :clj-ant/tag "stringtokenizer", :clj-ant/class "org.apache.tools.ant.util.StringTokenizer", :clj-ant/classes ["org.apache.tools.ant.util.StringTokenizer"]}
   [& args]
   (clojure.core/apply c/element :stringtokenizer args))
 
@@ -8513,7 +8513,7 @@
   https://ant.apache.org/manual/Types/substitution.html
 
   Defined by: org.apache.tools.ant.types.Substitution"
-  {:arglists (quote ([& {:keys [expression refid], :as attrs} & nested])), :clj-ant/tag "substitution", :clj-ant/class "org.apache.tools.ant.types.Substitution"}
+  {:arglists (quote ([& {:keys [expression refid], :as attrs} & nested])), :clj-ant/tag "substitution", :clj-ant/class "org.apache.tools.ant.types.Substitution", :clj-ant/classes ["org.apache.tools.ant.types.Substitution"]}
   [& args]
   (clojure.core/apply c/element :substitution args))
 
@@ -8533,7 +8533,7 @@
   https://ant.apache.org/manual/Types/tarentry.html
 
   Defined by: org.apache.tools.ant.types.resources.TarResource"
-  {:arglists (quote ([& {:keys [archive directory exists lastmodified mode name refid size], :as attrs} & nested])), :clj-ant/tag "tarentry", :clj-ant/class "org.apache.tools.ant.types.resources.TarResource"}
+  {:arglists (quote ([& {:keys [archive directory exists lastmodified mode name refid size], :as attrs} & nested])), :clj-ant/tag "tarentry", :clj-ant/class "org.apache.tools.ant.types.resources.TarResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.TarResource"]}
   [& args]
   (clojure.core/apply c/element :tarentry args))
 
@@ -8601,7 +8601,7 @@
   https://ant.apache.org/manual/Types/tarfileset.html
 
   Defined by: org.apache.tools.ant.types.TarFileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath gid group includes includesfile maxlevelsofsymlinks prefix refid src srcresource uid username], :as attrs} & nested])), :clj-ant/tag "tarfileset", :clj-ant/class "org.apache.tools.ant.types.TarFileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath gid group includes includesfile maxlevelsofsymlinks prefix refid src srcresource uid username], :as attrs} & nested])), :clj-ant/tag "tarfileset", :clj-ant/class "org.apache.tools.ant.types.TarFileSet", :clj-ant/classes ["org.apache.tools.ant.types.TarFileSet"]}
   [& args]
   (clojure.core/apply c/element :tarfileset args))
 
@@ -8616,7 +8616,7 @@
   https://ant.apache.org/manual/Types/tokens.html
 
   Defined by: org.apache.tools.ant.types.resources.Tokens"
-  {:arglists (quote ([& {:keys [cache encoding refid], :as attrs} & nested])), :clj-ant/tag "tokens", :clj-ant/class "org.apache.tools.ant.types.resources.Tokens"}
+  {:arglists (quote ([& {:keys [cache encoding refid], :as attrs} & nested])), :clj-ant/tag "tokens", :clj-ant/class "org.apache.tools.ant.types.resources.Tokens", :clj-ant/classes ["org.apache.tools.ant.types.resources.Tokens"]}
   [& args]
   (clojure.core/apply c/element :tokens args))
 
@@ -8630,7 +8630,7 @@
   https://ant.apache.org/manual/Types/union.html
 
   Defined by: org.apache.tools.ant.types.resources.Union"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "union", :clj-ant/class "org.apache.tools.ant.types.resources.Union"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "union", :clj-ant/class "org.apache.tools.ant.types.resources.Union", :clj-ant/classes ["org.apache.tools.ant.types.resources.Union"]}
   [& args]
   (clojure.core/apply c/element :union args))
 
@@ -8646,7 +8646,7 @@
   https://ant.apache.org/manual/Types/unpackagemapper.html
 
   Defined by: org.apache.tools.ant.util.UnPackageNameMapper"
-  {:arglists (quote ([& {:keys [casesensitive from handledirsep to], :as attrs} & nested])), :clj-ant/tag "unpackagemapper", :clj-ant/class "org.apache.tools.ant.util.UnPackageNameMapper"}
+  {:arglists (quote ([& {:keys [casesensitive from handledirsep to], :as attrs} & nested])), :clj-ant/tag "unpackagemapper", :clj-ant/class "org.apache.tools.ant.util.UnPackageNameMapper", :clj-ant/classes ["org.apache.tools.ant.util.UnPackageNameMapper"]}
   [& args]
   (clojure.core/apply c/element :unpackagemapper args))
 
@@ -8668,7 +8668,7 @@
   https://ant.apache.org/manual/Types/url.html
 
   Defined by: org.apache.tools.ant.types.resources.URLResource"
-  {:arglists (quote ([& {:keys [baseurl directory exists file lastmodified name refid relativepath size url], :as attrs} & nested])), :clj-ant/tag "url", :clj-ant/class "org.apache.tools.ant.types.resources.URLResource"}
+  {:arglists (quote ([& {:keys [baseurl directory exists file lastmodified name refid relativepath size url], :as attrs} & nested])), :clj-ant/tag "url", :clj-ant/class "org.apache.tools.ant.types.resources.URLResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.URLResource"]}
   [& args]
   (clojure.core/apply c/element :url args))
 
@@ -8690,7 +8690,7 @@
   https://ant.apache.org/manual/Types/xmlcatalog.html
 
   Defined by: org.apache.tools.ant.types.XMLCatalog"
-  {:arglists (quote ([& {:keys [catalogpathref classpath classpathref refid], :as attrs} & nested])), :clj-ant/tag "xmlcatalog", :clj-ant/class "org.apache.tools.ant.types.XMLCatalog"}
+  {:arglists (quote ([& {:keys [catalogpathref classpath classpathref refid], :as attrs} & nested])), :clj-ant/tag "xmlcatalog", :clj-ant/class "org.apache.tools.ant.types.XMLCatalog", :clj-ant/classes ["org.apache.tools.ant.types.XMLCatalog"]}
   [& args]
   (clojure.core/apply c/element :xmlcatalog args))
 
@@ -8712,7 +8712,7 @@
   https://ant.apache.org/manual/Types/zipentry.html
 
   Defined by: org.apache.tools.ant.types.resources.ZipResource"
-  {:arglists (quote ([& {:keys [archive directory encoding exists lastmodified mode name refid size zipfile], :as attrs} & nested])), :clj-ant/tag "zipentry", :clj-ant/class "org.apache.tools.ant.types.resources.ZipResource"}
+  {:arglists (quote ([& {:keys [archive directory encoding exists lastmodified mode name refid size zipfile], :as attrs} & nested])), :clj-ant/tag "zipentry", :clj-ant/class "org.apache.tools.ant.types.resources.ZipResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.ZipResource"]}
   [& args]
   (clojure.core/apply c/element :zipentry args))
 
@@ -8776,7 +8776,7 @@
   https://ant.apache.org/manual/Types/zipfileset.html
 
   Defined by: org.apache.tools.ant.types.ZipFileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "zipfileset", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "zipfileset", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet", :clj-ant/classes ["org.apache.tools.ant.types.ZipFileSet"]}
   [& args]
   (clojure.core/apply c/element :zipfileset args))
 
@@ -8792,7 +8792,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link$ReleaseInfoEntry"
-  {:arglists (quote ([& {:keys [charset file key value], :as attrs} & nested])), :clj-ant/tag "add", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$ReleaseInfoEntry"}
+  {:arglists (quote ([& {:keys [charset file key value], :as attrs} & nested])), :clj-ant/tag "add", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$ReleaseInfoEntry", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link$ReleaseInfoEntry"]}
   [& args]
   (clojure.core/apply c/element :add args))
 
@@ -8815,7 +8815,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "addfiles", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "addfiles", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :addfiles args))
 
@@ -8831,7 +8831,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Environment$Variable"
-  {:arglists (quote ([& {:keys [file key path value], :as attrs} & nested])), :clj-ant/tag "additionalconfig", :clj-ant/class "org.apache.tools.ant.types.Environment$Variable"}
+  {:arglists (quote ([& {:keys [file key path value], :as attrs} & nested])), :clj-ant/tag "additionalconfig", :clj-ant/class "org.apache.tools.ant.types.Environment$Variable", :clj-ant/classes ["org.apache.tools.ant.types.Environment$Variable"]}
   [& args]
   (clojure.core/apply c/element :additionalconfig args))
 
@@ -8877,7 +8877,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.AndSelector"
-  {:arglists (quote ([& {:keys [error refid], :as attrs} & nested])), :clj-ant/tag "and", :clj-ant/class "org.apache.tools.ant.types.selectors.AndSelector"}
+  {:arglists (quote ([& {:keys [error refid], :as attrs} & nested])), :clj-ant/tag "and", :clj-ant/class "org.apache.tools.ant.types.selectors.AndSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.AndSelector" "org.apache.tools.ant.taskdefs.condition.And"]}
   [& args]
   (clojure.core/apply c/element :and args))
 
@@ -8901,7 +8901,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Commandline$Argument"
-  {:arglists (quote ([& {:keys [file line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "arg", :clj-ant/class "org.apache.tools.ant.types.Commandline$Argument"}
+  {:arglists (quote ([& {:keys [file line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "arg", :clj-ant/class "org.apache.tools.ant.types.Commandline$Argument", :clj-ant/classes ["org.apache.tools.ant.types.Commandline$Argument" "org.apache.tools.ant.util.facade.ImplementationSpecificArgument"]}
   [& args]
   (clojure.core/apply c/element :arg args))
 
@@ -8920,7 +8920,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Commandline$Argument"
-  {:arglists (quote ([& {:keys [file line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "argument", :clj-ant/class "org.apache.tools.ant.types.Commandline$Argument"}
+  {:arglists (quote ([& {:keys [file line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "argument", :clj-ant/class "org.apache.tools.ant.types.Commandline$Argument", :clj-ant/classes ["org.apache.tools.ant.types.Commandline$Argument"]}
   [& args]
   (clojure.core/apply c/element :argument args))
 
@@ -8943,7 +8943,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "attachments", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "attachments", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :attachments args))
 
@@ -8966,7 +8966,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Manifest$Attribute"
-  {:arglists (quote ([& {:keys [name value], :as attrs} & nested])), :clj-ant/tag "attribute", :clj-ant/class "org.apache.tools.ant.taskdefs.Manifest$Attribute"}
+  {:arglists (quote ([& {:keys [name value], :as attrs} & nested])), :clj-ant/tag "attribute", :clj-ant/class "org.apache.tools.ant.taskdefs.Manifest$Attribute", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Manifest$Attribute" "org.apache.tools.ant.taskdefs.optional.extension.ExtraAttribute" "org.apache.tools.ant.taskdefs.MacroDef$Attribute" "org.apache.tools.ant.taskdefs.optional.XMLValidateTask$Attribute" "org.apache.tools.ant.taskdefs.optional.script.ScriptDef$Attribute" "org.apache.tools.ant.taskdefs.XSLTProcess$Factory$Attribute"]}
   [& args]
   (clojure.core/apply c/element :attribute args))
 
@@ -8986,7 +8986,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.resources.FileResource"
-  {:arglists (quote ([& {:keys [basedir directory exists file lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "basedir", :clj-ant/class "org.apache.tools.ant.types.resources.FileResource"}
+  {:arglists (quote ([& {:keys [basedir directory exists file lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "basedir", :clj-ant/class "org.apache.tools.ant.types.resources.FileResource", :clj-ant/classes ["org.apache.tools.ant.types.resources.FileResource"]}
   [& args]
   (clojure.core/apply c/element :basedir args))
 
@@ -9000,7 +9000,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.email.EmailAddress"
-  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "bcc", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress"}
+  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "bcc", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress", :clj-ant/classes ["org.apache.tools.ant.taskdefs.email.EmailAddress"]}
   [& args]
   (clojure.core/apply c/element :bcc args))
 
@@ -9023,7 +9023,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "bootclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "bootclasspath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :bootclasspath args))
 
@@ -9048,7 +9048,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.BorlandDeploymentTool"
-  {:arglists (quote ([& {:keys [basdtd classpath debug destdir generateclient genericjarsuffix java2iiopparams suffix verify verifyargs version], :as attrs} & nested])), :clj-ant/tag "borland", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.BorlandDeploymentTool"}
+  {:arglists (quote ([& {:keys [basdtd classpath debug destdir generateclient genericjarsuffix java2iiopparams suffix verify verifyargs version], :as attrs} & nested])), :clj-ant/tag "borland", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.BorlandDeploymentTool", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.BorlandDeploymentTool"]}
   [& args]
   (clojure.core/apply c/element :borland args))
 
@@ -9060,7 +9060,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$Html"
-  {:arglists (quote ([& nested])), :clj-ant/tag "bottom", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$Html"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "bottom", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$Html", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$Html"]}
   [& args]
   (clojure.core/apply c/element :bottom args))
 
@@ -9083,7 +9083,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "buildpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "buildpath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :buildpath args))
 
@@ -9096,7 +9096,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path$PathElement"
-  {:arglists (quote ([& {:keys [path], :as attrs} & nested])), :clj-ant/tag "buildpathelement", :clj-ant/class "org.apache.tools.ant.types.Path$PathElement"}
+  {:arglists (quote ([& {:keys [path], :as attrs} & nested])), :clj-ant/tag "buildpathelement", :clj-ant/class "org.apache.tools.ant.types.Path$PathElement", :clj-ant/classes ["org.apache.tools.ant.types.Path$PathElement"]}
   [& args]
   (clojure.core/apply c/element :buildpathelement args))
 
@@ -9119,7 +9119,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "catalogpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "catalogpath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :catalogpath args))
 
@@ -9133,7 +9133,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.email.EmailAddress"
-  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "cc", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress"}
+  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "cc", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress", :clj-ant/classes ["org.apache.tools.ant.taskdefs.email.EmailAddress"]}
   [& args]
   (clojure.core/apply c/element :cc args))
 
@@ -9146,7 +9146,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.Javah$ClassArgument"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "class", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Javah$ClassArgument"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "class", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.Javah$ClassArgument", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.Javah$ClassArgument"]}
   [& args]
   (clojure.core/apply c/element :class args))
 
@@ -9157,7 +9157,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.ClassConstants"
-  {:arglists (quote ([& nested])), :clj-ant/tag "classconstants", :clj-ant/class "org.apache.tools.ant.filters.ClassConstants"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "classconstants", :clj-ant/class "org.apache.tools.ant.filters.ClassConstants", :clj-ant/classes ["org.apache.tools.ant.filters.ClassConstants"]}
   [& args]
   (clojure.core/apply c/element :classconstants args))
 
@@ -9221,7 +9221,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.ZipFileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "classes", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "classes", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet", :clj-ant/classes ["org.apache.tools.ant.types.ZipFileSet"]}
   [& args]
   (clojure.core/apply c/element :classes args))
 
@@ -9244,7 +9244,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "classpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "classpath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :classpath args))
 
@@ -9260,7 +9260,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Commandline"
-  {:arglists (quote ([& {:keys [executable], :as attrs} & nested])), :clj-ant/tag "commandline", :clj-ant/class "org.apache.tools.ant.types.Commandline"}
+  {:arglists (quote ([& {:keys [executable], :as attrs} & nested])), :clj-ant/tag "commandline", :clj-ant/class "org.apache.tools.ant.types.Commandline", :clj-ant/classes ["org.apache.tools.ant.types.Commandline"]}
   [& args]
   (clojure.core/apply c/element :commandline args))
 
@@ -9283,7 +9283,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "commandpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "commandpath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :commandpath args))
 
@@ -9297,7 +9297,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.StripLineComments$Comment"
-  {:arglists (quote ([& {:keys [value], :as attrs} & nested])), :clj-ant/tag "comment", :clj-ant/class "org.apache.tools.ant.filters.StripLineComments$Comment"}
+  {:arglists (quote ([& {:keys [value], :as attrs} & nested])), :clj-ant/tag "comment", :clj-ant/class "org.apache.tools.ant.filters.StripLineComments$Comment", :clj-ant/classes ["org.apache.tools.ant.filters.StripLineComments$Comment"]}
   [& args]
   (clojure.core/apply c/element :comment args))
 
@@ -9323,7 +9323,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javac$ImplementationSpecificArgument"
-  {:arglists (quote ([& {:keys [compiler file implementation line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "compilerarg", :clj-ant/class "org.apache.tools.ant.taskdefs.Javac$ImplementationSpecificArgument"}
+  {:arglists (quote ([& {:keys [compiler file implementation line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "compilerarg", :clj-ant/class "org.apache.tools.ant.taskdefs.Javac$ImplementationSpecificArgument", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javac$ImplementationSpecificArgument" "org.apache.tools.ant.taskdefs.Rmic$ImplementationSpecificArgument"]}
   [& args]
   (clojure.core/apply c/element :compilerarg args))
 
@@ -9346,7 +9346,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "compilerclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "compilerclasspath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :compilerclasspath args))
 
@@ -9362,7 +9362,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link$Compression"
-  {:arglists (quote ([& {:keys [files level], :as attrs} & nested])), :clj-ant/tag "compress", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$Compression"}
+  {:arglists (quote ([& {:keys [files level], :as attrs} & nested])), :clj-ant/tag "compress", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$Compression", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link$Compression"]}
   [& args]
   (clojure.core/apply c/element :compress args))
 
@@ -9385,7 +9385,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "configpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "configpath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :configpath args))
 
@@ -9415,7 +9415,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Property"
-  {:arglists (quote ([& {:keys [basedir classpath classpathref environment file name prefix prefixvalues refid relative resource runtime url userproperty value], :as attrs} & nested])), :clj-ant/tag "connectionproperty", :clj-ant/class "org.apache.tools.ant.taskdefs.Property"}
+  {:arglists (quote ([& {:keys [basedir classpath classpathref environment file name prefix prefixvalues refid relative resource runtime url userproperty value], :as attrs} & nested])), :clj-ant/tag "connectionproperty", :clj-ant/class "org.apache.tools.ant.taskdefs.Property", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Property"]}
   [& args]
   (clojure.core/apply c/element :connectionproperty args))
 
@@ -9439,7 +9439,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.ContainsSelector"
-  {:arglists (quote ([& {:keys [casesensitive encoding error ignorewhitespace refid text], :as attrs} & nested])), :clj-ant/tag "contains", :clj-ant/class "org.apache.tools.ant.types.selectors.ContainsSelector"}
+  {:arglists (quote ([& {:keys [casesensitive encoding error ignorewhitespace refid text], :as attrs} & nested])), :clj-ant/tag "contains", :clj-ant/class "org.apache.tools.ant.types.selectors.ContainsSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.ContainsSelector" "org.apache.tools.ant.filters.LineContains$Contains" "org.apache.tools.ant.taskdefs.condition.Contains"]}
   [& args]
   (clojure.core/apply c/element :contains args))
 
@@ -9455,7 +9455,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TokenFilter$ContainsRegex"
-  {:arglists (quote ([& {:keys [byline flags pattern replace], :as attrs} & nested])), :clj-ant/tag "containsregex", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$ContainsRegex"}
+  {:arglists (quote ([& {:keys [byline flags pattern replace], :as attrs} & nested])), :clj-ant/tag "containsregex", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$ContainsRegex", :clj-ant/classes ["org.apache.tools.ant.filters.TokenFilter$ContainsRegex"]}
   [& args]
   (clojure.core/apply c/element :containsregex args))
 
@@ -9473,7 +9473,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.ContainsRegexpSelector"
-  {:arglists (quote ([& {:keys [casesensitive error expression multiline refid singleline], :as attrs} & nested])), :clj-ant/tag "containsregexp", :clj-ant/class "org.apache.tools.ant.types.selectors.ContainsRegexpSelector"}
+  {:arglists (quote ([& {:keys [casesensitive error expression multiline refid singleline], :as attrs} & nested])), :clj-ant/tag "containsregexp", :clj-ant/class "org.apache.tools.ant.types.selectors.ContainsRegexpSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.ContainsRegexpSelector"]}
   [& args]
   (clojure.core/apply c/element :containsregexp args))
 
@@ -9486,7 +9486,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TokenFilter$ContainsString"
-  {:arglists (quote ([& {:keys [contains], :as attrs} & nested])), :clj-ant/tag "containsstring", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$ContainsString"}
+  {:arglists (quote ([& {:keys [contains], :as attrs} & nested])), :clj-ant/tag "containsstring", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$ContainsString", :clj-ant/classes ["org.apache.tools.ant.filters.TokenFilter$ContainsString"]}
   [& args]
   (clojure.core/apply c/element :containsstring args))
 
@@ -9506,7 +9506,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.ExtendSelector"
-  {:arglists (quote ([& {:keys [classname classpath classpathref error refid], :as attrs} & nested])), :clj-ant/tag "custom", :clj-ant/class "org.apache.tools.ant.types.selectors.ExtendSelector"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref error refid], :as attrs} & nested])), :clj-ant/tag "custom", :clj-ant/class "org.apache.tools.ant.types.selectors.ExtendSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.ExtendSelector"]}
   [& args]
   (clojure.core/apply c/element :custom args))
 
@@ -9517,7 +9517,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Parallel$TaskList"
-  {:arglists (quote ([& nested])), :clj-ant/tag "daemons", :clj-ant/class "org.apache.tools.ant.taskdefs.Parallel$TaskList"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "daemons", :clj-ant/class "org.apache.tools.ant.taskdefs.Parallel$TaskList", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Parallel$TaskList"]}
   [& args]
   (clojure.core/apply c/element :daemons args))
 
@@ -9537,7 +9537,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.DateSelector"
-  {:arglists (quote ([& {:keys [checkdirs datetime error granularity millis pattern refid when], :as attrs} & nested])), :clj-ant/tag "date", :clj-ant/class "org.apache.tools.ant.types.selectors.DateSelector"}
+  {:arglists (quote ([& {:keys [checkdirs datetime error granularity millis pattern refid when], :as attrs} & nested])), :clj-ant/tag "date", :clj-ant/class "org.apache.tools.ant.types.selectors.DateSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.DateSelector"]}
   [& args]
   (clojure.core/apply c/element :date args))
 
@@ -9550,7 +9550,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.PropertyHelperTask$DelegateElement"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "delegate", :clj-ant/class "org.apache.tools.ant.taskdefs.PropertyHelperTask$DelegateElement"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "delegate", :clj-ant/class "org.apache.tools.ant.taskdefs.PropertyHelperTask$DelegateElement", :clj-ant/classes ["org.apache.tools.ant.taskdefs.PropertyHelperTask$DelegateElement"]}
   [& args]
   (clojure.core/apply c/element :delegate args))
 
@@ -9563,7 +9563,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TokenFilter$DeleteCharacters"
-  {:arglists (quote ([& {:keys [chars], :as attrs} & nested])), :clj-ant/tag "deletecharacters", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$DeleteCharacters"}
+  {:arglists (quote ([& {:keys [chars], :as attrs} & nested])), :clj-ant/tag "deletecharacters", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$DeleteCharacters", :clj-ant/classes ["org.apache.tools.ant.filters.TokenFilter$DeleteCharacters"]}
   [& args]
   (clojure.core/apply c/element :deletecharacters args))
 
@@ -9580,7 +9580,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "depends", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "depends", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"]}
   [& args]
   (clojure.core/apply c/element :depends args))
 
@@ -9596,7 +9596,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.DepthSelector"
-  {:arglists (quote ([& {:keys [error max min refid], :as attrs} & nested])), :clj-ant/tag "depth", :clj-ant/class "org.apache.tools.ant.types.selectors.DepthSelector"}
+  {:arglists (quote ([& {:keys [error max min refid], :as attrs} & nested])), :clj-ant/tag "depth", :clj-ant/class "org.apache.tools.ant.types.selectors.DepthSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.DepthSelector"]}
   [& args]
   (clojure.core/apply c/element :depth args))
 
@@ -9616,7 +9616,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.DifferentSelector"
-  {:arglists (quote ([& {:keys [error granularity ignorecontents ignorefiletimes refid targetdir], :as attrs} & nested])), :clj-ant/tag "different", :clj-ant/class "org.apache.tools.ant.types.selectors.DifferentSelector"}
+  {:arglists (quote ([& {:keys [error granularity ignorecontents ignorefiletimes refid targetdir], :as attrs} & nested])), :clj-ant/tag "different", :clj-ant/class "org.apache.tools.ant.types.selectors.DifferentSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.DifferentSelector"]}
   [& args]
   (clojure.core/apply c/element :different args))
 
@@ -9630,7 +9630,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Assertions$DisabledAssertion"
-  {:arglists (quote ([& {:keys [class package], :as attrs} & nested])), :clj-ant/tag "disable", :clj-ant/class "org.apache.tools.ant.types.Assertions$DisabledAssertion"}
+  {:arglists (quote ([& {:keys [class package], :as attrs} & nested])), :clj-ant/tag "disable", :clj-ant/class "org.apache.tools.ant.types.Assertions$DisabledAssertion", :clj-ant/classes ["org.apache.tools.ant.types.Assertions$DisabledAssertion"]}
   [& args]
   (clojure.core/apply c/element :disable args))
 
@@ -9643,7 +9643,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.GenerateKey$DistinguishedName"
-  {:arglists (quote ([& nested])), :clj-ant/tag "dname", :clj-ant/class "org.apache.tools.ant.taskdefs.GenerateKey$DistinguishedName"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "dname", :clj-ant/class "org.apache.tools.ant.taskdefs.GenerateKey$DistinguishedName", :clj-ant/classes ["org.apache.tools.ant.taskdefs.GenerateKey$DistinguishedName"]}
   [& args]
   (clojure.core/apply c/element :dname args))
 
@@ -9661,7 +9661,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$DocletInfo"
-  {:arglists (quote ([& {:keys [name path pathref], :as attrs} & nested])), :clj-ant/tag "doclet", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$DocletInfo"}
+  {:arglists (quote ([& {:keys [name path pathref], :as attrs} & nested])), :clj-ant/tag "doclet", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$DocletInfo", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$DocletInfo"]}
   [& args]
   (clojure.core/apply c/element :doclet args))
 
@@ -9673,7 +9673,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$Html"
-  {:arglists (quote ([& nested])), :clj-ant/tag "doctitle", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$Html"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "doctitle", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$Html", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$Html"]}
   [& args]
   (clojure.core/apply c/element :doctitle args))
 
@@ -9693,7 +9693,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.EjbJar$DTDLocation"
-  {:arglists (quote ([& {:keys [base publicid], :as attrs} & nested])), :clj-ant/tag "dtd", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.EjbJar$DTDLocation"}
+  {:arglists (quote ([& {:keys [base publicid], :as attrs} & nested])), :clj-ant/tag "dtd", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.EjbJar$DTDLocation", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.EjbJar$DTDLocation" "org.apache.tools.ant.types.ResourceLocation" "org.apache.tools.ant.types.DTDLocation"]}
   [& args]
   (clojure.core/apply c/element :dtd args))
 
@@ -9713,7 +9713,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.MacroDef$TemplateElement"
-  {:arglists (quote ([& {:keys [implicit name optional], :as attrs} & nested])), :clj-ant/tag "element", :clj-ant/class "org.apache.tools.ant.taskdefs.MacroDef$TemplateElement"}
+  {:arglists (quote ([& {:keys [implicit name optional], :as attrs} & nested])), :clj-ant/tag "element", :clj-ant/class "org.apache.tools.ant.taskdefs.MacroDef$TemplateElement", :clj-ant/classes ["org.apache.tools.ant.taskdefs.MacroDef$TemplateElement" "org.apache.tools.ant.taskdefs.optional.script.ScriptDef$NestedElement"]}
   [& args]
   (clojure.core/apply c/element :element args))
 
@@ -9727,7 +9727,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Assertions$EnabledAssertion"
-  {:arglists (quote ([& {:keys [class package], :as attrs} & nested])), :clj-ant/tag "enable", :clj-ant/class "org.apache.tools.ant.types.Assertions$EnabledAssertion"}
+  {:arglists (quote ([& {:keys [class package], :as attrs} & nested])), :clj-ant/tag "enable", :clj-ant/class "org.apache.tools.ant.types.Assertions$EnabledAssertion", :clj-ant/classes ["org.apache.tools.ant.types.Assertions$EnabledAssertion"]}
   [& args]
   (clojure.core/apply c/element :enable args))
 
@@ -9741,7 +9741,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.ResourceLocation"
-  {:arglists (quote ([& {:keys [base publicid], :as attrs} & nested])), :clj-ant/tag "entity", :clj-ant/class "org.apache.tools.ant.types.ResourceLocation"}
+  {:arglists (quote ([& {:keys [base publicid], :as attrs} & nested])), :clj-ant/tag "entity", :clj-ant/class "org.apache.tools.ant.types.ResourceLocation", :clj-ant/classes ["org.apache.tools.ant.types.ResourceLocation"]}
   [& args]
   (clojure.core/apply c/element :entity args))
 
@@ -9760,7 +9760,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.PropertyFile$Entry"
-  {:arglists (quote ([& {:keys [default key operation pattern type unit value], :as attrs} & nested])), :clj-ant/tag "entry", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.PropertyFile$Entry"}
+  {:arglists (quote ([& {:keys [default key operation pattern type unit value], :as attrs} & nested])), :clj-ant/tag "entry", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.PropertyFile$Entry", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.PropertyFile$Entry"]}
   [& args]
   (clojure.core/apply c/element :entry args))
 
@@ -9776,7 +9776,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Environment$Variable"
-  {:arglists (quote ([& {:keys [file key path value], :as attrs} & nested])), :clj-ant/tag "env", :clj-ant/class "org.apache.tools.ant.types.Environment$Variable"}
+  {:arglists (quote ([& {:keys [file key path value], :as attrs} & nested])), :clj-ant/tag "env", :clj-ant/class "org.apache.tools.ant.types.Environment$Variable", :clj-ant/classes ["org.apache.tools.ant.types.Environment$Variable"]}
   [& args]
   (clojure.core/apply c/element :env args))
 
@@ -9793,7 +9793,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.condition.Equals"
-  {:arglists (quote ([& {:keys [arg1 arg2 casesensitive forcestring trim], :as attrs} & nested])), :clj-ant/tag "equals", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.Equals"}
+  {:arglists (quote ([& {:keys [arg1 arg2 casesensitive forcestring trim], :as attrs} & nested])), :clj-ant/tag "equals", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.Equals", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.Equals"]}
   [& args]
   (clojure.core/apply c/element :equals args))
 
@@ -9829,7 +9829,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FilterChain"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "errorfilterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "errorfilterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain", :clj-ant/classes ["org.apache.tools.ant.types.FilterChain"]}
   [& args]
   (clojure.core/apply c/element :errorfilterchain args))
 
@@ -9851,7 +9851,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Mapper"
-  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "errormapper", :clj-ant/class "org.apache.tools.ant.types.Mapper"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "errormapper", :clj-ant/class "org.apache.tools.ant.types.Mapper", :clj-ant/classes ["org.apache.tools.ant.types.Mapper"]}
   [& args]
   (clojure.core/apply c/element :errormapper args))
 
@@ -9862,7 +9862,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.EscapeUnicode"
-  {:arglists (quote ([& nested])), :clj-ant/tag "escapeunicode", :clj-ant/class "org.apache.tools.ant.filters.EscapeUnicode"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "escapeunicode", :clj-ant/class "org.apache.tools.ant.filters.EscapeUnicode", :clj-ant/classes ["org.apache.tools.ant.filters.EscapeUnicode"]}
   [& args]
   (clojure.core/apply c/element :escapeunicode args))
 
@@ -9877,7 +9877,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.PatternSet$NameEntry"
-  {:arglists (quote ([& {:keys [if name unless], :as attrs} & nested])), :clj-ant/tag "exclude", :clj-ant/class "org.apache.tools.ant.types.PatternSet$NameEntry"}
+  {:arglists (quote ([& {:keys [if name unless], :as attrs} & nested])), :clj-ant/tag "exclude", :clj-ant/class "org.apache.tools.ant.types.PatternSet$NameEntry", :clj-ant/classes ["org.apache.tools.ant.types.PatternSet$NameEntry"]}
   [& args]
   (clojure.core/apply c/element :exclude args))
 
@@ -9891,7 +9891,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"
-  {:arglists (quote ([& {:keys [listfile pattern], :as attrs} & nested])), :clj-ant/tag "excludefiles", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"}
+  {:arglists (quote ([& {:keys [listfile pattern], :as attrs} & nested])), :clj-ant/tag "excludefiles", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"]}
   [& args]
   (clojure.core/apply c/element :excludefiles args))
 
@@ -9904,7 +9904,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$PackageName"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "excludepackage", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$PackageName"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "excludepackage", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$PackageName", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$PackageName"]}
   [& args]
   (clojure.core/apply c/element :excludepackage args))
 
@@ -9918,7 +9918,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"
-  {:arglists (quote ([& {:keys [listfile pattern], :as attrs} & nested])), :clj-ant/tag "excluderesources", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"}
+  {:arglists (quote ([& {:keys [listfile pattern], :as attrs} & nested])), :clj-ant/tag "excluderesources", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"]}
   [& args]
   (clojure.core/apply c/element :excluderesources args))
 
@@ -9933,7 +9933,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.PatternSet$NameEntry"
-  {:arglists (quote ([& {:keys [if name unless], :as attrs} & nested])), :clj-ant/tag "excludesfile", :clj-ant/class "org.apache.tools.ant.types.PatternSet$NameEntry"}
+  {:arglists (quote ([& {:keys [if name unless], :as attrs} & nested])), :clj-ant/tag "excludesfile", :clj-ant/class "org.apache.tools.ant.types.PatternSet$NameEntry", :clj-ant/classes ["org.apache.tools.ant.types.PatternSet$NameEntry"]}
   [& args]
   (clojure.core/apply c/element :excludesfile args))
 
@@ -9944,7 +9944,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.ExecutableSelector"
-  {:arglists (quote ([& nested])), :clj-ant/tag "executable", :clj-ant/class "org.apache.tools.ant.types.selectors.ExecutableSelector"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "executable", :clj-ant/class "org.apache.tools.ant.types.selectors.ExecutableSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.ExecutableSelector"]}
   [& args]
   (clojure.core/apply c/element :executable args))
 
@@ -9967,7 +9967,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "existing", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "existing", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :existing args))
 
@@ -9978,7 +9978,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.ExpandProperties"
-  {:arglists (quote ([& nested])), :clj-ant/tag "expandproperties", :clj-ant/class "org.apache.tools.ant.filters.ExpandProperties"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "expandproperties", :clj-ant/class "org.apache.tools.ant.filters.ExpandProperties", :clj-ant/classes ["org.apache.tools.ant.filters.ExpandProperties"]}
   [& args]
   (clojure.core/apply c/element :expandproperties args))
 
@@ -10001,7 +10001,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "extdirs", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "extdirs", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :extdirs args))
 
@@ -10018,7 +10018,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "extensionset", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "extensionset", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"]}
   [& args]
   (clojure.core/apply c/element :extensionset args))
 
@@ -10034,7 +10034,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.XSLTProcess$Factory"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "factory", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess$Factory"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "factory", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess$Factory", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess$Factory"]}
   [& args]
   (clojure.core/apply c/element :factory args))
 
@@ -10048,7 +10048,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.XSLTProcess$Factory$Feature"
-  {:arglists (quote ([& {:keys [name value], :as attrs} & nested])), :clj-ant/tag "feature", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess$Factory$Feature"}
+  {:arglists (quote ([& {:keys [name value], :as attrs} & nested])), :clj-ant/tag "feature", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess$Factory$Feature", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess$Factory$Feature"]}
   [& args]
   (clojure.core/apply c/element :feature args))
 
@@ -10066,7 +10066,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.FilenameSelector"
-  {:arglists (quote ([& {:keys [casesensitive error name negate refid regex], :as attrs} & nested])), :clj-ant/tag "filename", :clj-ant/class "org.apache.tools.ant.types.selectors.FilenameSelector"}
+  {:arglists (quote ([& {:keys [casesensitive error name negate refid regex], :as attrs} & nested])), :clj-ant/tag "filename", :clj-ant/class "org.apache.tools.ant.types.selectors.FilenameSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.FilenameSelector"]}
   [& args]
   (clojure.core/apply c/element :filename args))
 
@@ -10089,7 +10089,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "filepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "filepath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :filepath args))
 
@@ -10104,7 +10104,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.condition.FilesMatch"
-  {:arglists (quote ([& {:keys [file1 file2 textfile], :as attrs} & nested])), :clj-ant/tag "filesmatch", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.FilesMatch"}
+  {:arglists (quote ([& {:keys [file1 file2 textfile], :as attrs} & nested])), :clj-ant/tag "filesmatch", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.FilesMatch", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.FilesMatch"]}
   [& args]
   (clojure.core/apply c/element :filesmatch args))
 
@@ -10117,7 +10117,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FilterSet$FiltersFile"
-  {:arglists (quote ([& {:keys [file], :as attrs} & nested])), :clj-ant/tag "filtersfile", :clj-ant/class "org.apache.tools.ant.types.FilterSet$FiltersFile"}
+  {:arglists (quote ([& {:keys [file], :as attrs} & nested])), :clj-ant/tag "filtersfile", :clj-ant/class "org.apache.tools.ant.types.FilterSet$FiltersFile", :clj-ant/classes ["org.apache.tools.ant.types.FilterSet$FiltersFile"]}
   [& args]
   (clojure.core/apply c/element :filtersfile args))
 
@@ -10140,7 +10140,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Concat$TextElement"
-  {:arglists (quote ([& {:keys [encoding file filtering trim trimleading], :as attrs} & nested])), :clj-ant/tag "footer", :clj-ant/class "org.apache.tools.ant.taskdefs.Concat$TextElement"}
+  {:arglists (quote ([& {:keys [encoding file filtering trim trimleading], :as attrs} & nested])), :clj-ant/tag "footer", :clj-ant/class "org.apache.tools.ant.taskdefs.Concat$TextElement", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Concat$TextElement" "org.apache.tools.ant.taskdefs.Javadoc$Html"]}
   [& args]
   (clojure.core/apply c/element :footer args))
 
@@ -10158,7 +10158,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Tstamp$CustomFormat"
-  {:arglists (quote ([& {:keys [locale offset pattern property timezone unit], :as attrs} & nested])), :clj-ant/tag "format", :clj-ant/class "org.apache.tools.ant.taskdefs.Tstamp$CustomFormat"}
+  {:arglists (quote ([& {:keys [locale offset pattern property timezone unit], :as attrs} & nested])), :clj-ant/tag "format", :clj-ant/class "org.apache.tools.ant.taskdefs.Tstamp$CustomFormat", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Tstamp$CustomFormat"]}
   [& args]
   (clojure.core/apply c/element :format args))
 
@@ -10172,7 +10172,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.email.EmailAddress"
-  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "from", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress"}
+  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "from", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress", :clj-ant/classes ["org.apache.tools.ant.taskdefs.email.EmailAddress"]}
   [& args]
   (clojure.core/apply c/element :from args))
 
@@ -10193,7 +10193,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.j2ee.GenericHotDeploymentTool"
-  {:arglists (quote ([& {:keys [classname classpath password server username], :as attrs} & nested])), :clj-ant/tag "generic", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.j2ee.GenericHotDeploymentTool"}
+  {:arglists (quote ([& {:keys [classname classpath password server username], :as attrs} & nested])), :clj-ant/tag "generic", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.j2ee.GenericHotDeploymentTool", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.j2ee.GenericHotDeploymentTool"]}
   [& args]
   (clojure.core/apply c/element :generic args))
 
@@ -10208,7 +10208,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Permissions$Permission"
-  {:arglists (quote ([& {:keys [actions class name], :as attrs} & nested])), :clj-ant/tag "grant", :clj-ant/class "org.apache.tools.ant.types.Permissions$Permission"}
+  {:arglists (quote ([& {:keys [actions class name], :as attrs} & nested])), :clj-ant/tag "grant", :clj-ant/class "org.apache.tools.ant.types.Permissions$Permission", :clj-ant/classes ["org.apache.tools.ant.types.Permissions$Permission"]}
   [& args]
   (clojure.core/apply c/element :grant args))
 
@@ -10225,7 +10225,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$GroupArgument"
-  {:arglists (quote ([& {:keys [packages title], :as attrs} & nested])), :clj-ant/tag "group", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$GroupArgument"}
+  {:arglists (quote ([& {:keys [packages title], :as attrs} & nested])), :clj-ant/tag "group", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$GroupArgument", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$GroupArgument"]}
   [& args]
   (clojure.core/apply c/element :group args))
 
@@ -10247,7 +10247,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Input$Handler"
-  {:arglists (quote ([& {:keys [classname classpath classpathref loaderref refid reverseloader type uri], :as attrs} & nested])), :clj-ant/tag "handler", :clj-ant/class "org.apache.tools.ant.taskdefs.Input$Handler"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref loaderref refid reverseloader type uri], :as attrs} & nested])), :clj-ant/tag "handler", :clj-ant/class "org.apache.tools.ant.taskdefs.Input$Handler", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Input$Handler"]}
   [& args]
   (clojure.core/apply c/element :handler args))
 
@@ -10271,7 +10271,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Concat$TextElement"
-  {:arglists (quote ([& {:keys [encoding file filtering trim trimleading], :as attrs} & nested])), :clj-ant/tag "header", :clj-ant/class "org.apache.tools.ant.taskdefs.Concat$TextElement"}
+  {:arglists (quote ([& {:keys [encoding file filtering trim trimleading], :as attrs} & nested])), :clj-ant/tag "header", :clj-ant/class "org.apache.tools.ant.taskdefs.Concat$TextElement", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Concat$TextElement" "org.apache.tools.ant.taskdefs.email.Header" "org.apache.tools.ant.taskdefs.Javadoc$Html"]}
   [& args]
   (clojure.core/apply c/element :header args))
 
@@ -10294,7 +10294,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "headerpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "headerpath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :headerpath args))
 
@@ -10308,7 +10308,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.HeadFilter"
-  {:arglists (quote ([& {:keys [lines skip], :as attrs} & nested])), :clj-ant/tag "headfilter", :clj-ant/class "org.apache.tools.ant.filters.HeadFilter"}
+  {:arglists (quote ([& {:keys [lines skip], :as attrs} & nested])), :clj-ant/tag "headfilter", :clj-ant/class "org.apache.tools.ant.filters.HeadFilter", :clj-ant/classes ["org.apache.tools.ant.filters.HeadFilter"]}
   [& args]
   (clojure.core/apply c/element :headfilter args))
 
@@ -10325,7 +10325,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.condition.Http"
-  {:arglists (quote ([& {:keys [errorsbeginat followredirects readtimeout requestmethod url], :as attrs} & nested])), :clj-ant/tag "http", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.Http"}
+  {:arglists (quote ([& {:keys [errorsbeginat followredirects readtimeout requestmethod url], :as attrs} & nested])), :clj-ant/tag "http", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.Http", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.Http"]}
   [& args]
   (clojure.core/apply c/element :http args))
 
@@ -10338,7 +10338,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TokenFilter$IgnoreBlank"
-  {:arglists (quote ([& {:keys [byline], :as attrs} & nested])), :clj-ant/tag "ignoreblank", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$IgnoreBlank"}
+  {:arglists (quote ([& {:keys [byline], :as attrs} & nested])), :clj-ant/tag "ignoreblank", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$IgnoreBlank", :clj-ant/classes ["org.apache.tools.ant.filters.TokenFilter$IgnoreBlank"]}
   [& args]
   (clojure.core/apply c/element :ignoreblank args))
 
@@ -10361,7 +10361,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "implementationclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "implementationclasspath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :implementationclasspath args))
 
@@ -10376,7 +10376,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.PatternSet$NameEntry"
-  {:arglists (quote ([& {:keys [if name unless], :as attrs} & nested])), :clj-ant/tag "includesfile", :clj-ant/class "org.apache.tools.ant.types.PatternSet$NameEntry"}
+  {:arglists (quote ([& {:keys [if name unless], :as attrs} & nested])), :clj-ant/tag "includesfile", :clj-ant/class "org.apache.tools.ant.types.PatternSet$NameEntry", :clj-ant/classes ["org.apache.tools.ant.types.PatternSet$NameEntry"]}
   [& args]
   (clojure.core/apply c/element :includesfile args))
 
@@ -10399,7 +10399,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "indexjars", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "indexjars", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :indexjars args))
 
@@ -10421,7 +10421,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Mapper"
-  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "indexjarsmapper", :clj-ant/class "org.apache.tools.ant.types.Mapper"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "indexjarsmapper", :clj-ant/class "org.apache.tools.ant.types.Mapper", :clj-ant/classes ["org.apache.tools.ant.types.Mapper"]}
   [& args]
   (clojure.core/apply c/element :indexjarsmapper args))
 
@@ -10457,7 +10457,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FilterChain"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "inputfilterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "inputfilterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain", :clj-ant/classes ["org.apache.tools.ant.types.FilterChain"]}
   [& args]
   (clojure.core/apply c/element :inputfilterchain args))
 
@@ -10479,7 +10479,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Mapper"
-  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "inputmapper", :clj-ant/class "org.apache.tools.ant.types.Mapper"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "inputmapper", :clj-ant/class "org.apache.tools.ant.types.Mapper", :clj-ant/classes ["org.apache.tools.ant.types.Mapper"]}
   [& args]
   (clojure.core/apply c/element :inputmapper args))
 
@@ -10503,7 +10503,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.PatternSet"
-  {:arglists (quote ([& {:keys [excludes excludesfile includes includesfile refid], :as attrs} & nested])), :clj-ant/tag "invert", :clj-ant/class "org.apache.tools.ant.types.PatternSet"}
+  {:arglists (quote ([& {:keys [excludes excludesfile includes includesfile refid], :as attrs} & nested])), :clj-ant/tag "invert", :clj-ant/class "org.apache.tools.ant.types.PatternSet", :clj-ant/classes ["org.apache.tools.ant.types.PatternSet"]}
   [& args]
   (clojure.core/apply c/element :invert args))
 
@@ -10524,7 +10524,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.IPlanetDeploymentTool"
-  {:arglists (quote ([& {:keys [classpath debug destdir genericjarsuffix iashome keepgenerated suffix], :as attrs} & nested])), :clj-ant/tag "iplanet", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.IPlanetDeploymentTool"}
+  {:arglists (quote ([& {:keys [classpath debug destdir genericjarsuffix iashome keepgenerated suffix], :as attrs} & nested])), :clj-ant/tag "iplanet", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.IPlanetDeploymentTool", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.IPlanetDeploymentTool"]}
   [& args]
   (clojure.core/apply c/element :iplanet args))
 
@@ -10537,7 +10537,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.condition.IsFalse"
-  {:arglists (quote ([& {:keys [value], :as attrs} & nested])), :clj-ant/tag "isfalse", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsFalse"}
+  {:arglists (quote ([& {:keys [value], :as attrs} & nested])), :clj-ant/tag "isfalse", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsFalse", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.IsFalse"]}
   [& args]
   (clojure.core/apply c/element :isfalse args))
 
@@ -10551,7 +10551,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.condition.IsReference"
-  {:arglists (quote ([& {:keys [refid type], :as attrs} & nested])), :clj-ant/tag "isreference", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsReference"}
+  {:arglists (quote ([& {:keys [refid type], :as attrs} & nested])), :clj-ant/tag "isreference", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsReference", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.IsReference"]}
   [& args]
   (clojure.core/apply c/element :isreference args))
 
@@ -10564,7 +10564,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.condition.IsSet"
-  {:arglists (quote ([& {:keys [property], :as attrs} & nested])), :clj-ant/tag "isset", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsSet"}
+  {:arglists (quote ([& {:keys [property], :as attrs} & nested])), :clj-ant/tag "isset", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsSet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.IsSet"]}
   [& args]
   (clojure.core/apply c/element :isset args))
 
@@ -10577,7 +10577,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.condition.IsTrue"
-  {:arglists (quote ([& {:keys [value], :as attrs} & nested])), :clj-ant/tag "istrue", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsTrue"}
+  {:arglists (quote ([& {:keys [value], :as attrs} & nested])), :clj-ant/tag "istrue", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.IsTrue", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.IsTrue"]}
   [& args]
   (clojure.core/apply c/element :istrue args))
 
@@ -10595,7 +10595,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.JbossDeploymentTool"
-  {:arglists (quote ([& {:keys [classpath destdir genericjarsuffix suffix], :as attrs} & nested])), :clj-ant/tag "jboss", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.JbossDeploymentTool"}
+  {:arglists (quote ([& {:keys [classpath destdir genericjarsuffix suffix], :as attrs} & nested])), :clj-ant/tag "jboss", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.JbossDeploymentTool", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.JbossDeploymentTool"]}
   [& args]
   (clojure.core/apply c/element :jboss args))
 
@@ -10631,7 +10631,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.JonasDeploymentTool"
-  {:arglists (quote ([& {:keys [additionalargs classpath destdir genericjarsuffix jarsuffix javac javacopts jonasroot keepgenerated keepgeneric nocompil nogenic novalidation orb rmicopts secpropag verbose], :as attrs} & nested])), :clj-ant/tag "jonas", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.JonasDeploymentTool"}
+  {:arglists (quote ([& {:keys [additionalargs classpath destdir genericjarsuffix jarsuffix javac javacopts jonasroot keepgenerated keepgeneric nocompil nogenic novalidation orb rmicopts secpropag verbose], :as attrs} & nested])), :clj-ant/tag "jonas", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.JonasDeploymentTool", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.JonasDeploymentTool" "org.apache.tools.ant.taskdefs.optional.j2ee.JonasHotDeploymentTool"]}
   [& args]
   (clojure.core/apply c/element :jonas args))
 
@@ -10650,7 +10650,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Commandline$Argument"
-  {:arglists (quote ([& {:keys [file line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "jvmarg", :clj-ant/class "org.apache.tools.ant.types.Commandline$Argument"}
+  {:arglists (quote ([& {:keys [file line path pathref prefix suffix value], :as attrs} & nested])), :clj-ant/tag "jvmarg", :clj-ant/class "org.apache.tools.ant.types.Commandline$Argument", :clj-ant/classes ["org.apache.tools.ant.types.Commandline$Argument"]}
   [& args]
   (clojure.core/apply c/element :jvmarg args))
 
@@ -10665,7 +10665,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link$Launcher"
-  {:arglists (quote ([& {:keys [mainclass module name], :as attrs} & nested])), :clj-ant/tag "launcher", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$Launcher"}
+  {:arglists (quote ([& {:keys [mainclass module name], :as attrs} & nested])), :clj-ant/tag "launcher", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$Launcher", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link$Launcher"]}
   [& args]
   (clojure.core/apply c/element :launcher args))
 
@@ -10688,7 +10688,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "legalpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "legalpath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :legalpath args))
 
@@ -10752,7 +10752,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.ZipFileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "lib", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "lib", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet", :clj-ant/classes ["org.apache.tools.ant.types.ZipFileSet"]}
   [& args]
   (clojure.core/apply c/element :lib args))
 
@@ -10768,7 +10768,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.LineContains"
-  {:arglists (quote ([& {:keys [matchany negate], :as attrs} & nested])), :clj-ant/tag "linecontains", :clj-ant/class "org.apache.tools.ant.filters.LineContains"}
+  {:arglists (quote ([& {:keys [matchany negate], :as attrs} & nested])), :clj-ant/tag "linecontains", :clj-ant/class "org.apache.tools.ant.filters.LineContains", :clj-ant/classes ["org.apache.tools.ant.filters.LineContains"]}
   [& args]
   (clojure.core/apply c/element :linecontains args))
 
@@ -10785,7 +10785,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.LineContainsRegExp"
-  {:arglists (quote ([& {:keys [casesensitive negate regexp], :as attrs} & nested])), :clj-ant/tag "linecontainsregexp", :clj-ant/class "org.apache.tools.ant.filters.LineContainsRegExp"}
+  {:arglists (quote ([& {:keys [casesensitive negate regexp], :as attrs} & nested])), :clj-ant/tag "linecontainsregexp", :clj-ant/class "org.apache.tools.ant.filters.LineContainsRegExp", :clj-ant/classes ["org.apache.tools.ant.filters.LineContainsRegExp"]}
   [& args]
   (clojure.core/apply c/element :linecontainsregexp args))
 
@@ -10798,7 +10798,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link$LocaleSpec"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "locale", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$LocaleSpec"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "locale", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$LocaleSpec", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link$LocaleSpec"]}
   [& args]
   (clojure.core/apply c/element :locale args))
 
@@ -10813,7 +10813,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ssh.SSHSession$LocalTunnel"
-  {:arglists (quote ([& {:keys [lport rhost rport], :as attrs} & nested])), :clj-ant/tag "localtunnel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHSession$LocalTunnel"}
+  {:arglists (quote ([& {:keys [lport rhost rport], :as attrs} & nested])), :clj-ant/tag "localtunnel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHSession$LocalTunnel", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ssh.SSHSession$LocalTunnel"]}
   [& args]
   (clojure.core/apply c/element :localtunnel args))
 
@@ -10824,7 +10824,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.resolvers.LocationResolver"
-  {:arglists (quote ([& nested])), :clj-ant/tag "location", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.resolvers.LocationResolver"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "location", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.resolvers.LocationResolver", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.resolvers.LocationResolver"]}
   [& args]
   (clojure.core/apply c/element :location args))
 
@@ -10866,7 +10866,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.MajoritySelector"
-  {:arglists (quote ([& {:keys [allowtie error refid], :as attrs} & nested])), :clj-ant/tag "majority", :clj-ant/class "org.apache.tools.ant.types.selectors.MajoritySelector"}
+  {:arglists (quote ([& {:keys [allowtie error refid], :as attrs} & nested])), :clj-ant/tag "majority", :clj-ant/class "org.apache.tools.ant.types.selectors.MajoritySelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.MajoritySelector"]}
   [& args]
   (clojure.core/apply c/element :majority args))
 
@@ -10889,7 +10889,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "manpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "manpath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :manpath args))
 
@@ -10903,7 +10903,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.PathConvert$MapEntry"
-  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "map", :clj-ant/class "org.apache.tools.ant.taskdefs.PathConvert$MapEntry"}
+  {:arglists (quote ([& {:keys [from to], :as attrs} & nested])), :clj-ant/tag "map", :clj-ant/class "org.apache.tools.ant.taskdefs.PathConvert$MapEntry", :clj-ant/classes ["org.apache.tools.ant.taskdefs.PathConvert$MapEntry"]}
   [& args]
   (clojure.core/apply c/element :map args))
 
@@ -10917,7 +10917,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Commandline$Marker"
-  {:arglists (quote ([& {:keys [prefix suffix], :as attrs} & nested])), :clj-ant/tag "marker", :clj-ant/class "org.apache.tools.ant.types.Commandline$Marker"}
+  {:arglists (quote ([& {:keys [prefix suffix], :as attrs} & nested])), :clj-ant/tag "marker", :clj-ant/class "org.apache.tools.ant.types.Commandline$Marker", :clj-ant/classes ["org.apache.tools.ant.types.Commandline$Marker"]}
   [& args]
   (clojure.core/apply c/element :marker args))
 
@@ -10940,7 +10940,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "mergefiles", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "mergefiles", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :mergefiles args))
 
@@ -10957,7 +10957,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.email.Message"
-  {:arglists (quote ([& {:keys [charset inputencoding mimetype src], :as attrs} & nested])), :clj-ant/tag "message", :clj-ant/class "org.apache.tools.ant.taskdefs.email.Message"}
+  {:arglists (quote ([& {:keys [charset inputencoding mimetype src], :as attrs} & nested])), :clj-ant/tag "message", :clj-ant/class "org.apache.tools.ant.taskdefs.email.Message", :clj-ant/classes ["org.apache.tools.ant.taskdefs.email.Message"]}
   [& args]
   (clojure.core/apply c/element :message args))
 
@@ -11021,7 +11021,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.ZipFileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "metainf", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "metainf", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet", :clj-ant/classes ["org.apache.tools.ant.types.ZipFileSet"]}
   [& args]
   (clojure.core/apply c/element :metainf args))
 
@@ -11049,7 +11049,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.modifiedselector.ModifiedSelector"
-  {:arglists (quote ([& {:keys [algorithm algorithmclass cache cacheclass comparator comparatorclass delayupdate error modified refid seldirs selres update], :as attrs} & nested])), :clj-ant/tag "modified", :clj-ant/class "org.apache.tools.ant.types.selectors.modifiedselector.ModifiedSelector"}
+  {:arglists (quote ([& {:keys [algorithm algorithmclass cache cacheclass comparator comparatorclass delayupdate error modified refid seldirs selres update], :as attrs} & nested])), :clj-ant/tag "modified", :clj-ant/class "org.apache.tools.ant.types.selectors.modifiedselector.ModifiedSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.modifiedselector.ModifiedSelector"]}
   [& args]
   (clojure.core/apply c/element :modified args))
 
@@ -11068,7 +11068,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.AbstractCvsTask$Module"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "module", :clj-ant/class "org.apache.tools.ant.taskdefs.AbstractCvsTask$Module"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "module", :clj-ant/class "org.apache.tools.ant.taskdefs.AbstractCvsTask$Module", :clj-ant/classes ["org.apache.tools.ant.taskdefs.AbstractCvsTask$Module" "org.apache.tools.ant.taskdefs.Javadoc$PackageName" "org.apache.tools.ant.taskdefs.modules.Link$ModuleSpec"]}
   [& args]
   (clojure.core/apply c/element :module args))
 
@@ -11091,7 +11091,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "modulepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "modulepath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :modulepath args))
 
@@ -11114,7 +11114,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "modulesourcepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "modulesourcepath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :modulesourcepath args))
 
@@ -11127,7 +11127,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Jmod$ResolutionWarningSpec"
-  {:arglists (quote ([& {:keys [reason], :as attrs} & nested])), :clj-ant/tag "modulewarning", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Jmod$ResolutionWarningSpec"}
+  {:arglists (quote ([& {:keys [reason], :as attrs} & nested])), :clj-ant/tag "modulewarning", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Jmod$ResolutionWarningSpec", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Jmod$ResolutionWarningSpec"]}
   [& args]
   (clojure.core/apply c/element :modulewarning args))
 
@@ -11139,7 +11139,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Local$Name"
-  {:arglists (quote ([& nested])), :clj-ant/tag "name", :clj-ant/class "org.apache.tools.ant.taskdefs.Local$Name"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "name", :clj-ant/class "org.apache.tools.ant.taskdefs.Local$Name", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Local$Name"]}
   [& args]
   (clojure.core/apply c/element :name args))
 
@@ -11162,7 +11162,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "nativelibpath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "nativelibpath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :nativelibpath args))
 
@@ -11203,7 +11203,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.NoneSelector"
-  {:arglists (quote ([& {:keys [error refid], :as attrs} & nested])), :clj-ant/tag "none", :clj-ant/class "org.apache.tools.ant.types.selectors.NoneSelector"}
+  {:arglists (quote ([& {:keys [error refid], :as attrs} & nested])), :clj-ant/tag "none", :clj-ant/class "org.apache.tools.ant.types.selectors.NoneSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.NoneSelector"]}
   [& args]
   (clojure.core/apply c/element :none args))
 
@@ -11249,7 +11249,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.NotSelector"
-  {:arglists (quote ([& {:keys [error refid], :as attrs} & nested])), :clj-ant/tag "not", :clj-ant/class "org.apache.tools.ant.types.selectors.NotSelector"}
+  {:arglists (quote ([& {:keys [error refid], :as attrs} & nested])), :clj-ant/tag "not", :clj-ant/class "org.apache.tools.ant.types.selectors.NotSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.NotSelector" "org.apache.tools.ant.taskdefs.condition.Not"]}
   [& args]
   (clojure.core/apply c/element :not args))
 
@@ -11262,7 +11262,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link$ModuleSpec"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "observablemodule", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$ModuleSpec"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "observablemodule", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$ModuleSpec", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link$ModuleSpec"]}
   [& args]
   (clojure.core/apply c/element :observablemodule args))
 
@@ -11279,7 +11279,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "options", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "options", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.extension.ExtensionSet"]}
   [& args]
   (clojure.core/apply c/element :options args))
 
@@ -11325,7 +11325,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.OrSelector"
-  {:arglists (quote ([& {:keys [error refid], :as attrs} & nested])), :clj-ant/tag "or", :clj-ant/class "org.apache.tools.ant.types.selectors.OrSelector"}
+  {:arglists (quote ([& {:keys [error refid], :as attrs} & nested])), :clj-ant/tag "or", :clj-ant/class "org.apache.tools.ant.types.selectors.OrSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.OrSelector" "org.apache.tools.ant.taskdefs.condition.Or"]}
   [& args]
   (clojure.core/apply c/element :or args))
 
@@ -11342,7 +11342,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.OrionDeploymentTool"
-  {:arglists (quote ([& {:keys [classpath destdir genericjarsuffix], :as attrs} & nested])), :clj-ant/tag "orion", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.OrionDeploymentTool"}
+  {:arglists (quote ([& {:keys [classpath destdir genericjarsuffix], :as attrs} & nested])), :clj-ant/tag "orion", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.OrionDeploymentTool", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.OrionDeploymentTool"]}
   [& args]
   (clojure.core/apply c/element :orion args))
 
@@ -11358,7 +11358,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.condition.Os"
-  {:arglists (quote ([& {:keys [arch family name version], :as attrs} & nested])), :clj-ant/tag "os", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.Os"}
+  {:arglists (quote ([& {:keys [arch family name version], :as attrs} & nested])), :clj-ant/tag "os", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.Os", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.Os"]}
   [& args]
   (clojure.core/apply c/element :os args))
 
@@ -11394,7 +11394,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FilterChain"
-  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "outputfilterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain"}
+  {:arglists (quote ([& {:keys [refid], :as attrs} & nested])), :clj-ant/tag "outputfilterchain", :clj-ant/class "org.apache.tools.ant.types.FilterChain", :clj-ant/classes ["org.apache.tools.ant.types.FilterChain"]}
   [& args]
   (clojure.core/apply c/element :outputfilterchain args))
 
@@ -11416,7 +11416,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Mapper"
-  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "outputmapper", :clj-ant/class "org.apache.tools.ant.types.Mapper"}
+  {:arglists (quote ([& {:keys [classname classpath classpathref from refid to type], :as attrs} & nested])), :clj-ant/tag "outputmapper", :clj-ant/class "org.apache.tools.ant.types.Mapper", :clj-ant/classes ["org.apache.tools.ant.types.Mapper"]}
   [& args]
   (clojure.core/apply c/element :outputmapper args))
 
@@ -11430,7 +11430,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.XSLTProcess$OutputProperty"
-  {:arglists (quote ([& {:keys [name value], :as attrs} & nested])), :clj-ant/tag "outputproperty", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess$OutputProperty"}
+  {:arglists (quote ([& {:keys [name value], :as attrs} & nested])), :clj-ant/tag "outputproperty", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess$OutputProperty", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess$OutputProperty"]}
   [& args]
   (clojure.core/apply c/element :outputproperty args))
 
@@ -11444,7 +11444,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.OwnedBySelector"
-  {:arglists (quote ([& {:keys [followsymlinks owner], :as attrs} & nested])), :clj-ant/tag "ownedby", :clj-ant/class "org.apache.tools.ant.types.selectors.OwnedBySelector"}
+  {:arglists (quote ([& {:keys [followsymlinks owner], :as attrs} & nested])), :clj-ant/tag "ownedby", :clj-ant/class "org.apache.tools.ant.types.selectors.OwnedBySelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.OwnedBySelector"]}
   [& args]
   (clojure.core/apply c/element :ownedby args))
 
@@ -11457,7 +11457,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$PackageName"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "package", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$PackageName"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "package", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$PackageName", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$PackageName"]}
   [& args]
   (clojure.core/apply c/element :package args))
 
@@ -11513,7 +11513,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.DirSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "packageset", :clj-ant/class "org.apache.tools.ant.types.DirSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "packageset", :clj-ant/class "org.apache.tools.ant.types.DirSet", :clj-ant/classes ["org.apache.tools.ant.types.DirSet"]}
   [& args]
   (clojure.core/apply c/element :packageset args))
 
@@ -11536,7 +11536,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Parameter"
-  {:arglists (quote ([& {:keys [name type value], :as attrs} & nested])), :clj-ant/tag "param", :clj-ant/class "org.apache.tools.ant.types.Parameter"}
+  {:arglists (quote ([& {:keys [name type value], :as attrs} & nested])), :clj-ant/tag "param", :clj-ant/class "org.apache.tools.ant.types.Parameter", :clj-ant/classes ["org.apache.tools.ant.types.Parameter" "org.apache.tools.ant.taskdefs.Property" "java.lang.Object" "org.apache.tools.ant.taskdefs.Javadoc$DocletParam" "org.apache.tools.ant.taskdefs.XSLTProcess$Param"]}
   [& args]
   (clojure.core/apply c/element :param args))
 
@@ -11549,7 +11549,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path$PathElement"
-  {:arglists (quote ([& {:keys [path], :as attrs} & nested])), :clj-ant/tag "pathelement", :clj-ant/class "org.apache.tools.ant.types.Path$PathElement"}
+  {:arglists (quote ([& {:keys [path], :as attrs} & nested])), :clj-ant/tag "pathelement", :clj-ant/class "org.apache.tools.ant.types.Path$PathElement", :clj-ant/classes ["org.apache.tools.ant.types.Path$PathElement"]}
   [& args]
   (clojure.core/apply c/element :pathelement args))
 
@@ -11563,7 +11563,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Permissions"
-  {:arglists (quote ([& nested])), :clj-ant/tag "permissions", :clj-ant/class "org.apache.tools.ant.types.Permissions"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "permissions", :clj-ant/class "org.apache.tools.ant.types.Permissions", :clj-ant/classes ["org.apache.tools.ant.types.Permissions"]}
   [& args]
   (clojure.core/apply c/element :permissions args))
 
@@ -11577,7 +11577,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.PosixGroupSelector"
-  {:arglists (quote ([& {:keys [followsymlinks group], :as attrs} & nested])), :clj-ant/tag "posixgroup", :clj-ant/class "org.apache.tools.ant.types.selectors.PosixGroupSelector"}
+  {:arglists (quote ([& {:keys [followsymlinks group], :as attrs} & nested])), :clj-ant/tag "posixgroup", :clj-ant/class "org.apache.tools.ant.types.selectors.PosixGroupSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.PosixGroupSelector"]}
   [& args]
   (clojure.core/apply c/element :posixgroup args))
 
@@ -11591,7 +11591,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.PosixPermissionsSelector"
-  {:arglists (quote ([& {:keys [followsymlinks permissions], :as attrs} & nested])), :clj-ant/tag "posixpermissions", :clj-ant/class "org.apache.tools.ant.types.selectors.PosixPermissionsSelector"}
+  {:arglists (quote ([& {:keys [followsymlinks permissions], :as attrs} & nested])), :clj-ant/tag "posixpermissions", :clj-ant/class "org.apache.tools.ant.types.selectors.PosixPermissionsSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.PosixPermissionsSelector"]}
   [& args]
   (clojure.core/apply c/element :posixpermissions args))
 
@@ -11604,7 +11604,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.PrefixLines"
-  {:arglists (quote ([& {:keys [prefix], :as attrs} & nested])), :clj-ant/tag "prefixlines", :clj-ant/class "org.apache.tools.ant.filters.PrefixLines"}
+  {:arglists (quote ([& {:keys [prefix], :as attrs} & nested])), :clj-ant/tag "prefixlines", :clj-ant/class "org.apache.tools.ant.filters.PrefixLines", :clj-ant/classes ["org.apache.tools.ant.filters.PrefixLines"]}
   [& args]
   (clojure.core/apply c/element :prefixlines args))
 
@@ -11622,7 +11622,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.PresentSelector"
-  {:arglists (quote ([& {:keys [error present refid targetdir], :as attrs} & nested])), :clj-ant/tag "present", :clj-ant/class "org.apache.tools.ant.types.selectors.PresentSelector"}
+  {:arglists (quote ([& {:keys [error present refid targetdir], :as attrs} & nested])), :clj-ant/tag "present", :clj-ant/class "org.apache.tools.ant.types.selectors.PresentSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.PresentSelector"]}
   [& args]
   (clojure.core/apply c/element :present args))
 
@@ -11679,7 +11679,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Sync$SyncTarget"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks preserveemptydirs refid], :as attrs} & nested])), :clj-ant/tag "preserveintarget", :clj-ant/class "org.apache.tools.ant.taskdefs.Sync$SyncTarget"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks preserveemptydirs refid], :as attrs} & nested])), :clj-ant/tag "preserveintarget", :clj-ant/class "org.apache.tools.ant.taskdefs.Sync$SyncTarget", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Sync$SyncTarget"]}
   [& args]
   (clojure.core/apply c/element :preserveintarget args))
 
@@ -11695,7 +11695,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.PropertySet$PropertyRef"
-  {:arglists (quote ([& {:keys [builtin name prefix regex], :as attrs} & nested])), :clj-ant/tag "propertyref", :clj-ant/class "org.apache.tools.ant.types.PropertySet$PropertyRef"}
+  {:arglists (quote ([& {:keys [builtin name prefix regex], :as attrs} & nested])), :clj-ant/tag "propertyref", :clj-ant/class "org.apache.tools.ant.types.PropertySet$PropertyRef", :clj-ant/classes ["org.apache.tools.ant.types.PropertySet$PropertyRef"]}
   [& args]
   (clojure.core/apply c/element :propertyref args))
 
@@ -11708,7 +11708,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.spi.Provider"
-  {:arglists (quote ([& {:keys [classname], :as attrs} & nested])), :clj-ant/tag "provider", :clj-ant/class "org.apache.tools.ant.types.spi.Provider"}
+  {:arglists (quote ([& {:keys [classname], :as attrs} & nested])), :clj-ant/tag "provider", :clj-ant/class "org.apache.tools.ant.types.spi.Provider", :clj-ant/classes ["org.apache.tools.ant.types.spi.Provider"]}
   [& args]
   (clojure.core/apply c/element :provider args))
 
@@ -11721,7 +11721,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.pvcs.PvcsProject"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "pvcsproject", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.pvcs.PvcsProject"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "pvcsproject", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.pvcs.PvcsProject", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.pvcs.PvcsProject"]}
   [& args]
   (clojure.core/apply c/element :pvcsproject args))
 
@@ -11732,7 +11732,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.ReadableSelector"
-  {:arglists (quote ([& nested])), :clj-ant/tag "readable", :clj-ant/class "org.apache.tools.ant.types.selectors.ReadableSelector"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "readable", :clj-ant/class "org.apache.tools.ant.types.selectors.ReadableSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.ReadableSelector"]}
   [& args]
   (clojure.core/apply c/element :readable args))
 
@@ -11746,7 +11746,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Ant$Reference"
-  {:arglists (quote ([& {:keys [refid torefid], :as attrs} & nested])), :clj-ant/tag "reference", :clj-ant/class "org.apache.tools.ant.taskdefs.Ant$Reference"}
+  {:arglists (quote ([& {:keys [refid torefid], :as attrs} & nested])), :clj-ant/tag "reference", :clj-ant/class "org.apache.tools.ant.taskdefs.Ant$Reference", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Ant$Reference"]}
   [& args]
   (clojure.core/apply c/element :reference args))
 
@@ -11763,7 +11763,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link$ReleaseInfo"
-  {:arglists (quote ([& {:keys [delete file], :as attrs} & nested])), :clj-ant/tag "releaseinfo", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$ReleaseInfo"}
+  {:arglists (quote ([& {:keys [delete file], :as attrs} & nested])), :clj-ant/tag "releaseinfo", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$ReleaseInfo", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link$ReleaseInfo"]}
   [& args]
   (clojure.core/apply c/element :releaseinfo args))
 
@@ -11778,7 +11778,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ssh.SSHSession$RemoteTunnel"
-  {:arglists (quote ([& {:keys [lhost lport rport], :as attrs} & nested])), :clj-ant/tag "remotetunnel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHSession$RemoteTunnel"}
+  {:arglists (quote ([& {:keys [lhost lport rport], :as attrs} & nested])), :clj-ant/tag "remotetunnel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHSession$RemoteTunnel", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ssh.SSHSession$RemoteTunnel"]}
   [& args]
   (clojure.core/apply c/element :remotetunnel args))
 
@@ -11796,7 +11796,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Replace$Replacefilter"
-  {:arglists (quote ([& {:keys [property token value], :as attrs} & nested])), :clj-ant/tag "replacefilter", :clj-ant/class "org.apache.tools.ant.taskdefs.Replace$Replacefilter"}
+  {:arglists (quote ([& {:keys [property token value], :as attrs} & nested])), :clj-ant/tag "replacefilter", :clj-ant/class "org.apache.tools.ant.taskdefs.Replace$Replacefilter", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Replace$Replacefilter"]}
   [& args]
   (clojure.core/apply c/element :replacefilter args))
 
@@ -11812,7 +11812,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TokenFilter$ReplaceRegex"
-  {:arglists (quote ([& {:keys [byline flags pattern replace], :as attrs} & nested])), :clj-ant/tag "replaceregex", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$ReplaceRegex"}
+  {:arglists (quote ([& {:keys [byline flags pattern replace], :as attrs} & nested])), :clj-ant/tag "replaceregex", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$ReplaceRegex", :clj-ant/classes ["org.apache.tools.ant.filters.TokenFilter$ReplaceRegex"]}
   [& args]
   (clojure.core/apply c/element :replaceregex args))
 
@@ -11827,7 +11827,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TokenFilter$ReplaceString"
-  {:arglists (quote ([& {:keys [byline from to], :as attrs} & nested])), :clj-ant/tag "replacestring", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$ReplaceString"}
+  {:arglists (quote ([& {:keys [byline from to], :as attrs} & nested])), :clj-ant/tag "replacestring", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$ReplaceString", :clj-ant/classes ["org.apache.tools.ant.filters.TokenFilter$ReplaceString"]}
   [& args]
   (clojure.core/apply c/element :replacestring args))
 
@@ -11841,7 +11841,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Replace$NestedString"
-  {:arglists (quote ([& {:keys [expandproperties], :as attrs} & nested])), :clj-ant/tag "replacetoken", :clj-ant/class "org.apache.tools.ant.taskdefs.Replace$NestedString"}
+  {:arglists (quote ([& {:keys [expandproperties], :as attrs} & nested])), :clj-ant/tag "replacetoken", :clj-ant/class "org.apache.tools.ant.taskdefs.Replace$NestedString", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Replace$NestedString"]}
   [& args]
   (clojure.core/apply c/element :replacetoken args))
 
@@ -11858,7 +11858,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.ReplaceTokens"
-  {:arglists (quote ([& {:keys [begintoken endtoken propertiesresource], :as attrs} & nested])), :clj-ant/tag "replacetokens", :clj-ant/class "org.apache.tools.ant.filters.ReplaceTokens"}
+  {:arglists (quote ([& {:keys [begintoken endtoken propertiesresource], :as attrs} & nested])), :clj-ant/tag "replacetokens", :clj-ant/class "org.apache.tools.ant.filters.ReplaceTokens", :clj-ant/classes ["org.apache.tools.ant.filters.ReplaceTokens"]}
   [& args]
   (clojure.core/apply c/element :replacetokens args))
 
@@ -11872,7 +11872,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Replace$NestedString"
-  {:arglists (quote ([& {:keys [expandproperties], :as attrs} & nested])), :clj-ant/tag "replacevalue", :clj-ant/class "org.apache.tools.ant.taskdefs.Replace$NestedString"}
+  {:arglists (quote ([& {:keys [expandproperties], :as attrs} & nested])), :clj-ant/tag "replacevalue", :clj-ant/class "org.apache.tools.ant.taskdefs.Replace$NestedString", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Replace$NestedString"]}
   [& args]
   (clojure.core/apply c/element :replacevalue args))
 
@@ -11886,7 +11886,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.email.EmailAddress"
-  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "replyto", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress"}
+  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "replyto", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress", :clj-ant/classes ["org.apache.tools.ant.taskdefs.email.EmailAddress"]}
   [& args]
   (clojure.core/apply c/element :replyto args))
 
@@ -11900,7 +11900,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"
-  {:arglists (quote ([& {:keys [listfile pattern], :as attrs} & nested])), :clj-ant/tag "resourceorder", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"}
+  {:arglists (quote ([& {:keys [listfile pattern], :as attrs} & nested])), :clj-ant/tag "resourceorder", :clj-ant/class "org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry", :clj-ant/classes ["org.apache.tools.ant.taskdefs.modules.Link$PatternListEntry"]}
   [& args]
   (clojure.core/apply c/element :resourceorder args))
 
@@ -11915,7 +11915,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Permissions$Permission"
-  {:arglists (quote ([& {:keys [actions class name], :as attrs} & nested])), :clj-ant/tag "revoke", :clj-ant/class "org.apache.tools.ant.types.Permissions$Permission"}
+  {:arglists (quote ([& {:keys [actions class name], :as attrs} & nested])), :clj-ant/tag "revoke", :clj-ant/class "org.apache.tools.ant.types.Permissions$Permission", :clj-ant/classes ["org.apache.tools.ant.types.Permissions$Permission"]}
   [& args]
   (clojure.core/apply c/element :revoke args))
 
@@ -11928,7 +11928,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.optional.depend.ClassfileSet$ClassRoot"
-  {:arglists (quote ([& {:keys [classname], :as attrs} & nested])), :clj-ant/tag "root", :clj-ant/class "org.apache.tools.ant.types.optional.depend.ClassfileSet$ClassRoot"}
+  {:arglists (quote ([& {:keys [classname], :as attrs} & nested])), :clj-ant/tag "root", :clj-ant/class "org.apache.tools.ant.types.optional.depend.ClassfileSet$ClassRoot", :clj-ant/classes ["org.apache.tools.ant.types.optional.depend.ClassfileSet$ClassRoot"]}
   [& args]
   (clojure.core/apply c/element :root args))
 
@@ -11984,7 +11984,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "rootfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "rootfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet", :clj-ant/classes ["org.apache.tools.ant.types.FileSet"]}
   [& args]
   (clojure.core/apply c/element :rootfileset args))
 
@@ -11999,7 +11999,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.SchemaValidate$SchemaLocation"
-  {:arglists (quote ([& {:keys [file namespace url], :as attrs} & nested])), :clj-ant/tag "schema", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.SchemaValidate$SchemaLocation"}
+  {:arglists (quote ([& {:keys [file namespace url], :as attrs} & nested])), :clj-ant/tag "schema", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.SchemaValidate$SchemaLocation", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.SchemaValidate$SchemaLocation"]}
   [& args]
   (clojure.core/apply c/element :schema args))
 
@@ -12014,7 +12014,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Manifest$Section"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "section", :clj-ant/class "org.apache.tools.ant.taskdefs.Manifest$Section"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "section", :clj-ant/class "org.apache.tools.ant.taskdefs.Manifest$Section", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Manifest$Section"]}
   [& args]
   (clojure.core/apply c/element :section args))
 
@@ -12030,7 +12030,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.spi.Service"
-  {:arglists (quote ([& {:keys [provider type], :as attrs} & nested])), :clj-ant/tag "service", :clj-ant/class "org.apache.tools.ant.types.spi.Service"}
+  {:arglists (quote ([& {:keys [provider type], :as attrs} & nested])), :clj-ant/tag "service", :clj-ant/class "org.apache.tools.ant.types.spi.Service", :clj-ant/classes ["org.apache.tools.ant.types.spi.Service"]}
   [& args]
   (clojure.core/apply c/element :service args))
 
@@ -12047,7 +12047,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.SizeSelector"
-  {:arglists (quote ([& {:keys [error refid units value when], :as attrs} & nested])), :clj-ant/tag "size", :clj-ant/class "org.apache.tools.ant.types.selectors.SizeSelector"}
+  {:arglists (quote ([& {:keys [error refid units value when], :as attrs} & nested])), :clj-ant/tag "size", :clj-ant/class "org.apache.tools.ant.types.selectors.SizeSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.SizeSelector"]}
   [& args]
   (clojure.core/apply c/element :size args))
 
@@ -12061,7 +12061,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.condition.Socket"
-  {:arglists (quote ([& {:keys [port server], :as attrs} & nested])), :clj-ant/tag "socket", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.Socket"}
+  {:arglists (quote ([& {:keys [port server], :as attrs} & nested])), :clj-ant/tag "socket", :clj-ant/class "org.apache.tools.ant.taskdefs.condition.Socket", :clj-ant/classes ["org.apache.tools.ant.taskdefs.condition.Socket"]}
   [& args]
   (clojure.core/apply c/element :socket args))
 
@@ -12074,7 +12074,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$SourceFile"
-  {:arglists (quote ([& {:keys [file], :as attrs} & nested])), :clj-ant/tag "source", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$SourceFile"}
+  {:arglists (quote ([& {:keys [file], :as attrs} & nested])), :clj-ant/tag "source", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$SourceFile", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$SourceFile"]}
   [& args]
   (clojure.core/apply c/element :source args))
 
@@ -12085,7 +12085,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$ResourceCollectionContainer"
-  {:arglists (quote ([& nested])), :clj-ant/tag "sourcefiles", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$ResourceCollectionContainer"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "sourcefiles", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$ResourceCollectionContainer", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$ResourceCollectionContainer"]}
   [& args]
   (clojure.core/apply c/element :sourcefiles args))
 
@@ -12108,7 +12108,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "sourcepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "sourcepath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :sourcepath args))
 
@@ -12122,7 +12122,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.resources.Union"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "sources", :clj-ant/class "org.apache.tools.ant.types.resources.Union"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "sources", :clj-ant/class "org.apache.tools.ant.types.resources.Union", :clj-ant/classes ["org.apache.tools.ant.types.resources.Union"]}
   [& args]
   (clojure.core/apply c/element :sources args))
 
@@ -12145,7 +12145,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "src", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "src", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :src args))
 
@@ -12159,7 +12159,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Commandline$Marker"
-  {:arglists (quote ([& {:keys [prefix suffix], :as attrs} & nested])), :clj-ant/tag "srcfile", :clj-ant/class "org.apache.tools.ant.types.Commandline$Marker"}
+  {:arglists (quote ([& {:keys [prefix suffix], :as attrs} & nested])), :clj-ant/tag "srcfile", :clj-ant/class "org.apache.tools.ant.types.Commandline$Marker", :clj-ant/classes ["org.apache.tools.ant.types.Commandline$Marker"]}
   [& args]
   (clojure.core/apply c/element :srcfile args))
 
@@ -12176,7 +12176,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FileList"
-  {:arglists (quote ([& {:keys [dir files refid], :as attrs} & nested])), :clj-ant/tag "srcfilelist", :clj-ant/class "org.apache.tools.ant.types.FileList"}
+  {:arglists (quote ([& {:keys [dir files refid], :as attrs} & nested])), :clj-ant/tag "srcfilelist", :clj-ant/class "org.apache.tools.ant.types.FileList", :clj-ant/classes ["org.apache.tools.ant.types.FileList"]}
   [& args]
   (clojure.core/apply c/element :srcfilelist args))
 
@@ -12232,7 +12232,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "srcfiles", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "srcfiles", :clj-ant/class "org.apache.tools.ant.types.FileSet", :clj-ant/classes ["org.apache.tools.ant.types.FileSet"]}
   [& args]
   (clojure.core/apply c/element :srcfiles args))
 
@@ -12288,7 +12288,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "srcfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "srcfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet", :clj-ant/classes ["org.apache.tools.ant.types.FileSet"]}
   [& args]
   (clojure.core/apply c/element :srcfileset args))
 
@@ -12302,7 +12302,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.resources.Union"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "srcresources", :clj-ant/class "org.apache.tools.ant.types.resources.Union"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "srcresources", :clj-ant/class "org.apache.tools.ant.types.resources.Union", :clj-ant/classes ["org.apache.tools.ant.types.resources.Union"]}
   [& args]
   (clojure.core/apply c/element :srcresources args))
 
@@ -12313,7 +12313,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.StripJavaComments"
-  {:arglists (quote ([& nested])), :clj-ant/tag "stripjavacomments", :clj-ant/class "org.apache.tools.ant.filters.StripJavaComments"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "stripjavacomments", :clj-ant/class "org.apache.tools.ant.filters.StripJavaComments", :clj-ant/classes ["org.apache.tools.ant.filters.StripJavaComments"]}
   [& args]
   (clojure.core/apply c/element :stripjavacomments args))
 
@@ -12326,7 +12326,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.StripLineBreaks"
-  {:arglists (quote ([& {:keys [linebreaks], :as attrs} & nested])), :clj-ant/tag "striplinebreaks", :clj-ant/class "org.apache.tools.ant.filters.StripLineBreaks"}
+  {:arglists (quote ([& {:keys [linebreaks], :as attrs} & nested])), :clj-ant/tag "striplinebreaks", :clj-ant/class "org.apache.tools.ant.filters.StripLineBreaks", :clj-ant/classes ["org.apache.tools.ant.filters.StripLineBreaks"]}
   [& args]
   (clojure.core/apply c/element :striplinebreaks args))
 
@@ -12339,7 +12339,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.StripLineComments"
-  {:arglists (quote ([& nested])), :clj-ant/tag "striplinecomments", :clj-ant/class "org.apache.tools.ant.filters.StripLineComments"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "striplinecomments", :clj-ant/class "org.apache.tools.ant.filters.StripLineComments", :clj-ant/classes ["org.apache.tools.ant.filters.StripLineComments"]}
   [& args]
   (clojure.core/apply c/element :striplinecomments args))
 
@@ -12352,7 +12352,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.SuffixLines"
-  {:arglists (quote ([& {:keys [suffix], :as attrs} & nested])), :clj-ant/tag "suffixlines", :clj-ant/class "org.apache.tools.ant.filters.SuffixLines"}
+  {:arglists (quote ([& {:keys [suffix], :as attrs} & nested])), :clj-ant/tag "suffixlines", :clj-ant/class "org.apache.tools.ant.filters.SuffixLines", :clj-ant/classes ["org.apache.tools.ant.filters.SuffixLines"]}
   [& args]
   (clojure.core/apply c/element :suffixlines args))
 
@@ -12408,7 +12408,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "support", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "support", :clj-ant/class "org.apache.tools.ant.types.FileSet", :clj-ant/classes ["org.apache.tools.ant.types.FileSet"]}
   [& args]
   (clojure.core/apply c/element :support args))
 
@@ -12424,7 +12424,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Environment$Variable"
-  {:arglists (quote ([& {:keys [file key path value], :as attrs} & nested])), :clj-ant/tag "sysproperty", :clj-ant/class "org.apache.tools.ant.types.Environment$Variable"}
+  {:arglists (quote ([& {:keys [file key path value], :as attrs} & nested])), :clj-ant/tag "sysproperty", :clj-ant/class "org.apache.tools.ant.types.Environment$Variable", :clj-ant/classes ["org.apache.tools.ant.types.Environment$Variable"]}
   [& args]
   (clojure.core/apply c/element :sysproperty args))
 
@@ -12443,7 +12443,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.PropertySet"
-  {:arglists (quote ([& {:keys [dynamic negate refid], :as attrs} & nested])), :clj-ant/tag "syspropertyset", :clj-ant/class "org.apache.tools.ant.types.PropertySet"}
+  {:arglists (quote ([& {:keys [dynamic negate refid], :as attrs} & nested])), :clj-ant/tag "syspropertyset", :clj-ant/class "org.apache.tools.ant.types.PropertySet", :clj-ant/classes ["org.apache.tools.ant.types.PropertySet"]}
   [& args]
   (clojure.core/apply c/element :syspropertyset args))
 
@@ -12456,7 +12456,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TabsToSpaces"
-  {:arglists (quote ([& {:keys [tablength], :as attrs} & nested])), :clj-ant/tag "tabstospaces", :clj-ant/class "org.apache.tools.ant.filters.TabsToSpaces"}
+  {:arglists (quote ([& {:keys [tablength], :as attrs} & nested])), :clj-ant/tag "tabstospaces", :clj-ant/class "org.apache.tools.ant.filters.TabsToSpaces", :clj-ant/classes ["org.apache.tools.ant.filters.TabsToSpaces"]}
   [& args]
   (clojure.core/apply c/element :tabstospaces args))
 
@@ -12515,7 +12515,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$TagArgument"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir enabled erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks name refid scope], :as attrs} & nested])), :clj-ant/tag "tag", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$TagArgument"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir enabled erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks name refid scope], :as attrs} & nested])), :clj-ant/tag "tag", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$TagArgument", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$TagArgument"]}
   [& args]
   (clojure.core/apply c/element :tag args))
 
@@ -12532,7 +12532,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$ExtensionInfo"
-  {:arglists (quote ([& {:keys [name path pathref], :as attrs} & nested])), :clj-ant/tag "taglet", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$ExtensionInfo"}
+  {:arglists (quote ([& {:keys [name path pathref], :as attrs} & nested])), :clj-ant/tag "taglet", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$ExtensionInfo", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$ExtensionInfo"]}
   [& args]
   (clojure.core/apply c/element :taglet args))
 
@@ -12546,7 +12546,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TailFilter"
-  {:arglists (quote ([& {:keys [lines skip], :as attrs} & nested])), :clj-ant/tag "tailfilter", :clj-ant/class "org.apache.tools.ant.filters.TailFilter"}
+  {:arglists (quote ([& {:keys [lines skip], :as attrs} & nested])), :clj-ant/tag "tailfilter", :clj-ant/class "org.apache.tools.ant.filters.TailFilter", :clj-ant/classes ["org.apache.tools.ant.filters.TailFilter"]}
   [& args]
   (clojure.core/apply c/element :tailfilter args))
 
@@ -12559,7 +12559,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Ant$TargetElement"
-  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "target", :clj-ant/class "org.apache.tools.ant.taskdefs.Ant$TargetElement"}
+  {:arglists (quote ([& {:keys [name], :as attrs} & nested])), :clj-ant/tag "target", :clj-ant/class "org.apache.tools.ant.taskdefs.Ant$TargetElement", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Ant$TargetElement"]}
   [& args]
   (clojure.core/apply c/element :target args))
 
@@ -12573,7 +12573,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Commandline$Marker"
-  {:arglists (quote ([& {:keys [prefix suffix], :as attrs} & nested])), :clj-ant/tag "targetfile", :clj-ant/class "org.apache.tools.ant.types.Commandline$Marker"}
+  {:arglists (quote ([& {:keys [prefix suffix], :as attrs} & nested])), :clj-ant/tag "targetfile", :clj-ant/class "org.apache.tools.ant.types.Commandline$Marker", :clj-ant/classes ["org.apache.tools.ant.types.Commandline$Marker"]}
   [& args]
   (clojure.core/apply c/element :targetfile args))
 
@@ -12590,7 +12590,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FileList"
-  {:arglists (quote ([& {:keys [dir files refid], :as attrs} & nested])), :clj-ant/tag "targetfilelist", :clj-ant/class "org.apache.tools.ant.types.FileList"}
+  {:arglists (quote ([& {:keys [dir files refid], :as attrs} & nested])), :clj-ant/tag "targetfilelist", :clj-ant/class "org.apache.tools.ant.types.FileList", :clj-ant/classes ["org.apache.tools.ant.types.FileList"]}
   [& args]
   (clojure.core/apply c/element :targetfilelist args))
 
@@ -12646,7 +12646,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "targetfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "targetfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet", :clj-ant/classes ["org.apache.tools.ant.types.FileSet"]}
   [& args]
   (clojure.core/apply c/element :targetfileset args))
 
@@ -12669,7 +12669,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "targets", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "targets", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :targets args))
 
@@ -12683,7 +12683,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.resources.Union"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "tars", :clj-ant/class "org.apache.tools.ant.types.resources.Union"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "tars", :clj-ant/class "org.apache.tools.ant.types.resources.Union", :clj-ant/classes ["org.apache.tools.ant.types.resources.Union"]}
   [& args]
   (clojure.core/apply c/element :tars args))
 
@@ -12694,7 +12694,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.Task"
-  {:arglists (quote ([& nested])), :clj-ant/tag "task", :clj-ant/class "org.apache.tools.ant.Task"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "task", :clj-ant/class "org.apache.tools.ant.Task", :clj-ant/classes ["org.apache.tools.ant.Task"]}
   [& args]
   (clojure.core/apply c/element :task args))
 
@@ -12710,7 +12710,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.MacroDef$Text"
-  {:arglists (quote ([& {:keys [default name optional trim], :as attrs} & nested])), :clj-ant/tag "text", :clj-ant/class "org.apache.tools.ant.taskdefs.MacroDef$Text"}
+  {:arglists (quote ([& {:keys [default name optional trim], :as attrs} & nested])), :clj-ant/tag "text", :clj-ant/class "org.apache.tools.ant.taskdefs.MacroDef$Text", :clj-ant/classes ["org.apache.tools.ant.taskdefs.MacroDef$Text"]}
   [& args]
   (clojure.core/apply c/element :text args))
 
@@ -12722,7 +12722,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc$Html"
-  {:arglists (quote ([& nested])), :clj-ant/tag "title", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$Html"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "title", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc$Html", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc$Html"]}
   [& args]
   (clojure.core/apply c/element :title args))
 
@@ -12736,7 +12736,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.email.EmailAddress"
-  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "to", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress"}
+  {:arglists (quote ([& {:keys [address name], :as attrs} & nested])), :clj-ant/tag "to", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailAddress", :clj-ant/classes ["org.apache.tools.ant.taskdefs.email.EmailAddress"]}
   [& args]
   (clojure.core/apply c/element :to args))
 
@@ -12750,7 +12750,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.ReplaceTokens$Token"
-  {:arglists (quote ([& {:keys [key value], :as attrs} & nested])), :clj-ant/tag "token", :clj-ant/class "org.apache.tools.ant.filters.ReplaceTokens$Token"}
+  {:arglists (quote ([& {:keys [key value], :as attrs} & nested])), :clj-ant/tag "token", :clj-ant/class "org.apache.tools.ant.filters.ReplaceTokens$Token", :clj-ant/classes ["org.apache.tools.ant.filters.ReplaceTokens$Token"]}
   [& args]
   (clojure.core/apply c/element :token args))
 
@@ -12774,7 +12774,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TokenFilter"
-  {:arglists (quote ([& {:keys [delimoutput], :as attrs} & nested])), :clj-ant/tag "tokenfilter", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter"}
+  {:arglists (quote ([& {:keys [delimoutput], :as attrs} & nested])), :clj-ant/tag "tokenfilter", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter", :clj-ant/classes ["org.apache.tools.ant.filters.TokenFilter"]}
   [& args]
   (clojure.core/apply c/element :tokenfilter args))
 
@@ -12791,7 +12791,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.XSLTProcess$TraceConfiguration"
-  {:arglists (quote ([& {:keys [elements extension generation selection templates], :as attrs} & nested])), :clj-ant/tag "trace", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess$TraceConfiguration"}
+  {:arglists (quote ([& {:keys [elements extension generation selection templates], :as attrs} & nested])), :clj-ant/tag "trace", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess$TraceConfiguration", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess$TraceConfiguration"]}
   [& args]
   (clojure.core/apply c/element :trace args))
 
@@ -12806,7 +12806,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.SQLExec$Transaction"
-  {:arglists (quote ([& {:keys [src srcresource], :as attrs} & nested])), :clj-ant/tag "transaction", :clj-ant/class "org.apache.tools.ant.taskdefs.SQLExec$Transaction"}
+  {:arglists (quote ([& {:keys [src srcresource], :as attrs} & nested])), :clj-ant/tag "transaction", :clj-ant/class "org.apache.tools.ant.taskdefs.SQLExec$Transaction", :clj-ant/classes ["org.apache.tools.ant.taskdefs.SQLExec$Transaction"]}
   [& args]
   (clojure.core/apply c/element :transaction args))
 
@@ -12819,7 +12819,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.filters.TokenFilter$Trim"
-  {:arglists (quote ([& {:keys [byline], :as attrs} & nested])), :clj-ant/tag "trim", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$Trim"}
+  {:arglists (quote ([& {:keys [byline], :as attrs} & nested])), :clj-ant/tag "trim", :clj-ant/class "org.apache.tools.ant.filters.TokenFilter$Trim", :clj-ant/classes ["org.apache.tools.ant.filters.TokenFilter$Trim"]}
   [& args]
   (clojure.core/apply c/element :trim args))
 
@@ -12834,7 +12834,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.TypeSelector"
-  {:arglists (quote ([& {:keys [error refid type], :as attrs} & nested])), :clj-ant/tag "type", :clj-ant/class "org.apache.tools.ant.types.selectors.TypeSelector"}
+  {:arglists (quote ([& {:keys [error refid type], :as attrs} & nested])), :clj-ant/tag "type", :clj-ant/class "org.apache.tools.ant.types.selectors.TypeSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.TypeSelector"]}
   [& args]
   (clojure.core/apply c/element :type args))
 
@@ -12857,7 +12857,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "upgrademodulepath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "upgrademodulepath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :upgrademodulepath args))
 
@@ -12871,7 +12871,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.cvslib.CvsUser"
-  {:arglists (quote ([& {:keys [displayname userid], :as attrs} & nested])), :clj-ant/tag "user", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.CvsUser"}
+  {:arglists (quote ([& {:keys [displayname userid], :as attrs} & nested])), :clj-ant/tag "user", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.CvsUser", :clj-ant/classes ["org.apache.tools.ant.taskdefs.cvslib.CvsUser"]}
   [& args]
   (clojure.core/apply c/element :user args))
 
@@ -12886,7 +12886,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.ModuleVersion"
-  {:arglists (quote ([& {:keys [build number prerelease], :as attrs} & nested])), :clj-ant/tag "version", :clj-ant/class "org.apache.tools.ant.types.ModuleVersion"}
+  {:arglists (quote ([& {:keys [build number prerelease], :as attrs} & nested])), :clj-ant/tag "version", :clj-ant/class "org.apache.tools.ant.types.ModuleVersion", :clj-ant/classes ["org.apache.tools.ant.types.ModuleVersion"]}
   [& args]
   (clojure.core/apply c/element :version args))
 
@@ -12909,7 +12909,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "wasclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "wasclasspath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :wasclasspath args))
 
@@ -12922,7 +12922,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.jsp.JspC$WebAppParameter"
-  {:arglists (quote ([& {:keys [basedir], :as attrs} & nested])), :clj-ant/tag "webapp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.jsp.JspC$WebAppParameter"}
+  {:arglists (quote ([& {:keys [basedir], :as attrs} & nested])), :clj-ant/tag "webapp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.jsp.JspC$WebAppParameter", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.jsp.JspC$WebAppParameter"]}
   [& args]
   (clojure.core/apply c/element :webapp args))
 
@@ -12986,7 +12986,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.ZipFileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "webinf", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir dirmode encoding erroronmissingarchive erroronmissingdir excludes excludesfile file filemode followsymlinks fullpath includes includesfile maxlevelsofsymlinks prefix refid src srcresource], :as attrs} & nested])), :clj-ant/tag "webinf", :clj-ant/class "org.apache.tools.ant.types.ZipFileSet", :clj-ant/classes ["org.apache.tools.ant.types.ZipFileSet"]}
   [& args]
   (clojure.core/apply c/element :webinf args))
 
@@ -13027,7 +13027,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.WeblogicDeploymentTool"
-  {:arglists (quote ([& {:keys [args classpath compiler destdir ejbcclass ejbdtd genericjarsuffix jvmargs jvmdebuglevel keepgenerated keepgeneric newcmp noejbc oldcmp outputdir rebuild suffix weblogicdtd wlclasspath wldtd], :as attrs} & nested])), :clj-ant/tag "weblogic", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.WeblogicDeploymentTool"}
+  {:arglists (quote ([& {:keys [args classpath compiler destdir ejbcclass ejbdtd genericjarsuffix jvmargs jvmdebuglevel keepgenerated keepgeneric newcmp noejbc oldcmp outputdir rebuild suffix weblogicdtd wlclasspath wldtd], :as attrs} & nested])), :clj-ant/tag "weblogic", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.WeblogicDeploymentTool", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.WeblogicDeploymentTool" "org.apache.tools.ant.taskdefs.optional.j2ee.WebLogicHotDeploymentTool"]}
   [& args]
   (clojure.core/apply c/element :weblogic args))
 
@@ -13065,7 +13065,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.WeblogicTOPLinkDeploymentTool"
-  {:arglists (quote ([& {:keys [args classpath compiler destdir ejbcclass ejbdtd genericjarsuffix jvmargs jvmdebuglevel keepgenerated keepgeneric newcmp noejbc oldcmp outputdir rebuild suffix toplinkdescriptor toplinkdtd weblogicdtd wlclasspath wldtd], :as attrs} & nested])), :clj-ant/tag "weblogictoplink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.WeblogicTOPLinkDeploymentTool"}
+  {:arglists (quote ([& {:keys [args classpath compiler destdir ejbcclass ejbdtd genericjarsuffix jvmargs jvmdebuglevel keepgenerated keepgeneric newcmp noejbc oldcmp outputdir rebuild suffix toplinkdescriptor toplinkdtd weblogicdtd wlclasspath wldtd], :as attrs} & nested])), :clj-ant/tag "weblogictoplink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.WeblogicTOPLinkDeploymentTool", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.WeblogicTOPLinkDeploymentTool"]}
   [& args]
   (clojure.core/apply c/element :weblogictoplink args))
 
@@ -13103,7 +13103,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.WebsphereDeploymentTool"
-  {:arglists (quote ([& {:keys [classpath codegen dbname dbschema dbvendor destdir ejbdeploy ejbdtd genericjarsuffix keepgeneric newcmp noinform novalidate nowarn oldcmp quiet rebuild rmicoptions suffix tempdir trace use35 wasclasspath], :as attrs} & nested])), :clj-ant/tag "websphere", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.WebsphereDeploymentTool"}
+  {:arglists (quote ([& {:keys [classpath codegen dbname dbschema dbvendor destdir ejbdeploy ejbdtd genericjarsuffix keepgeneric newcmp noinform novalidate nowarn oldcmp quiet rebuild rmicoptions suffix tempdir trace use35 wasclasspath], :as attrs} & nested])), :clj-ant/tag "websphere", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.WebsphereDeploymentTool", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.WebsphereDeploymentTool"]}
   [& args]
   (clojure.core/apply c/element :websphere args))
 
@@ -13114,7 +13114,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.WindowsJunctionSelector"
-  {:arglists (quote ([& nested])), :clj-ant/tag "windowsjunction", :clj-ant/class "org.apache.tools.ant.types.selectors.WindowsJunctionSelector"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "windowsjunction", :clj-ant/class "org.apache.tools.ant.types.selectors.WindowsJunctionSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.WindowsJunctionSelector"]}
   [& args]
   (clojure.core/apply c/element :windowsjunction args))
 
@@ -13137,7 +13137,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.Path"
-  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "wlclasspath", :clj-ant/class "org.apache.tools.ant.types.Path"}
+  {:arglists (quote ([& {:keys [cache path refid], :as attrs} & nested])), :clj-ant/tag "wlclasspath", :clj-ant/class "org.apache.tools.ant.types.Path", :clj-ant/classes ["org.apache.tools.ant.types.Path"]}
   [& args]
   (clojure.core/apply c/element :wlclasspath args))
 
@@ -13148,7 +13148,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.selectors.WritableSelector"
-  {:arglists (quote ([& nested])), :clj-ant/tag "writable", :clj-ant/class "org.apache.tools.ant.types.selectors.WritableSelector"}
+  {:arglists (quote ([& nested])), :clj-ant/tag "writable", :clj-ant/class "org.apache.tools.ant.types.selectors.WritableSelector", :clj-ant/classes ["org.apache.tools.ant.types.selectors.WritableSelector"]}
   [& args]
   (clojure.core/apply c/element :writable args))
 
@@ -13204,7 +13204,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.FileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "zipgroupfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet"}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "zipgroupfileset", :clj-ant/class "org.apache.tools.ant.types.FileSet", :clj-ant/classes ["org.apache.tools.ant.types.FileSet"]}
   [& args]
   (clojure.core/apply c/element :zipgroupfileset args))
 
@@ -13218,7 +13218,7 @@
   Nested-only element discovered via introspection.
 
   Defined by: org.apache.tools.ant.types.resources.Union"
-  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "zips", :clj-ant/class "org.apache.tools.ant.types.resources.Union"}
+  {:arglists (quote ([& {:keys [cache refid], :as attrs} & nested])), :clj-ant/tag "zips", :clj-ant/class "org.apache.tools.ant.types.resources.Union", :clj-ant/classes ["org.apache.tools.ant.types.resources.Union"]}
   [& args]
   (clojure.core/apply c/element :zips args))
 
