@@ -24,6 +24,7 @@
                                  DefaultLogger BuildListener BuildEvent]
            [org.apache.tools.ant.types Resource ResourceCollection]
            [org.apache.tools.ant.types.resources FileProvider]
+           [cljant ClojureTask]
            [java.io File PrintStream]))
 
 ;; ---------------------------------------------------------------------------
@@ -211,7 +212,55 @@
       (.addBuildListener p l))
     (doseq [[k v] props]
       (.setUserProperty p (clojure.core/name k) (str v)))
+    ;; Register every Clojure-defined task on this project. The
+    ;; bridge class itself is shared; per-task fns live in
+    ;; ClojureTask/REGISTRY and are looked up by task name.
+    (doseq [tn (.keySet ClojureTask/REGISTRY)]
+      (.addTaskDefinition p tn ClojureTask))
     p))
+
+;; ---------------------------------------------------------------------------
+;; Clojure-defined tasks
+;;
+;; `deftask` registers a Clojure fn as an Ant task. The fn becomes
+;; indistinguishable from a built-in inside an element tree --
+;; ${...} property expansion runs on its attributes, the build
+;; logger fires task-started / task-finished, <antcall> can target
+;; it, <macrodef> can wrap it. The bridge class lives in
+;; src/java/cljant/ClojureTask.java and is the only Java in clj-ant.
+
+(defn deftask
+  "Register a Clojure fn as an Ant task named `tag`.
+
+  The fn is called on execute with one argument: a map containing
+
+    :project    the org.apache.tools.ant.Project
+    :task-name  the registered tag name (a String)
+    :text       the element's text body, if any
+    <attr>      one keyword entry per attribute; values are strings
+                with `${...}` property references already expanded.
+
+  Side-effecting: the registration is global. Every Project clj-ant
+  builds via `make-project` after this call has the task installed.
+  Re-registering the same `tag` replaces the previous fn.
+
+  Example:
+      (a/deftask :slack-notify
+        (fn [{:keys [channel msg webhook]}]
+          (slack/post webhook channel msg)))
+
+      (a/ant
+        (a/element :slack-notify :webhook url
+                   :channel \"#deploys\"
+                   :msg \"shipped ${version}\"))"
+  [tag f]
+  (.put ClojureTask/REGISTRY (clojure.core/name tag) f)
+  tag)
+
+(defn deftask?
+  "Truthy if `tag` has been registered via `deftask`."
+  [tag]
+  (.containsKey ClojureTask/REGISTRY (clojure.core/name tag)))
 
 ;; ---------------------------------------------------------------------------
 ;; Data → UnknownElement
