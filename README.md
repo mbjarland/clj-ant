@@ -1,6 +1,10 @@
 # clj-ant
 
-Apache Ant's task and type ecosystem, callable as fluent Clojure.
+Apache Ant's task ecosystem, fluent from Clojure. Tasks are
+functions; **resource collections** (`fileset`, `path`, `dirset`,
+`union`, `restrict`, …) are lazy `java.io.File` seqs you can
+`filter`/`map`/`transduce` over — and pass straight back as
+children of any task.
 
 [![CI](https://github.com/mbjarland/clj-ant/actions/workflows/ci.yml/badge.svg)](https://github.com/mbjarland/clj-ant/actions/workflows/ci.yml)
 [![Clojars Project](https://img.shields.io/clojars/v/io.github.mbjarland/clj-ant.svg)](https://clojars.org/io.github.mbjarland/clj-ant)
@@ -13,21 +17,41 @@ Apache Ant's task and type ecosystem, callable as fluent Clojure.
 
 ```clojure
 (require '[clj-ant.core  :as a]
-         '[clj-ant.tasks :as t])
+         '[clj-ant.tasks :as t]
+         '[slack.api     :as slack])
 
-(a/ant
-  (t/property :name "version" :value "1.2.3")
-  (t/jar     :destfile "app-${version}.jar" :basedir "target/classes")
-  (t/scp     :file "app-${version}.jar"
-             :todir "deploy@web-1:/srv/"
-             :keyfile "~/.ssh/id_ed25519" :trust "true")
-  (t/sshexec :host "web-1" :username "deploy"
-             :keyfile "~/.ssh/id_ed25519" :trust "true"
-             :command "systemctl --user restart app"))
+;; Find every config file changed in the last 5 minutes -- in Clojure --
+;; render it with Ant's streaming token-replacement, scp the bundle to
+;; the remote, restart the service, ping Slack. One expression.
+(let [since   (- (System/currentTimeMillis) (* 5 60 1000))
+      version "1.2.3"]
+  (a/ant
+    (t/copy :todir "deploy/etc"
+      ;; A live Clojure seq, dropped into the Ant tree as a child:
+      (->> (a/files (t/fileset :dir "etc/templates"))
+           (filter #(> (.lastModified %) since)))
+      ;; Ant's filterchain, streaming through every file:
+      (t/filterchain
+        (t/tokenfilter
+          (t/replacestring :from "@VERSION@" :to version))))
+
+    (t/scp     :file (str "app-" version ".jar")
+               :todir "deploy@web-1:/srv/"
+               :keyfile "~/.ssh/id_ed25519" :trust "true")
+    (t/sshexec :host "web-1" :username "deploy"
+               :keyfile "~/.ssh/id_ed25519" :trust "true"
+               :command "systemctl --user restart app")
+
+    ;; Arbitrary Clojure code as a first-class Ant task in the chain:
+    (a/task :notify
+      #(slack/post webhook (str ":rocket: shipped v" version)))))
 ```
 
-That's the whole story. No XML, no forked `Main.java`, no custom
-URL protocol. Just Clojure data plus Ant's own public AST classes.
+That single expression weaves five things vanilla Clojure can't
+compose cleanly: file scanning with Ant's pattern grammar, a Clojure
+filter on the result, streaming token substitution at copy time,
+SSH + remote command execution, and inline Clojure as an Ant task.
+No XML, no `ProcessBuilder`, no shell-out for SSH.
 
 
 ## Why
