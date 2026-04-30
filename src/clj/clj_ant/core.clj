@@ -40,10 +40,23 @@
 
 (defrecord Node [tag attrs children text])
 
+;; A JavaChild wraps an actual Ant DataType / ResourceCollection
+;; so it can be inlined as a child of a regular node. The runner
+;; registers `object` on the project under a unique reference id
+;; and emits a `<tag refid="..."/>` proxy in the AST. This lets us
+;; hand huge collections (or pre-built FileSets, Paths, Mappers, ...)
+;; to Ant without rebuilding them as data.
+(defrecord JavaChild [object tag])
+
 (defn node?
   "Truthy if `x` is a clj-ant node."
   [x]
   (instance? Node x))
+
+(defn java-child?
+  "Truthy if `x` is a `child`-wrapped real Ant object."
+  [x]
+  (instance? JavaChild x))
 
 (defn- split-args
   "Pulls keyword/value attribute pairs off the front of a positional arg
@@ -62,7 +75,7 @@
         (string? x)
         (recur attrs (str (or text "") x) children (rest xs))
 
-        (or (node? x) (map? x))
+        (or (node? x) (java-child? x) (map? x))
         (recur attrs text (conj children x) (rest xs))
 
         (sequential? x)
@@ -168,29 +181,59 @@
                                               v))
     :else           (str v)))
 
-(defn- ->unknown-element
-  ^UnknownElement [{:keys [tag attrs children text]}
-                   ^Project project ^Target target]
-  (let [tag-name (name tag)
-        ue       (doto (UnknownElement. tag-name)
-                   (.setProject project)
-                   (.setOwningTarget target)
-                   (.setQName tag-name)
-                   (.setTaskName tag-name)
-                   (.setLocation Location/UNKNOWN_LOCATION))
-        wrap     (RuntimeConfigurable. ue tag-name)]
-    (doseq [[k v] attrs]
-      (.setAttribute wrap (name k) (attr->string v)))
-    (when text
-      (.addText wrap (str text)))
-    (doseq [c children]
-      (let [child (->unknown-element c project target)]
-        (.addChild ue child)
-        (.addChild wrap (.getWrapper child))))
-    ;; Task.setRuntimeConfigurableWrapper is public; this is the same
-    ;; hook ProjectHelper2 uses when assembling the AST from XML.
+;; Per-project monotonic counter for synthetic reference ids. Reset
+;; per build (each `execute!` makes its own Project). Using a counter
+;; instead of identityHashCode avoids collisions when the user
+;; re-injects the same object across many children.
+(defn- next-ref-id! [^Project project]
+  (let [k "_clj-ant.ref-counter"
+        n (or (.getReference project k) (atom 0))]
+    (when-not (.getReference project k)
+      (.addReference project k n))
+    (str "_clj-ant.ref-" (swap! n inc))))
+
+(defn- java-child->ue
+  ^UnknownElement [^JavaChild jc ^Project project ^Target target]
+  (let [{:keys [object tag]} jc
+        ref-id  (next-ref-id! project)
+        _       (.addReference project ref-id object)
+        tag-name (name (or tag :resources))
+        ue      (doto (UnknownElement. tag-name)
+                  (.setProject project)
+                  (.setOwningTarget target)
+                  (.setQName tag-name)
+                  (.setTaskName tag-name)
+                  (.setLocation Location/UNKNOWN_LOCATION))
+        wrap    (doto (RuntimeConfigurable. ue tag-name)
+                  (.setAttribute "refid" ref-id))]
     (.setRuntimeConfigurableWrapper ue wrap)
     ue))
+
+(defn- ->unknown-element
+  ^UnknownElement [n ^Project project ^Target target]
+  (if (java-child? n)
+    (java-child->ue n project target)
+    (let [{:keys [tag attrs children text]} n
+          tag-name (name tag)
+          ue       (doto (UnknownElement. tag-name)
+                     (.setProject project)
+                     (.setOwningTarget target)
+                     (.setQName tag-name)
+                     (.setTaskName tag-name)
+                     (.setLocation Location/UNKNOWN_LOCATION))
+          wrap     (RuntimeConfigurable. ue tag-name)]
+      (doseq [[k v] attrs]
+        (.setAttribute wrap (name k) (attr->string v)))
+      (when text
+        (.addText wrap (str text)))
+      (doseq [c children]
+        (let [child (->unknown-element c project target)]
+          (.addChild ue child)
+          (.addChild wrap (.getWrapper child))))
+      ;; Task.setRuntimeConfigurableWrapper is public; this is the same
+      ;; hook ProjectHelper2 uses when assembling the AST from XML.
+      (.setRuntimeConfigurableWrapper ue wrap)
+      ue)))
 
 ;; ---------------------------------------------------------------------------
 ;; Execution
@@ -380,6 +423,86 @@
             (recur (assoc opts (first xs) (second xs)) (drop 2 xs))
             [opts xs]))]
     (apply execute! (vec rest-args) (mapcat identity opts))))
+
+;; ---------------------------------------------------------------------------
+;; Real Ant objects as children
+;;
+;; Turning every entry in a million-file collection into its own
+;; `<file name="..."/>` UnknownElement is wasteful: we'd allocate
+;; millions of wrapper records. The cheap path is a real Ant
+;; ResourceCollection, attached to the parent task by `refid`. The
+;; helpers below give you three flavours, in increasing magic order:
+;;
+;;   `child`             -- wrap any pre-built DataType, RC, etc.
+;;   `eager-resources`   -- build a Resources from a known seq of File
+;;   `lazy-resources`    -- reify a ResourceCollection over a lazy seq
+
+(defn child
+  "Inject a real Ant DataType (typically a ResourceCollection) as a
+  child of a task node. The runner registers `obj` on the project
+  under a unique refid and emits a `<tag refid=\"...\"/>` proxy.
+
+      (let [^FileSet fs (a/realize (t/fileset :dir \"src\"))]
+        (a/ant (t/copy :todir \"out\" (a/child fs))))
+
+  `tag` defaults to `:resources`, which works for any
+  `ResourceCollection` because `<resources refid=\"...\"/>` resolves
+  through Ant's polymorphic ResourceCollection cast. Override `tag`
+  for non-RC types (e.g. `:mapper`)."
+  ([obj] (child obj :resources))
+  ([obj tag] (->JavaChild obj tag)))
+
+(defn eager-resources
+  "Build a populated `org.apache.tools.ant.types.resources.Resources`
+  out of a seq of `java.io.File` (or `Resource`) and wrap it as a
+  child. O(n) memory but skips the per-element UnknownElement /
+  RuntimeConfigurable overhead, so it's much cheaper than
+  `(map #(node :file :name (.getName %)) files)` for large sets."
+  [files]
+  (let [rc (org.apache.tools.ant.types.resources.Resources.)]
+    (doseq [f files]
+      (.add rc (if (instance? org.apache.tools.ant.types.Resource f)
+                 f
+                 (org.apache.tools.ant.types.resources.FileResource.
+                   ^File (io/file f)))))
+    (child rc)))
+
+(defn lazy-resources
+  "Reify a `ResourceCollection` over a Clojure seq. Each element of
+  the seq is wrapped in a `FileResource` on demand by the iterator,
+  so a 10M-file scan doesn't materialise into 10M Java objects up
+  front. Pass the result anywhere a child resource collection is
+  accepted (copy, jar, zip, …).
+
+  Options:
+    :size              size hint, returned by ResourceCollection.size().
+                       If omitted, size is computed by counting the seq
+                       on first call (forcing realisation).
+    :filesystem-only?  default true. Set false for non-File resources."
+  ([files] (lazy-resources files {}))
+  ([files {:keys [size filesystem-only?]
+           :or   {filesystem-only? true}}]
+   (let [->res (fn [x]
+                 (cond
+                   (instance? org.apache.tools.ant.types.Resource x) x
+                   (instance? File x)
+                   (org.apache.tools.ant.types.resources.FileResource. ^File x)
+                   :else
+                   (org.apache.tools.ant.types.resources.FileResource.
+                     ^File (io/file x))))
+         size-cache (delay (or size (count files)))
+         rc (reify org.apache.tools.ant.types.ResourceCollection
+              (iterator [_]
+                (let [s (atom (seq files))]
+                  (reify java.util.Iterator
+                    (hasNext [_] (boolean (seq @s)))
+                    (next    [_]
+                      (let [v (->res (first @s))]
+                        (swap! s next)
+                        v)))))
+              (size [_] @size-cache)
+              (isFilesystemOnly [_] (boolean filesystem-only?)))]
+     (child rc))))
 
 ;; ---------------------------------------------------------------------------
 ;; Realisation: turn data nodes into live Ant objects without executing.

@@ -163,7 +163,39 @@ differ from sources, but you still want to verify the destination
 list in Clojure first.
 
 
-## 9. Realize once, iterate many times
+## 9. Scale: `child`, `eager-resources`, `lazy-resources`
+
+Comma-strings and nested `<file>` elements are fine for hundreds of
+names. They're the wrong choice for a million. Three escape hatches
+let you hand Ant a real `ResourceCollection` instead, without
+reshaping it through XML-flavoured intermediates:
+
+```clojure
+;; A) Re-use a pre-built Ant DataType.
+(let [fs (a/realize (t/fileset :dir "src" :includes "**/*.clj"))]
+  (a/ant (t/copy :todir "out" (a/child fs))))
+
+;; B) Build a populated org.apache.tools.ant.types.resources.Resources
+;; from a known seq of File. O(n) memory, but skips the per-element
+;; UnknownElement / RuntimeConfigurable wrappers.
+(a/ant (t/copy :todir "out"
+               (a/eager-resources (filter recent? all-files))))
+
+;; C) Reify a ResourceCollection over a (possibly lazy) seq. The
+;; iterator pulls FileResource instances on demand -- a 10-million
+;; entry seq becomes 10 million java.io.File walks, not 10 million
+;; persistent objects sitting in memory.
+(let [files (lazy-seq (find-files-from-some-source))]
+  (a/ant (t/copy :todir "out" (a/lazy-resources files {:size 10000000}))))
+```
+
+All three register the underlying object as a project reference and
+emit a tiny `<resources refid=\"…\"/>` proxy node in the AST. Ant's
+own `add(ResourceCollection)` adder picks it up polymorphically -- so
+this works as a child of `copy`, `jar`, `zip`, `tar`, `manifestmap`,
+and every other task that accepts a resource collection.
+
+## 10. Realize once, iterate many times
 
 `a/files` materialises a fresh project per call. If you're iterating
 a large fileset many times, build it once:
@@ -186,7 +218,7 @@ For sources where the collection is huge, prefer `transduce` /
 ```
 
 
-## 10. Babashka: stream paths as they're discovered
+## 11. Babashka: stream paths as they're discovered
 
 Long scans benefit from streaming on the bb side:
 
