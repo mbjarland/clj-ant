@@ -29,11 +29,11 @@ this with hand-rolled string replacement; Ant has `<filterchain>` +
 (a/ant :level :warn
   (t/copy :todir "deploy/etc"
     (t/fileset :dir "etc/templates" :includes "**/*.conf")
-    (a/element :filterchain
-      (a/element :tokenfilter
-        (a/element :replacestring :from "@VERSION@" :to (:version env))
-        (a/element :replacestring :from "@HOST@"    :to (:host env))
-        (a/element :replacestring :from "@DB_URL@"  :to (:db env))))))
+    (t/filterchain
+      (t/tokenfilter
+        (t/replacestring :from "@VERSION@" :to (:version env))
+        (t/replacestring :from "@HOST@"    :to (:host env))
+        (t/replacestring :from "@DB_URL@"  :to (:db env))))))
 ```
 
 Drop in `(a/element :replaceregex :pattern …)` instead of `:replacestring`
@@ -89,7 +89,7 @@ skips by content rather than mtime).
 (a/ant :level :warn
   (t/move :todir "src"
     (t/fileset :dir "src" :includes "**/*.clj")
-    (a/element :globmapper :from "*.clj" :to "*.cljc")))
+    (t/globmapper :from "*.clj" :to "*.cljc")))
 ```
 
 Mappers come in many flavours — `glob`, `regexp`, `package` (for
@@ -106,7 +106,7 @@ rest. `<unzip>` + `<patternset>`:
 ```clojure
 (a/ant :level :warn
   (t/unzip :src "deps/big.jar" :dest "extracted/"
-    (a/element :patternset
+    (t/patternset
             :includes "**/*.properties,META-INF/services/**"
             :excludes "**/test/**")))
 ```
@@ -151,10 +151,10 @@ file (or, with `:parallel "true"`, in parallel):
   (t/apply :executable "convert" :parallel "true"
            :dest "build/thumbs"
     (t/fileset :dir "src/img" :includes "**/*.png")
-    (a/element :globmapper :from "*.png" :to "*.thumb.png")
+    (t/globmapper :from "*.png" :to "*.thumb.png")
     (a/element :arg :value "-resize")
     (a/element :arg :value "120x120")
-    (a/element :srcfile)
+    (t/srcfile)
     (a/element :targetfile)))
 ```
 
@@ -331,8 +331,8 @@ and `:text` if the element had a text body.
 
 (a/ant
   (t/macrodef :name "greet-twice"
-    (a/element :attribute :name "who")
-    (a/element :sequential
+    (t/attribute :name "who")
+    (t/sequential
       (a/element :greet :who "@{who}")
       (a/element :greet :who "@{who}")))
   (a/element :greet-twice :who "world"))
@@ -405,7 +405,7 @@ for non-File data, or `a/realize` for the live Java object).
 (a/files
   (t/first :count "10"
     (t/sort (t/fileset :dir "logs" :includes "*.log")
-            (a/element :date))))         ; or :name, :size, :type, ...
+            (t/date))))         ; or :name, :size, :type, ...
 ```
 
 
@@ -418,8 +418,8 @@ content match, file signature, "present in another tree", and so on.
 (a/files
   (t/restrict
     (t/fileset :dir "src")
-    (a/element :size :when "more" :size "1024")            ; > 1KiB
-    (a/element :modified :seconds "86400")))               ; modified in last day
+    (t/size :when "more" :size "1024")            ; > 1KiB
+    (t/modified :seconds "86400")))               ; modified in last day
 ```
 
 
@@ -445,7 +445,7 @@ you get a resource per line, slurpable individually:
 
 ```clojure
 (->> (t/tokens (t/file :file "TODO.md")
-               (a/element :linetokenizer))
+               (t/linetokenizer))
      a/resources
      (map #(slurp (.getInputStream %)))
      (filter #(re-find #"^- \[ \]" %)))
@@ -461,7 +461,7 @@ you get a resource per line, slurpable individually:
 (a/files
   (t/mappedresources
     (t/fileset :dir "src" :includes "**/*.clj")
-    (a/element :globmapper :from "*.clj" :to "*.cljc")))
+    (t/globmapper :from "*.clj" :to "*.cljc")))
 ;; same files reported under .cljc names
 ```
 

@@ -175,8 +175,9 @@
         text-block  (when supports-text?
                       "  Body text: this element accepts a free-form text body.")
         link        (case kind
-                      :task (str "  https://ant.apache.org/manual/Tasks/" tag ".html")
-                      :type (str "  https://ant.apache.org/manual/Types/" tag ".html"))
+                      :task   (str "  https://ant.apache.org/manual/Tasks/" tag ".html")
+                      :type   (str "  https://ant.apache.org/manual/Types/" tag ".html")
+                      :nested "  Nested-only element discovered via introspection.")
         desc        (or description
                         (str "Ant " (clojure.core/name kind) " "
                              tag ". (No description bundled.)"))
@@ -223,6 +224,34 @@
   (let [manual (let [d (io/file manual-dir)] (when (.isDirectory d) d))
         tasks  (load-defaults task-defs-path)
         types  (load-defaults type-defs-path)
+        ;; Walk every top-level type's nested-element graph to pick
+        ;; up nested-only tags like tokenfilter, replacestring,
+        ;; modified, size, srcfile, targetfile, etc. defaults.properties
+        ;; lists what's reachable at the top level; recursive
+        ;; introspection lists what's reachable at all.
+        nested
+        (let [project (doto (Project.) .init)
+              seen-classes (java.util.HashSet.)
+              found        (java.util.LinkedHashMap.)]
+          (letfn [(visit [tag class-name]
+                    (when class-name
+                      (try
+                        (let [klass (Class/forName class-name)]
+                          (when (.add seen-classes klass)
+                            (when (and tag
+                                       (not (.containsKey found tag))
+                                       (not (.containsKey tasks tag))
+                                       (not (.containsKey types tag)))
+                              (.put found tag class-name))
+                            (doseq [^java.util.Map$Entry e
+                                    (.getNestedElementMap
+                                      (IntrospectionHelper/getHelper
+                                        project klass))]
+                              (visit (.getKey e)
+                                     (.getName ^Class (.getValue e))))))
+                        (catch Throwable _ nil))))]
+            (doseq [[t c] (concat tasks types)] (visit t c))
+            (into (sorted-map) found)))
         render (fn [tag klass-name kind]
                  (when-some [info (introspect klass-name)]
                    (task-fn-source
@@ -232,13 +261,14 @@
                       :kind        kind
                       :description (read-description manual tag)
                       :info        info})))
-        all-tags    (concat (keys tasks) (keys types))
+        all-tags    (concat (keys tasks) (keys types) (keys nested))
         all-syms    (set (map safe-symbol all-tags))
         core-syms   (set (map name (keys (ns-publics 'clojure.core))))
         shadowed    (->> all-syms (map name) (filter core-syms) sort vec)
         bodies (concat
-                 (keep (fn [[t c]] (render t c :task)) tasks)
-                 (keep (fn [[t c]] (render t c :type)) types))
+                 (keep (fn [[t c]] (render t c :task))   tasks)
+                 (keep (fn [[t c]] (render t c :type))   types)
+                 (keep (fn [[t c]] (render t c :nested)) nested))
         header (str "(ns clj-ant.tasks\n"
                     "  \"Auto-generated Ant task and type wrappers.\n\n"
                     "  Each function returns a clj-ant element (plain data); pass\n"
