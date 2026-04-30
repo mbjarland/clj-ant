@@ -193,6 +193,14 @@
                   (map? nodes)        [nodes]
                   :else (throw (ex-info "execute! expects a node or seq of nodes"
                                         {:value nodes})))
+        _       (when (:validate? opts)
+                  (let [errs (mapcat (requiring-resolve 'clj-ant.spec/validate-tree)
+                                     nodes)]
+                    (when (seq errs)
+                      (throw (ex-info
+                               (str "Build failed validation: " (count errs)
+                                    " issue(s)")
+                               {:errors (vec errs)})))))
         project ^Project (or (:project opts) (make-project opts))
         events  (when (:capture? opts) (atom []))
         rec     (when events
