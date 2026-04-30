@@ -171,23 +171,42 @@ let you hand Ant a real `ResourceCollection` instead, without
 reshaping it through XML-flavoured intermediates:
 
 ```clojure
-;; A) Re-use a pre-built Ant DataType.
-(let [fs (a/realize (t/fileset :dir "src" :includes "**/*.clj"))]
-  (a/ant (t/copy :todir "out" (a/child fs))))
-
-;; B) Build a populated org.apache.tools.ant.types.resources.Resources
-;; from a known seq of File. O(n) memory, but skips the per-element
-;; UnknownElement / RuntimeConfigurable wrappers.
+;; A) eager-resources -- known seq of File -> real Ant Resources.
+;;    O(n) memory but skips the per-element UnknownElement /
+;;    RuntimeConfigurable wrappers a (filelist + nested <file>) tree
+;;    would build.
 (a/ant (t/copy :todir "out"
                (a/eager-resources (filter recent? all-files))))
 
-;; C) Reify a ResourceCollection over a (possibly lazy) seq. The
-;; iterator pulls FileResource instances on demand -- a 10-million
-;; entry seq becomes 10 million java.io.File walks, not 10 million
-;; persistent objects sitting in memory.
+;; B) lazy-resources -- reify ResourceCollection over a (possibly
+;;    lazy) seq. The iterator pulls FileResource instances on demand,
+;;    so a 10-million-entry seq becomes 10 million file-walks, not
+;;    10 million live objects sitting in memory.
 (let [files (lazy-seq (find-files-from-some-source))]
-  (a/ant (t/copy :todir "out" (a/lazy-resources files {:size 10000000}))))
+  (a/ant (t/copy :todir "out"
+                 (a/lazy-resources files {:size 10000000}))))
+
+;; C) child -- if you already hold a real Ant DataType (handed in
+;;    from a Java library, constructed by hand, or shared across
+;;    several tasks), wrap it as-is without rebuilding it as data.
+(let [fs ^FileSet (some-fn-that-returns-a-fileset)]
+  (a/ant (t/copy :todir "out"   (a/child fs))
+         (t/jar  :destfile "x"  (a/child fs))))   ; reused, not rebuilt
 ```
+
+Note on the simple case: if you're *constructing* a fileset yourself,
+you don't need `child` at all -- just use the data form directly,
+which is shorter, lazier, and prints nicer:
+
+```clojure
+(a/ant (t/copy :todir "out"
+               (t/fileset :dir "src" :includes "**/*.clj")))
+```
+
+`a/realize` exists for the inverse use case: when you want the live
+Ant object *out* (to inspect, to hand to other Java code, to slurp
+its iterator into a Clojure seq via `a/files`). It's not needed to
+go back into another `ant` build -- nodes already do that natively.
 
 All three register the underlying object as a project reference and
 emit a tiny `<resources refid=\"…\"/>` proxy node in the AST. Ant's
