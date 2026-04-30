@@ -23,4 +23,9 @@
            :test  {:extra-paths ["test"]
                    :extra-deps  {lambdaisland/kaocha
                                  {:mvn/version "1.91.1392"}}
-                   :main-opts   ["-m" "kaocha.runner"]}}}
+                   :main-opts   ["-m" "kaocha.runner"]}
+
+           ;; Babashka pod entry point (see doc/babashka.md):
+           ;;   bb -e '(require (quote [babashka.pods :as pods]))
+           ;;          (pods/load-pod ["clojure" "-M:pod"]) ...'
+           :pod   {:main-opts ["-m" "clj-ant.pod"]}}}
