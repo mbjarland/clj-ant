@@ -94,7 +94,13 @@ corpus.
 zipper-based version may be lighter.
 
 
-### Live Project caching for REPL  💭
+### Live Project caching for REPL  ✅
+
+`(with-project p body...)` binds a `*project*` dynamic var that
+`execute!` uses by default. Properties set in one call are visible
+in the next. Pass `:project` explicitly to opt out for a single
+call. deftask registrations are re-synced on every entry, so tasks
+defined after the project was created still work.
 
 Today every `(execute! …)` makes a fresh `Project` (~200 ms init,
 taskdef registration, etc.). A `(with-project p …)` macro that
