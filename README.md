@@ -208,6 +208,24 @@ completion, so typing `(t/copy :` brings up `:todir :tofile :overwrite
 which returns the same information as Clojure data.
 
 
+## SSH support
+
+`<scp>` and `<sshexec>` are bundled out of the box — `ant-jsch` plus
+the Terrapin-fixed `com.github.mwiede:jsch` fork. Push a jar and
+restart a remote service in one expression:
+
+```clojure
+(a/ant
+  (t/scp     :file "target/app.jar" :todir "deploy@web-1:/srv/"
+             :keyfile "~/.ssh/id_ed25519" :trust "true")
+  (t/sshexec :host "web-1" :username "deploy"
+             :keyfile "~/.ssh/id_ed25519" :trust "true"
+             :command "systemctl --user restart app"))
+```
+
+See [doc/examples.md](doc/examples.md#ssh-and-scp-from-babashka-without-writing-your-own-ssh).
+
+
 ## Aliases
 
 ```
