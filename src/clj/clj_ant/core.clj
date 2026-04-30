@@ -188,9 +188,11 @@
     (.setErrorPrintStream   ^PrintStream err)
     (.setEmacsMode (boolean emacs?))))
 
+(declare make-project)
+
 (def ^{:doc "If non-nil, `execute!` reuses this Project instead of
-  building a fresh one. Bind via `with-project` for REPL-driven
-  workflows where the ~200 ms project init per call adds up."
+  building a fresh one. Bind via `with-project` / `with-session`
+  for REPL-driven workflows where the per-call init adds up."
        :dynamic true}
   *project* nil)
 
@@ -205,9 +207,66 @@
 
   Properties set in earlier calls remain visible in later ones --
   that's Ant's normal Project semantics. Pass an explicit
-  `:project` option to override for a single call."
+  `:project` option to override for a single call.
+
+  Prefer `with-session` for new code; this stays for existing users
+  who hold a raw Project."
   [project & body]
   `(binding [*project* ~project] ~@body))
+
+(defrecord ^:no-doc Session [^Project project])
+
+(defn session
+  "Create a long-lived session backed by a single Ant Project.
+  Reuse across many execute!/ant calls to amortise the per-call
+  init + logger setup + taskdef registration cost.
+
+      (def s (a/session {:level :info}))
+      (a/ant :session s (t/echo :message \"first\"))
+      (a/ant :session s (t/echo :message \"second\"))
+      (a/close-session s)
+
+  Or, with automatic cleanup:
+
+      (a/with-session [s {:level :info}]
+        (a/ant (t/echo :message \"first\"))
+        (a/ant (t/echo :message \"second\")))
+
+  Properties carry over between calls in the same session -- that's
+  Ant's normal Project semantics. Pass `:project` explicitly to a
+  single call to opt out for that call.
+
+  `opts` are the same options accepted by `make-project`."
+  ([] (session {}))
+  ([opts] (->Session (make-project (or opts {})))))
+
+(defn close-session
+  "Release a session. Currently the Project is just dropped from
+  the dynamic binding; held resources clean up under GC. Kept for
+  forward compatibility -- if we ever attach long-lived resources
+  to a Session (caches, listeners) this is the cleanup hook."
+  [_session]
+  nil)
+
+(defmacro with-session
+  "Bind a fresh session for the duration of body. The session is
+  closed automatically on exit. `opts` are the options accepted by
+  `make-project`.
+
+      (a/with-session [s {:basedir \"out\" :level :info}]
+        (a/ant (t/property :name \"v\" :value \"1\"))
+        (a/ant (t/echo :message \"v=${v}\")))   ; v carries over"
+  [[sym opts] & body]
+  `(let [~sym (session ~opts)]
+     (try
+       (binding [*project* (:project ~sym)] ~@body)
+       (finally (close-session ~sym)))))
+
+;; Generation counter on the global ClojureTask registry. Each
+;; `deftask` call bumps it. Projects track the gen they last synced
+;; against so `execute!` can skip the per-call replay when nothing
+;; has changed (the common case after the first call).
+(defonce ^:private registry-gen (atom 0))
 
 (defn make-project
   "Build a fresh `org.apache.tools.ant.Project`, attach a logger, and
@@ -234,12 +293,28 @@
       (.addBuildListener p l))
     (doseq [[k v] props]
       (.setUserProperty p (clojure.core/name k) (str v)))
-    ;; Register every Clojure-defined task on this project. The
-    ;; bridge class itself is shared; per-task fns live in
-    ;; ClojureTask/REGISTRY and are looked up by task name.
+    ;; Register every Clojure-defined task on this project, then
+    ;; remember the registry generation we synced against. Future
+    ;; `execute!` calls compare the project's stamp to the global
+    ;; gen and skip the doseq when nothing has changed.
     (doseq [tn (.keySet ClojureTask/REGISTRY)]
       (.addTaskDefinition p tn ClojureTask))
+    (.addReference p "_clj-ant.registry-gen" (atom @registry-gen))
     p))
+
+(defn- ^:no-doc sync-deftasks!
+  "Sync the project's task definitions against the global
+  ClojureTask/REGISTRY *only* if the registry has changed since the
+  last sync. Idempotent and cheap on the steady-state path."
+  [^Project project]
+  (let [stamp (.getReference project "_clj-ant.registry-gen")
+        cur   @registry-gen]
+    (when (or (nil? stamp) (not= cur @stamp))
+      (doseq [tn (.keySet ClojureTask/REGISTRY)]
+        (.addTaskDefinition project tn ClojureTask))
+      (if stamp
+        (reset! stamp cur)
+        (.addReference project "_clj-ant.registry-gen" (atom cur))))))
 
 ;; ---------------------------------------------------------------------------
 ;; build.xml round-trip
@@ -339,6 +414,7 @@
                    :msg \"shipped ${version}\"))"
   [tag f]
   (.put ClojureTask/REGISTRY (clojure.core/name tag) f)
+  (swap! registry-gen inc)
   tag)
 
 (defn deftask?
@@ -555,13 +631,13 @@
                                (str "Validation failed: " (count errs)
                                     " issue(s)")
                                {:errors (vec errs)})))))
-        project ^Project (or (:project opts) *project* (make-project opts))
-        ;; A cached project (via with-project) was made before some
-        ;; deftasks may have been defined. Sync the registrations
-        ;; cheaply -- addTaskDefinition replaces, so this is safe
-        ;; and idempotent on a fresh project too.
-        _       (doseq [tn (.keySet ClojureTask/REGISTRY)]
-                  (.addTaskDefinition project tn ClojureTask))
+        project ^Project (or (when-some [s (:session opts)] (:project s))
+                             (:project opts) *project*
+                             (make-project opts))
+        ;; Sync deftask registrations only if the global registry has
+        ;; changed since this project last saw it. With many calls to
+        ;; the same with-project, this is the steady-state fast path.
+        _       (sync-deftasks! project)
         ;; Inline tasks created via `task`. We add their fns to the
         ;; registry just for this run and remove them in `finally`,
         ;; so a long REPL session doesn't leak per-call inline tasks.
@@ -758,6 +834,66 @@
      (target :name ~(name nm) ~@body)))
 
 ;; ---------------------------------------------------------------------------
+;; prepare / run -- compile/execute split for tight loops
+;;
+;; `execute!` does several project-independent walks every call:
+;;   coerce children, validate, collect inline tasks, partition
+;;   target vs task. None of that depends on the live Project, so
+;;   it can run once up-front and the result can be replayed cheaply
+;;   against a (typically reused) session.
+
+(defrecord ^:no-doc Plan [elements opts])
+
+(defn- ^:no-doc deep-coerce
+  "Walk an element tree, applying `as-child` to every child. The
+  result is a tree where every child is already an Element /
+  JavaChild -- nothing for `->unknown-element` to coerce on the
+  hot path."
+  [x]
+  (cond
+    (or (element? x) (and (map? x) (contains? x :tag)))
+    (assoc x :children (mapv #(deep-coerce (as-child %)) (:children x)))
+    :else x))
+
+(defn prepare
+  "Coerce, validate, and freeze an element tree. Returns a Plan
+  ready to be `run` against a session many times. Combine with
+  `with-session` for the lowest steady-state cost in tight REPL
+  loops:
+
+      (a/with-session [s {:level :info}]
+        (let [p (a/prepare elements :validate? true)]
+          (dotimes [_ 100] (a/run p :session s))))
+
+  The big perf win is session reuse; `prepare` is the smaller
+  additional optimisation on top, removing per-call coercion +
+  validation walks."
+  [elements & {:as opts}]
+  (let [es (cond
+             (element? elements)    [elements]
+             (sequential? elements) (vec elements)
+             (map? elements)        [elements]
+             :else (throw (ex-info "prepare expects an element or seq of elements"
+                                   {:value elements})))
+        coerced (mapv deep-coerce es)]
+    (when (:validate? opts)
+      (let [vt   (requiring-resolve 'clj-ant.spec/validate-tree)
+            vopt (select-keys opts [:closed?])
+            errs (mapcat #(vt % vopt) coerced)]
+        (when (seq errs)
+          (throw (ex-info (str "Validation failed: " (count errs)
+                               " issue(s)")
+                          {:errors (vec errs)})))))
+    (->Plan coerced (assoc opts :validate? false :clj-ant/prepared? true))))
+
+(defn run
+  "Execute a previously-`prepare`d Plan. Re-runs are cheap when paired
+  with `with-session`."
+  [^Plan plan & {:as opts}]
+  (apply execute! (:elements plan)
+         (mapcat identity (merge (:opts plan) opts))))
+
+;; ---------------------------------------------------------------------------
 ;; Top-level convenience
 
 (defn ant
@@ -785,21 +921,35 @@
     (apply execute! (vec rest-args) (mapcat identity opts))))
 
 ;; ---------------------------------------------------------------------------
-;; Advanced child-injection knobs. The everyday path is to just pass a
-;; value to a element -- the runner calls `as-child` and figures out what
-;; to do. These helpers are kept around for the rare case where you
-;; need to override the default behaviour (e.g. a non-filesystem-only
-;; resource collection, or a hand-rolled Resources). They are not
-;; documented in the README on purpose.
+;; Streaming resource collections. Most code can just pass a seq of
+;; Files directly -- the runner's `as-child` will wrap it for you with
+;; safe defaults. Reach for `lazy-resources` when you have a million-
+;; entry seq and the default eager `(count files)` for `.size` is too
+;; expensive, or when you need to set `isFilesystemOnly` to false for
+;; HTTP/zip-entry resources.
 
-(defn ^:no-doc lazy-resources
-  "Like passing a seq of files directly, but lets you override the
-  size hint and the isFilesystemOnly flag. Returns a JavaChild ready
-  to drop into a element.
+(defn lazy-resources
+  "Wrap a (possibly lazy/infinite) seq of `java.io.File` / `Resource`
+  / path-string as a real Ant `ResourceCollection`. Iteration is on
+  demand: the resulting object pulls one `FileResource` at a time
+  from the seq, so a 10M-entry input never materialises into 10M
+  live objects up front.
+
+  Returns a value you can drop into any task that accepts a resource
+  collection (copy, jar, zip, tar, …).
+
+      (a/ant
+        (t/copy :todir \"out\"
+          (a/lazy-resources (find-millions-of-files)
+                            {:size 10000000})))
 
   Options:
-    :size              skip the eager (count files) and use this.
-    :filesystem-only?  default true. Set false for HTTP/zip/etc."
+    :size              size hint, returned by ResourceCollection.size().
+                       Default: `(count files)` -- forces full
+                       realisation. Pass an explicit size to skip
+                       the count when you already know it.
+    :filesystem-only?  default true. Set false for HTTP / zip /
+                       tar / non-filesystem resources."
   ([files] (as-child files))
   ([files {:keys [size filesystem-only?]
            :or   {filesystem-only? true}}]

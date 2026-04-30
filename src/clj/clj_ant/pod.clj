@@ -139,6 +139,32 @@
   (-> (apply core/execute! elements (mapcat identity (or opts {})))
       element-clean))
 
+;; ---------------------------------------------------------------------------
+;; Sessions. A session is a long-lived clj-ant Session (i.e. a single
+;; Ant Project) that the bb side keeps a handle to via a string id.
+;; Without sessions, every pod call rebuilds a Project; with them, the
+;; init cost is paid once.
+
+(defonce ^:private sessions (atom {}))    ; id -> Session
+
+(defn ^:no-doc op-open-session [{:keys [opts]}]
+  (let [id (str "sess-" (System/nanoTime))
+        s  (core/session (or opts {}))]
+    (swap! sessions assoc id s)
+    id))
+
+(defn ^:no-doc op-close-session [{:keys [id]}]
+  (when-some [s (get @sessions id)]
+    (core/close-session s)
+    (swap! sessions dissoc id))
+  nil)
+
+(defn ^:no-doc op-execute-in [{:keys [id elements opts]}]
+  (when-some [s (get @sessions id)]
+    (-> (apply core/execute! elements
+               (mapcat identity (assoc (or opts {}) :session s)))
+        element-clean)))
+
 (defn ^:no-doc op-execute-stream
   "Streaming variant of execute. Each event is sent as its own pod
   reply (status []); `partial!` is called by the pod loop for every
@@ -178,9 +204,12 @@
   (with-out-str (core/plan element)))
 
 (def ops
-  {"clj-ant.pod/execute" {:fn #'op-execute}
-   "clj-ant.pod/files"   {:fn #'op-files}
-   "clj-ant.pod/plan"    {:fn #'op-plan}
+  {"clj-ant.pod/execute"        {:fn #'op-execute}
+   "clj-ant.pod/files"          {:fn #'op-files}
+   "clj-ant.pod/plan"           {:fn #'op-plan}
+   "clj-ant.pod/open-session"   {:fn #'op-open-session}
+   "clj-ant.pod/close-session"  {:fn #'op-close-session}
+   "clj-ant.pod/execute-in"     {:fn #'op-execute-in}
    "clj-ant.pod/execute-stream"
    {:fn #'op-execute-stream :stream? true}
    "clj-ant.pod/files-stream"
@@ -279,6 +308,36 @@
                 "    \"clj-ant.pod\" "
                 "    'clj-ant.pod/plan "
                 "    [{:element element}]))")}
+             ;; Long-lived sessions. The pod side holds an Ant Project
+             ;; per id; bb gets a string handle. Reuse across many
+             ;; calls amortises the per-call init cost (logger setup,
+             ;; taskdef registration, project base initialisation).
+             {"name" "open-session" "code"
+              (str
+                "(defn open-session [& {:as opts}] "
+                "  (babashka.pods/invoke "
+                "    \"clj-ant.pod\" "
+                "    'clj-ant.pod/open-session "
+                "    [{:opts opts}]))")}
+             {"name" "close-session" "code"
+              (str
+                "(defn close-session [id] "
+                "  (babashka.pods/invoke "
+                "    \"clj-ant.pod\" "
+                "    'clj-ant.pod/close-session "
+                "    [{:id id}]))")}
+             {"name" "execute-in" "code"
+              (str
+                "(defn execute-in [id elements & {:as opts}] "
+                "  (babashka.pods/invoke "
+                "    \"clj-ant.pod\" "
+                "    'clj-ant.pod/execute-in "
+                "    [{:id id :elements elements :opts opts}]))")}
+             {"name" "with-session" "code"
+              (str
+                "(defmacro with-session [[sym opts] & body] "
+                "  `(let [~sym (open-session ~@(mapcat identity opts))] "
+                "     (try ~@body (finally (close-session ~sym)))))")}
              ;; Streaming variant: the supplied handler fn is called
              ;; with each event as it happens, and the final return
              ;; is the result map.
