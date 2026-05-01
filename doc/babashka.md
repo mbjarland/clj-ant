@@ -105,11 +105,21 @@ Operations exposed today:
 | `files`          | a resource-collection element      | vector of absolute paths     |
 | `files-stream`   | element + handler                  | streams paths to handler     |
 | `plan`           | an element tree                    | XML-ish string               |
+| `describe`       | task/type tag                      | reflected docs/schema data   |
+| `lint`           | element tree + opts                | validation issue vector      |
 
 In addition the pod ships the full `clj-ant.tasks` namespace: a
 thin function wrapper per Ant task, type, and nested element, that
 builds the element map for you so bb scripts never have to spell
 out `{:tag … :attrs …}` by hand.
+
+```clojure
+(a/lint (t/copy :tdoir "out"))
+;; => [{:tag :copy, :suggestions {:tdoir [:todir]}, ...}]
+
+(-> (a/describe :copy) :attrs (get "todir"))
+;; => {:type "java.io.File", :description "The directory to copy to.", ...}
+```
 
 
 ## How it works

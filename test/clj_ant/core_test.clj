@@ -1,7 +1,8 @@
 (ns clj-ant.core-test
   (:require [clojure.test :refer [deftest is testing]]
             [clojure.java.io :as io]
-            [clj-ant.core :as a])
+            [clj-ant.core :as a]
+            [clj-ant.pod :as pod])
   (:import [java.io File]
            [java.nio.file Files]
            [org.apache.tools.ant Project]))
@@ -763,6 +764,20 @@
   (testing "explain is an alias for lint"
     (let [tree (a/element :copy :tdoir "out")]
       (is (= (a/lint tree) (a/explain tree))))))
+
+(deftest pod-exposes-introspection
+  (testing "pod describe returns bb-safe data"
+    (let [d (#'pod/op-describe {:tag :copy})]
+      (is (= :copy (:tag d)))
+      (is (= "java.io.File" (get-in d [:attrs "todir" :type])))
+      (is (= "org.apache.tools.ant.types.FileSet"
+             (get-in d [:nested "fileset"])))
+      (is (re-find #"Copies a file" (:description d)))))
+
+  (testing "pod lint returns validation issues"
+    (let [issue (first (#'pod/op-lint {:elements (a/element :copy :tdoir "out")}))]
+      (is (= :copy (:tag issue)))
+      (is (= [:todir] (get-in issue [:suggestions :tdoir]))))))
 
 (deftest macrodef-via-runtime
   (testing "macrodef works because RuntimeConfigurable handles expansion"
