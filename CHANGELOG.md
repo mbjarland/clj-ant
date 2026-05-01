@@ -7,6 +7,11 @@ format.
 
 ## Unreleased
 
+### Fixed
+
+- Allow Java bridge compilation on JDK 8 while still emitting Java 8
+  bytecode from newer JDKs.
+
 ## 1.0.0-alpha.3 - 2026-05-01
 
 ### Changed

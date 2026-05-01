@@ -48,6 +48,14 @@
       [:name "Matias Bjarland"]
       [:url "https://github.com/mbjarland"]]]])
 
+(defn- java8-runtime? []
+  (= "1.8" (System/getProperty "java.specification.version")))
+
+(defn- javac-opts []
+  (if (java8-runtime?)
+    ["-source" "1.8" "-target" "1.8"]
+    ["--release" "8"]))
+
 (defn- process!
   "Run a subprocess and fail the build when it exits non-zero."
   [command-args]
@@ -72,10 +80,9 @@
   (b/javac {:src-dirs   ["src/java"]
             :class-dir  class-dir
             :basis      @basis
-            ;; --release 8 keeps the jar usable on JDK 8+ (Ant
-            ;; itself supports JDK 8). Our bridge class uses
-            ;; nothing newer, so there's no cost to staying low.
-            :javac-opts ["--release" "8"]})
+            ;; Build on JDK 8 itself as well as newer JDKs while keeping
+            ;; the compiled bridge usable on the supported JDK floor.
+            :javac-opts (javac-opts)})
   (println "> compiled src/java -> target/classes"))
 
 (defn jar [_]
