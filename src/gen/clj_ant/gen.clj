@@ -4,13 +4,9 @@
   Walks Ant's `defaults.properties` (one for tasks, one for types),
   reflects on each class via Ant's own `IntrospectionHelper`, and
   emits a Clojure namespace where every task and type is a thin
-  function with rich docstring + `:arglists` metadata.
-
-  IDE autocompletion (Cursive, CIDER, clojure-lsp) reads `:arglists`
-  off the var, so keys you list in `[& {:keys [todir tofile ...]}]`
-  show up as keyword completions at call sites. Combined with the
-  attribute/element type info from IntrospectionHelper, the result
-  is a self-documenting Ant API at the REPL.
+  function with cljdoc-friendly Markdown docstrings. Attributes and
+  nested elements come from IntrospectionHelper, enriched by the
+  bundled Ant manual when a matching page exists.
 
   Usage:
 
@@ -131,16 +127,25 @@
    "javadoc2" "Tasks/javadoc.html"
    "renameext" "Tasks/renameextensions.html"})
 
+(defn- polish-text [s]
+  (some-> s
+          (str/replace #"\s+([,;:!?])" "$1")
+          (str/replace #"\s+\.(?=\s|$)" ".")
+          (str/replace #",(?=\S)" ", ")
+          (str/replace #"\(\s+" "(")
+          (str/replace #"\s+\)" ")")
+          str/trim
+          not-empty))
+
 (defn- html->text [html]
   (some-> html
           (str/replace #"(?is)<!--.*?-->" " ")
           (str/replace #"(?is)<(br|/p|/div|/li|/tr|/h[1-6])\b[^>]*>" " ")
-          (str/replace #"(?is)<[^>]+>" " ")
+          (str/replace #"(?is)<[^>]+>" "")
           (str/replace #"&(#x[0-9A-Fa-f]+|#[0-9]+|[A-Za-z]+);"
                        #(decode-entity (second %)))
           (str/replace #"\s+" " ")
-          str/trim
-          not-empty))
+          polish-text))
 
 (defn- href-entry [^File base href]
   (let [[path section] (str/split (or href "") #"#" 2)]
@@ -353,10 +358,6 @@
             (recur (rest words) cand out)))
         (str/join (str \newline pad) (filter seq (conj out line)))))))
 
-(defn- indent-wrap [s width indent]
-  (let [pad (apply str (repeat indent \space))]
-    (str pad (wrap s width indent))))
-
 (defn- string-literal [s]
   (str "\""
        (-> s
@@ -391,17 +392,15 @@
 (defn- attribute-doc-line [manual-attrs [k ^Class c]]
   (let [kw (attr-keyword k)
         {:keys [description required]} (get manual-attrs kw)]
-    (str/join \newline
-              (remove nil?
-                      [(format "    %-26s %s" (str kw) (friendly-type c))
-                       (when description
-                         (indent-wrap description 74 6))
-                       (when required
-                         (indent-wrap (str "Required: " required) 74 6))]))))
+    (str "- `" kw "` `" (friendly-type c) "`"
+         (when description
+           (str " - " description))
+         (when required
+           (str \newline "  Required: " required)))))
 
 (defn- nested-doc-line [[k ^Class c]]
-  (format "    %-26s (%s)"
-          (str (attr-keyword k))
+  (format "- `%s` (`%s`)"
+          (attr-keyword k)
           (.getSimpleName c)))
 
 (defn- task-fn-source
@@ -414,55 +413,48 @@
                                               (when-some [doc (get manual-attrs kw)]
                                                 [kw doc]))))
                                     attrs)
-        attr-keys (mapv (comp symbol name attr-keyword first) attrs)
         attr-block  (when (seq attrs)
-                       (str "  Attributes:" \newline
-                            (str/join \newline (map #(attribute-doc-line manual-attrs %)
-                                                     attrs))))
+                       (str "**Attributes**" \newline \newline
+                             (str/join \newline (map #(attribute-doc-line manual-attrs %)
+                                                      attrs))))
         nested-block (when (seq nested)
-                       (str "  Nested elements:" \newline
-                            (str/join \newline (map nested-doc-line nested))))
+                       (str "**Nested elements**" \newline \newline
+                             (str/join \newline (map nested-doc-line nested))))
         text-block  (when supports-text?
-                      "  Body text: this element accepts a free-form text body.")
+                      "**Body text**\n\nAccepts a free-form text body.")
         link-url    (:manual-url manual)
-        link        (or (some->> link-url (str "  "))
+        link        (or link-url
                         (case kind
-                          :task   (str "  https://ant.apache.org/manual/Tasks/" tag ".html")
-                          :type   (str "  https://ant.apache.org/manual/Types/" tag ".html")
-                          :nested "  Nested-only element discovered via introspection."))
+                          :task   (str "https://ant.apache.org/manual/Tasks/" tag ".html")
+                          :type   (str "https://ant.apache.org/manual/Types/" tag ".html")
+                          :nested "Nested-only element discovered via introspection."))
         ;; Some nested tags are ambiguous: <attribute> on macrodef is
         ;; MacroDef$Attribute, on manifest is Manifest$Attribute.
         ;; The runner picks the right class at execute time based on
         ;; parent context; the wrapper just carries the data. The
         ;; docstring lists every class we saw so users know.
         ambiguity   (when (seq other-classes)
-                      (str "  Note: this tag has multiple meanings depending\n"
-                           "  on parent context. Other classes seen:" \newline
+                      (str "**Parent context**\n\n"
+                           "This tag has multiple meanings depending on parent context. "
+                           "Other classes seen:" \newline \newline
                            (str/join \newline
-                                     (map #(str "    " %) other-classes))
-                           \newline
-                           "  The runner picks the right class at execute time;\n"
-                           "  attribute docs above are for the first one."))
+                                     (map #(str "- `" % "`") other-classes))
+                           \newline \newline
+                           "The runner picks the right class at execute time; "
+                           "attribute docs above are for the first one."))
         desc        (or (:description manual)
                         (str "Ant " (clojure.core/name kind) " "
                              tag ". (No description bundled.)"))
-        docstring   (->> [(wrap desc 76 2)
-                          ""
+        docstring   (->> [(wrap desc 88 0)
                           attr-block
                           nested-block
                           text-block
                           ambiguity
-                          ""
-                          link
-                          ""
-                          (format "  Defined by: %s" class?)]
-                         (remove nil?)
-                         (str/join \newline))
-        arglists    (if (seq attr-keys)
-                      (list 'quote
-                            (list ['& {:keys attr-keys :as 'attrs}
-                                   '& 'nested]))
-                      (list 'quote (list ['& 'nested])))]
+                          (str "**Reference**" \newline \newline link)
+                          (format "**Defined by**\n\n`%s`" class?)]
+                          (remove nil?)
+                          (str/join (str \newline \newline)))
+        arglists    (list 'quote (list ['& 'args]))]
     (with-out-str
       (println (str "(defn " sym))
       (println (str "  " (string-literal docstring)))

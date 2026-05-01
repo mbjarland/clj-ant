@@ -7,6 +7,21 @@ format.
 
 ## Unreleased
 
+## 1.0.0-alpha.3 - 2026-05-01
+
+### Changed
+
+- Render generated wrapper API docs as Markdown sections with compact
+  signatures for cljdoc.
+
+### Fixed
+
+- Ensure build subprocess failures, including lint warnings, fail the
+  `tools.build` check pipeline.
+- Corrected the generated POM developer name.
+
+## 1.0.0-alpha.2 - 2026-05-01
+
 ### Added
 
 - Added strict clj-kondo linting to the local build, CI, and release
