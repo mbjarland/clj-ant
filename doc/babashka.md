@@ -10,6 +10,24 @@ it were a local namespace.
 [pods]: https://github.com/babashka/pods
 
 
+## Loading the pod
+
+Today the pod is loaded as a JVM process from the project classpath:
+
+```clojure
+(require '[babashka.pods :as pods])
+(pods/load-pod ["clojure" "-M:pod"])
+
+(require '[clj-ant.pod :as a]
+         '[clj-ant.tasks :as t])
+```
+
+Publishing through the babashka pod registry is packaging work, not a
+protocol change: the registry expects downloadable artifacts with a pod
+entry point, while clj-ant currently ships the JVM entry point directly.
+`bin/bb-pod-smoke.clj` is the CI smoke test for that public pod surface.
+
+
 ## What you get
 
 A bb deploy script. SSH, token substitution, and live event

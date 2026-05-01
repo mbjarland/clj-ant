@@ -30,7 +30,7 @@
 
 (def scm
   {:url "https://github.com/mbjarland/clj-ant"
-   :connection "scm:git:git://github.com/mbjarland/clj-ant.git"
+   :connection "scm:git:https://github.com/mbjarland/clj-ant.git"
    :developerConnection "scm:git:ssh://git@github.com/mbjarland/clj-ant.git"
    :tag (or (System/getenv "GITHUB_REF_NAME") "HEAD")})
 

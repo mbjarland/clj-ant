@@ -65,7 +65,8 @@
   (testing "generated API docs use Markdown sections instead of run-on text"
     (let [doc (:doc (meta #'tasks/chgrp))]
       (is (= '([& args]) (:arglists (meta #'tasks/chgrp))))
-      (is (re-find #"\*\*Attributes\*\*\n\n- `:addsourcefile` `boolean`" doc))
-      (is (re-find #"- `:file` `File` - the file or directory" doc))
+      (is (re-find #"\*\*Attributes\*\*\n\n\| Attribute \| Type \| Description \| Required \|" doc))
+      (is (re-find #"\| `:addsourcefile` \| `boolean` \|  \|  \|" doc))
+      (is (re-find #"\| `:file` \| `File` \| the file or directory" doc))
       (is (re-find #"\*\*Nested elements\*\*\n\n- `:arg` \(`Argument`\)" doc))
       (is (not (re-find #"FileSet s" doc))))))

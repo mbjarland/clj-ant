@@ -365,6 +365,12 @@
            (str/replace "\"" "\\\""))
        "\""))
 
+(defn- table-cell [s]
+  (-> (or s "")
+      (str/replace #"\s+" " ")
+      (str/replace "|" "\\|")
+      str/trim))
+
 (defn- safe-symbol
   "Pick a clojure-friendly symbol for an Ant tag.
 
@@ -392,11 +398,11 @@
 (defn- attribute-doc-line [manual-attrs [k ^Class c]]
   (let [kw (attr-keyword k)
         {:keys [description required]} (get manual-attrs kw)]
-    (str "- `" kw "` `" (friendly-type c) "`"
-         (when description
-           (str " - " description))
-         (when required
-           (str \newline "  Required: " required)))))
+    (format "| `%s` | `%s` | %s | %s |"
+            kw
+            (table-cell (friendly-type c))
+            (table-cell description)
+            (table-cell required))))
 
 (defn- nested-doc-line [[k ^Class c]]
   (format "- `%s` (`%s`)"
@@ -415,6 +421,8 @@
                                     attrs)
         attr-block  (when (seq attrs)
                        (str "**Attributes**" \newline \newline
+                             "| Attribute | Type | Description | Required |" \newline
+                             "| --- | --- | --- | --- |" \newline
                              (str/join \newline (map #(attribute-doc-line manual-attrs %)
                                                       attrs))))
         nested-block (when (seq nested)

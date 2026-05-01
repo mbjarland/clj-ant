@@ -1,0 +1,11 @@
+{:cljdoc/languages ["clj"]
+ :cljdoc.doc/tree
+ [["Readme" {:file "README.md"}]
+  ["Where to Start" {:file "doc/intro.md"}]
+  ["Cookbook" {:file "doc/examples.md"}]
+  ["Babashka Pod" {:file "doc/babashka.md"}]
+  ["tools.build" {:file "doc/tools-build.md"}]
+  ["Architecture" {:file "doc/architecture.md"}]
+  ["Roadmap" {:file "doc/roadmap.md"}]
+  ["Release Checklist" {:file "doc/pre-release.md"}]
+  ["Changelog" {:file "CHANGELOG.md"}]]}

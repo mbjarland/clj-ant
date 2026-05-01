@@ -374,13 +374,15 @@ top-level dispatch read as a one-liner `if`.
 
 We could resolve task names at runtime — every `(t/foo …)` call
 delegates to a single `(element :foo …)`. Instead the generator
-emits explicit `defn`s with rich docstrings + `:arglists`
-metadata.
+emits explicit `defn`s with cljdoc-friendly Markdown docstrings and
+metadata derived from Ant introspection plus the bundled manual.
 
-Why: **IDE ergonomics**. Cursive, CIDER, and clojure-lsp read
-`:arglists` for keyword completion. With explicit defns, typing
-`(t/copy :` brings up `:todir :tofile :overwrite …` inline. With
-dynamic dispatch the IDE has nothing to introspect.
+Why: **discoverability and tool data**. Explicit vars give cljdoc,
+`clojure.repl/doc`, source links, and REPL completion a real namespace to
+index. We keep the public arglist compact (`[& args]`) so generated API
+pages don't start with hundreds of attribute names, while structured
+attribute data stays available through var metadata and `a/describe`.
+With dynamic dispatch, tools would have only one opaque entry point.
 
 The cost is `tasks.clj` being a checked-in generated file (large).
 Worth it. Regen with `clj -X:gen` after an Ant version bump.

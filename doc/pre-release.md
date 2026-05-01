@@ -22,9 +22,9 @@ Legend:
   The group is verified and matches the artifact coordinates in
   `build.clj`.
 
-- ✅ **Tag `v1.0.0-alpha.1`.**
-  The first alpha is published. Final 1.0 waits for external usage and
-  feedback on the public API.
+- ✅ **Tag the alpha releases.**
+  `v1.0.0-alpha.1` through `v1.0.0-alpha.4` are published. Final 1.0
+  waits for external usage and feedback on the public API.
 
 ### Build / publish
 
@@ -36,7 +36,7 @@ Legend:
   GitHub secrets are configured with a rotated Clojars deploy token.
 
 - ✅ **Confirm Clojars deployment.**
-  `io.github.mbjarland/clj-ant` `1.0.0-alpha.1` is available on
+  `io.github.mbjarland/clj-ant` `1.0.0-alpha.4` is available on
   Clojars.
 
 ### Continuous integration
@@ -91,9 +91,9 @@ Legend:
   It follows `keepachangelog.com` format and records the first alpha
   release separately from unreleased follow-up work.
 
-- 🚧 **cljdoc auto-publish.** Free with Clojars; the artifact has
-  landed and cljdoc should index it. If indexing fails, inspect the
-  cljdoc build log for the released version.
+- ✅ **cljdoc auto-publish.** Free with Clojars; `1.0.0-alpha.3`
+  indexed successfully with API docs, articles, source links, and GitHub
+  source metadata.
 
 - ❓ **Migrate `tasks.clj` out of git history?** It's a 16k-line
   generated file. Bloats clones. Could move to an artifact
@@ -127,7 +127,6 @@ Legend:
 
 ## Suggested order of operations
 
-1. Wait for cljdoc to index `1.0.0-alpha.1`.
-2. Share the Clojars and cljdoc links with early users.
-3. Collect feedback on `clj-ant.spec`, pod streaming, and validation.
-4. Cut follow-up alpha tags for documentation or API fixes as needed.
+1. Share the Clojars and cljdoc links with early users.
+2. Collect feedback on `clj-ant.spec`, pod streaming, and validation.
+3. Cut follow-up alpha tags for documentation or API fixes as needed.
