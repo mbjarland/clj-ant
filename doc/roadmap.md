@@ -20,8 +20,9 @@ flip back. `deftask` removes that wall by letting any Clojure fn
 register itself as an Ant task name:
 
 ```clojure
-(a/deftask :slack-notify [{:keys [channel msg webhook]}]
-  (slack/post webhook channel msg))
+(a/deftask :slack-notify
+  (fn [{:keys [channel msg webhook]}]
+    (slack/post webhook channel msg)))
 
 (a/ant
   (t/jar :destfile "app.jar" ...)
