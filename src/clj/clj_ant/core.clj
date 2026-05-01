@@ -18,6 +18,7 @@
   because they are implemented inside Ant's runtime configuration
   machinery, not its XML layer."
   (:require [clojure.java.io :as io]
+            [clojure.string :as str]
             [clojure.xml :as xml]
             [clojure.core.protocols :as p])
   (:import [org.apache.tools.ant Project ProjectComponent Target Location IntrospectionHelper
@@ -33,7 +34,7 @@
 ;;
 ;; Tasks and types are nothing but functions that return a map. The map is
 ;; opaque data — in particular, calling (copy ...) does NOT trigger any Ant
-;; activity. That only happens once the tree is handed to `run!`.
+;; activity. That only happens once the tree is handed to `execute!` / `ant`.
 
 (defrecord Element [tag attrs children text])
 
@@ -216,7 +217,8 @@
   * keyword/value pairs are attributes
   * strings concatenate into the element's text body
   * maps or other elements become children
-  * sequential collections splice their contents in as children
+  * sequential collections of elements/maps splice in as children
+  * sequential collections of files/resources/paths become one resource child
 
   Returned value is an `Element` record — a plain map you can inspect,
   walk, diff, transform with `update`, store in an atom, etc."
@@ -325,6 +327,16 @@
 ;; has changed (the common case after the first call).
 (defonce ^:private registry-gen (atom 0))
 
+;; Names registered via deftask. ClojureTask/REGISTRY also briefly contains
+;; inline task fns during execute!, so Project sync must not treat every
+;; registry entry as a permanent task definition.
+(defonce ^:private deftask-tags (atom #{}))
+
+(defonce ^:private inline-task-counter (atom 0))
+
+(defn- ^:no-doc registered-deftask-tags []
+  (filter #(.containsKey ClojureTask/REGISTRY %) @deftask-tags))
+
 (defn make-project
   "Build a fresh `org.apache.tools.ant.Project`, attach a logger, and
   call `init` so all built-in tasks/types are registered.
@@ -354,7 +366,7 @@
     ;; remember the registry generation we synced against. Future
     ;; `execute!` calls compare the project's stamp to the global
     ;; gen and skip the doseq when nothing has changed.
-    (doseq [tn (.keySet ClojureTask/REGISTRY)]
+    (doseq [tn (registered-deftask-tags)]
       (.addTaskDefinition p tn ClojureTask))
     (.addReference p "_clj-ant.registry-gen" (atom @registry-gen))
     p))
@@ -367,7 +379,7 @@
   (let [stamp (.getReference project "_clj-ant.registry-gen")
         cur   @registry-gen]
     (when (or (nil? stamp) (not= cur @stamp))
-      (doseq [tn (.keySet ClojureTask/REGISTRY)]
+      (doseq [tn (registered-deftask-tags)]
         (.addTaskDefinition project tn ClojureTask))
       (if stamp
         (reset! stamp cur)
@@ -470,14 +482,18 @@
                    :channel \"#deploys\"
                    :msg \"shipped ${version}\"))"
   [tag f]
-  (.put ClojureTask/REGISTRY (clojure.core/name tag) f)
+  (let [n (clojure.core/name tag)]
+    (.put ClojureTask/REGISTRY n f)
+    (swap! deftask-tags conj n))
   (swap! registry-gen inc)
   tag)
 
 (defn deftask?
   "Truthy if `tag` has been registered via `deftask`."
   [tag]
-  (.containsKey ClojureTask/REGISTRY (clojure.core/name tag)))
+  (let [n (clojure.core/name tag)]
+    (and (contains? @deftask-tags n)
+         (.containsKey ClojureTask/REGISTRY n))))
 
 (defn task
   "Inline a Clojure thunk as an Ant task. Returns an element you can
@@ -507,14 +523,15 @@
   ([f] (task nil f))
   ([tag f]
    (let [;; Anonymous tasks get a distinctively-prefixed name so they
-         ;; cannot collide with any Ant task or user deftask. Explicit
-         ;; tags pass through verbatim; the runner refuses at execute
-         ;; time if they would shadow something.
+         ;; cannot collide with any Ant task, user deftask, or another
+         ;; anonymous inline task in a concurrent execute!. Explicit tags
+         ;; pass through verbatim; the runner refuses at execute time if
+         ;; they would shadow something.
          tag (or tag
-                 (keyword (str "clj-ant-inline-"
-                               (System/identityHashCode f))))]
+                  (keyword (str "clj-ant-inline-"
+                                (swap! inline-task-counter inc))))]
      (with-meta (element tag)
-                {:clj-ant/inline-fn f}))))
+                 {:clj-ant/inline-fn f}))))
 
 (defn- ^:no-doc collect-inline-tasks
   "Walk `elements` and return [{:tag <kw> :fn <fn>} ...] for every
@@ -561,12 +578,27 @@
     (keyword? v)    (name v)
     (symbol? v)     (name v)
     (sequential? v) (clojure.string/join ","
-                                         (map #(cond
-                                                 (keyword? %) (name %)
-                                                 (symbol? %)  (name %)
-                                                 :else        (str %))
-                                              v))
+                                          (map #(cond
+                                                  (keyword? %) (name %)
+                                                  (symbol? %)  (name %)
+                                                  :else        (str %))
+                                               v))
     :else           (str v)))
+
+(defn- target-name
+  "Return the non-blank Ant target name for an element, or nil."
+  [attrs]
+  (when-some [v (:name attrs)]
+    (let [n (attr->string v)]
+      (when-not (str/blank? n) n))))
+
+(defn- require-target-name!
+  "Fail fast for target elements without a usable :name."
+  [element]
+  (or (target-name (:attrs element))
+      (throw (ex-info "Target elements require a non-empty :name attribute"
+                      {:tag (:tag element)
+                       :attrs (:attrs element)}))))
 
 ;; Per-project monotonic counter for synthetic reference ids. Counter
 ;; lives on the project so it survives across calls when the project
@@ -804,11 +836,12 @@
         _         (.addOrReplaceTarget project implicit)
         ;; Register named targets.
         named-tgts (mapv (fn [n]
-                           (let [{:keys [attrs children]} n
-                                 t (doto (Target.)
-                                     (.setName        (str (:name attrs)))
-                                     (.setProject     project)
-                                     (.setDescription (:description attrs)))
+                            (let [{:keys [attrs children]} n
+                                  name (require-target-name! n)
+                                  t (doto (Target.)
+                                      (.setName        name)
+                                      (.setProject     project)
+                                      (.setDescription (:description attrs)))
                                  deps (:depends attrs)
                                  deps-str (cond
                                             (nil? deps) nil
@@ -913,7 +946,9 @@
               (mkdir :dir \"classes\")
               (javac :srcdir \"src\" :destdir \"classes\"))"
   [& args]
-  (apply element :target args))
+  (let [e (apply element :target args)]
+    (require-target-name! e)
+    e))
 
 (defmacro deftarget
   "def a target element bound to `nm`, with :name set from the symbol's
@@ -1163,13 +1198,14 @@
 
 (defn ant
   "Run a sequence of Ant tasks inline. Each top-level form is added as a
-  task of an implicit unnamed target. Keyword options must come first
-  and are forwarded to `execute!` / `make-project`.
+  task of an implicit unnamed target. Options are forwarded to
+  `execute!` / `make-project` and may be supplied either as leading
+  keyword/value pairs or as one leading map.
 
   Example:
 
       (ant
-        :basedir \"out\"
+        {:basedir \"out\"}
         (mkdir :dir \"classes\")
         (copy  :todir \"classes\"
           (fileset :dir \"src\" :includes \"**/*.clj\")))
@@ -1179,10 +1215,12 @@
   `(element :my-tag ...)` from this namespace."
   [& args]
   (let [[opts rest-args]
-        (loop [opts {} xs args]
-          (if (and (keyword? (first xs)) (not (element? (second xs))))
-            (recur (assoc opts (first xs) (second xs)) (drop 2 xs))
-            [opts xs]))]
+        (if (and (map? (first args)) (not (contains? (first args) :tag)))
+          [(first args) (rest args)]
+          (loop [opts {} xs args]
+            (if (and (keyword? (first xs)) (not (element? (second xs))))
+              (recur (assoc opts (first xs) (second xs)) (drop 2 xs))
+              [opts xs])))]
     (apply execute! (vec rest-args) (mapcat identity opts))))
 
 ;; ---------------------------------------------------------------------------
