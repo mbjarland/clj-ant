@@ -87,34 +87,91 @@
       (size [_] @size-cache)
       (isFilesystemOnly [_] true))))
 
+(defprotocol ICoercible
+  "Coerce a value to a child usable inside an element tree.
+
+  The default extensions cover everything the runner already
+  handles: Element / JavaChild records (passed through), Ant
+  ResourceCollection / Resource / File (wrapped as a refid'd
+  proxy), node-shaped maps (passed through), and Sequential of
+  any of the above (wrapped as a lazy ResourceCollection).
+
+  To plug in your own type without forking, extend the protocol:
+
+      (extend-protocol clj-ant.core/ICoercible
+        my.lib.SomeFileBag
+        (-as-child [bag]
+          (clj-ant.core/->JavaChild
+            (.toAntResourceCollection bag) :resources)))
+
+  After that, instances flow through `as-child` (and therefore
+  any task wrapper) like any other built-in shape."
+  (-as-child [x]
+    "Convert `x` to an Element / JavaChild / node-shaped map.
+    Implementations should return a value the runner can drop
+    into the children list."))
+
+(defn- ^:no-doc rc-of-one [x]
+  (->JavaChild (build-lazy-rc [x]) :resources))
+
+(extend-protocol ICoercible
+  Element
+  (-as-child [x] x)
+
+  JavaChild
+  (-as-child [x] x)
+
+  ResourceCollection
+  (-as-child [x] (->JavaChild x :resources))
+
+  File
+  (-as-child [x] (rc-of-one x))
+
+  Resource
+  (-as-child [x] (rc-of-one x))
+
+  ;; Catches Vector / List / LazySeq / Cons / etc.
+  clojure.lang.Sequential
+  (-as-child [x] (->JavaChild (build-lazy-rc x) :resources))
+
+  ;; Element and JavaChild are records so they hit those impls
+  ;; first; this one fires for plain hand-built maps that carry
+  ;; a :tag (the from-xml shape, the bb-pod shape).
+  clojure.lang.IPersistentMap
+  (-as-child [x] x)
+
+  nil
+  (-as-child [_]
+    (throw (ex-info "Cannot use nil as a child" {})))
+
+  Object
+  (-as-child [x]
+    (throw (ex-info (str "Cannot use as child: " (pr-str x))
+                    {:value x :type (class x)}))))
+
 (defn as-child
-  "Coerce `x` to a Element or JavaChild so it can be a child of an Ant
-  element. The rule is:
+  "Coerce `x` to a child usable inside an element tree. Dispatches
+  through the `ICoercible` protocol -- extend that protocol for
+  your own types.
 
-    Element / JavaChild     -> as is
-    map (element-shaped)    -> as is
+  Built-in dispatches:
+
+    Element / JavaChild        -> as is
     org.apache.tools.ant.types.ResourceCollection
-                         -> JavaChild (refid proxy at execute time)
-    File / Resource      -> single-element ResourceCollection
-    seq of the above     -> lazy ResourceCollection over the seq
+                               -> JavaChild (refid proxy at execute time)
+    File / Resource            -> single-element ResourceCollection
+    Sequential of the above    -> lazy ResourceCollection over the seq
+    map (element-shaped)       -> as is
 
-  You don't usually call this yourself -- `element` (and the generated
-  task wrappers) call it on every positional arg. So this works
-  out of the box:
+  You don't usually call this yourself -- `element` (and the
+  generated task wrappers) call it on every positional arg. So
+  this works out of the box:
 
       (a/ant (t/copy :todir \"out\" my-fileset))      ; FileSet
       (a/ant (t/copy :todir \"out\" (find-files)))    ; lazy seq of File
       (a/ant (t/copy :todir \"out\" (io/file \"x\"))) ; one File"
   [x]
-  (cond
-    (or (element? x) (java-child? x))    x
-    (map? x)                          x
-    (instance? ResourceCollection x)  (->JavaChild x :resources)
-    (or (instance? File x)
-        (instance? Resource x))       (->JavaChild (build-lazy-rc [x]) :resources)
-    (sequential? x)                   (->JavaChild (build-lazy-rc x) :resources)
-    :else (throw (ex-info (str "Cannot use as child: " (pr-str x))
-                          {:value x :type (class x)}))))
+  (-as-child x))
 
 (defn- split-args
   "Pulls keyword/value attribute pairs off the front of a positional arg

@@ -518,6 +518,7 @@ If you're adding a feature, here's where it goes:
 
 | You want to...                           | Touch...                            |
 |------------------------------------------|-------------------------------------|
+| Plug a custom Java type as a child       | `extend-protocol ICoercible` from your code (no fork) |
 | Add a new top-level operation            | `core.clj`                          |
 | Add per-tag validation                   | `spec.clj` (build-schema)           |
 | Add a streaming pod op                   | `pod.clj` (ops + describe payload)  |
@@ -526,6 +527,22 @@ If you're adding a feature, here's where it goes:
 | Bump Ant                                 | `deps.edn` + run `clj -X:gen`       |
 | Add a recipe                             | `doc/examples.md`                   |
 | Capture an open idea                     | `doc/roadmap.md`                    |
+
+The `ICoercible` protocol is the explicit extension seam for
+data flowing INTO the runner. Default extensions cover Element,
+JavaChild, ResourceCollection, Resource, File, Sequential, and
+node-shaped maps. Out-of-tree types extend the protocol from
+their own namespace -- no need to fork:
+
+```clojure
+(extend-protocol clj-ant.core/ICoercible
+  my.lib.SomeFileBag
+  (-as-child [bag]
+    (clj-ant.core/lazy-resources (.-paths bag) {:size (.size bag)})))
+```
+
+Anywhere the runner accepts a child (any task wrapper, hand-built
+elements, etc.), `SomeFileBag` instances now flow through cleanly.
 
 If you're adding a **task wrapper**, don't write it by hand —
 either it's already in `tasks.clj` (run `clj -X:gen` after an Ant

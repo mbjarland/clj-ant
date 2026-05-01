@@ -379,6 +379,29 @@
         (is (= 1 (count (:clj-ant/elements ed))))
         (is (re-find #"tdoir" (:ant/message ed)))))))
 
+(deftype TestUserBag [paths])
+
+(extend-protocol a/ICoercible
+  TestUserBag
+  (-as-child [bag]
+    (a/lazy-resources (map #(File. ^String %) (.-paths bag))
+                      {:size (count (.-paths bag))})))
+
+(deftest icoercible-user-extension
+  (testing "a user-defined type extending ICoercible flows as a child"
+    (let [base (tmp-dir)
+          src  (File. base "src")]
+      (.mkdirs src)
+      (doseq [n ["a.txt" "b.txt" "c.txt"]] (spit-file src n n))
+      (let [dst (File. base "dst")
+            bag (->TestUserBag (mapv #(.getAbsolutePath (File. src %))
+                                     ["a.txt" "b.txt"]))]
+        (a/ant :level :warn
+          (a/element :copy :todir (.getAbsolutePath dst) bag))
+        (is (= #{"a.txt" "b.txt"}
+               (set (mapv #(.getName %) (.listFiles dst))))
+            "user-extended type contributed two files via the protocol")))))
+
 (deftest plain-map-tree-with-raw-children
   (testing "execute! handles map-shaped trees with raw seq/File children
             (the shape from-xml and the bb pod produce)"
