@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Permissions type</title>
 </head>
@@ -25,6 +25,18 @@
 <body>
 
 <h2 id="permissions">Permissions</h2>
+<p><b>Note:</b> <code>Permissions</code> requires the use of Java SecurityManager.
+  Java version 17 deprecated SecurityManager for removal and Java 18 and higher versions, by
+  default, disallow setting SecurityManager at runtime. <code>Permissions</code> is thus no longer
+  supported when used in Java 18 or higher versions. Using it in those Java runtime versions
+  will throw a <code>org.apache.tools.ant.BuildException</code>. Throwing of
+  <code>BuildException</code> can be relaxed by setting the
+  <code>ant.securitymanager.usage.warn</code> system or Ant property to <code>true</code>,
+  which will then cause a warning to be logged instead of the exception being thrown. Even when
+  <code>ant.securitymanager.usage.warn</code> is set to <code>true</code>,
+  SecurityManager usage will still be disabled and no security checks will be performed.
+  It is recommended to no longer use <code>&lt;permissions&gt;</code></p>
+
 <p>Permissions represents a set of security permissions granted or revoked to a specific part
 code executed in the JVM where Apache Ant is running in.  The actual Permissions are specified
 via a set of nested permission items either <code>&lt;grant&gt;</code>ed
@@ -40,9 +52,9 @@ has been revoked.</p>
 are granted.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>class</td>
@@ -67,9 +79,9 @@ function properly. The name and actions are parsed by the actual Permission clas
 <p>Indicates a specific permission is revoked.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>class</td>
@@ -134,9 +146,9 @@ are revoked.  If the <var>actions</var> are left empty all actions match, and ar
   &lt;grant class=&quot;java.util.PropertyPermission&quot; name=&quot;user.home&quot; action=&quot;read,write&quot;/&gt;
 &lt;/permissions&gt;
 </pre>
-<p>Grants the base set of permissions with the addition of a <code>SocketPermission</code> to
-connect to <samp>foo.bar.com</samp> and the permission to read and write
-the <code>user.home</code> system property.</p>
+<p>Grants the base set of permissions with the addition of
+a <code class="code">SocketPermission</code> to connect to <samp>foo.bar.com</samp> and the
+permission to read and write the <code>user.home</code> system property.</p>
 
 </body>
 </html>

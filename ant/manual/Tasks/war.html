@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>WAR Task</title>
 </head>
@@ -54,9 +54,9 @@ attribute to a value other than its default, <q>add</q>.</strong></p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>destfile</td>
@@ -241,6 +241,16 @@ attribute to a value other than its default, <q>add</q>.</strong></p>
       the <a href="zip.html#zip64">discussion in the zip task page</a></td>
     <td>No; default is <q>never</q></td>
   </tr>
+  <tr>
+    <td valign="top">modificationtime</td>
+    <td valign="top">Set all stored file modification times to the
+    given time. This can either be a number interpreted as
+    milliseconds since 1970-01-01T00:00:00Z or a string that can be
+    parsed as a ISO 8601 timestamp with optional timezone.
+      <em>Since Ant 1.10.2</em>.
+    </td>
+    <td align="center" valign="top">No</td>
+  </tr>
 </table>
 
 <h3>Parameters specified as nested elements</h3>
@@ -282,7 +292,7 @@ src/html/myapp/index.html
 src/jsp/myapp/front.jsp
 src/graphics/images/gifs/small/logo.gif
 src/graphics/images/gifs/large/logo.gif</pre>
-then the war file <samp>myapp.war</samp> created with
+<p>then the war file <samp>myapp.war</samp> created with</p>
 <pre>
 &lt;war destfile=&quot;myapp.war&quot; webxml=&quot;src/metadata/myapp.xml&quot;&gt;
   &lt;fileset dir=&quot;src/html/myapp&quot;/&gt;

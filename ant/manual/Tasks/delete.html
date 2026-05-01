@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Delete Task</title>
 </head>
@@ -26,7 +26,7 @@
 
 <h2 id="delete">Delete</h2>
 <h3>Description</h3>
-<p>Deletes a single file, a specified directory and all its files and subdirectories, or a set of
+<p>Deletes a single file, a symbolic link or Windows junction, a specified directory and all its files and subdirectories, or a set of
 files specified by one or more <a href="../Types/resources.html#collection">resource
 collection</a>s.  The literal implication of <code>&lt;fileset&gt;</code> is that directories are
 not included; however the removal of empty directories can be triggered when using nested filesets
@@ -49,15 +49,15 @@ nested <code>&lt;fileset&gt;</code>.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>file</td>
     <td>The file to delete, specified as either the simple filename (if the file exists in the
       current base directory), a relative-path filename, or a full-path filename.</td>
-    <td rowspan="2">At least one of the two, unless nested resource collections are specified</td>
+    <td rowspan="3">At least one of the three, unless nested resource collections are specified</td>
   </tr>
   <tr>
     <td>dir</td>
@@ -70,6 +70,15 @@ nested <code>&lt;fileset&gt;</code>.</p>
      (and the base directory itself, if different from the current working directory).</td>
   </tr>
   <tr>
+    <td>link</td>
+    <td>The symbolic link or Windows junction to delete,
+      specified as either the simple filename (if the link exists in
+      the current base directory), a relative-path filename, or a
+      full-path filename.<br/>
+      <em>since Ant 1.10.16</em>.
+    </td>
+  </tr>
+  <tr>
     <td>verbose</td>
     <td>Whether to show the name of each deleted file.</td>
     <td>No; default <q>false</q></td>
@@ -77,10 +86,10 @@ nested <code>&lt;fileset&gt;</code>.</p>
   <tr>
     <td>quiet</td>
     <td>If the specified file or directory does not exist, do not display a diagnostic message
-      (unless Apache Ant has been invoked with the <code>-verbose</code> or <code>-debug</code>
+      (unless Apache Ant has been invoked with the <kbd>-verbose</kbd> or <kbd>-debug</kbd>
       switches) or modify the exit status to reflect an error.  When set to <q>true</q>, if a file
       or directory cannot be deleted, no error is reported. This setting emulates
-      the <code>-f</code> option to the Unix <em>rm</em> command.  Setting this to <q>true</q>
+      the <kbd>-f</kbd> option to the Unix <em>rm</em> command.  Setting this to <q>true</q>
       implies setting <var>failonerror</var> to <q>false</q>.</td>
     <td>No; default <q>false</q></td>
   </tr>
@@ -124,7 +133,7 @@ nested <code>&lt;fileset&gt;</code>.</p>
   <tr>
     <td>defaultexcludes</td>
     <td><em><u>Deprecated</u></em>.  Use resource collections.  Whether to
-      use <a href="../dirtasks.html#defaultexcludes"> default excludes.</a></td>
+      use <a href="../dirtasks.html#defaultexcludes">default excludes.</a></td>
     <td>No; default <q>true</q></td>
   </tr>
   <tr>
@@ -138,7 +147,8 @@ nested <code>&lt;fileset&gt;</code>.</p>
     <td>removeNotFollowedSymlinks</td>
     <td>Whether symbolic links (not the files/directories they link to) should be removed if they
       haven't been followed because <var>followSymlinks</var> was <q>false</q> or the maximum number
-      of symbolic links was too big.  <em>Since Ant 1.8.0</em></td>
+      of symbolic links was too big.  <em>Since Ant 1.8.0</em><br/>
+    Since since Ant 1.10.16 this also applies to not followed windows junctions.</td>
     <td>No; default <q>false</q></td>
   </tr>
   <tr>
@@ -153,45 +163,46 @@ nested <code>&lt;fileset&gt;</code>.</p>
 </table>
 
 <h3>Examples</h3>
+
+<p>Delete the file <samp>/lib/ant.jar</samp>.</p>
 <pre>&lt;delete file=&quot;/lib/ant.jar&quot;/&gt;</pre>
-<p>deletes the file <samp>/lib/ant.jar</samp>.</p>
 
-<pre>&lt;delete dir=&quot;lib&quot;/&gt;</pre>
-<p>deletes the <samp>lib</samp> directory, including all files and subdirectories
+<p>Delete the <samp>lib</samp> directory, including all files and subdirectories
 of <samp>lib</samp>.</p>
+<pre>&lt;delete dir=&quot;lib&quot;/&gt;</pre>
 
+<p>Delete all files with the extension <samp>.bak</samp> from the current directory and any
+subdirectories.</p>
 <pre>
 &lt;delete&gt;
   &lt;fileset dir=&quot;.&quot; includes=&quot;**/*.bak&quot;/&gt;
 &lt;/delete&gt;
 </pre>
-<p>deletes all files with the extension <samp>.bak</samp> from the current directory and any
-subdirectories.</p>
 
+<p>Delete all files and subdirectories of <samp>build</samp>, including <samp>build</samp>
+itself.</p>
 <pre>
 &lt;delete includeEmptyDirs=&quot;true&quot;&gt;
   &lt;fileset dir=&quot;build&quot;/&gt;
 &lt;/delete&gt;
 </pre>
-<p>deletes all files and subdirectories of <samp>build</samp>, including <samp>build</samp>
-itself.</p>
 
+<p>Delete all files and subdirectories of <samp>build</samp>, without <samp>build</samp> itself.</p>
 <pre>
 &lt;delete includeemptydirs=&quot;true&quot;&gt;
   &lt;fileset dir=&quot;build&quot; includes=&quot;**/*&quot;/&gt;
 &lt;/delete&gt;
 </pre>
-<p>deletes all files and subdirectories of <samp>build</samp>, without <samp>build</samp>
-itself.</p>
 
+<p>Delete the Subversion metadata directories under <samp>src</samp>. Because <samp>.svn</samp> is
+on of the <a href="../dirtasks.html#defaultexcludes">default excludes</a> you have to use
+the <var>defaultexcludes</var> flag, otherwise Ant won't delete these directories and the files in
+it.</p>
 <pre>
 &lt;delete includeemptydirs=&quot;true&quot;&gt;
   &lt;fileset dir=&quot;src&quot; includes=&quot;**/.svn/&quot; defaultexcludes=&quot;false&quot;/&gt;
 &lt;/delete&gt;
 </pre>
-<p>deletes the subversion metadata directories under <samp>src</samp>. Because <samp>.svn</samp> is
-on of the <a href="../dirtasks.html#defaultexcludes">default excludes</a> you have to use the
-<var>defaultexcludes</var> flag, otherwise Ant won't delete these directories and the files in it.</p>
 
 </body>
 </html>

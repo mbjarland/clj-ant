@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-  <meta http-equiv="Content-Language" content="en-us">
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <title>ClearCase Tasks</title>
 </head>
@@ -55,25 +55,26 @@ Sean Egan    (sean at cm-logic dot com)</p>
 <hr/>
 <h2 id="introduction">Introduction</h2>
 <p>Apache Ant provides several optional tasks for working with ClearCase. These tasks correspond to
-various ClearCase commands using the <code>cleartool</code> program. The current tasks available for
+various ClearCase commands using the <kbd>cleartool</kbd> program. The current tasks available for
 Ant correspond to only a few of the significant ClearCase commands.</p>
 
 <p>More tasks can be easily added by deriving from the ClearCase class and then adding functionality
 that is specific to that ClearCase command.</p>
-<p>Important: these tasks all require <code>cleartool</code> on the command line.  If a task fails
-  with an IOException, especially <code>error=2</code> on Windows, this is your problem.</p>
+<p>Important: these tasks all require <kbd>cleartool</kbd> on the command line.  If a task fails
+with an <code>IOException</code>, especially <code>error=2</code> on Windows, this is your
+problem.</p>
 
 <hr/>
 
 <h2 id="cccheckin">CCCheckin</h2>
 <h3>Description</h3>
-<p>Task to perform a <code>cleartool checkin</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool checkin</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>viewpath</td>
@@ -117,28 +118,27 @@ that is specific to that ClearCase command.</p>
 </table>
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>checkin</code> on the file <samp>c:/views/viewdir/afile</samp>. Comment
+text from the file <samp>acomment.txt</samp> is added to ClearCase as a comment. All warning
+messages are suppressed. The file is checked in even if it is <em>identical</em> to the
+original.</p>
 <pre>
 &lt;cccheckin viewpath="c:/views/viewdir/afile"
            commentfile="acomment.txt"
            nowarn="true"
            identical="true"/&gt;</pre>
 
-<p>Does a ClearCase <code>checkin</code> on the file <samp>c:/views/viewdir/afile</samp>.  Comment
-text from the file <samp>acomment.txt</samp> is added to ClearCase as a comment.  All warning
-messages are suppressed. The file is checked in even if it is <em>identical</em> to the
-original.</p>
-
 <hr/>
 
 <h2 id="cccheckout">CCCheckout</h2>
 <h3>Description</h3>
-<p>Task to perform a <code>cleartool checkout</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool checkout</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>viewpath</td>
@@ -199,6 +199,9 @@ original.</p>
 </table>
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>checkout</code> on the file <samp>c:/views/viewdir/afile</samp>. It is
+checked out as <em>reserved</em> on branch called <samp>abranch</samp>. All warning messages are
+suppressed. A &quot;<samp>Some comment text</samp>&quot; is added to ClearCase as a comment.</p>
 <pre>
 &lt;cccheckout viewpath="c:/views/viewdir/afile"
             reserved="true"
@@ -206,21 +209,17 @@ original.</p>
             nowarn="true"
             comment="Some comment text"/&gt;</pre>
 
-<p>Does a ClearCase <code>checkout</code> on the file <samp>c:/views/viewdir/afile</samp>.  It is
-checked out as <em>reserved</em> on branch called <samp>abranch</samp>. All warning messages are
-suppressed. A &quot;<samp>Some comment text</samp>&quot; is added to ClearCase as a comment.</p>
-
 <hr/>
 
 <h2 id="ccuncheckout">CCUnCheckout</h2>
 <h3>Description</h3>
-<p>Task to perform a <code>uncheckout</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool uncheckout</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>viewpath</td>
@@ -240,22 +239,21 @@ suppressed. A &quot;<samp>Some comment text</samp>&quot; is added to ClearCase a
 </table>
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>uncheckout</code> on the file <samp>c:/views/viewdir/afile</samp>. A
+copy of the file named <samp>c:/views/viewdir/afile.keep</samp> is kept.</p>
 <pre>&lt;ccuncheckout viewpath="c:/views/viewdir/afile" keepcopy="true"/&gt;</pre>
-
-<p>Does a ClearCase <code>uncheckout</code> on the file <samp>c:/views/viewdir/afile</samp>.  A copy
-of the file called <samp>c:/views/viewdir/afile.keep</samp> is kept.</p>
 
 <hr/>
 
 <h2 id="ccupdate">CCUpdate</h2>
 <h3>Description</h3>
-<p>Task to perform an <code>cleartool update</code> command to ClearCase.</p>
+<p>Task to perform an <kbd>cleartool update</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>viewpath</td>
@@ -302,6 +300,10 @@ of the file called <samp>c:/views/viewdir/afile.keep</samp> is kept.</p>
 </table>
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>update</code> on the snapshot view
+directory <samp>c:/views/viewdir</samp>. A graphical dialog will be displayed. The output will be
+logged to <samp>log.log</samp> and it will overwrite any hijacked files. The modified time will be
+set to the current time.</p>
 <pre>
 &lt;ccupdate viewpath="c:/views/viewdir"
           graphical="false"
@@ -310,22 +312,17 @@ of the file called <samp>c:/views/viewdir/afile.keep</samp> is kept.</p>
           currenttime="true"
           rename="false"/&gt;</pre>
 
-<p>Does a ClearCase <code>update</code> on the snapshot view
-directory <samp>c:/views/viewdir</samp>.  A graphical dialog will be displayed. The output will be
-logged to <samp>log.log</samp> and it will overwrite any hijacked files. The modified time will be
-set to the current time.</p>
-
 <hr/>
 
 <h2 id="ccmklbtype">CCMklbtype</h2>
 <h3>Description</h3>
-<p>Task to perform a <code>mklbtype</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool mklbtype</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>typename</td>
@@ -381,26 +378,25 @@ set to the current time.</p>
 
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>mklbtype</code> to create a label type named <samp>VERSION_1</samp>. It
+is created as <em>ordinary</em> so it is available only to the current VOB. The text <q>Development
+version 1</q> is added as a comment.</p>
 <pre>
 &lt;ccmklbtype typename="VERSION_1"
             ordinary="true"
             comment="Development version 1"/&gt;</pre>
 
-<p>Does a ClearCase <code>mklbtype</code> to create a label type named <samp>VERSION_1</samp>.  It
-is created as <em>ordinary</em> so it is available only to the current VOB.  The text <q>Development
-version 1</q> is added as a comment.</p>
-
 <hr/>
 
 <h2 id="ccmklabel">CCMklabel</h2>
 <h3>Description</h3>
-<p>Task to perform a <code>mklabel</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool mklabel</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>typename</td>
@@ -450,6 +446,9 @@ version 1</q> is added as a comment.</p>
 
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>mklabel</code> on the file <samp>c:/views/viewdir/afile</samp> under
+the <samp>main</samp> branch for version 2 (<samp>\main\2</samp>). Text &quot;<samp>Some comment
+text</samp>&quot; is added as a comment. It will <em>recurse</em> all subdirectories.</p>
 <pre>
 &lt;ccmklabel viewpath="c:/views/viewdir/afile"
            comment="Some comment text"
@@ -458,29 +457,25 @@ version 1</q> is added as a comment.</p>
            typename="VERSION_1"/&gt;
 </pre>
 
-<p>Does a ClearCase <code>mklabel</code> on the file <samp>c:/views/viewdir/afile</samp> under the
-main branch for version 2 (<samp>\main\2</samp>). Text &quot;<samp>Some comment text</samp>&quot; is
-added as a comment. It will <em>recurse</em> all subdirectories.</p>
-
 <hr/>
 
 <h2 id="ccrmtype">CCRmtype</h2>
 <h3>Description</h3>
-<p>Task to perform a <code>rmtype</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool rmtype</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>typekind</td>
     <td>The kind of type to create. Valid types are:
       <table>
         <tr>
-          <th>Kind</th>
-          <th>Description</th>
+          <th scope="col">Kind</th>
+          <th scope="col">Description</th>
         </tr>
         <tr>
           <td><q>attype</q></td>
@@ -543,27 +538,26 @@ added as a comment. It will <em>recurse</em> all subdirectories.</p>
 
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>rmtype</code> to remove a label type (<q>lbtype</q>)
+named <samp>VERSION_1</samp>. Comment text from the file <samp>acomment.txt</samp> is added as a
+comment. All instances of the type are removed, including the type object itself.</p>
 <pre>
 &lt;ccrmtype typekind="lbtype"
           typename="VERSION_1"
           commentfile="acomment.txt"
           rmall="true"/&gt;</pre>
 
-<p>Does a ClearCase <code>rmtype</code> to remove a label type (<q>lbtype</q>)
-named <samp>VERSION_1</samp>.  Comment text from the file <samp>acomment.txt</samp> is added as a
-comment. All instances of the type are removed, including the type object itself.</p>
-
 <hr/>
 
 <h2 id="cclock">CCLock</h2>
 <h3>Description</h3>
-<p>Task to perform a <code>cleartool lock</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool lock</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>replace</td>
@@ -608,22 +602,21 @@ comment. All instances of the type are removed, including the type object itself
 </table>
 <h3>Examples</h3>
 
-<pre>&lt;cclock objsel="stream:Application_Integration@\MyProject_PVOB"/&gt;</pre>
-
-<p>Does a ClearCase <code>lock</code> on the
+<p>Perform a ClearCase <code>lock</code> on the
 object <samp>stream:Application_Integration@\MyProject_PVOB</samp>.</p>
+<pre>&lt;cclock objsel="stream:Application_Integration@\MyProject_PVOB"/&gt;</pre>
 
 <hr/>
 
 <h2 id="ccunlock">CCUnlock</h2>
 <h3>Description</h3>
-<p>Task to perform a <code>cleartool unlock</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool unlock</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>comment</td>
@@ -653,22 +646,21 @@ object <samp>stream:Application_Integration@\MyProject_PVOB</samp>.</p>
 </table>
 <h3>Examples</h3>
 
-<pre>&lt;ccunlock objsel="stream:Application_Integration@\MyProject_PVOB"/&gt;</pre>
-
-<p>Does a ClearCase <code>unlock</code> on the
+<p>Perform a ClearCase <code>unlock</code> on the
 object <samp>stream:Application_Integration@\MyProject_PVOB</samp>.</p>
+<pre>&lt;ccunlock objsel="stream:Application_Integration@\MyProject_PVOB"/&gt;</pre>
 
 <hr/>
 
 <h2 id="ccmkbl">CCMkbl</h2>
 <h3>Description</h3>
-<p>Task to perform a <code>cleartool mkbl</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool mkbl</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>comment</td>
@@ -712,28 +704,27 @@ object <samp>stream:Application_Integration@\MyProject_PVOB</samp>.</p>
 </table>
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>mkbl</code> on the Integration view at <samp>v:\ApplicationCC</samp>
+even if it is <em>identical</em> to a previous baseline. The new baseline with be incremental and
+named <samp>Application_Baseline_AUTO</samp>.</p>
 <pre>
 &lt;ccmkbl baselinerootname="Application_Baseline_AUTO"
         identical="yes"
         full="no"
         viewpath="v:\ApplicationCC"/&gt;</pre>
 
-<p>Does a ClearCase <code>mkbl</code> on the Integration view at <samp>v:\ApplicationCC</samp> even
-if it is <em>identical</em> to a previous baseline. The new baseline with be incremental and
-named <samp>Application_Baseline_AUTO</samp>.</p>
-
 <hr/>
 
 <h2 id="ccmkattr">CCMkattr</h2>
 <p><em>Since Ant 1.6.1</em></p>
 <h3>Description</h3>
-<p>Task to perform a <code>cleartool mkattr</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool mkattr</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>viewpath</td>
@@ -782,27 +773,26 @@ named <samp>Application_Baseline_AUTO</samp>.</p>
 </table>
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>mkattr</code> on the file <samp>c:/views/viewdir/afile</samp> and
+attach the attribute <samp>BugFix</samp> with a value of <samp>34445</samp> to it.</p>
 <pre>
 &lt;ccmkattr viewpath=&quot;c:/views/viewdir/afile&quot;
           typename=&quot;BugFix&quot;
           typevalue=&quot;34445&quot;/&gt;
 </pre>
 
-<p>Does a ClearCase <code>mkattr</code> on the file <samp>c:/views/viewdir/afile</samp> and attaches
-the attribute <samp>BugFix</samp> with a value of <samp>34445</samp> to it.</p>
-
 <hr/>
 
 <h2 id="ccmkdir">CCMkdir</h2>
 <p><em>Since Ant 1.6.1</em></p>
 <h3>Description</h3>
-<p>Task to perform a <code>cleartool mkdir</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool mkdir</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>viewpath</td>
@@ -831,26 +821,25 @@ the attribute <samp>BugFix</samp> with a value of <samp>34445</samp> to it.</p>
 </table>
 <h3>Examples</h3>
 
+<p>Perform a ClearCase <code>mkdir</code> on the dir <samp>c:/views/viewdir/adir</samp> and do not
+automatically check it out.</p>
 <pre>
 &lt;ccmkdir viewpath=&quot;c:/views/viewdir/adir&quot;
          nocheckout=&quot;true&quot;
          comment=&quot;Some comment text&quot;/&gt;</pre>
-
-<p>Does a ClearCase <code>mkdir</code> on the dir <samp>c:/views/viewdir/adir</samp> and does not
-automatically check it out.</p>
 
 <hr/>
 
 <h2 id="ccmkelem">CCMkelem</h2>
 <p><em>Since Ant 1.6.1</em></p>
 <h3>Description</h3>
-<p>Task to perform a <code>cleartool mkelem</code> command to ClearCase.</p>
+<p>Task to perform a <kbd>cleartool mkelem</kbd> command to ClearCase.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>viewpath</td>
@@ -904,14 +893,13 @@ automatically check it out.</p>
 </table>
 <h3>Examples</h3>
 
+<p>Perform ClearCase <code>mkelem</code> on the file <samp>c:/views/viewdir/afile</samp> with
+element type <samp>text_file</samp>, check in the file after creation.</p>
 <pre>
 &lt;ccmkelem viewpath=&quot;c:/views/viewdir/afile&quot;
           eltype=&quot;text_file&quot;
           checkin=&quot;true&quot;
           comment=&quot;Some comment text&quot;/&gt;</pre>
-
-<p>Does a ClearCase <code>mkelem</code> on the file <samp>c:/views/viewdir/afile</samp> with element
-type <samp>text_file</samp>. It also checks in the file after creation.</p>
 
 </body>
 </html>

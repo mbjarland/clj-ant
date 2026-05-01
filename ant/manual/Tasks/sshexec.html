@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>SSHEXEC Task</title>
 </head>
@@ -40,9 +40,9 @@ JSCh earlier than 0.1.28.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>host</td>
@@ -103,6 +103,14 @@ JSCh earlier than 0.1.28.</p>
     <td>passphrase</td>
     <td>Passphrase for your private key.</td>
     <td>No; defaults to an empty string</td>
+  </tr>
+  <tr>
+    <td>sshConfig</td>
+    <td>Location of the file holding the OpenSSH style configuration (e.g. <code>${user.home}/.ssh/config</code>).
+        The username and the key file are read from the configuration file,
+        unless they are already specified in the task parameters.
+        <em>since Ant 1.10.8</em></td>
+    <td>No</td>
   </tr>
   <tr>
     <td>suppresssystemout</td>
@@ -173,7 +181,7 @@ JSCh earlier than 0.1.28.</p>
   <tr>
     <td>verbose</td>
     <td>Determines whether <code>sshexec</code> outputs verbosely to the user.<br/>  Similar output
-      is generated as the <code>ssh</code> commandline tool with the <code>-v</code>
+      is generated as the <kbd>ssh</kbd> command line tool with the <kbd>-v</kbd>
       option.  <em>since Ant 1.8.0</em></td>
     <td>No; defaults to <q>false</q></td>
   </tr>
@@ -196,7 +204,7 @@ JSCh earlier than 0.1.28.</p>
   </tr>
   <tr>
     <td>usepty</td>
-    <td>Whether to allocate a pseudo-tty (like <code>ssh -t</code>).  <em>since Ant 1.8.3</em></td>
+    <td>Whether to allocate a pseudo-tty (like <kbd>ssh -t</kbd>).  <em>since Ant 1.8.3</em></td>
     <td>No; defaults to <q>false</q></td>
   </tr>
   <tr>
@@ -220,17 +228,69 @@ JSCh earlier than 0.1.28.</p>
       not <q>0</q>.  <em>since Ant 1.9.7</em></td>
     <td>No; defaults to <q>3</q></td>
   </tr>
+  <tr>
+    <td>hideSensitive</td>
+    <td>Allows to hide sensitive data in logs without output supressing. It makes easier debugging
+      with sensitive data hiding. <em>since Ant 1.10.16</em>
+    </td>
+    <td>No; defaults to <q>false</q></td>
+  </tr>
+  <tr>
+    <td>bindSensitive</td>
+    <td>Contains string with key=values pairs are divided by <var>sensitiveDelimiter</var>. <em>since Ant 1.10.16</em></td>
+    <td>Yes if <var>hideSensitive</var> set to <q>true</q></td>
+  </tr>
+  <tr>
+    <td>sensitiveDelimiter</td>
+    <td>Sensitive data delimiter of key=values pairs. <em>since Ant 1.10.16</em></td>
+    <td>No, defaults to <q>;</q></td>
+  </tr>
+  <tr>
+    <td>placeholderBrackets</td>
+    <td>Contains symbols to destinguish placeholder are needed to replace with sensitive data. <em>since Ant 1.10.16</em></td>
+    <td>No, defaults to <q>:</q></td>
+  </tr>
+</table>
+
+<h3>Parameters specified as nested elements</h3>
+
+<h4 id="additionalConfig">additionalConfig</h4>
+
+<p><em>since Ant 1.10.10</em></p>
+
+<p>Adds configuration settings for the JSch Session created that are
+  not directly supported by specific Ant attributes.</p>
+
+<table class="attr">
+  <tr>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
+  </tr>
+  <tr>
+    <td>key</td>
+    <td>The key of the configuration setting.</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>value</td>
+    <td>The value of the configuration setting.</td>
+    <td>Yes</td>
+  </tr>
 </table>
 
 <h3>Examples</h3>
-<p><strong>Run a command on a remote machine using password authentication</strong></p>
+
+<p>Run a command on a remote machine using password authentication</p>
+
 <pre>
 &lt;sshexec host=&quot;somehost&quot;
          username=&quot;dude&quot;
          password=&quot;yo&quot;
          command=&quot;touch somefile&quot;/&gt;</pre>
 
-<p><strong>Run a command on a remote machine using key authentication</strong></p>
+<p>Run a command on a remote machine using key authentication</p>
+
 <pre>
 &lt;sshexec host=&quot;somehost&quot;
          username=&quot;dude&quot;
@@ -238,14 +298,17 @@ JSCh earlier than 0.1.28.</p>
          passphrase=&quot;yo its a secret&quot;
          command=&quot;touch somefile&quot;/&gt;</pre>
 
-<p><strong>Run a command on a remote machine using key authentication with no passphrase</strong></p>
+<p>Run a command on a remote machine using key authentication with no passphrase</p>
+
 <pre>
 &lt;sshexec host=&quot;somehost&quot;
          username=&quot;dude&quot;
          keyfile=&quot;${user.home}/.ssh/id_dsa&quot;
          command=&quot;touch somefile&quot;/&gt;</pre>
 
-<p><strong>Run a set of commands from a command resource (file) on a remote machine using key authentication with no passphrase</strong></p>
+<p>Run a set of commands from a command resource (file) on a remote machine using key authentication
+with no passphrase</p>
+
 <pre>
 &lt;sshexec host=&quot;somehost&quot;
          username=&quot;dude&quot;
@@ -255,15 +318,38 @@ JSCh earlier than 0.1.28.</p>
 <p><strong>Security Note</strong>: Hardcoding passwords and/or usernames in <var>sshexec</var> task
 can be a serious security hole. Consider using variable substitution and include the password on the
 command line. For example:</p>
+
 <pre>
 &lt;sshexec host=&quot;somehost&quot;
          username=&quot;${username}&quot;
          password=&quot;${password}&quot;
          command=&quot;touch somefile&quot;/&gt;</pre>
+
 <p>Invoking Ant with the following command line:</p>
-<pre>ant -Dusername=me -Dpassword=mypassword target1 target2</pre>
+<pre class="input">ant -Dusername=me -Dpassword=mypassword target1 target2</pre>
 <p>is slightly better, but the username/password is exposed to all users on an Unix system (via
-the <code>ps</code> command). The best approach is to use the <code>&lt;input&gt;</code> task and/or
+the <kbd>ps</kbd> command). The best approach is to use the <code>&lt;input&gt;</code> task and/or
 retrieve the password from a (secured) <samp>.properties</samp> file.</p>
+
+<p>Sometimes you may want to execute a command that contains sensitive
+  data that you don't want to appear in Ant's log output. For this you
+  can use a combination of <var>hideSensitive</var>
+  and <var>bindSensitive</var></p>
+
+<pre>
+&lt;sshexec ...
+    command=&quot;some-script :secret: :another-secret:&quot;
+    hidesensitive=&quot;true&quot;
+    bindSensitive=&quot;secret=scott;another-secret=tiger&quot;&gt;
+</pre>
+
+<p>will log <code>some-script :secret: :another-secret:</code> but
+  actually execute <code>some-script scott
+  tiger</code>. The <var>placeholderBrackets</var> attribute allows to use a
+  different string than the default <q>:</q> to mark sensitive parts
+  of the command to replace and <var>sensitiveDelimiter</var> allows
+  the key value pairs of <var>bindSensitive</var> to be separated by a
+  different string than the default <q>;</q>.</p>
+
 </body>
 </html>

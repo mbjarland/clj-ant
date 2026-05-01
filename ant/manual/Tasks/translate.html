@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Translate Task</title>
 </head>
@@ -54,15 +54,15 @@ bundle files can be specified.</p>
 If <var>forceoverwrite</var> is <q>false</q>, the destination file is overwritten only if either the
 source file or any of the files that make up the bundle have been modified after the destination
 file was last modified.</p>
-<p><em>Since Apache Ant 1.6</em>:<br/>Line endings of source files are preserved in the translated
+<p><em>Since Apache Ant 1.6</em> line endings of source files are preserved in the translated
 files.</p>
 <p><a href="../Types/fileset.html">FileSet</a>s are used to select files to translate.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>todir</td>
@@ -127,8 +127,8 @@ files.</p>
 value translated files are to be generated.</p>
 
 <h3>Examples</h3>
-<p><strong>Translate source file encoded in English into its Japanese equivalent using a resource
-bundle encoded in Japanese.</strong></p>
+<p>Translate source file encoded in English into its Japanese equivalent using a resource bundle
+encoded in Japanese.</p>
 <pre>
 &lt;translate toDir=&quot;$(dest.dir}/ja&quot;
            starttoken=&quot;#&quot;

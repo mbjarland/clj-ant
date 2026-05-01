@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>LoadResource Task</title>
@@ -39,9 +40,9 @@ the property is not set.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>property</td>
@@ -61,21 +62,22 @@ the property is not set.</p>
   <tr>
     <td>quiet</td>
     <td>Do not display a diagnostic message (unless Ant has been invoked with
-      the <code>-verbose</code> or <code>-debug</code> switches) or modify the exit status to
+      the <kbd>-verbose</kbd> or <kbd>-debug</kbd> switches) or modify the exit status to
       reflect an error. Setting this to <q>true</q> implies setting <var>failonerror</var>
       to <q>false</q>.</td>
     <td>No; default is <q>false</q></td>
   </tr>
 </table>
-<p>The LoadResource task supports nested <a href="../Types/filterchain.html"> FilterChain</a>s.</p>
+<p>The LoadResource task supports nested <a href="../Types/filterchain.html">FilterChain</a>s.</p>
 
 <h3>Examples</h3>
-<pre>
-&lt;loadresource property="homepage"&gt;
-    &lt;url url="http://ant.apache.org/index.html"/&gt;
-&lt;/loadresource&gt;</pre>
+
 <p>Load the entry point of Ant's homepage into property <code>homepage</code>;
 an <code>&lt;echo&gt;</code> can print this.</p>
+<pre>
+&lt;loadresource property="homepage"&gt;
+    &lt;url url="https://ant.apache.org/index.html"/&gt;
+&lt;/loadresource&gt;</pre>
 
 <p>For more examples see the <a href="loadfile.html">loadfile</a> task.</p>
 

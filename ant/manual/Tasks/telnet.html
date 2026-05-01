@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Telnet Task</title>
 </head>
@@ -26,8 +26,8 @@
 
 <h2 id="telnet">Telnet</h2>
 <h3>Description</h3>
-<q>Task to automate a remote telnet session. The task uses nested <code>&lt;read&gt;</code> to
-indicate strings to wait for, and <code>&lt;write&gt;</code> tags to specify text to send.</q>
+<p>Task to automate a remote telnet session. The task uses nested <code>&lt;read&gt;</code> to
+indicate strings to wait for, and <code>&lt;write&gt;</code> tags to specify text to send.</p>
 
 <p>If you do specify a userid and password, the system will assume a common Unix prompt to wait
 on. This behavior can be easily overridden.</p>
@@ -38,9 +38,9 @@ information.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>userid</td>
@@ -115,7 +115,7 @@ of <q>ogin:</q> for the userid, and a prompt of <q>assword:</q> for the password
 &lt;/telnet&gt;</pre>
 
 <p>A timeout can be specified at the <code>&lt;telnet&gt;</code> level or at
-the <code>&lt;read&gt;</code> level.  This will connect, issue a <code>sleep</code> command that is
+the <code>&lt;read&gt;</code> level.  This will connect, issue a <kbd>sleep</kbd> command that is
 suppressed from displaying and wait 10 seconds before quitting.</p>
 
 <pre>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>VerifyJar Task</title>
 </head>
@@ -26,15 +26,17 @@
 
 <h2 id="verifyjar">VerifyJar</h2>
 <h3>Description</h3>
-<p>Verifies JAR files with the <code>jarsigner</code> command line tool.  It will take a named file
-in the <var>jar</var> attribute. Nested paths are also supported.</p>
+<p>Verifies JAR files with
+the <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jarsigner.html"
+target="_top"><kbd>jarsigner</kbd></a> command line tool.  It will take a named file in
+the <var>jar</var> attribute. Nested paths are also supported.</p>
 
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>jar</td>
@@ -48,8 +50,12 @@ in the <var>jar</var> attribute. Nested paths are also supported.</p>
   </tr>
   <tr>
     <td>storepass</td>
-    <td>password for keystore integrity.</td>
-    <td>Yes</td>
+    <td>password for keystore integrity.
+    Note that
+    jarsigner does not read the password from stdin during
+    verification, so the password must be send via a command line
+    interface and may be visible to other users of the system.</td>
+    <td>No</td>
   </tr>
   <tr>
     <td>keystore</td>
@@ -83,24 +89,47 @@ in the <var>jar</var> attribute. Nested paths are also supported.</p>
   </tr>
   <tr>
     <td>maxmemory</td>
-    <td>Specifies the maximum memory the <code>jarsigner</code> JVM will use. Specified in the style
+    <td>Specifies the maximum memory the <kbd>jarsigner</kbd> JVM will use. Specified in the style
       of standard Java memory specs (e.g. <q>128m</q> = 128 MBytes)</td>
     <td>No</td>
   </tr>
   <tr>
     <td>executable</td>
-    <td>Specify a particular <code>jarsigner</code> executable to use in place of the default binary
+    <td>Specify a particular <kbd>jarsigner</kbd> executable to use in place of the default binary
       (found in the same JDK as Apache Ant is running in).<br/>  Must support the same command line
-      options as the Sun JDK <code>jarsigner</code> command.  <em>since Ant 1.8.0</em>.</td>
+      options as the Sun JDK <kbd>jarsigner</kbd> command.  <em>since Ant 1.8.0</em>.</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>providername</td>
+    <td>name of a cryptographic service provider's name
+      when listed in the security properties file.
+      <em>since Ant 1.10.6</em>.</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>providerclass</td>
+    <td>name of a cryptographic service provider's master
+      class file when the service provider is not listed in the security
+      properties file.
+      <em>since Ant 1.10.6</em>.</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>providerarg</td>
+    <td>Represents an optional string input argument for
+      the constructor of provider_class_name. Ignored
+      if <code>providerclass</code> is not set.
+      <em>since Ant 1.10.6</em>.</td>
     <td>No</td>
   </tr>
 </table>
 <h3>Parameters as nested elements</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>path</td>
@@ -118,14 +147,23 @@ in the <var>jar</var> attribute. Nested paths are also supported.</p>
       variables</a></td>
     <td>No, and only one can be supplied</td>
   </tr>
- </table>
+  <tr>
+    <td>arg</td>
+    <td>Use this to specify a <kbd>keytool</kbd>
+    <a href="../using.html#arg">command line argument</a> not
+    explicitly supported via an attribute.
+    <em>since Ant 1.10.6</em>.</td>
+    <td>No</td>
+  </tr>
+</table>
 
 <h3>Examples</h3>
+
+<p>Verify the <samp>ant.jar</samp> with alias <q>apache-group</q> accessing the keystore and private
+key via <q>secret</q> password.</p>
 <pre>
 &lt;verifyjar jar=&quot;${dist}/lib/ant.jar&quot;
            alias=&quot;apache-group&quot; storepass=&quot;secret&quot;/&gt;</pre>
-<p>verifies the <samp>ant.jar</samp> with alias <q>apache-group</q> accessing the keystore and
-private key via <q>secret</q> password.</p>
 
 </body>
 </html>

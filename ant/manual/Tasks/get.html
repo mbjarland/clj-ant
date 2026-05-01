@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Get Task</title>
 </head>
@@ -28,7 +28,7 @@
 <h3>Description</h3>
 <p>Gets files from URLs.  When the <var>verbose</var> option is <q>on</q>, this task displays
 a <q>.</q> for every 100 Kb retrieved. Any URL schema supported by the runtime is valid here,
-including <q>http:</q>, <q>ftp:</q> and <q>jar:</q>.</p>
+including <q>http:</q>, <q>https:</q>, <q>ftp:</q> and <q>jar:</q>.</p>
 <p>The <var>usetimestamp</var> option enables you to control downloads so that the remote file is
 only fetched if newer than the local copy. If there is no local copy, the download always takes
 place. When a file is downloaded, the timestamp of the downloaded file is set to the remote
@@ -39,7 +39,7 @@ authentication is used. This is only secure over an HTTPS link.</p>
 
 <p><strong>Proxies</strong>. <em>Since Apache Ant 1.7.0</em>, Ant running on Java 5 or later
 can <a href="../proxy.html">use the proxy settings of the operating system</a> if enabled with
-the <code>-autoproxy</code> command line option. There is also
+the <kbd>-autoproxy</kbd> command line option. There is also
 the <a href="../Tasks/setproxy.html">&lt;setproxy&gt;</a> task for earlier Java versions. With
 proxies turned on, <code>&lt;get&gt;</code> requests against localhost may not work as expected, if
 the request is relayed to the proxy.</p>
@@ -47,9 +47,9 @@ the request is relayed to the proxy.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>src</td>
@@ -90,6 +90,12 @@ the request is relayed to the proxy.</p>
     <td>password</td>
     <td>password for basic HTTP authentication</td>
     <td>Yes if <var>username</var> is set</td>
+  </tr>
+  <tr>
+    <td>authenticateOnRedirect</td>
+    <td>Whether the credentials should also be sent to the new location when a redirect is followed.<br/>
+    <em>since Ant 1.10.13</em></td>
+    <td>No; default is <q>false</q></td>
   </tr>
   <tr>
     <td>maxtime</td>
@@ -155,9 +161,9 @@ nested <code>&lt;header/&gt;</code> node are as follows:</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -174,27 +180,28 @@ nested <code>&lt;header/&gt;</code> node are as follows:</p>
 </table>
 
 <h3>Examples</h3>
-<pre>&lt;get src=&quot;http://ant.apache.org/&quot; dest=&quot;help/index.html&quot;/&gt;</pre>
-<p>Gets the index page of <samp>http://ant.apache.org/</samp>, and stores it in the
-file <samp>help/index.html</samp>.</p>
 
+<p>Get the index page of <samp>https://ant.apache.org/</samp>, and store it in the
+file <samp>help/index.html</samp>.</p>
+<pre>&lt;get src=&quot;https://ant.apache.org/&quot; dest=&quot;help/index.html&quot;/&gt;</pre>
+
+<p>Get the PGP keys of Ant's (current and past) release managers, if the local copy is missing or
+out of date. Use the <var>verbose</var> option for progress information.</p>
 <pre>
-&lt;get src=&quot;http://www.apache.org/dist/ant/KEYS&quot;
+&lt;get src=&quot;https://www.apache.org/dist/ant/KEYS&quot;
      dest=&quot;KEYS&quot;
      verbose=&quot;true&quot;
      usetimestamp=&quot;true&quot;/&gt;</pre>
-<p>Gets the PGP keys of Ant's (current and past) release managers, if the local copy is missing or
-out of date. Uses the verbose option for progress information.</p>
 
+<p>Fetch some file from a server with access control. Because HTTPS is being used, the fact that
+basic auth sends passwords in plaintext is moot if you ignore the fact that it is part of your build
+file which may be readable by third parties.  If you need more security, consider using
+the <a href="input.html">input</a> task to query for a password.</p>
 <pre>
 &lt;get src=&quot;https://insecure-bank.org/statement/user=1214&quot;
      dest=&quot;statement.html&quot;
      username=&quot;1214&quot;
      password=&quot;secret&quot;/&gt;</pre>
-<p>Fetches some file from a server with access control. Because https is being used the fact that
-basic auth sends passwords in plaintext is moot if you ignore the fact that it is part of your build
-file which may be readable by third parties.  If you need more security, consider using
-the <a href="input.html">input task</a> to query for a password.</p>
 
 <p>Using a macro like the following</p>
 
@@ -229,20 +236,20 @@ naming convention for the checksum file, of course) and validate the checksum on
 
 <pre>
 &lt;get dest=&quot;downloads&quot;&gt;
-  &lt;url url=&quot;http://ant.apache.org/index.html&quot;/&gt;
-  &lt;url url=&quot;http://ant.apache.org/faq.html&quot;/&gt;
+  &lt;url url=&quot;https://ant.apache.org/index.html&quot;/&gt;
+  &lt;url url=&quot;https://ant.apache.org/faq.html&quot;/&gt;
 &lt;/get&gt;</pre>
 
-<p>With custom HTTP headers</p>
+<p>Using custom HTTP headers</p>
 
 <pre>
-&lt;get src=&quot;http://ant.apache.org/index.html&quot; dest=&quot;downloads&quot;&gt;
+&lt;get src=&quot;https://ant.apache.org/index.html&quot; dest=&quot;downloads&quot;&gt;
   &lt;header name=&quot;header1&quot; value=&quot;headerValue1&quot;/&gt;
   &lt;header name=&quot;header2&quot; value=&quot;headerValue2&quot;/&gt;
   &lt;header name=&quot;header3&quot; value=&quot;headerValue3&quot;/&gt;
 &lt;/get&gt;</pre>
 
-<p>Gets the index and FAQ pages of <samp>http://ant.apache.org/</samp>, and stores them in the
+<p>get the index and FAQ pages of <samp>https://ant.apache.org/</samp>, and store them in the
 directory <samp>downloads</samp> which will be created if necessary.</p>
 </body>
 </html>

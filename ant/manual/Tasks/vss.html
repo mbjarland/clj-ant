@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Microsoft Visual SourceSafe (VSS) Tasks</title>
@@ -46,17 +47,17 @@
 <p>These tasks provide an interface to
 the <a href="https://msdn.microsoft.com/en-us/library/3h0544kx(v=vs.80).aspx"
 target="_top">Microsoft Visual SourceSafe</a> SCM.
-The <code>org.apache.tools.ant.taskdefs.optional.vss</code> package consists of a simple framework
-to support VSS functionality as well as some Apache Ant tasks encapsulating frequently used VSS
-commands.  Although it is possible to use these commands on the desktop, they were primarily
-intended to be used by automated build systems.</p>
-<p>If you get a <code>CreateProcess error=2</code> when running these, it means
-that <code>ss.exe</code> was not found. Check to see if you can run it from the command
-line&mdash;you may need to alter your path, or set the <var>ssdir</var> property.</p>
+The <code class="code">org.apache.tools.ant.taskdefs.optional.vss</code> package consists of a
+simple framework to support VSS functionality as well as some Apache Ant tasks encapsulating
+frequently used VSS commands.  Although it is possible to use these commands on the desktop, they
+were primarily intended to be used by automated build systems.</p>
+<p>If you get a <code class="output">CreateProcess error=2</code> when running these, it means
+that <kbd>ss.exe</kbd> was not found. Check to see if you can run it from the command line&mdash;you
+may need to alter your path, or set the <var>ssdir</var> property.</p>
 <h2 id="tasks">The Tasks</h2>
 
 <table>
-  <tr><th>Task</th><th>Description</th></tr>
+  <tr><th scope="col">Task</th><th scope="col">Description</th></tr>
   <tr>
     <td><a href="#vssget">vssget</a></td>
     <td>Retrieves a copy of the specified VSS file(s).</td>
@@ -104,9 +105,9 @@ order version, date, label.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>vsspath</td>
@@ -127,7 +128,7 @@ order version, date, label.</p>
   </tr>
   <tr>
     <td>ssdir</td>
-    <td>directory where <code>ss.exe</code> resides.</td>
+    <td>directory where <kbd>ss.exe</kbd> resides.</td>
     <td>No; by default expected to be in <code>PATH</code></td>
   </tr>
   <tr>
@@ -168,7 +169,7 @@ order version, date, label.</p>
   </tr>
   <tr>
     <td>autoresponse</td>
-    <td>What to respond with (sets the <code>-I</code> option). By default, <code>-I-</code> is
+    <td>What to respond with (sets the <kbd>-I</kbd> option). By default, <kbd>-I-</kbd> is
       used; values of <q>Y</q> or <q>N</q> will be appended to this.</td>
     <td>No</td>
   </tr>
@@ -180,7 +181,7 @@ order version, date, label.</p>
   </tr>
   <tr>
     <td>failonerror</td>
-    <td>Stop the build process if <code>ss.exe</code> exits with a return code <q>100</q></td>
+    <td>Stop the build process if <kbd>ss.exe</kbd> exits with a return code <q>100</q></td>
     <td>No; defaults to <q>true</q></td>
   </tr>
   <tr>
@@ -193,6 +194,11 @@ order version, date, label.</p>
 <p>Note that only one of version, date or label should be specified</p>
 <h3>Examples</h3>
 
+<p>Perform a get on the VSS Project <samp>$/source/myproject</samp> using the username <q>me</q> and
+the password <q>mypassword</q>. That will recursively get the files which are
+labeled <q>Release1</q> and write them to the local directory <samp>C:\mysrc\myproject</samp>. The
+local files will be writable.</p>
+
 <pre>
 &lt;vssget localPath=&quot;C:\mysrc\myproject&quot;
         recursive=&quot;true&quot;
@@ -200,11 +206,6 @@ order version, date, label.</p>
         login=&quot;me,mypassword&quot;
         vsspath=&quot;$/source/aProject&quot;
         writable=&quot;true&quot;/&gt;</pre>
-
-<p>Does a get on the VSS Project <samp>$/source/myproject</samp> using the username <q>me</q> and
-the password <q>mypassword</q>. It will recursively get the files which are labeled <q>Release1</q>
-and write them to the local directory <samp>C:\mysrc\myproject</samp>. The local files will be
-writable.</p>
 
 <hr/>
 <!-- VSSLABEL -->
@@ -215,9 +216,9 @@ writable.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>vsspath</td>
@@ -233,7 +234,7 @@ writable.</p>
   </tr>
   <tr>
     <td>ssdir</td>
-    <td>directory where <code>ss.exe</code> resides.</td>
+    <td>directory where <kbd>ss.exe</kbd> resides.</td>
     <td>No; by default expected to be in <code>PATH</code></td>
   </tr>
   <tr>
@@ -259,34 +260,34 @@ writable.</p>
   </tr>
   <tr>
     <td>autoresponse</td>
-    <td>What to respond with (sets the <code>-I</code> option). By default, <code>-I-</code> is
+    <td>What to respond with (sets the <kbd>-I</kbd> option). By default, <kbd>-I-</kbd> is
       used; values of <q>Y</q> or <q>N</q> will be appended to this.</td>
     <td>No</td>
   </tr>
   <tr>
     <td>failonerror</td>
-    <td>Stop the build process if <code>ss.exe</code> exits with a return code <q>100</q>.</td>
+    <td>Stop the build process if <kbd>ss.exe</kbd> exits with a return code <q>100</q>.</td>
     <td>No; defaults to <q>true</q></td>
   </tr>
 </table>
 <h3>Examples</h3>
+
+<p>Label the current version of the VSS project <samp>$/source/aProject</samp> with the
+label <q>Release1</q> using the username <q>me</q> and the password <q>mypassword</q>.</p>
 
 <pre>
 &lt;vsslabel vsspath=&quot;$/source/aProject&quot;
           login=&quot;me,mypassword&quot;
           label=&quot;Release1&quot;/&gt;</pre>
 
-<p>Labels the current version of the VSS project <samp>$/source/aProject</samp> with the
-label <q>Release1</q> using the username <q>me</q> and the password <q>mypassword</q>.</p>
+<p>Label version 4 of the VSS file <samp>$/source/aProject/myfile.txt</samp> with the
+label <q>1.03.004</q>. If this version already has a label, the operation (and the build) will
+fail.</p>
 
 <pre>
 &lt;vsslabel vsspath=&quot;$/source/aProject/myfile.txt&quot;
           version=&quot;4&quot;
           label=&quot;1.03.004&quot;/&gt;</pre>
-
-<p>Labels version 4 of the VSS file <samp>$/source/aProject/myfile.txt</samp> with the
-label <q>1.03.004</q>. If this version already has a label, the operation (and the build) will
-fail.</p>
 
 <hr/>
 <!-- VSSHISTORY -->
@@ -296,9 +297,9 @@ Task to perform HISTORY commands to Microsoft Visual SourceSafe.
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>vsspath</td>
@@ -314,7 +315,7 @@ Task to perform HISTORY commands to Microsoft Visual SourceSafe.
   </tr>
   <tr>
     <td>ssdir</td>
-    <td>directory where <code>ss.exe</code> resides.</td>
+    <td>directory where <kbd>ss.exe</kbd> resides.</td>
     <td>No; by default expected to be in <code>PATH</code></td>
   </tr>
   <tr>
@@ -376,7 +377,7 @@ Task to perform HISTORY commands to Microsoft Visual SourceSafe.
   </tr>
   <tr>
     <td>failonerror</td>
-    <td>Stop the build process if <code>ss.exe</code> exits with a return code <q>100</q></td>
+    <td>Stop the build process if <kbd>ss.exe</kbd> exits with a return code <q>100</q></td>
     <td>No; defaults to <q>true</q></td>
   </tr>
 </table>
@@ -393,20 +394,22 @@ Task to perform HISTORY commands to Microsoft Visual SourceSafe.
 
 <h3>Examples</h3>
 
+<p>Show all changes between <q>Release1</q> and <q>Release2</q>.</p>
+
 <pre>
 &lt;vsshistory vsspath=&quot;$/myProject&quot; recursive=&quot;true&quot;
             fromLabel=&quot;Release1&quot;
             toLabel=&quot;Release2&quot;/&gt;</pre>
 
-<p>Shows all changes between <q>Release1</q> and <q>Release2</q>.</p>
+<p>Show all changes between January 1st 2001 and March 31st 2001 (in Germany, date must be specified
+according to your locale).</p>
 
 <pre>
 &lt;vsshistory vsspath=&quot;$/myProject&quot; recursive=&quot;true&quot;
             fromDate=&quot;01.01.2001&quot;
             toDate=&quot;31.03.2001&quot;/&gt;</pre>
 
-<p>Shows all changes between January 1st 2001 and March 31st 2001 (in Germany, date must be
-specified according to your locale).</p>
+<p>Shows all changes in the last fortnight.</p>
 
 <pre>
 &lt;tstamp&gt;
@@ -418,8 +421,6 @@ specified according to your locale).</p>
             dateFormat=&quot;M-d-yy;h:mma&quot;
             toDate=&quot;${to.tstamp}&quot;/&gt;</pre>
 
-<p>Shows all changes in the 14 days before today.</p>
-
 <hr/>
 <!-- VSSCHECKIN -->
 <h2 id="vsscheckin">VssCheckin</h2>
@@ -428,9 +429,9 @@ specified according to your locale).</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
      <td>vsspath</td>
@@ -451,7 +452,7 @@ specified according to your locale).</p>
   </tr>
   <tr>
      <td>ssdir</td>
-     <td>directory where <code>ss.exe</code> resides.</td>
+     <td>directory where <kbd>ss.exe</kbd> resides.</td>
      <td>No; by default expected to be in <code>PATH</code></td>
   </tr>
   <tr>
@@ -481,21 +482,21 @@ specified according to your locale).</p>
   </tr>
   <tr>
     <td>failonerror</td>
-    <td>Stop the build process if <code>ss.exe</code> exits with a return code <q>100</q>.</td>
+    <td>Stop the build process if <kbd>ss.exe</kbd> exits with a return code <q>100</q>.</td>
     <td>No; defaults to <q>true</q></td>
   </tr>
 </table>
 
 <h3>Examples</h3>
 
+<p>Check in the file(s) named <samp>test*</samp> in the project <samp>$/test</samp> using the local
+directory <samp>D:\build</samp>.</p>
+
 <pre>
 &lt;vsscheckin vsspath=&quot;$/test/test*&quot;
             localpath=&quot;D:\build\&quot;
             comment=&quot;Modified by automatic build&quot;/&gt;
 </pre>
-
-<p>Checks in the file(s) named <samp>test*</samp> in the project <samp>$/test</samp> using the local
-directory <samp>D:\build</samp>.</p>
 
 <hr/>
 <!-- VSSCHECKOUT -->
@@ -508,9 +509,9 @@ order <var>version</var>, <var>date</var>, <var>label</var>.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>vsspath</td>
@@ -531,7 +532,7 @@ order <var>version</var>, <var>date</var>, <var>label</var>.</p>
   </tr>
   <tr>
     <td>ssdir</td>
-    <td>directory where <code>ss.exe</code> resides.</td>
+    <td>directory where <kbd>ss.exe</kbd> resides.</td>
     <td>No; by default expected to be in <code>PATH</code></td>
   </tr>
   <tr>
@@ -570,7 +571,7 @@ order <var>version</var>, <var>date</var>, <var>label</var>.</p>
   </tr>
   <tr>
     <td>failonerror</td>
-    <td>Stop the build process if <code>ss.exe</code> exits with a return code <q>100</q>.</td>
+    <td>Stop the build process if <kbd>ss.exe</kbd> exits with a return code <q>100</q>.</td>
     <td>No; defaults to <q>true</q></td>
   </tr>
   <tr>
@@ -588,14 +589,13 @@ order <var>version</var>, <var>date</var>, <var>label</var>.</p>
 
 <h3>Examples</h3>
 
+<p>Check out the project <samp>$/test</samp> recursively to the directory <samp>D:\build</samp>.</p>
+
 <pre>
 &lt;vsscheckout vsspath=&quot;$/test&quot;
              localpath=&quot;D:\build&quot;
              recursive=&quot;true&quot;
              login=&quot;me,mypass&quot;/&gt;</pre>
-
-<p>Does a recursive checkout of the project <samp>$/test</samp> to the
-directory <samp>D:\build</samp>.</p>
 
 <hr/>
 <!-- VSSADD -->
@@ -605,9 +605,9 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>localpath</td>
@@ -623,7 +623,7 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
   </tr>
   <tr>
     <td>ssdir</td>
-    <td>directory where <code>ss.exe</code> resides.</td>
+    <td>directory where <kbd>ss.exe</kbd> resides.</td>
     <td>No; by default expected to be in <code>PATH</code></td>
   </tr>
   <tr>
@@ -653,19 +653,19 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
   </tr>
   <tr>
     <td>failonerror</td>
-    <td>Stop the build process if <code>ss.exe</code> exits with a return code <q>100</q>.</td>
+    <td>Stop the build process if <kbd>ss.exe</kbd> exits with a return code <q>100</q>.</td>
     <td>No; defaults to <q>true</q></td>
   </tr>
 </table>
 
 <h3>Examples</h3>
 
+<p>Add the file named <samp>build.00012.zip</samp> into the project current working directory
+(see <code>vsscp</code>).</p>
+
 <pre>
 &lt;vssadd localpath=&quot;D:\build\build.00012.zip&quot;
         comment=&quot;Added by automatic build&quot;/&gt;</pre>
-
-<p>Add the file named <samp>build.00012.zip</samp> into the project current working directory
-(see <code>vsscp</code>).</p>
 
 <hr/>
 <!-- VSSCP -->
@@ -676,9 +676,9 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>vsspath</td>
@@ -694,7 +694,7 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
   </tr>
   <tr>
     <td>ssdir</td>
-    <td>directory where <code>ss.exe</code> resides.</td>
+    <td>directory where <kbd>ss.exe</kbd> resides.</td>
     <td>No; by default expected to be in <code>PATH</code></td>
   </tr>
   <tr>
@@ -704,16 +704,16 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
   </tr>
   <tr>
     <td>failonerror</td>
-    <td>Stop the build process if <code>ss.exe</code> exits with a return code <q>100</q>.</td>
+    <td>Stop the build process if <kbd>ss.exe</kbd> exits with a return code <q>100</q>.</td>
     <td>No; defaults to <q>true</q></td>
   </tr>
 </table>
 
 <h3>Examples</h3>
 
-<pre>&lt;vsscp vsspath=&quot;$/Projects/ant&quot;/&gt;</pre>
+<p>Set the current VSS project to <samp>$/Projects/ant</samp>.</p>
 
-<p>Sets the current VSS project to <samp>$/Projects/ant</samp>.</p>
+<pre>&lt;vsscp vsspath=&quot;$/Projects/ant&quot;/&gt;</pre>
 
 <hr/>
 <!-- VSSCREATE -->
@@ -724,9 +724,9 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Values</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Values</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>login</td>
@@ -740,7 +740,7 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
   </tr>
   <tr>
     <td>ssdir</td>
-    <td>directory where <code>ss.exe</code> resides.</td>
+    <td>directory where <kbd>ss.exe</kbd> resides.</td>
     <td>No; by default expected to be in <code>PATH</code></td>
   </tr>
   <tr>
@@ -755,7 +755,7 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
   </tr>
   <tr>
     <td>autoresponse</td>
-    <td>What to respond with (sets the <code>-I</code> option). By default, <code>-I-</code> is
+    <td>What to respond with (sets the <kbd>-I</kbd> option). By default, <kbd>-I-</kbd> is
       used; values of <q>Y</q> or <q>N</q> will be appended to this.</td>
     <td>No</td>
   </tr>
@@ -767,9 +767,9 @@ Task to perform ADD commands to Microsoft Visual SourceSafe.
 </table>
 <h3>Examples</h3>
 
-<pre>&lt;vsscreate vsspath=&quot;$/existingProject/newProject&quot;/&gt;</pre>
+<p>Create the VSS Project <samp>$/existingProject/newProject</samp>.</p>
 
-<p>Creates the VSS Project <samp>$/existingProject/newProject</samp>.</p>
+<pre>&lt;vsscreate vsspath=&quot;$/existingProject/newProject&quot;/&gt;</pre>
 
 </body>
 </html>

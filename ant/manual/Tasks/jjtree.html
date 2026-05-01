@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
-   <meta http-equiv="Content-Language" content="en-us">
-   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>JJTree Task</title>
 </head>
 <body>
@@ -25,9 +25,9 @@
 <h2 id="jjtree">JJTree</h2>
 
 <h3>Description</h3>
-<p>Invokes the <a href="https://javacc.org/">JJTree</a> preprocessor for the JavaCC compiler
-compiler. It inserts parse tree building actions at various places in the JavaCC source that it
-generates. The output of JJTree is run through JavaCC to create the parser.</p>
+<p>Invokes the <a href="https://javacc.org/" target="_top">JJTree</a> preprocessor for the JavaCC
+compiler compiler. It inserts parse tree building actions at various places in the JavaCC source
+that it generates. The output of JJTree is run through JavaCC to create the parser.</p>
 <p>To use the <code>jjtree</code> task, set the <var>target</var> attribute to the name of the
 JJTree grammar file to process. You also need to specify the directory containing the JavaCC
 installation using the <var>javacchome</var> attribute, so that Ant can find the JavaCC
@@ -43,9 +43,9 @@ file as the JJTree grammar file with a suffix <samp>.jj</samp>.</p>
 
 <table class="attr">
 <tr>
-  <th>Attribute</th>
-  <th>Description</th>
-  <th>Required</th>
+  <th scope="col">Attribute</th>
+  <th scope="col">Description</th>
+  <th scope="col">Required</th>
 </tr>
 
 <tr>
@@ -141,24 +141,23 @@ file as the JJTree grammar file with a suffix <samp>.jj</samp>.</p>
   <td>No</td>
 </tr>
 
-  <tr>
-    <td>maxmemory</td>
-    <td>Max amount of memory to allocate to the forked JVM.  <em>since Ant 1.8.3</em></td>
-    <td>No</td>
-  </tr>
+<tr>
+  <td>maxmemory</td>
+  <td>Max amount of memory to allocate to the forked JVM.  <em>since Ant 1.8.3</em></td>
+  <td>No</td>
+</tr>
 </table>
 
 <h3>Example</h3>
 
+<p>Invoke JJTree on grammar file <samp>src/Parser.jjt</samp>, writing the generated grammar
+file, <samp>Parser.jj</samp>, to <samp>build/src</samp>. The grammar option NODE_USES_PARSER is set
+to <q>true</q> when invoking JJTree.</p>
 <pre>
 &lt;jjtree target="src/Parser.jjt"
         outputdirectory="build/src"
         javacchome="c:/program files/JavaCC"
         nodeusesparser="true"/&gt;</pre>
-
-<p>This invokes JJTree on grammar file <samp>src/Parser.jjt</samp>, writing the generated grammar
-file, <samp>Parser.jj</samp>, file to <samp>build/src</samp>. The grammar option NODE_USES_PARSER is
-set to <q>true</q> when invoking JJTree.</p>
 
 <h3>Comparison of output locations between command line JJTree and different Ant <code>taskdef</code>
 versions</h3>
@@ -166,9 +165,9 @@ versions</h3>
 <table>
   <thead class="no-bold">
 <tr>
-  <th><strong>Command line JJTree options</strong> and <em>generated files</em> (working directory: <samp>/tmp</samp>)</th>
-  <th><strong>Ant 1.5.3</strong> versus command line</th>
-  <th><strong>Ant 1.6</strong> versus command line</th>
+  <th scope="col"><strong>Command line JJTree options</strong> and <em>generated files</em> (working directory: <samp>/tmp</samp>)</th>
+  <th scope="col"><strong>Ant 1.5.3</strong> versus command line</th>
+  <th scope="col"><strong>Ant 1.6</strong> versus command line</th>
 </tr>
   </thead>
   <tbody>
@@ -494,18 +493,18 @@ versions</h3>
 </table>
 
 <p id="footnote-1"><a href="#footnote-1-back"><strong>Note</strong></a>: When running JJTree with
-the Ant <code>taskdef jjtree</code> the option <code>-OUTPUT_DIRECTORY</code> must always be set,
+the Ant <code>taskdef jjtree</code> the option <kbd>-OUTPUT_DIRECTORY</kbd> must always be set,
 because the project's <var>basedir</var> and the Ant working directory might differ. So even if you
 don't specify the <var>outputdirectory</var> for <code>taskdef jjtree</code>, JJTree will be called
-with the <code>-OUTPUT_DIRECTORY</code> set to the project's <var>basedir</var>.  But when
-the <code>-OUTPUT_DIRECTORY</code> is set, the <code>-OUTPUT_FILE</code> setting is handled as if
-relative to this <code>-OUTPUT_DIRECTORY</code>. Thus when the <code>-OUTPUT_FILE</code> is absolute
+with the <kbd>-OUTPUT_DIRECTORY</kbd> set to the project's <var>basedir</var>.  But when
+the <kbd>-OUTPUT_DIRECTORY</kbd> is set, the <kbd>-OUTPUT_FILE</kbd> setting is handled as if
+relative to this <kbd>-OUTPUT_DIRECTORY</kbd>. Thus when the <kbd>-OUTPUT_FILE</kbd> is absolute
 or contains a drive letter we have a problem.  Therefore absolute <var>outputfile</var>s (when
 the <var>outputdirectory</var> isn't specified) are made relative to the default directory.  And for
 this reason <var>outputfile</var>s that contain a drive letter can't be supported.</p>
 
-<p>By the way: specifying a drive letter in the <code>-OUTPUT_FILE</code> when
-the <code>-OUTPUT_DIRECTORY</code> is set, also results in strange behavior when running JJTree from
+<p>By the way: specifying a drive letter in the <kbd>-OUTPUT_FILE</kbd> when
+the <kbd>-OUTPUT_DIRECTORY</kbd> is set, also results in strange behavior when running JJTree from
 the command line.</p>
 
 </body>

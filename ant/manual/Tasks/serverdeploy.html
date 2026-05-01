@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>ServerDeploy Task</title>
 
@@ -37,7 +37,7 @@
 <p>At present the tasks support:</p>
 
 <ul>
-  <li><a href="http://www.bea.com" target="_top">WebLogic</a> servers</li>
+  <li><a href="https://www.oracle.com/corporate/acquisitions/bea/" target="_top">WebLogic</a> servers</li>
   <li><a href="https://jonas.ow2.org/" target="_top">JOnAS</a> 2.4 Open Source EJB server</li>
 </ul>
 <p>Over time we expect further optional tasks to support additional J2EE Servers.</p>
@@ -45,8 +45,8 @@
 <hr/>
 
 <table>
-  <tr><th>Task</th><th colspan="2">Application Servers</th></tr>
-  <tr><td rowspan="4"><a href="#serverdeploy_element">serverdeploy</a></td><th colspan="2">Nested Elements</th></tr>
+  <tr><th scope="col">Task</th><th scope="col" colspan="2">Application Servers</th></tr>
+  <tr><td rowspan="4"><a href="#serverdeploy_element">serverdeploy</a></td><th scope="col" colspan="2">Nested Elements</th></tr>
   <tr><td><a href="#serverdeploy_generic">generic</a></td><td>Generic task</td></tr>
   <tr><td><a href="#serverdeploy_jonas">jonas</a></td><td>JOnAS 2.4</td></tr>
   <tr><td><a href="#serverdeploy_weblogic">weblogic</a></td><td>WebLogic</td></tr>
@@ -64,9 +64,9 @@ which attributes are required, depending on the tool.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>action</td>
@@ -96,9 +96,9 @@ classpath.</p>
 <h3>Parameters used for all tools</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>classpath</td>
@@ -131,9 +131,9 @@ generic one if at all possible.</p>
 <p>The following attributes are supported by the generic element.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>classname</td>
@@ -176,9 +176,9 @@ it defaults to <q>system</q>.  The <var>password</var> attribute is required for
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>application</td>
@@ -191,7 +191,7 @@ it defaults to <q>system</q>.  The <var>password</var> attribute is required for
       form <code>&lt;component&gt;:&lt;target1&gt;,&lt;target2&gt;...</code>  Where component is the
       archive name (minus the <samp>.jar</samp>, <samp>.ear</samp>, <samp>.war</samp> extension).
       Targets are the servers where the components will be deployed</td>
-    <td>no</td>
+    <td>No</td>
   </tr>
   <tr>
     <td>debug</td>
@@ -221,7 +221,7 @@ server:</p>
 server:</p>
 
 <pre>
-&lt;serverdeploy action=&quot;delete&quot; source=&quot;${lib.dir}/ejb_myApp.jar&quot;/&gt
+&lt;serverdeploy action=&quot;delete&quot; source=&quot;${lib.dir}/ejb_myApp.jar&quot;/&gt;
     &lt;weblogic application=&quot;myapp&quot;
               server=&quot;t3://myserver:7001&quot;
               classpath=&quot;${weblogic.home}/lib/weblogic.jar&quot;
@@ -236,9 +236,9 @@ tool.</p>
 <p>You can't use <var>user</var> and <var>password</var> property with this task.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>jonasroot</td>
@@ -292,9 +292,9 @@ server:</p>
 server and a WebLogic server:</p>
 
 <pre>
-&lt;serverdeploy action=&quot;list&quot;/&gt
+&lt;serverdeploy action=&quot;list&quot;/&gt;
     &lt;jonas jonasroot=&quot;${jonas.root}&quot; orb=&quot;JEREMIE&quot;/&gt;
-    &lt;weblogic application=&quot;myapp&quot
+    &lt;weblogic application=&quot;myapp&quot;
               server=&quot;t3://myserver:7001&quot;
               classpath=&quot;${weblogic.home}/lib/weblogic.jar&quot;
               username=&quot;${user.name}&quot;

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>AntCall Task</title>
 </head>
@@ -67,9 +67,9 @@ undefined.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>target</td>
@@ -111,9 +111,9 @@ their <var>id</var>.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>refid</td>
@@ -142,9 +142,9 @@ using the <var>target</var> attribute.  These will be executed as if Ant had bee
 single target whose dependencies are the targets so specified, in the order specified.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -154,6 +154,7 @@ single target whose dependencies are the targets so specified, in the order spec
 </table>
 
 <h3>Examples</h3>
+<p>The following</p>
 <pre>
 &lt;target name=&quot;default&quot;&gt;
   &lt;antcall target=&quot;doSomethingElse&quot;&gt;
@@ -164,13 +165,11 @@ single target whose dependencies are the targets so specified, in the order spec
 &lt;target name=&quot;doSomethingElse&quot;&gt;
   &lt;echo message=&quot;param1=${param1}&quot;/&gt;
 &lt;/target&gt;</pre>
-<p>Will run the target <var>doSomethingElse</var> and echo <code>param1=value</code>.</p>
-
+<p>will run the target <var>doSomethingElse</var> and echo <code>param1=value</code>, whereas</p>
 <pre>
 &lt;antcall ... &gt;
   &lt;reference refid=&quot;path1&quot; torefid=&quot;path2&quot;/&gt;
 &lt;/antcall&gt;</pre>
-
 <p>will copy the parent's definition of <samp>path1</samp> into the new project using
 the <var>id</var> <samp>path2</samp>.</p>
 

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Echoproperties Task</title>
 </head>
@@ -30,15 +30,15 @@
 <p>Displays all the current properties (or a subset of them specified by a
 nested <code>&lt;propertyset&gt;</code>) in the project.  The output can be sent to a file if
 desired.  This task can be used as a somewhat contrived means of returning data from an
-<code>ant</code> invocation, but is really for debugging build
+<kbd>ant</kbd> invocation, but is really for debugging build
 files.</p>
 
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>destfile</td>
@@ -62,9 +62,9 @@ files.</p>
   <tr>
     <td>failonerror</td>
     <td>If an error occurs while writing the properties to a file, and this attribute is enabled,
-      then a BuildException will be thrown, causing the build to fail.  If disabled, then IO errors
-      will be reported as a log statement, and the build will continue without failure from this
-      task.</td>
+      then a <code>BuildException</code> will be thrown, causing the build to fail.  If disabled,
+      then IO errors will be reported as a log statement, and the build will continue without
+      failure from this task.</td>
     <td>No; default is <q>true</q></td>
   </tr>
   <tr>
@@ -86,27 +86,33 @@ more control on which properties will be picked up. The attributes <var>prefix</
 and <var>regex</var> are just shortcuts that use <code>propertyset</code>s internally.</p>
 
 <h3>Examples</h3>
-<pre>&lt;echoproperties/&gt;</pre>
 <p>Report the current properties to the log.</p>
+<pre>&lt;echoproperties/&gt;</pre>
+
+<p>Report the current properties to the file <samp>my.properties</samp>, and fail the build if the
+file could not be created or written to.</p>
 <pre>&lt;echoproperties destfile="my.properties"/&gt;</pre>
-<p>Report the current properties to the file <samp>my.properties</samp>, and will fail the build if
-the file could not be created or written to.</p>
+
+<p>Report the current properties to the file <samp>my.properties</samp>, and log a message if the
+file could not be created or written to, but still allow the build to continue.</p>
 <pre>&lt;echoproperties destfile="my.properties" failonerror="false"/&gt;</pre>
-<p>Report the current properties to the file <samp>my.properties</samp>, and will log a message if
-the file could not be created or written to, but will still allow the build to continue.</p>
-<pre>&lt;echoproperties prefix="java."/&gt;</pre>
+
 <p>List all properties beginning with <samp>java.</samp></p>
+<pre>&lt;echoproperties prefix="java."/&gt;</pre>
+
+<p>Lists all properties beginning with <samp>java.</samp> using a
+nested <code>&lt;propertyset/&gt;</code> which is an equivalent but longer way.</p>
 <pre>
 &lt;echoproperties&gt;
   &lt;propertyset&gt;
     &lt;propertyref prefix="java."/&gt;
   &lt;/propertyset&gt;
 &lt;/echoproperties&gt;</pre>
-<p>This again lists all properties beginning with <samp>java.</samp> using a
-nested <code>&lt;propertyset/&gt;</code> which is an equivalent but longer way.</p>
+
+<p>Lists all properties that contain <samp>ant</samp> in their names.</p>
 <pre>&lt;echoproperties regex=".*ant.*"/&gt;</pre>
-<p>Lists all properties that contain <samp>ant</samp> in their names.  The equivalent snippet
-with <code>&lt;propertyset/&gt;</code> is:</p>
+
+<p>The equivalent snippet with <code>&lt;propertyset/&gt;</code> is:</p>
 <pre>
 &lt;echoproperties&gt;
   &lt;propertyset&gt;

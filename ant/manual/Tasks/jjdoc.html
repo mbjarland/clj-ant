@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
-   <meta http-equiv="Content-Language" content="en-us">
-   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>JJDoc Task</title>
 </head>
 <body>
@@ -26,9 +26,9 @@
 <p><em>Since Apache Ant 1.6</em></p>
 <h3>Description</h3>
 
-<p>Invokes the <a href="https://javacc.org/">JJDoc</a> preprocessor for the JavaCC compiler
-compiler. It takes a JavaCC parser specification and produces documentation for the BNF grammar.  It
-can operate in three modes, determined by command line options.
+<p>Invokes the <a href="https://javacc.org/" target="_top">JJDoc</a> preprocessor for the JavaCC
+compiler compiler. It takes a JavaCC parser specification and produces documentation for the BNF
+grammar.  It can operate in three modes, determined by command line options.
 <p>To use the <code>jjdoc</code> task, set the <var>target</var> attribute to the name of the JavaCC
 grammar file to process. You also need to specify the directory containing the JavaCC installation
 using the <var>javacchome</var> attribute, so that Ant can find the JavaCC classes. Optionally, you
@@ -42,9 +42,9 @@ documentation file.</p>
 
 <table class="attr">
 <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
 </tr>
 
 <tr>
@@ -87,13 +87,13 @@ documentation file.</p>
 
 <h3>Example</h3>
 
+<p>Invoke JJDoc on grammar file <samp>src/Parser.jj</samp>, writing the generated BNF documentation
+file, <samp>ParserBNF.html</samp>, to <samp>doc</samp>.</p>
+
 <pre>
 &lt;jjdoc target="src/Parser.jj"
        outputfile="doc/ParserBNF.html"
        javacchome="c:/program files/JavaCC"/&gt;</pre>
-
-<p>This invokes JJDoc on grammar file <samp>src/Parser.jj</samp>, writing the generated BNF
-documentation file, <samp>ParserBNF.html</samp>, to <samp>doc</samp>.</p>
 
 </body>
 </html>

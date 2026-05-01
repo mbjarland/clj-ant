@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>ChangeLog Task</title>
 </head>
@@ -28,18 +28,18 @@
 <h3>Description</h3>
 <p>Generates an XML-formatted report file of the change logs recorded in
 a <a href="https://www.nongnu.org/cvs/" target="_top">CVS</a> repository.</p>
-<p><strong>Important</strong>: This task needs <code>cvs</code> on the path. If it isn't, you will get
-an error (such as error <code>2</code> on Windows). If <code>&lt;cvs&gt;</code> doesn't work, try to
-execute <code>cvs.exe</code> from the command line in the target directory in which you are working.
-Also note that this task assumes that the cvs executable is compatible with the Unix version, this
-is not completely true for certain other CVS clients&mdash;like CVSNT for example&mdash;and some
-operation may fail when using such an incompatible client.</p>
+<p><strong>Important</strong>: This task needs <kbd>cvs</kbd> on the path. If it isn't, you will get
+an error (such as <code>error=2</code> on Windows). If <code>&lt;cvs&gt;</code> doesn't work, try to
+execute <kbd>cvs.exe</kbd> from the command line in the target directory in which you are working.
+Also note that this task assumes that the <kbd>cvs</kbd> executable is compatible with the Unix
+version, this is not completely true for certain other CVS clients&mdash;like CVSNT for
+example&mdash;and some operation may fail when using such an incompatible client.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td colspan="3" class="left">Attributes from parent <code>&lt;cvs&gt;</code> task which are
@@ -87,7 +87,7 @@ operation may fail when using such an incompatible client.</p>
   </tr>
   <tr>
     <td>dir</td>
-    <td>The directory from which to run the CVS <em>log</em> command.</td>
+    <td>The directory from which to run the <kbd>cvs log</kbd> command.</td>
     <td>No; defaults to <q>${basedir}</q></td>
   </tr>
   <tr>
@@ -119,7 +119,7 @@ operation may fail when using such an incompatible client.</p>
   </tr>
   <tr>
     <td>remote</td>
-    <td>If set to true, works against the repository (using <code>rlog</code>) without a working
+    <td>If set to true, works against the repository (using <kbd>cvs rlog</kbd>) without a working
       copy.  <em>Since Ant 1.8.0</em></td>
     <td>No; default is <q>false</q></td>
   </tr>
@@ -148,9 +148,9 @@ will include the name specified in <var>displayname</var> rather than the user I
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>displayname</td>
@@ -172,9 +172,9 @@ attribute can contain spaces in their name.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -184,59 +184,53 @@ attribute can contain spaces in their name.</p>
 </table>
 
 <h3>Examples</h3>
+<p>Generate a change log report for all the changes that have been made under
+the <samp>dve/network</samp> directory. Write these changes into the
+file <samp>changelog.xml</samp>.</p>
 <pre>
 &lt;cvschangelog dir=&quot;dve/network&quot;
               destfile=&quot;changelog.xml&quot;/&gt;</pre>
 
-<p>Generates a change log report for all the changes that have been made under
-the <samp>dve/network</samp> directory.  It writes these changes into the
-file <samp>changelog.xml</samp>.</p>
-
+<p>Generate a change log report for any changes that were made under the <samp>dve/network</samp>
+directory in the past 10 days. Write these changes into the file <samp>changelog.xml</samp>.</p>
 <pre>
 &lt;cvschangelog dir=&quot;dve/network&quot;
               destfile=&quot;changelog.xml&quot;
               daysinpast=&quot;10&quot;/&gt;</pre>
 
-<p>Generates a change log report for any changes that were made under the <samp>dve/network</samp>
-directory in the past 10 days.  It writes these changes into the
+<p>Generate a change log report for any changes that were made between February 20, 2002 and March
+20, 2002 under the <samp>dve/network</samp> directory. Write these changes into the
 file <samp>changelog.xml</samp>.</p>
-
 <pre>
 &lt;cvschangelog dir=&quot;dve/network&quot;
               destfile=&quot;changelog.xml&quot;
               start=&quot;20 Feb 2002&quot;
               end=&quot;20 Mar 2002&quot;/&gt;</pre>
 
-<p>Generates a change log report for any changes that were made between February 20, 2002 and March
-20, 2002 under the <samp>dve/network</samp> directory.  It writes these changes into the
+<p>Generate a change log report for any changes that were made after February 20, 2002 under
+the <samp>dve/network</samp> directory. Write these changes into the
 file <samp>changelog.xml</samp>.</p>
-
 <pre>
 &lt;cvschangelog dir=&quot;dve/network&quot;
               destfile=&quot;changelog.xml&quot;
               start=&quot;20 Feb 2002&quot;/&gt;</pre>
 
-<p>Generates a change log report for any changes that were made after February 20, 2002 under
-the <samp>dve/network</samp> directory.  It writes these changes into the
-file <samp>changelog.xml</samp>.</p>
-
+<p>Generate a change log report for all the changes that were made under
+the <code>dve/network</code> directory, substituting the name <samp>Peter Donald</samp> in
+the <code>&lt;author&gt;</code> tags anytime a change made by the user ID <samp>donaldp</samp> is
+encountered.  Write these changes into the file <samp>changelog.xml</samp>.</p>
 <pre>
 &lt;cvschangelog dir=&quot;dve/network&quot;
               destfile=&quot;changelog.xml&quot;&gt;
     &lt;user displayname=&quot;Peter Donald&quot; userid=&quot;donaldp&quot;/&gt;
 &lt;/cvschangelog&gt;</pre>
 
-<p>Generates a change log report for all the changes that were made under
-the <code>dve/network</code> directory, substituting the name <samp>Peter Donald</samp> in
-the <code>&lt;author&gt;</code> tags anytime it encounters a change made by the user
-ID <samp>donaldp</samp>.  It writes these changes into the file <samp>changelog.xml</samp>.</p>
-
-<p>Generates a change log report on the <code>ANT_16_BRANCH</code>.</p>
+<p>Generate a change log report on the <code>ANT_16_BRANCH</code>.</p>
 <pre>
 &lt;cvschangelog dir=&quot;c:/dev/asf/ant.head&quot; passfile=&quot;c:/home/myself/.cvspass&quot;
               destfile=&quot;changelogant.xml&quot; tag=&quot;ANT_16_BRANCH&quot;/&gt;</pre>
 <h4>Generate Report</h4>
-<p>Ant includes a basic XSLT stylesheet that you can use to generate a HTML report based on the xml
+<p>Ant includes a basic XSLT stylesheet that you can use to generate a HTML report based on the XML
 output. The following example illustrates how to generate a HTML report from the XML report.</p>
 
 <pre>
@@ -245,7 +239,7 @@ output. The following example illustrates how to generate a HTML report from the
       style="${ant.home}/etc/changelog.xsl"&gt;
   &lt;param name="title" expression="Ant ChangeLog"/&gt;
   &lt;param name="module" expression="ant"/&gt;
-  &lt;param name="cvsweb" expression="http://cvs.apache.org/viewcvs/"/&gt;
+  &lt;param name="cvsweb" expression="https://cvs.apache.org/viewcvs/"/&gt;
 &lt;/style&gt;</pre>
 
 <h4>Sample Output</h4>

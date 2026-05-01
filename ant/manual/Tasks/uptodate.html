@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Uptodate Task</title>
 </head>
@@ -43,9 +43,9 @@ on the relative age of the specified files.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>property</td>
@@ -98,13 +98,13 @@ attribute of the nested <code>srcfiles</code> element.</p>
 <p><em>Since Ant 1.6.3</em>, one can use a <code>filenamemapper</code> type in place of the mapper
 element.</p>
 <h3>Examples</h3>
+<p>Set the property <code>xmlBuild.notRequired</code> to <q>true</q> if
+the <samp>${deploy}/xmlClasses.jar</samp> file is more up-to-date than any of the DTD files in
+the <samp>${src}/xml</samp> directory.</p>
 <pre>
 &lt;uptodate property=&quot;xmlBuild.notRequired&quot; targetfile=&quot;${deploy}\xmlClasses.jar&quot;&gt;
   &lt;srcfiles dir=&quot;${src}/xml&quot; includes=&quot;**/*.dtd&quot;/&gt;
 &lt;/uptodate&gt;</pre>
-<p>sets the property <code>xmlBuild.notRequired</code> to <q>true</q> if
-the <samp>${deploy}/xmlClasses.jar</samp> file is more up-to-date than any of the DTD files in
-the <samp>${src}/xml</samp> directory.</p>
 <p>This can be written as:</p>
 <pre>
 &lt;uptodate property=&quot;xmlBuild.notRequired&quot;&gt;

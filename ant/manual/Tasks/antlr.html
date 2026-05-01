@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>ANTLR Task</title>
 </head>
@@ -38,14 +38,14 @@ the <var>glib</var> attribute) is newer than the generated files.</p>
 distribution. See <a href="../install.html#librarydependencies">Library Dependencies</a> for more
 information.</p>
 <p>Antlr 2.7.2 Note: <em>You will need <samp>antlrall.jar</samp> that can be created by
-the <code>antlr-all.jar</code> target of the Makefile provided with the download.</em></p>
+the <q>antlr-all.jar</q> target of the Makefile provided with the download.</em></p>
 
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>target</td>
@@ -127,7 +127,7 @@ nested <code>&lt;jvmarg&gt;</code> attributes, for example:</p>
 
 <pre>
 &lt;antlr target="..."&gt;
-  &lt;jvmarg value=&quot;-Djava.compiler=NONE&quot;/&gt;
+  &lt;jvmarg value=&quot;-Dfoo=bar&quot;/&gt;
   ...
 &lt;/antlr&gt;</pre>
 
@@ -137,12 +137,12 @@ nested <code>&lt;jvmarg&gt;</code> attributes, for example:</p>
 in <a href="../using.html#arg">Command line arguments</a>.</p>
 
 <h3>Example</h3>
+<p>Invoke ANTLR on grammar file <samp>etc/java.g</samp>, writing the generated files
+to <samp>build/src</samp>:</p>
 <pre>
 &lt;antlr
     target=&quot;etc/java.g&quot;
     outputdirectory=&quot;build/src&quot;/&gt;</pre>
-<p>This invokes ANTLR on grammar file <samp>etc/java.g</samp>, writing the generated files
-to <samp>build/src</samp>.</p>
 
 </body>
 </html>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>jarlib-resolve Task</title>
 </head>
@@ -29,22 +29,22 @@
 <p>Try to locate a jar to satisfy an extension and place location of jar into property. The task
 allows you to add a number of resolvers that are capable of locating a library for a specific
 extension. Each resolver will be attempted in specified order until library is found or no resolvers
-are left.  If no resolvers are left and <var>failOnError</var> is true then a BuildException will be
-thrown.</p>
+are left.  If no resolvers are left and <var>failOnError</var> is true then
+a <code>BuildException</code> will be thrown.</p>
 
 <p>Note that this task works with extensions as defined by the "Optional Package" specification.
 For more information about optional packages, see the document <em>Optional Package Versioning</em>
-in the documentation bundle for your Java Standard Edition package, in file
-<code>guide/extensions/versioning.html</code> or the online <a target="_blank"
-href="https://docs.oracle.com/javase/8/docs/technotes/guides/extensions/versioning.html"> Extension
-and ExtensionSet documentation</a> for further details.</p>
+in the documentation bundle for your Java Standard Edition package, in
+file <code>guide/extensions/versioning.html</code> or the
+online <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/extensions/versioning.html"
+target="_top">Extension and ExtensionSet documentation</a> for further details.</p>
 
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>property</td>
@@ -73,9 +73,9 @@ and ExtensionSet documentation</a> for further details.</p>
 to project directory.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>location</td>
@@ -88,9 +88,9 @@ to project directory.</p>
 <p>The <code>url</code> resolver allows you to download a library from a URL to a local file.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>url</td>
@@ -104,7 +104,7 @@ to project directory.</p>
   </tr>
   <tr>
     <td>destdir</td>
-    <td>The directory in which to place downloaded file.</td>
+    <td class="left">The directory in which to place downloaded file.</td>
   </tr>
 </table>
 
@@ -113,9 +113,9 @@ to project directory.</p>
 library.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>antfile</td>
@@ -135,8 +135,8 @@ library.</p>
 </table>
 
 <h3>Examples</h3>
-<p><strong>Resolve Extension to file.</strong> If file does not exist or file does not implement
-extension then throw an exception.</p>
+<p>Resolve Extension to file. If file does not exist or file does not implement extension then throw
+an exception.</p>
 <pre>
 &lt;extension id=&quot;dve.ext&quot;
            extensionName=&quot;org.realityforge.dve&quot;
@@ -148,8 +148,8 @@ extension then throw an exception.</p>
   &lt;location location="/opt/jars/dve.jar"/&gt;
 &lt;/jarlib-resolve&gt;</pre>
 
-<p><strong>Resolve Extension to URL.</strong> If URL does not exist or can not write
-to <var>destfile</var> or file does not implement extension then throw an exception.</p>
+<p>Resolve Extension to URL. If URL does not exist or can not write to <var>destfile</var> or file
+does not implement extension then throw an exception.</p>
 <pre>
 &lt;extension id=&quot;dve.ext&quot;
            extensionName=&quot;org.realityforge.dve&quot;
@@ -158,12 +158,12 @@ to <var>destfile</var> or file does not implement extension then throw an except
 
 &lt;jarlib-resolve property="dve.library"&gt;
   &lt;extension refid="dve.ext"/&gt;
-  &lt;url url="http://www.realityforge.net/jars/dve.jar" destfile="lib/dve.jar"/&gt;
+  &lt;url url="https://www.example.com/jars/dve.jar" destfile="lib/dve.jar"/&gt;
 &lt;/jarlib-resolve&gt;</pre>
 
-<p><strong>Resolve Extension to file produce by Ant build.</strong> If file does not get produced or
-Ant file is missing or build fails then throw an exception. (<strong>Note</strong>: does not check
-that library implements extension.)</p>
+<p>Resolve Extension to file produce by Ant build. If file does not get produced or Ant file is
+missing or build fails then throw an exception. (<strong>Note</strong>: does not check that library
+implements extension.)</p>
 <pre>
 &lt;extension id=&quot;dve.ext&quot;
            extensionName=&quot;org.realityforge.dve&quot;
@@ -175,10 +175,9 @@ that library implements extension.)</p>
   &lt;ant antfile="../dve/build.xml" target="main" destfile="lib/dve.jar"/&gt;
 &lt;/jarlib-resolve&gt;</pre>
 
-<p><strong>Resolve Extension via multiple methods.</strong> First check local file to see if it
-implements extension. If it does not then try to build it from source in parallel directory. If that
-fails then finally try to download it from a website. If all steps fail then throw a build
-exception.</p>
+<p>Resolve Extension via multiple methods. First check local file to see if it implements
+extension. If it does not then try to build it from source in parallel directory. If that fails then
+finally try to download it from a website. If all steps fail then throw a build exception.</p>
 <pre>
 &lt;extension id=&quot;dve.ext&quot;
            extensionName=&quot;org.realityforge.dve&quot;
@@ -189,7 +188,7 @@ exception.</p>
   &lt;extension refid="dve.ext"/&gt;
   &lt;location location="/opt/jars/dve.jar"/&gt;
   &lt;ant antfile="../dve/build.xml" target="main" destfile="lib/dve.jar"/&gt;
-  &lt;url url="http://www.realityforge.net/jars/dve.jar" destfile="lib/dve.jar"/&gt;
+  &lt;url url="https://example.com/jars/dve.jar" destfile="lib/dve.jar"/&gt;
 &lt;/jarlib-resolve&gt;</pre>
 
 </body>

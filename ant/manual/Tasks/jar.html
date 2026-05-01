@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Jar Task</title>
 </head>
@@ -71,15 +71,14 @@ a <code>zipfileset</code> in a <code>Zip</code> task. The one difference is that
 the <var>manifest</var> attribute is not specified, the <code>Jar</code> task will include an empty
 one for you.)</p>
 
-<p>Manifests are processed by the <code>Jar</code> task according to the <a target="_blank"
-href="https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html">Jar file
-specification.</a>  Note in particular that this may result in manifest lines greater than 72 bytes
-being wrapped and continued on the next line.</p>
+<p>Manifests are processed by the <code>Jar</code> task according to
+the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html" target="_top">Jar
+file specification.</a>  Note in particular that this may result in manifest lines greater than 72
+bytes being wrapped and continued on the next line.</p>
 
 <p>The <code>Jar</code> task checks whether you specified package information according to
-the <a target="_blank"
-href="https://docs.oracle.com/javase/8/docs/technotes/guides/versioning/spec/versioning2.html#wp90779">
-versioning specification</a>.</p>
+the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/versioning/spec/versioning2.html#wp90779"
+target="_top">versioning specification</a>.</p>
 
 <p><strong>Please note that the ZIP format allows multiple files of the same fully-qualified name to
 exist within a single archive. This has been documented as causing various problems for unsuspecting
@@ -89,7 +88,7 @@ other than its default, <q>add</q>.</strong></p>
 <p>To cryptographically sign your JAR file, use the <a href="signjar.html">SignJar task</a> on the
 JAR that you create from this task.</p>
 
-<p>For creating a simple version of a <a target="_blank" href="http://openjdk.java.net/jeps/238">JEP
+<p>For creating a simple version of a <a href="https://openjdk.java.net/jeps/238" target="_top">JEP
 238 multi-release jar</a>, you don't need any special tools. Just set the
 required <code>manifest</code> entry and place the files where required, as you could see in
 the <a href="#jep238-example">JEP 238 example</a>. If you want to tune this kind of jar,
@@ -99,9 +98,9 @@ e.g. decreasing the size by deleting 'same' classes from the versions-branches, 
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>destfile</td>
@@ -202,10 +201,10 @@ e.g. decreasing the size by deleting 'same' classes from the versions-branches, 
   <tr>
     <td>index</td>
     <td>whether to create
-      an <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#JAR_Index">index
-      list</a> to speed up classloading.  This is a JDK 1.3+ specific feature.  Unless you specify
-      additional jars with nested <a href="#indexjars"><code>indexjars</code></a> elements, only the
-      contents of this jar will be included in the index.</td>
+      an <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#JAR_Index"
+      target="_top">index list</a> to speed up classloading.
+      Unless you specify additional jars with nested <a href="#indexjars"><code>indexjars</code></a>
+      elements, only the contents of this jar will be included in the index.</td>
     <td>No; defaults to <q>false</q></td>
   </tr>
   <tr>
@@ -213,8 +212,8 @@ e.g. decreasing the size by deleting 'same' classes from the versions-branches, 
     <td>whether to include <samp>META-INF</samp> and its children in the index.  Doesn't have any
       effect if <var>index</var> is <q>false</q>.<br/>Sun's jar implementation used to skip
       the <samp>META-INF</samp> directory and Ant followed that example.  The behavior has been
-      changed with <a href="https://bugs.openjdk.java.net/browse/JDK-4408526">Java 5</a>.  In order
-      to avoid problems with Ant generated jars on Java 1.4 or earlier Ant will not
+      changed with <a href="https://bugs.openjdk.java.net/browse/JDK-4408526" target="_top">Java
+      5</a>.  In order to avoid problems with Ant generated jars on Java 1.4 or earlier Ant will not
       include <samp>META-INF</samp> unless explicitly asked to. <em>Since Ant 1.8.0</em></td>
     <td>No; defaults to <q>false</q></td>
   </tr>
@@ -306,6 +305,16 @@ e.g. decreasing the size by deleting 'same' classes from the versions-branches, 
       the <a href="zip.html#zip64">discussion in the zip task page</a></td>
     <td>No; defaults to <q>never</q></td>
   </tr>
+  <tr>
+    <td valign="top">modificationtime</td>
+    <td valign="top">Set all stored file modification times to the
+    given time. This can either be a number interpreted as
+    milliseconds since 1970-01-01T00:00:00Z or a string that can be
+    parsed as a ISO 8601 timestamp with optional timezone.
+      <em>Since Ant 1.10.2</em>.
+    </td>
+    <td align="center" valign="top">No</td>
+  </tr>
 </table>
 
 <h3>Parameters specified as nested elements</h3>
@@ -350,24 +359,33 @@ names used for the archives depend on your manifest:</p>
 inside the <samp>META-INF</samp> directory unless the <var>indexmetainf</var> attribute has been set
 to <q>true</q>.</p>
 
+<h4 id="indexjarsmapper">indexjarsmapper</h4>
+
+<p><em>Since Ant 1.10.9</em></p>
+
+<p>The nested <code>indexjarsmapper</code> element can be used to perform custom filename
+transformations for the archives specified by <code>indexjars</code> if the
+<a href="#indexjars">default filename transformation</a> doesn't suffice.
+
 <h4 id="service">service</h4>
 
 <p><em>Since Ant 1.7.0</em></p>
 
 <p>The nested <code>service</code> element specifies a service.  Services are described in
-the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Service_Provider">service
-provider overview</a>.  The approach is to have providers JARs include files named by the service
-provided, for example, <samp>META-INF/services/javax.script.ScriptEngineFactory</samp> which can
-include implementation class names, one per line (usually just one per JAR).</p>
+the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Service_Provider"
+target="_top">service provider overview</a>.  The approach is to have providers JARs include files
+named by the service provided, for
+example, <samp>META-INF/services/javax.script.ScriptEngineFactory</samp> which can include
+implementation class names, one per line (usually just one per JAR).</p>
 
 <p>The name of the service is set by the <var>type</var> attribute. The classname implementing the
 service is the the <var>provider</var> attribute, or if one wants to specify a number of classes
 that implement the service, by <code>provider</code> nested elements.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>type</td>
@@ -388,45 +406,47 @@ nested <code>&lt;provider&gt;</code> elements may be used.</p>
 <h3>Examples</h3>
 
 <h4>Simple</h4>
-<pre>&lt;jar destfile=&quot;${dist}/lib/app.jar&quot; basedir=&quot;${build}/classes&quot;/&gt;</pre>
-<p>jars all files in the <samp>${build}/classes</samp> directory into a file
+<p>Jar all files in the <samp>${build}/classes</samp> directory into a file
 called <samp>app.jar</samp> in the <samp>${dist}/lib</samp> directory.</p>
+<pre>&lt;jar destfile=&quot;${dist}/lib/app.jar&quot; basedir=&quot;${build}/classes&quot;/&gt;</pre>
 
 <h4>With filters</h4>
 
+<p>Jar all files in the <samp>${build}/classes</samp> directory into a file
+called <samp>app.jar</samp> in the <samp>${dist}/lib</samp> directory. Files with the
+name <samp>Test.class</samp> are excluded.</p>
 <pre>&lt;jar destfile=&quot;${dist}/lib/app.jar&quot;
      basedir=&quot;${build}/classes&quot;
      excludes=&quot;**/Test.class&quot;/&gt;</pre>
-<p>jars all files in the <samp>${build}/classes</samp> directory into a file
-called <samp>app.jar</samp> in the <samp>${dist}/lib</samp> directory. Files with the
-name <samp>Test.class</samp> are excluded.</p>
 
+<p>Jar all files in the <samp>${build}/classes</samp> directory into a file
+called <samp>app.jar</samp> in the <samp>${dist}/lib</samp> directory. Only files under the
+directory <samp>mypackage/test</samp> are used, and files with the name <samp>Test.class</samp> are
+excluded.</p>
 <pre>
 &lt;jar destfile=&quot;${dist}/lib/app.jar&quot;
      basedir=&quot;${build}/classes&quot;
      includes=&quot;mypackage/test/**&quot;
      excludes=&quot;**/Test.class&quot;/&gt;</pre>
-<p>jars all files in the <samp>${build}/classes</samp> directory into a file
-called <samp>app.jar</samp> in the <samp>${dist}/lib</samp> directory. Only files under the
-directory <samp>mypackage/test</samp> are used, and files with the name <samp>Test.class</samp> are
-excluded.</p>
 
 <h4>Multiple filesets</h4>
+<p>Jar all files in the <samp>${build}/classes</samp> directory and also in
+the <samp>${src}/resources</samp> directory together into a file called <samp>app.jar</samp> in
+the <samp>${dist}/lib</samp> directory. Files with the name <samp>Test.class</samp> are excluded. If
+there are files such as <samp>${build}/classes/mypackage/MyClass.class</samp>
+and <samp>${src}/resources/mypackage/image.gif</samp>, they will appear in the same directory in the
+jar (and thus be considered in the same package by Java).</p>
 <pre>
 &lt;jar destfile=&quot;${dist}/lib/app.jar&quot;&gt;
     &lt;fileset dir=&quot;${build}/classes&quot;
              excludes=&quot;**/Test.class&quot;/&gt;
     &lt;fileset dir=&quot;${src}/resources&quot;/&gt;
 &lt;/jar&gt;</pre>
-<p>jars all files in the <samp>${build}/classes</samp> directory and also in
-the <samp>${src}/resources</samp> directory together into a file called <samp>app.jar</samp> in
-the <samp>${dist}/lib</samp> directory.  Files with the name <samp>Test.class</samp> are excluded.
-If there are files such as <samp>${build}/classes/mypackage/MyClass.class</samp>
-and <samp>${src}/resources/mypackage/image.gif</samp>, they will appear in the same directory in the
-JAR (and thus be considered in the same package by Java).</p>
 
 <h4>Merging archives</h4>
 
+<p>Create an executable jar file with a main class <samp>com.acme.checksites.Main</samp>, and embed
+all the classes from the jar <samp>lib/main/some.jar</samp>.</p>
 <pre>
 &lt;jar destfile="build/main/checksites.jar"&gt;
     &lt;fileset dir="build/main/classes"/&gt;
@@ -436,9 +456,9 @@ JAR (and thus be considered in the same package by Java).</p>
                  value="com.acme.checksites.Main"/&gt;
     &lt;/manifest&gt;
 &lt;/jar&gt;</pre>
-<p>Creates an executable jar file with a main class <samp>com.acme.checksites.Main</samp>, and
-embeds all the classes from the jar <samp>lib/main/some.jar</samp>.</p>
 
+<p>Create an executable jar file with a main class <samp>com.acme.checksites.Main</samp>, and embed
+all the classes from all the jars in <samp>lib/main</samp>.</p>
 <pre>
 &lt;jar destfile="build/main/checksites.jar"&gt;
     &lt;fileset dir="build/main/classes"/&gt;
@@ -455,8 +475,6 @@ embeds all the classes from the jar <samp>lib/main/some.jar</samp>.</p>
               value="com.acme.checksites.Main"/&gt;
     &lt;/manifest&gt;
 &lt;/jar&gt;</pre>
-<p>Creates an executable jar file with a main class <samp>com.acme.checksites.Main</samp>, and
-embeds all the classes from all the jars in <samp>lib/main</samp>.</p>
 
 <h4>Inline manifest</h4>
 <pre>
@@ -464,7 +482,7 @@ embeds all the classes from all the jars in <samp>lib/main</samp>.</p>
     &lt;include name=&quot;build&quot;/&gt;
     &lt;manifest&gt;
         &lt;!-- If this is an Applet or Web Start application, include
-             the proper attributes from <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jweb/index.html">https://docs.oracle.com/javase/8/docs/technotes/guides/jweb/index.html</a> --&gt;
+             the proper attributes from <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jweb/index.html" target="_top">https://docs.oracle.com/javase/8/docs/technotes/guides/jweb/index.html</a> --&gt;
         &lt;attribute name=&quot;Permissions&quot; value=&quot;sandbox&quot;/&gt;
         &lt;attribute name=&quot;Codebase&quot; value=&quot;example.com&quot;/&gt;
         &lt;!-- Who is building this jar? --&gt;
@@ -500,7 +518,7 @@ Sealed: false</pre>
 <h4>Service Provider</h4>
 
 <p>The following shows how to create a jar file specifying a service with an implementation of the
-JDK 6 scripting interface:</p>
+scripting interface:</p>
 <pre>
 &lt;jar destfile="pinky.jar"&gt;
     &lt;fileset dir="build/classes"/&gt;
@@ -509,7 +527,7 @@ JDK 6 scripting interface:</p>
 &lt;/jar&gt;</pre>
 
 <p>The following shows how to create a jar file specifying a service with two implementations of the
-JDK 6 scripting interface:</p>
+scripting interface:</p>
 <pre>
 &lt;jar destfile="pinkyandbrain.jar"&gt;
     &lt;fileset dir="classes"/&gt;
@@ -521,9 +539,9 @@ JDK 6 scripting interface:</p>
 
 <h4 id="jep238-example">JEP 238 example: a Multi-Release JAR Files</h4>
 <p>Here we want to create a <em>Multi-Release JAR File</em> according the
-specification <a target="_blank" href="http://openjdk.java.net/jeps/238">JEP 238</a>.  It defines on
+specification <a href="https://openjdk.java.net/jeps/238" target="_top">JEP 238</a>. It defines on
 top of a JAR the possibility to place additional or overwriting classes in a jar, which are
-available according to the Java version you run.<br/>  Basically it says, that you have to set the
+available according to the Java version you run.<br/>Basically it says, that you have to set the
 manifest entry <code>Multi-Release: true</code> and place all additional or overwriting classes
 in <samp>META-INF/versions/<i>number</i>/package-structure</samp>,
 e.g. <samp>META-INF/versions/9/org/apache/ant/MyClass.class</samp></p>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>LoadFile Task</title>
@@ -33,9 +34,9 @@ is not set.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>srcFile</td>
@@ -60,7 +61,7 @@ is not set.</p>
   <tr>
     <td>quiet</td>
     <td>Do not display a diagnostic message (unless Apache Ant has been invoked with
-      the <code>-verbose</code> or <code>-debug</code> switches) or modify the exit status to
+      the <kbd>-verbose</kbd> or <kbd>-debug</kbd> switches) or modify the exit status to
       reflect an error. Setting this to <q>true</q> implies setting <var>failonerror</var>
       to <q>false</q>. <em>Since Ant 1.7.0</em>.
     </td>
@@ -68,31 +69,35 @@ is not set.</p>
   </tr>
 
 </table>
-<p>The LoadFile task supports nested <a href="../Types/filterchain.html"> FilterChain</a>s.</p>
+<p>The LoadFile task supports nested <a href="../Types/filterchain.html">FilterChain</a>s.</p>
 
 <h3>Examples</h3>
+<p>Load file <samp>message.txt</samp> into property <code>message</code>;
+an <code>&lt;echo&gt;</code> can print this.</p>
 <pre>
 &lt;loadfile property="message"
           srcFile="message.txt"/&gt;</pre>
-<p>Load file message.txt into property <code>message</code>; an <code>&lt;echo&gt;</code> can print
-this.  This is identical to</p>
+
+<p>The above is identical to</p>
 <pre>
 &lt;loadresource property="message"&gt;
     &lt;file file="message.txt"/&gt;
 &lt;/loadresource&gt;</pre>
 
+<p>Load a file using the Latin-1 encoding</p>
 <pre>
 &lt;loadfile property="encoded-file"
           srcFile="loadfile.xml"
           encoding="ISO-8859-1"/&gt;</pre>
-<p>Load a file using the Latin-1 encoding</p>
 
+<p>Load a file, don't fail if it is missing (a message is printed, though)</p>
 <pre>
 &lt;loadfile property="optional.value"
           srcFile="optional.txt"
           failonerror="false"/&gt;</pre>
-<p>Load a file, don't fail if it is missing (a message is printed, though)</p>
 
+<p>Load a property which can be used as a parameter for another task (in this
+case <code>mail</code>), merging lines to ensure this happens.</p>
 <pre>
 &lt;loadfile property="mail.recipients"
           srcFile="recipientlist.txt"&gt;
@@ -100,9 +105,9 @@ this.  This is identical to</p>
         &lt;<a href="../Types/filterchain.html#striplinebreaks">striplinebreaks</a>/&gt;
     &lt;/filterchain&gt;
 &lt;/loadfile&gt;</pre>
-<p>Load a property which can be used as a parameter for another task (in this
-case <code>mail</code>), merging lines to ensure this happens.</p>
 
+<p>Load an XML file into a property, expanding all properties declared in the file in the
+process.</p>
 <pre>
 &lt;loadfile property="system.configuration.xml"
           srcFile="configuration.xml"&gt;
@@ -110,8 +115,6 @@ case <code>mail</code>), merging lines to ensure this happens.</p>
         &lt;<a href="../Types/filterchain.html#expandproperties">expandproperties</a>/&gt;
     &lt;/filterchain&gt;
 &lt;/loadfile&gt;</pre>
-<p>Load an XML file into a property, expanding all properties declared in the file in the
-process.</p>
 
 </body>
 </html>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,9 +15,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>SQL Task</title>
 </head>
@@ -45,14 +45,14 @@ and transaction and fail task.</p>
 proxy settings to route their JDBC operations to the database.  <em>Since Apache Ant 1.7</em>, Ant
 running on Java 5 or later defaults to <a href="../proxy.html">using the proxy settings of the
 operating system</a>.  Accordingly, the OS proxy settings need to be valid, or Ant's proxy support
-disabled with <code>-noproxy</code> option.</p>
+disabled with <kbd>-noproxy</kbd> option.</p>
 
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>driver</td>
@@ -173,8 +173,8 @@ disabled with <code>-noproxy</code> option.</p>
   <tr>
     <td>escapeprocessing</td>
     <td>Control whether the Java statement object will perform escape substitution.<br/>
-      See <a href="https://docs.oracle.com/javase/8/docs/api/java/sql/Statement.html#setEscapeProcessing-boolean-">Statement's
-      API docs</a> for details.  <em>Since Ant 1.6</em>.
+      See <a href="https://docs.oracle.com/javase/8/docs/api/java/sql/Statement.html#setEscapeProcessing-boolean-"
+      target="_top">Statement's API docs</a> for details.  <em>Since Ant 1.6</em>.
     <td>No; defaults to <q>true</q></td>
   </tr>
   <tr>
@@ -259,9 +259,9 @@ the executed executed in the same connection but different transactions. This is
 when there are multiple files to execute on the same schema.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>src</td>
@@ -290,9 +290,9 @@ JDBC classes.</p>
 that need to be set when connecting to the database.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -307,6 +307,11 @@ that need to be set when connecting to the database.</p>
 </table>
 
 <h3>Examples</h3>
+
+<p>Connect to the database given in <var>url</var> as the <q>sa</q> user using
+the <code>org.database.jdbcDriver</code> and execute the SQL statements contained within the
+file <samp>data.sql</samp></p>
+
 <pre>
 &lt;sql driver=&quot;org.database.jdbcDriver&quot;
      url=&quot;jdbc:database-url&quot;
@@ -314,9 +319,10 @@ that need to be set when connecting to the database.</p>
      password=&quot;pass&quot;
      src=&quot;data.sql&quot;/&gt;</pre>
 
-<p>Connects to the database given in <var>url</var> as the <q>sa</q> user using
-the <code>org.database.jdbcDriver</code> and executes the SQL statements contained within the
-file <samp>data.sql</samp></p>
+<p>Connect to the database given in <var>url</var> as the <q>sa</q> user using
+the <code>org.database.jdbcDriver</code> and execute the SQL statements contained within the
+file <samp>data.sql</samp>. Also set the property <code>internal_logon</code> to the
+value <q>SYSDBA</q>.</p>
 
 <pre>
 &lt;sql driver=&quot;org.database.jdbcDriver&quot;
@@ -327,10 +333,10 @@ file <samp>data.sql</samp></p>
   &lt;connectionProperty name=&quot;internal_logon&quot; value=&quot;SYSDBA&quot;&gt;
 &lt;/sql&gt;</pre>
 
-<p>Connects to the database given in <var>url</var> as the <q>sa</q> user using
-the <code>org.database.jdbcDriver</code> and executes the SQL statements contained within the
-file <samp>data.sql</samp>.  Also sets the property <code>internal_logon</code> to the
-value <q>SYSDBA</q>.</p>
+<p>Connect to the database given in <var>url</var> as the <q>sa</q> user using
+the <code>org.database.jdbcDriver</code> and execute the two SQL statements inserting data
+into <samp>some_table</samp> and truncating <samp>some_other_table</samp>. Ant properties in the
+nested text will not be expanded.</p>
 
 <pre>
 &lt;sql driver=&quot;org.database.jdbcDriver&quot;
@@ -343,11 +349,6 @@ values(1,2,3,4);
 
 truncate table some_other_table;
 &lt;/sql&gt;</pre>
-
-<p>Connects to the database given in <var>url</var> as the <q>sa</q> user using
-the <code>org.database.jdbcDriver</code> and executes the two SQL statements inserting data
-into <samp>some_table</samp> and truncating <samp>some_other_table</samp>. Ant Properties in the
-nested text will not be expanded.</p>
 
 <p>Note that you may want to enclose your statements in <code>&lt;![CDATA[</code>
 ... <code>]]&gt;</code> sections so you don't need to

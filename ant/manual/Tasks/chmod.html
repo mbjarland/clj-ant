@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Chmod Task</title>
 </head>
@@ -28,7 +28,7 @@
 <h3>Description</h3>
 <p>Changes the permissions of a file or all files inside specified directories. Right now it has
 effect only under Unix or NonStop Kernel (Tandem).  The permissions are also UNIX style, like the
-argument for the <code>chmod</code> command.</p>
+argument for the <kbd>chmod</kbd> command.</p>
 <p>See the section on <a href="../dirtasks.html#directorybasedtasks">directory based tasks</a>, on
 how the inclusion/exclusion of files works, and how to write patterns.</p>
 
@@ -44,7 +44,7 @@ nested <a href="../Types/filelist.html">filelist</a>s.</p>
 arbitrary <a href="../Types/resources.html#collection">resource collections</a> as nested
 elements.</p>
 
-<p>By default this task will use a single invocation of the underlying <code>chmod</code> command.
+<p>By default this task will use a single invocation of the underlying <kbd>chmod</kbd> command.
 If you are working on a large number of files this may result in a command line that is too long for
 your operating system.  If you encounter such problems, you should set the <var>maxparallel</var>
 attribute of this task to a non-zero value.  The number to use highly depends on the length of your
@@ -54,7 +54,7 @@ may give you an approximation for the number you could use as initial value for 
 experiments.</p>
 
 <p>By default this task won't do anything unless it detects it is running on a Unix system.  If you
-know for sure that you have a <code>chmod</code> executable on your <code>PATH</code> that is
+know for sure that you have a <kbd>chmod</kbd> executable on your <code>PATH</code> that is
 command line compatible with the Unix command, you can use the task's <var>os</var> attribute and
 set its value to your current OS.</p>
 
@@ -64,9 +64,9 @@ alternative.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>file</td>
@@ -103,7 +103,7 @@ alternative.</p>
   </tr>
   <tr>
     <td>parallel</td>
-    <td>process all specified files using a single <code>chmod</code> command.</td>
+    <td>process all specified files using a single <kbd>chmod</kbd> command.</td>
     <td>No; defaults to <q>true</q></td>
   </tr>
   <tr>
@@ -138,19 +138,24 @@ alternative.</p>
   </tr>
 </table>
 <h3>Examples</h3>
+
+<p>Make the <samp>start.sh</samp> file readable and executable for anyone on a UNIX system.</p>
 <pre>&lt;chmod file=&quot;${dist}/start.sh&quot; perm=&quot;ugo+rx&quot;/&gt;</pre>
-<p>makes the <samp>start.sh</samp> file readable and executable for anyone on a UNIX system.</p>
 
-<pre>&lt;chmod file=&quot;${dist}/start.sh&quot; perm=&quot;700&quot;/&gt;</pre>
-<p>makes the <samp>start.sh</samp> file readable, writable and executable only for the owner on a
+<p>Make the <samp>start.sh</samp> file readable, writable and executable only for the owner on a
 UNIX system.</p>
+<pre>&lt;chmod file=&quot;${dist}/start.sh&quot; perm=&quot;700&quot;/&gt;</pre>
 
+<p>Make all <samp>.sh</samp> files below <samp>${dist}/bin</samp> readable and executable for anyone
+on a UNIX system.</p>
 <pre>
 &lt;chmod dir=&quot;${dist}/bin&quot; perm=&quot;ugo+rx&quot;
        includes=&quot;**/*.sh&quot;/&gt;</pre>
-<p>makes all <samp>.sh</samp> files below <samp>${dist}/bin</samp> readable and executable for
-anyone on a UNIX system.</p>
 
+<p>Make all files below <samp>shared/sources1</samp> (except those below any directory
+named <samp>trial</samp>) writable for members of the same group on a UNIX system. In addition, all
+files belonging to a FileSet with <var>id</var> <samp>other.shared.sources</samp> get the same
+permissions.</p>
 <pre>
 &lt;chmod perm=&quot;g+w&quot;&gt;
   &lt;fileset dir=&quot;shared/sources1&quot;&gt;
@@ -158,10 +163,10 @@ anyone on a UNIX system.</p>
   &lt;/fileset&gt;
   &lt;fileset refid=&quot;other.shared.sources&quot;/&gt;
 &lt;/chmod&gt;</pre>
-<p>makes all files below <samp>shared/sources1</samp> (except those below any directory named trial)
-writable for members of the same group on a UNIX system. In addition all files belonging to a
-FileSet with <var>id</var> <samp>other.shared.sources</samp> get the same permissions.</p>
 
+<p>Keep non-owners from touching <code>cgi</code> scripts, files with a <samp>.old</samp> extension
+or directories beginning with <samp>private_</samp>. A directory ending in <samp>.old</samp> or a
+file beginning with <samp>private_</samp> would remain unaffected.</p>
 <pre>
 &lt;chmod perm=&quot;go-rwx&quot; type=&quot;file&quot;&gt;
   &lt;fileset dir=&quot;/web&quot;&gt;
@@ -172,9 +177,6 @@ FileSet with <var>id</var> <samp>other.shared.sources</samp> get the same permis
     &lt;include name=&quot;**/private_*&quot;/&gt;
   &lt;/dirset&gt;
 &lt;/chmod&gt;</pre>
-<p>keeps non-owners from touching cgi scripts, files with a <samp>.old</samp> extension or
-directories beginning with <samp>private_</samp>. A directory ending in <samp>.old</samp> or a file
-beginning with <samp>private_</samp> would remain unaffected.</p>
 
 <h3>Note on <var>maxparallel</var> attribute</h3>
 <p>Some shells have a limit of the number of characters that a command line may contain.  This

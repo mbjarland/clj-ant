@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,9 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>FilterChains and FilterReaders</title>
 </head>
 
@@ -27,23 +28,23 @@
 that contained the string <q>blee</q> from the first 10 lines of a text file <samp>foo</samp>
 (<em>you wouldn't want to filter a binary file</em>) to a file <samp>bar</samp>, you would do
 something like:</p>
-<pre>cat foo|head -n10|grep blee &gt; bar</pre>
-<p>Apache Ant was not flexible enough.  There was no way for the <code>&lt;copy&gt;</code> task
-to do something similar.  If you wanted the <code>&lt;copy&gt;</code> task to get the first 10
-lines, you would have had to create special attributes:</p>
+<pre class="input">cat foo|head -n10|grep blee &gt; bar</pre>
+<p>Apache Ant was not flexible enough.  There was no way for the <code>&lt;copy&gt;</code> task to
+do something similar.  If you wanted the <code>&lt;copy&gt;</code> task to get the first 10 lines,
+you would have had to create special attributes:</p>
 <pre>&lt;copy file=&quot;foo&quot; tofile=&quot;bar&quot; head=&quot;10&quot; contains=&quot;blee&quot;/&gt;</pre>
 <p>The obvious problem thus surfaced: Ant tasks would not be able to accommodate such data
 transformation attributes as they would be endless.  The task would also not know in which order
 these attributes were to be interpreted.  That is, must the task execute the contains attribute
 first and then the head attribute or vice-versa?  What Ant tasks needed was a mechanism to allow
-pluggable filter (data transformer) chains.  Ant would provide a few filters for which there
-have been repeated requests.  Users with special filtering needs would be able to easily write
-their own and plug them in.</p>
+pluggable filter (data transformer) chains.  Ant would provide a few filters for which there have
+been repeated requests.  Users with special filtering needs would be able to easily write their own
+and plug them in.</p>
 
 <p>The solution was to refactor data transformation oriented tasks to support FilterChains.  A
-FilterChain is a group of ordered FilterReaders.  Users can define their own FilterReaders by
-just extending the <code>java.io.FilterReader</code> class.  Such custom FilterReaders can be
-easily plugged in as nested elements of <code>&lt;filterchain&gt;</code> by
+FilterChain is a group of ordered FilterReaders.  Users can define their own FilterReaders by just
+extending the <code class="code">java.io.FilterReader</code> class.  Such custom FilterReaders can
+be easily plugged in as nested elements of <code>&lt;filterchain&gt;</code> by
 using <code>&lt;filterreader&gt;</code> elements.</p>
 <p>Example:</p>
 <pre>
@@ -82,6 +83,12 @@ also.</p>
   &lt;/filterchain&gt;
 &lt;/loadfile&gt;</pre>
 
+<p>The only supported attribute is <code>refid</code> which makes this
+  <code>filterchain</code>
+  a <a href="../using.html#references">reference</a> to
+  a <code>filterchain</code> defined elsewhere. If specified no other
+  attributes or nested elements are allowed.</p>
+
 <p>The following built-in tasks support nested <code>&lt;filterchain&gt;</code> elements.<br/>
 <a href="../Tasks/concat.html">Concat</a>,<br/>
 <a href="../Tasks/copy.html">Copy</a>,<br/>
@@ -114,20 +121,20 @@ also.</p>
 
 <h3 id="filterreader">FilterReader</h3>
 
-<p>The <code>filterreader</code> element is the generic way to define a filter.  User defined
-filter elements are defined in the build file using this.  Please note that built in filter
-readers can also be defined using this syntax.</p>
+<p>The <code>filterreader</code> element is the generic way to define a filter.  User defined filter
+elements are defined in the build file using this.  Please note that built in filter readers can
+also be defined using this syntax.</p>
 
 <p>A FilterReader element must be supplied with a class name as an attribute value.  The class
-resolved by this name must extend <code>java.io.FilterReader</code>.  If the custom filter
-reader needs to be parameterized, it must
-implement <code>org.apache.tools.type.Parameterizable</code>.</p>
+resolved by this name must extend <code class="code">java.io.FilterReader</code>.  If the custom
+filter reader needs to be parameterized, it must
+implement <code class="code">org.apache.tools.type.Parameterizable</code>.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>classname</td>
@@ -138,23 +145,22 @@ implement <code>org.apache.tools.type.Parameterizable</code>.</p>
 
 <h4>Nested elements</h4>
 <p><code>&lt;filterreader&gt;</code> supports <code>&lt;classpath&gt;</code>
-and <code>&lt;param&gt;</code> as nested elements.  Each <code>&lt;param&gt;</code> element may
-take in the following attributes&mdash;<var>name</var>, <var>type</var> and <var>value</var>.</p>
+and <code>&lt;param&gt;</code> as nested elements.  Each <code>&lt;param&gt;</code> element may take
+in the following attributes&mdash;<var>name</var>, <var>type</var> and <var>value</var>.</p>
 <p>The following FilterReaders are supplied with the default distribution.</p>
 
 <h3 id="classconstants">ClassConstants</h3>
-<p>This filters basic constants defined in a Java Class, and outputs them in lines composed of
-the format <em>name</em>=<em>value</em>.  This filter uses the BCEL library to understand the
-Java Class file.  See <a href="../install.html#librarydependencies">Library Dependencies</a>.</p>
-<p><strong>Important</strong>: This filter is different from most of the other filters.  Most of
-the filters operate on a sequence of characters.  This filter operates on the sequence of bytes
-that makes up a class. However the bytes arrive to the filter as a sequence of characters. This
-means that one must be careful on the choice of character encoding to use. Most encodings lose
-information on conversion from an arbitrary sequence of bytes to characters and back again to
-bytes. In particular, the usual default character encodings (CP1252 and UTF-8) do.  For this
-reason, <em>since Ant 1.7</em>, the character encoding <strong>ISO-8859-1</strong> is used to
-convert from characters back to bytes, so one <strong>has</strong> to use this encoding for
-reading the java class file.</p>
+<p>This filters basic constants defined in a Java Class, and outputs them in lines composed of the
+format <em>name</em>=<em>value</em>.  This filter uses the BCEL library to understand the Java Class
+file.  See <a href="../install.html#librarydependencies">Library Dependencies</a>.</p>
+<p><strong>Important</strong>: This filter is different from most of the other filters.  Most of the
+filters operate on a sequence of characters.  This filter operates on the sequence of bytes that
+makes up a class. However the bytes arrive to the filter as a sequence of characters. This means
+that one must be careful on the choice of character encoding to use. Most encodings lose information
+on conversion from an arbitrary sequence of bytes to characters and back again to bytes. In
+particular, the usual default character encodings (CP1252 and UTF-8) do.  For this reason, <em>since
+Ant 1.7</em>, the character encoding <strong>ISO-8859-1</strong> is used to convert from characters
+back to bytes, so one <strong>has</strong> to use this encoding for reading the Java class file.</p>
 <h4>Example</h4>
 
 <p>This loads the basic constants defined in a Java class as Ant properties.</p>
@@ -203,13 +209,13 @@ Unicode escape backslash u plus 4 digits.</p>
 &lt;/loadproperties&gt;</pre>
 
 <h3 id="expandproperties">ExpandProperties</h3>
-<p>If the data contains data that represents Ant properties (of the form <code>${...}</code>),
-that is substituted with the property's actual value.</p>
+<p>If the data contains data that represents Ant properties (of the form <code>${...}</code>), that
+is substituted with the property's actual value.</p>
 
 <h4>Example</h4>
 
-<p>This results in the property <code>modifiedmessage</code> holding the value &quot;All these
-moments will be lost in time, like teardrops in the rain&quot;</p>
+<p>This results in the property <code>modifiedmessage</code> holding the value <q>All these moments
+will be lost in time, like teardrops in the rain</q></p>
 <pre>
 &lt;echo message=&quot;All these moments will be lost in time, like teardrops in the ${weather}&quot;
       file=&quot;loadfile1.tmp&quot;/&gt;
@@ -251,9 +257,9 @@ moments will be lost in time, like teardrops in the rain&quot;</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>lines</td>
@@ -305,9 +311,9 @@ the source distribution).</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Type</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Type</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>contains</td>
@@ -318,6 +324,14 @@ the source distribution).</p>
     <td>negate</td>
     <td>Whether to select <em>non-</em>matching lines only. <em>Since Ant 1.7</em></td>
     <td>No</td>
+  </tr>
+  <tr>
+    <td>matchAny</td>
+    <td>If <q>false</q>, then all the strings are expected to be present in the line. If
+      <q>true</q>, then the presence of any of the strings in the line is considered
+      a successful match.<br/><em>Since Ant 1.10.4</em>
+    </td>
+    <td>No; defaults to <q>false</q></td>
   </tr>
 </table>
 <p>
@@ -358,9 +372,9 @@ matching strings.</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Type</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Type</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>regexp</td>
@@ -417,9 +431,9 @@ and of the choice of regular expression implementation.</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>prefix</td>
@@ -447,9 +461,9 @@ and of the choice of regular expression implementation.</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>suffix</td>
@@ -476,10 +490,10 @@ and <var>endtoken</var> with user defined values.</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Type</th>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Type</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>tokenchar</td>
@@ -621,9 +635,9 @@ filter does not take in any parameters.</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>linebreaks</td>
@@ -663,14 +677,14 @@ them.</p>
 
 <h3 id="striplinecomments">StripLineComments</h3>
 
-<p>This filter removes all those lines that begin with strings that represent comments as
-specified by the user.</p>
+<p>This filter removes all those lines that begin with strings that represent comments as specified
+by the user.</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Type</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Type</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>comment</td>
@@ -709,14 +723,14 @@ and <q>//</q></p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>tablength</td>
-    <td>Defaults to <q>8</q></td>
-    <td>No</td>
+    <td>Amount of space characters to replace a tab character with.</td>
+    <td>No; defaults to <q>8</q></td>
   </tr>
 </table>
 
@@ -744,9 +758,9 @@ and <q>//</q></p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>lines</td>
@@ -764,13 +778,13 @@ and <q>//</q></p>
 <p>
 
 <h4>Background</h4>
-<p>With HeadFilter and TailFilter you can extract each part of a text file you want.  This
-graphic shows the dependencies:</p>
+<p>With HeadFilter and TailFilter you can extract each part of a text file you want.  This graphic
+shows the dependencies:</p>
 
 <table>
 <tr>
- <th>Content</th>
- <th colspan="3">Filter</th>
+ <th scope="col">Content</th>
+ <th scope="col" colspan="3">Filter</th>
 </tr>
 <tr>
  <td>Line 1</td>
@@ -895,9 +909,9 @@ extracted)</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>chars</td>
@@ -918,9 +932,9 @@ extracted)</p>
 <p>This filter prepends or appends the content file to the filtered files.</p>
 <table class="attr">
   <tr>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>prepend</td>
@@ -957,14 +971,14 @@ extracted)</p>
 <p><em>Since Ant 1.8.0</em></p>
 
 <p>The sort filter reads all lines and sorts them.  The sort order can be reversed and it is
-possible to specify a custom implementation of the <code>java.util.Comparator</code> interface
-to get even more control.</p>
+possible to specify a custom implementation of the <code class="code">java.util.Comparator</code>
+interface to get even more control.</p>
 
 <table class="attr">
   <tr>
-    <th>Parameter Name</th>
-    <th>Parameter Value</th>
-    <th>Required</th>
+    <th scope="col">Parameter Name</th>
+    <th scope="col">Parameter Value</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>reverse</td>
@@ -974,8 +988,8 @@ to get even more control.</p>
   </tr>
   <tr>
     <td>comparator</td>
-    <td>Class name of a class that implements <code>java.util.Comparator</code> for Strings.
-      This class will be used to determine the sort order of lines.</td>
+    <td>Class name of a class that implements <code class="code">java.util.Comparator</code> for
+      Strings.  This class will be used to determine the sort order of lines.</td>
     <td>No</td>
   </tr>
 </table>
@@ -1025,12 +1039,12 @@ them into <samp>build</samp> location.
 
 <p>
 Sort all files <samp>*.txt</samp> from <samp>src</samp> location using as sorting
-criterium <code>EvenFirstCmp</code> class, that sorts the file lines putting even lines first
-then odd lines for example. The modified files are copied into <samp>build</samp>
-location. The <code>EvenFirstCmp</code>, has to an instanciable class
-via <code>Class.newInstance()</code>, therefore in case of inner class has to
-be <em>static</em>. It also has to implement <code>java.util.Comparator</code> interface, for
-example:
+criterium <code class="code">EvenFirstCmp</code> class, that sorts the file lines putting even lines
+first then odd lines for example. The modified files are copied into <samp>build</samp>
+location. The <code class="code">EvenFirstCmp</code> has to an instanciable class
+via <code class="code">Class.newInstance()</code>, therefore in case of inner class has to
+be <em>static</em>. It also has to implement <code class="code">java.util.Comparator</code>
+interface, for example:
 </p>
 
 <pre>
@@ -1079,9 +1093,9 @@ following are understood: <q>\n</q>, <q>\r</q>, <q>\f</q>, <q>\t</q> and <q>\\</
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>delimOutput</td>
@@ -1120,20 +1134,19 @@ following are understood: <q>\n</q>, <q>\r</q>, <q>\f</q>, <q>\t</q> and <q>\\</
 </p>
 <p>
 Some of the filters may be used directly within a <code>filterchain</code>. In this case
-a <code>tokenfilter</code> is created implicitly. An extra attribute <var>byline</var> is added
-to the filter to specify whether to use a <code>linetokenizer</code>
-(<var>byline</var>=<q>true</q>) or a <code>filetokenizer</code>
-(<var>byline</var>=<q>false</q>). The default is <q>true</q>.
+a <code>tokenfilter</code> is created implicitly. An extra attribute <var>byline</var> is added to
+the filter to specify whether to use a <code>linetokenizer</code> (<var>byline</var>=<q>true</q>) or
+a <code>filetokenizer</code> (<var>byline</var>=<q>false</q>). The default is <q>true</q>.
 </p>
 
 <h4 id="linetokenizer">LineTokenizer</h4>
-<p>This tokenizer splits the input into lines.  The tokenizer delimits lines
-by <q>\r</q>, <q>\n</q> or <q>\r\n</q>.  This is the default tokenizer.</p>
+<p>This tokenizer splits the input into lines.  The tokenizer delimits lines by <q>\r</q>, <q>\n</q>
+or <q>\r\n</q>.  This is the default tokenizer.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>includeDelims</td>
@@ -1169,16 +1182,16 @@ this on very large input.</p>
 &lt;/tokenfilter&gt;</pre>
 
 <h4 id="stringtokenizer">StringTokenizer</h4>
-<p>This tokenizer is based on <code>java.util.StringTokenizer</code>.  It splits up the input
-into strings separated by white space, or by a specified list of delimiting characters.  If the
-stream starts with delimiter characters, the first token will be the empty string (unless
+<p>This tokenizer is based on <code class="code">java.util.StringTokenizer</code>.  It splits up the
+input into strings separated by white space, or by a specified list of delimiting characters.  If
+the stream starts with delimiter characters, the first token will be the empty string (unless
 the <var>delimsaretokens</var> attribute is used).</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>delims</td>
@@ -1220,9 +1233,9 @@ a <code>filterchain</code>.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>from</td>
@@ -1250,9 +1263,9 @@ a <code>filterchain</code>.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>contains</td>
@@ -1282,9 +1295,9 @@ implementation.
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>pattern</td>
@@ -1323,9 +1336,9 @@ expression implementation.
 </p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>pattern</td>
@@ -1377,9 +1390,9 @@ a <code>filterchain</code>.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>chars</td>
@@ -1427,14 +1440,13 @@ the <a href="../Tasks/native2ascii.html">native2ascii</a> task.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>reverse</td>
-    <td>Reverse the sense of the conversion,
-      i.e. convert from ASCII to native.</td>
+    <td>Reverse the sense of the conversion, i.e. convert from ASCII to native.</td>
     <td>No</td>
   </tr>
 </table>
@@ -1451,37 +1463,38 @@ the <a href="../Tasks/native2ascii.html">native2ascii</a> task.</p>
 <p>
 This is an optional filter that executes a script in a <a href="https://jakarta.apache.org/bsf"
 target="_top">Apache BSF</a>
-or <a href="https://jcp.org/aboutJava/communityprocess/maintenance/jsr223/223ChangeLog.html">JSR
-223</a> supported language.
+or <a href="https://jcp.org/aboutJava/communityprocess/maintenance/jsr223/223ChangeLog.html"
+target="_top">JSR 223</a> supported language.
 </p>
 <p>
 See the <a href="../Tasks/script.html">Script</a> task for an explanation of scripts and
 dependencies.
 </p>
 <p>
-The script is provided with an object <samp>self</samp> that has <code>getToken()</code>
-and <code>setToken(String)</code> methods.  The <code>getToken()</code> method returns the
-current token. The <code>setToken(String)</code> method replaces the current token.
+The script is provided with an object <samp class="code">self</samp> that
+has <code class="code">getToken()</code> and <code class="code">setToken(String)</code> methods.
+The <code class="code">getToken()</code> method returns the current
+token. The <code class="code">setToken(String)</code> method replaces the current token.
 </p>
 <p>
 This filter may be used directly within a <code>filterchain</code>.
 </p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>language</td>
-    <td>Programming language the script is written in.  Must be a supported Apache BSF or
-      JSR 223 language</td>
+    <td>Programming language the script is written in.  Must be a supported Apache BSF or JSR 223
+      language</td>
     <td>Yes</td>
   </tr>
   <tr>
     <td>manager</td>
-    <td>Script engine manager to use.  See the <a href="../Tasks/script.html">script</a>
-      task for using this attribute.</td>
+    <td>Script engine manager to use.  See the <a href="../Tasks/script.html">script</a> task for
+      using this attribute.</td>
     <td>No; default is <q>auto</q></td>
   </tr>
   <tr>
@@ -1507,8 +1520,8 @@ This filter may be used directly within a <code>filterchain</code>.
   </tr>
   <tr>
     <td>classpathref</td>
-    <td>The classpath to use, given as a <a href="../using.html#references">reference</a> to a
-      path defined elsewhere.
+    <td>The classpath to use, given as a <a href="../using.html#references">reference</a> to a path
+      defined elsewhere.
     <td>No</td>
   </tr>
 </table>
@@ -1541,8 +1554,8 @@ the <a href="../Tasks/script.html">script</a> task on how to use this element.
 <h4 id="custom">Custom tokenizers and string filters</h4>
 
 <p>Custom string filters and tokenizers may be plugged in by extending the
-interfaces <code>org.apache.tools.ant.filters.TokenFilter.Filter</code>
-and <code>org.apache.tools.ant.util.Tokenizer</code> respectly.</p>
+interfaces <code class="code">org.apache.tools.ant.filters.TokenFilter.Filter</code>
+and <code class="code">org.apache.tools.ant.util.Tokenizer</code> respectly.</p>
 
 <p>They are defined in the build file using <code>&lt;typedef/&gt;</code>. For example, a string
 filter that capitalizes words may be declared as:</p>
