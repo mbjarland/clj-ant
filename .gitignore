@@ -9,8 +9,10 @@ pom.xml.asc
 /.cpcache
 /.lsp
 /.claude
-/.clj-kondo/.cache
-/.idea/workspace.xml
+/.clj-kondo
+/.idea
+*.iml
+/backup
 /.DS_Store
 /gen-resources
 /.lein-*

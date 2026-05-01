@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Deps: org.apache.ant/ant-launcher:1.10.14">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-launcher/1.10.14/ant-launcher-1.10.14.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

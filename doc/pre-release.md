@@ -18,9 +18,9 @@ Legend:
   The repo is available at `github.com/mbjarland/clj-ant`, which is
   the location Clojars' `io.github.*` verified-group policy checks.
 
-- ⏳ **Claim the verified group `io.github.mbjarland` on Clojars.**
-  https://clojars.org/verified-group — one-time setup, requires
-  the repo to live at `github.com/mbjarland/<artifact>`.
+- ✅ **Claim the verified group `io.github.mbjarland` on Clojars.**
+  The group is verified and matches the artifact coordinates in
+  `build.clj`.
 
 - ⏳ **Tag `v1.0.0-alpha.1` (suggest pre-1.0 to start).**
   Lets users know APIs may evolve based on real-world feedback
@@ -32,10 +32,9 @@ Legend:
   `build/deploy` uses `slipset/deps-deploy` and the existing
   `:build` alias to publish the jar + generated POM to Clojars.
 
-- ⏳ **Wire `CLOJARS_USERNAME` / `CLOJARS_PASSWORD` deploy token.**
-  Generate via Clojars web UI (deploy-only token, scoped to the
-  verified group). Store as a GitHub secret if CI-driven, or as
-  an env var for local manual deploy.
+- 🚧 **Wire `CLOJARS_USERNAME` / `CLOJARS_PASSWORD` deploy token.**
+  GitHub secrets are configured, but rotate the exposed Clojars token
+  before pushing a release tag.
 
 ### Continuous integration
 
