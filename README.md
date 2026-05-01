@@ -114,7 +114,7 @@ For the underlying Ant tasks themselves — what each one does, what
 attributes they take, what nested elements they accept — the
 canonical reference is:
 
-📖 **[Apache Ant Tasks Reference](https://ant.apache.org/manual/tasks.html)**
+📖 **[Apache Ant Tasks Overview](https://ant.apache.org/manual/tasksoverview.html)**
 
 Every wrapper in `clj-ant.tasks` has a docstring with a direct link
 to its corresponding Ant manual page. Browse the full list there

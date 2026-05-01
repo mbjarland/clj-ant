@@ -700,7 +700,7 @@ validate-tree      collect errors from a tree
 For task / type / nested-element semantics, the canonical source
 is **Apache Ant's manual**:
 
-- [Ant Tasks Reference](https://ant.apache.org/manual/tasks.html)
+- [Ant Tasks Overview](https://ant.apache.org/manual/tasksoverview.html)
 - [Ant Types Reference](https://ant.apache.org/manual/types.html)
 - [Ant Concepts and Type Reference](https://ant.apache.org/manual/index.html)
 
