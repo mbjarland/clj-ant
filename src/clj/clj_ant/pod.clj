@@ -222,10 +222,34 @@
 (defn ^:no-doc op-plan [{:keys [element]}]
   (with-out-str (core/plan element)))
 
+(defn- class-name [x]
+  (if (instance? Class x) (.getName ^Class x) x))
+
+(defn- describe-clean [m]
+  (some-> m
+          (update :attrs
+                  (fn [attrs]
+                    (into (sorted-map)
+                          (map (fn [[k v]] [k (update v :type class-name)]))
+                          attrs)))
+          (update :nested
+                  (fn [nested]
+                    (into (sorted-map)
+                          (map (fn [[k v]] [k (class-name v)]))
+                          nested)))))
+
+(defn ^:no-doc op-describe [{:keys [tag]}]
+  (describe-clean (core/describe tag)))
+
+(defn ^:no-doc op-lint [{:keys [elements opts]}]
+  (apply core/lint elements (mapcat identity (or opts {}))))
+
 (def ops
   {"clj-ant.pod/execute"        {:fn #'op-execute}
    "clj-ant.pod/files"          {:fn #'op-files}
    "clj-ant.pod/plan"           {:fn #'op-plan}
+   "clj-ant.pod/describe"       {:fn #'op-describe}
+   "clj-ant.pod/lint"           {:fn #'op-lint}
    "clj-ant.pod/open-session"   {:fn #'op-open-session}
    "clj-ant.pod/close-session"  {:fn #'op-close-session}
    "clj-ant.pod/execute-in"     {:fn #'op-execute-in}
@@ -327,6 +351,22 @@
                 "    \"clj-ant.pod\" "
                 "    'clj-ant.pod/plan "
                 "    [{:element element}]))")}
+             {"name" "describe" "code"
+              (str
+                "(defn describe [tag] "
+                "  (babashka.pods/invoke "
+                "    \"clj-ant.pod\" "
+                "    'clj-ant.pod/describe "
+                "    [{:tag tag}]))")}
+             {"name" "lint" "code"
+              (str
+                "(defn lint [elements & {:as opts}] "
+                "  (babashka.pods/invoke "
+                "    \"clj-ant.pod\" "
+                "    'clj-ant.pod/lint "
+                "    [{:elements elements :opts opts}]))")}
+             {"name" "explain" "code"
+              "(defn explain [elements & opts] (apply lint elements opts))"}
              ;; Long-lived sessions. The pod side holds an Ant Project
              ;; per id; bb gets a string handle. Reuse across many
              ;; calls amortises the per-call init cost (logger setup,
