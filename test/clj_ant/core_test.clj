@@ -115,6 +115,40 @@
         t-clean t-compile t-package)
       (is (= ["clean" "compile" "package"] @order)))))
 
+(deftest target-requires-name
+  (testing "target constructor fails before building an invalid target"
+    (is (thrown-with-msg?
+          clojure.lang.ExceptionInfo
+          #"Target elements require a non-empty :name"
+          (a/target (a/element :echo :message "unnamed")))))
+
+  (testing "raw target-shaped elements are checked at execute time"
+    (is (thrown-with-msg?
+          clojure.lang.ExceptionInfo
+          #"Target elements require a non-empty :name"
+          (a/ant :level :error
+                 (a/element :target
+                   (a/element :echo :message "unnamed")))))))
+
+(deftest ant-accepts-leading-options-map
+  (testing "a leading map is treated as execute!/make-project options"
+    (let [messages (atom [])]
+      (a/ant {:level :warn
+              :on-event #(when (= :message (:phase %))
+                           (swap! messages conj (:message %)))}
+        (a/element :echo :message "via-map"))
+      (is (some #{"via-map"} @messages))))
+
+  (testing "an element-shaped map in first position still executes as data"
+    (let [base (tmp-dir)
+          dir  (File. base "created")]
+      (a/ant {:level :warn}
+        {:tag :mkdir
+         :attrs {:dir (.getAbsolutePath dir)}
+         :children []
+         :text nil})
+      (is (.exists dir)))))
+
 (deftest sequential-attrs-auto-join
   (testing "vector/list attribute values join with commas"
     (let [base (tmp-dir)
@@ -426,6 +460,16 @@
         (is (= 25 @hits))
         (is (= before after)
             "registry size unchanged after 25 inline tasks")))))
+
+(deftest project-syncs-only-permanent-deftasks
+  (testing "transient registry entries are not replayed into new Projects"
+    (let [task-name "transient-registry-entry"]
+      (.put cljant.ClojureTask/REGISTRY task-name (fn [_]))
+      (try
+        (let [p (a/make-project {:level :error})]
+          (is (nil? (.get (.getTaskDefinitions ^Project p) task-name))))
+        (finally
+          (.remove cljant.ClojureTask/REGISTRY task-name))))))
 
 (deftest ambiguous-tag-union-schema
   (testing "<attribute> on macrodef and on manifest both pass closed validation"
