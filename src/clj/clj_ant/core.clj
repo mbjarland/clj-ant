@@ -447,6 +447,64 @@
     (cond-> elt
       src-dir (update :attrs assoc :clj-ant/source-dir src-dir))))
 
+(defn- xml-name [x]
+  (cond
+    (keyword? x) (if-some [ns (namespace x)] (str ns ":" (name x)) (name x))
+    (symbol? x)  (if-some [ns (namespace x)] (str ns ":" (name x)) (name x))
+    :else        (str x)))
+
+(defn- xml-escape [s attr?]
+  (cond-> (str/replace (str s) "&" "&amp;")
+    true  (str/replace "<" "&lt;")
+    true  (str/replace ">" "&gt;")
+    attr? (str/replace "\"" "&quot;")))
+
+(declare attr->string)
+
+(defn to-xml
+  "Render a clj-ant element tree to compact Ant XML.
+
+  This is the inverse of `from-xml` for normal data trees. It renders
+  `Element` records and element-shaped maps, escapes XML text and
+  attribute values, and omits clj-ant's internal namespaced attrs such as
+  `:clj-ant/source-dir`.
+
+  JVM-backed children (`JavaChild`, raw `FileSet`s, lazy resource seqs)
+  cannot be represented faithfully as XML and will throw.
+
+      (to-xml (element :echo :message \"hi\"))
+      ;; returns <echo message=\"hi\"/>"
+  [tree]
+  (letfn [(render [n]
+            (cond
+              (java-child? n)
+              (throw (ex-info "Cannot render JVM-backed child as XML"
+                              {:child-type :java-child}))
+
+              (or (element? n) (and (map? n) (contains? n :tag)))
+              (let [tag (xml-name (:tag n))
+                    attrs (->> (:attrs n)
+                               (remove (fn [[k _]] (= "clj-ant" (namespace k))))
+                               (sort-by (comp xml-name first)))
+                    attr-str (apply str
+                                    (for [[k v] attrs]
+                                      (str " " (xml-name k) "=\""
+                                           (xml-escape (attr->string v) true)
+                                           "\"")))
+                    text (:text n)
+                    children (:children n)]
+                (if (or text (seq children))
+                  (str "<" tag attr-str ">"
+                       (when text (xml-escape text false))
+                       (apply str (map render children))
+                       "</" tag ">")
+                  (str "<" tag attr-str "/>")))
+
+              :else
+              (throw (ex-info "Cannot render value as XML element"
+                              {:value n :type (some-> n class .getName)}))))]
+    (render tree)))
+
 ;; ---------------------------------------------------------------------------
 ;; Clojure-defined tasks
 ;;

@@ -246,12 +246,13 @@ class — without writing parsers:
 ;; Rewrite every <copy> to add :preservelastmodified="true"
 (let [tree (a/from-xml "build.xml")
       patched (a/transform tree
-                           (fn [e]
-                             (cond-> e
-                               (= :copy (:tag e))
-                               (assoc-in [:attrs :preservelastmodified] "true"))))]
-  ;; round-trip back: just run the rewritten tree
-  (a/ant patched))
+                            (fn [e]
+                              (cond-> e
+                                (= :copy (:tag e))
+                                (assoc-in [:attrs :preservelastmodified] "true"))))]
+  ;; Run the rewritten tree, or re-emit compact XML with to-xml.
+  (a/ant patched)
+  (a/to-xml patched))
 ```
 
 `a/elements` is `(filter pred (tree-seq element? :children tree))`,
@@ -280,6 +281,9 @@ re-emit), or just to query a corpus of existing builds:
        (filter #(= "true" (-> % :attrs :trust)))
        count))
 ;; how many <scp trust="true"/> calls in the corpus
+
+;; Re-emit compact XML after a data-only rewrite:
+(a/to-xml (a/from-xml "build.xml"))
 ```
 
 `src` may be a path string, a `File`, an `InputStream`, or an XML
@@ -287,6 +291,10 @@ string (detected by leading `<`). The returned root is a
 `:project` element; the runner unwraps it transparently and lifts
 the project's `name` / `basedir` / `default` attributes into
 execute options.
+
+`to-xml` is for normal element data. Trees containing real Java Ant
+objects, such as direct `FileSet`s or lazy file seq children, should be
+run directly because they cannot be represented faithfully as XML.
 
 
 ### Mix Clojure code into the element tree with `deftask`
