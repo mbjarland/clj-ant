@@ -1,6 +1,7 @@
 (ns clj-ant.gen-test
   (:require [clojure.test :refer [deftest is testing]]
-            [clj-ant.gen :as gen])
+            [clj-ant.gen :as gen]
+            [clj-ant.tasks :as tasks])
   (:import [java.io File]))
 
 (defn- manual-info [tag]
@@ -56,6 +57,15 @@
     (let [info (manual-info "blgenclient")]
       (is (re-find #"Borland Application Server" (:description info)))
       (is (re-find #"ejbclient.jar"
-                   (get-in info [:attrs :clientjar :description])))
+                    (get-in info [:attrs :clientjar :description])))
       (is (not (re-find #"&rArr;"
-                        (get-in info [:attrs :clientjar :description])))))))
+                         (get-in info [:attrs :clientjar :description])))))))
+
+(deftest generated-docstrings-are-cljdoc-structured
+  (testing "generated API docs use Markdown sections instead of run-on text"
+    (let [doc (:doc (meta #'tasks/chgrp))]
+      (is (= '([& args]) (:arglists (meta #'tasks/chgrp))))
+      (is (re-find #"\*\*Attributes\*\*\n\n- `:addsourcefile` `boolean`" doc))
+      (is (re-find #"- `:file` `File` - the file or directory" doc))
+      (is (re-find #"\*\*Nested elements\*\*\n\n- `:arg` \(`Argument`\)" doc))
+      (is (not (re-find #"FileSet s" doc))))))

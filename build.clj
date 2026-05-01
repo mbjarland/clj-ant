@@ -43,10 +43,18 @@
      [:url "https://www.eclipse.org/legal/epl-v10.html"]
      [:distribution "repo"]]]
    [:developers
-    [:developer
-     [:id "mbjarland"]
-     [:name "Morten Bjarland"]
-     [:url "https://github.com/mbjarland"]]]])
+     [:developer
+      [:id "mbjarland"]
+      [:name "Matias Bjarland"]
+      [:url "https://github.com/mbjarland"]]]])
+
+(defn- process!
+  "Run a subprocess and fail the build when it exits non-zero."
+  [command-args]
+  (let [{:keys [exit] :as result} (b/process {:command-args command-args})]
+    (when-not (zero? exit)
+      (throw (ex-info (str "Command failed: " command-args) result)))
+    result))
 
 (defn clean [_]
   (b/delete {:path "target"}))
@@ -54,7 +62,7 @@
 (defn lint
   "Run static linting with clj-kondo. Warnings fail the build."
   [_]
-  (b/process {:command-args ["clojure" "-M:lint"]})
+  (process! ["clojure" "-M:lint"])
   (println "> lint passed"))
 
 (defn javac
@@ -91,7 +99,7 @@
   "Run the full local verification pipeline: lint, tests, and jar build."
   [_]
   (lint nil)
-  (b/process {:command-args ["clojure" "-M:test"]})
+  (process! ["clojure" "-M:test"])
   (jar nil))
 
 (defn install [_]
