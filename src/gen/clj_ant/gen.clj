@@ -19,10 +19,9 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as str])
   (:import [java.util Properties]
-           [java.util.regex Pattern]
-           [java.util.jar JarFile JarEntry]
-           [java.io File]
-           [org.apache.tools.ant Project IntrospectionHelper]))
+            [java.util.regex Pattern]
+            [java.io File]
+            [org.apache.tools.ant Project IntrospectionHelper]))
 
 ;; ---------------------------------------------------------------------------
 ;; Default-properties harvesting
@@ -264,7 +263,7 @@
   (some-> (re-find #"(?is)<body[^>]*>\s*This document's new home is\s*<a\b[^>]*\bhref\s*=\s*[\"']([^\"']+)[\"']" html)
           second))
 
-(defn- resolve-redirects [{:keys [file] :as entry}]
+(defn- resolve-redirects [entry]
   (loop [entry entry
          seen #{}]
     (let [^File f (:file entry)]

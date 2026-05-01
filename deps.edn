@@ -39,6 +39,13 @@
                                  {:mvn/version "1.91.1392"}}
                    :main-opts   ["-m" "kaocha.runner"]}
 
+           ;; Static lint: clj -M:lint
+           :lint  {:extra-deps {clj-kondo/clj-kondo
+                                {:mvn/version "2026.04.15"}}
+                   :main-opts  ["-m" "clj-kondo.main"
+                                "--lint" "src/clj" "src/gen" "test" "build.clj"
+                                "--fail-level" "warning"]}
+
            ;; Babashka pod entry point (see doc/babashka.md):
            ;;   bb -e '(require (quote [babashka.pods :as pods]))
            ;;          (pods/load-pod ["clojure" "-M:pod"]) ...'

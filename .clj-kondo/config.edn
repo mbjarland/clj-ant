@@ -1,0 +1,3 @@
+{:lint-as {clj-ant.core/with-session clojure.core/let}
+ :config-in-ns {clj-ant.tasks
+                {:linters {:var-same-name-except-case {:level :off}}}}}

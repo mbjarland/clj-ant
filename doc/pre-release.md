@@ -1,7 +1,7 @@
-# Pre-release checklist
+# Release checklist
 
-What's left between the current state and a public 1.0 on
-GitHub + Clojars. Categorized by who owns it.
+Release readiness for the current alpha series and the eventual public
+1.0. Categorized by who owns each item.
 
 Legend:
 - ⏳ todo
@@ -10,7 +10,7 @@ Legend:
 - ❓ decision needed (no obvious right answer)
 
 
-## Blocking — must do before publishing
+## Release foundations
 
 ### Repo + identity
 
@@ -22,9 +22,9 @@ Legend:
   The group is verified and matches the artifact coordinates in
   `build.clj`.
 
-- ⏳ **Tag `v1.0.0-alpha.1` (suggest pre-1.0 to start).**
-  Lets users know APIs may evolve based on real-world feedback
-  during the alpha period. Final 1.0 once external usage settles.
+- ✅ **Tag `v1.0.0-alpha.1`.**
+  The first alpha is published. Final 1.0 waits for external usage and
+  feedback on the public API.
 
 ### Build / publish
 
@@ -32,18 +32,22 @@ Legend:
   `build/deploy` uses `slipset/deps-deploy` and the existing
   `:build` alias to publish the jar + generated POM to Clojars.
 
-- 🚧 **Wire `CLOJARS_USERNAME` / `CLOJARS_PASSWORD` deploy token.**
-  GitHub secrets are configured, but rotate the exposed Clojars token
-  before pushing a release tag.
+- ✅ **Wire `CLOJARS_USERNAME` / `CLOJARS_PASSWORD` deploy token.**
+  GitHub secrets are configured with a rotated Clojars deploy token.
+
+- ✅ **Confirm Clojars deployment.**
+  `io.github.mbjarland/clj-ant` `1.0.0-alpha.1` is available on
+  Clojars.
 
 ### Continuous integration
 
 - ✅ **`.github/workflows/ci.yml`** running on every push:
-  ```yaml
-  - clj -T:build javac
-  - clj -M:test
-  - clj -T:build jar
-  ```
+   ```yaml
+   - clj -T:build javac
+   - clj -T:build lint
+   - clj -M:test
+   - clj -T:build jar
+   ```
   The workflow tests JDK 8, 11, 17, and 21.
 
 
@@ -83,13 +87,13 @@ Legend:
 
 ## Nice to have — post-launch
 
-- ✅ **CHANGELOG.md** with real unreleased entries.
-  It now follows `keepachangelog.com` format and can be promoted into
-  tagged release notes when the first alpha is cut.
+- ✅ **CHANGELOG.md** with release entries.
+  It follows `keepachangelog.com` format and records the first alpha
+  release separately from unreleased follow-up work.
 
-- ❓ **cljdoc auto-publish.** Free with Clojars; just needs the
-  artifact to land. cljdoc reads `doc/` folder and assembles a
-  hosted reference site at cljdoc.org/d/io.github.mbjarland/clj-ant.
+- 🚧 **cljdoc auto-publish.** Free with Clojars; the artifact has
+  landed and cljdoc should index it. If indexing fails, inspect the
+  cljdoc build log for the released version.
 
 - ❓ **Migrate `tasks.clj` out of git history?** It's a 16k-line
   generated file. Bloats clones. Could move to an artifact
@@ -111,7 +115,7 @@ Legend:
 - Sessions and prepare/run
 - The babashka pod
 - SSH bundling (Terrapin-fixed)
-- Broad kaocha test suite / multiple rounds of external review
+- Broad Kaocha test suite / multiple rounds of external review
 
 **Don't** over-promise on:
 - `clj-ant.spec` and the `:by-parent` introspection paths — added
@@ -123,8 +127,7 @@ Legend:
 
 ## Suggested order of operations
 
-1. Claim Clojars verified group.
-2. Wire `CLOJARS_USERNAME` / `CLOJARS_PASSWORD` secrets.
-3. Cut `v1.0.0-alpha.1`, push tag.
-4. Confirm the release workflow deployed the tag-derived version.
-5. Wait for cljdoc to pick up; share link in README.
+1. Wait for cljdoc to index `1.0.0-alpha.1`.
+2. Share the Clojars and cljdoc links with early users.
+3. Collect feedback on `clj-ant.spec`, pod streaming, and validation.
+4. Cut follow-up alpha tags for documentation or API fixes as needed.

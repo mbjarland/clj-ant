@@ -1,13 +1,11 @@
 # Where to start
 
 clj-ant is a Clojure interface to Apache Ant's task and type
-ecosystem. It is **not** a build tool — there's no opinion about
+ecosystem. It is **not** a build tool: there's no opinion about
 project layout, no replacement for `tools.build`. It exists so that
-the long tail of Ant's ~470 tasks and types (`<scp>`,
-`<replaceregexp>`, `<filterchain>`, `<jar>`, `<get>`,
-`<checksum>`, `<apply>`, ...)
-becomes callable as ordinary Clojure code, with results readable
-as Clojure data.
+Ant tasks such as `<scp>`, `<replaceregexp>`, `<filterchain>`,
+`<jar>`, `<get>`, `<checksum>`, and `<apply>` become callable as
+ordinary Clojure code, with results readable as Clojure data.
 
 The docs to read, roughly in order:
 

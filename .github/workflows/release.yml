@@ -21,6 +21,8 @@ jobs:
         with: { cli: latest }
       - name: Compile Java bridge
         run: clojure -T:build javac
+      - name: Run lint
+        run: clojure -T:build lint
       - name: Run tests
         run: clojure -M:test
       - name: Deploy to Clojars

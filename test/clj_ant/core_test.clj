@@ -1,6 +1,7 @@
 (ns clj-ant.core-test
   (:require [clojure.test :refer [deftest is testing]]
             [clojure.java.io :as io]
+            [clojure.string :as str]
             [clj-ant.core :as a]
             [clj-ant.pod :as pod])
   (:import [java.io File]
@@ -66,7 +67,7 @@
           (is (= 2 (count (filter #(.isFile %) (a/files fs)))))
           (is (= ["CORE.CLJ" "TASKS.CLJ"]
                  (into [] (comp (map #(.getName %))
-                                (map clojure.string/upper-case))
+                                 (map str/upper-case))
                        (sort-by #(.getName %) (a/files fs))))))))))
 
 (deftest describe-returns-data
@@ -208,7 +209,7 @@
 (deftest deftask-integration
   (let [seen (atom [])]
     (a/deftask :test-tap
-      (fn [{:keys [project task-name v] :as args}]
+      (fn [args]
         (swap! seen conj (select-keys args [:task-name :v]))))
 
     (testing "deftask is true for registered tags"
@@ -338,7 +339,7 @@
 
 (deftest session-and-prepare
   (testing "with-session reuses one Project across calls"
-    (a/with-session [s {:level :warn}]
+    (a/with-session [_s {:level :warn}]
       (a/ant (a/element :property :name "v" :value "session-val"))
       (let [seen (atom nil)]
         (a/ant :on-event #(when (and (= :message (:phase %))
@@ -822,7 +823,6 @@
 (deftest macrodef-via-runtime
   (testing "macrodef works because RuntimeConfigurable handles expansion"
     (let [base (tmp-dir)
-          out  (File. base "out.txt")
           r (a/ant
               :basedir (.getAbsolutePath base)
               :level :warn

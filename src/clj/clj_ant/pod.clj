@@ -24,10 +24,8 @@
   it inline -- pods are small enough that pulling in a dependency for
   bencode would be overkill."
   (:require [clojure.edn :as edn]
-            [clojure.java.io :as io]
             [clj-ant.core :as core])
-  (:import [java.io InputStream OutputStream PushbackInputStream
-                    ByteArrayOutputStream]))
+  (:import [java.io OutputStream PushbackInputStream]))
 
 ;; ---------------------------------------------------------------------------
 ;; Bencode (https://en.wikipedia.org/wiki/Bencode)
@@ -451,7 +449,7 @@
     (write-bencode out reply)
     (.flush out)))
 
-(defn ^:no-doc handle-invoke [in out msg]
+(defn ^:no-doc handle-invoke [_in out msg]
   (let [op-name (get msg "var")
         id      (get msg "id")
         args    (when-some [a (get msg "args")] (edn/read-string a))

@@ -33,8 +33,8 @@ register itself as an Ant task name:
 
 Inside the tree the new task is indistinguishable from a built-in:
 `${…}` property expansion runs on its attributes, the build logger
-emits `:task-started` / `:task-finished`, `<antcall>` can target
-it, `<macrodef>` can wrap it.
+emits `:task-started` / `:task-finished`, targets containing it can be
+invoked with `<antcall>`, and `<macrodef>` can wrap it.
 
 Implementation: a single small Java class (`cljant.ClojureTask`)
 that extends `org.apache.tools.ant.Task` and implements
@@ -51,8 +51,8 @@ AOT or a bytecode-gen library.
 Inverse of execute. Hand it a path or a string, get back a clj-ant
 element tree. Massive migration path for shops with thousands of
 lines of legacy Ant: walk the tree from Clojure, refactor with
-`update`/`assoc`/`walk`, write back via XML emit if you want, or
-just keep it as data and run with `execute!`.
+`update`/`assoc`/`walk`, re-emit compact XML with `to-xml`, or keep
+it as data and run with `execute!`.
 
 Same shape powers a static analyzer over a corpus of build files —
 "every `<scp>` with `:trust true`", "every `<javac>` without
@@ -79,36 +79,22 @@ long tail (signing, deployment, archive surgery, SSH, XSLT).
 
 ### Element-tree querying  ✅
 
-`(elements tree pred)` and `(transform tree f)` ship in core.clj.
+`(elements tree pred)` and `(transform tree f)` ship in `core.clj`.
 Specter / zippers turned out to be unnecessary: `tree-seq` over
-`:children` already gives a lazy depth-first walk, and a 7-line
-`transform` covers rewrite. See `doc/examples.md` "Audit a corpus
-of build.xml files".
+`:children` already gives a lazy depth-first walk, and the current
+`transform` covers post-order rewrites. See `doc/examples.md` "Audit
+a corpus of build.xml files".
 
-A `(query tree pred)` helper that walks element trees the way
-Specter walks data. Lets users write linters, refactor scripts,
-security audits ("which `<scp>` calls have `:trust "true"`?").
-Compose with `from-xml` for a real auditor over an org's build
-corpus.
-
-**Size:** small (~40 lines), but Specter is a heavyweight dep — a
-zipper-based version may be lighter.
+**Size:** small. Shipped without adding Specter or a zipper layer.
 
 
-### Live Project caching for REPL  ✅
+### Session reuse for REPL and scripts  ✅
 
-`(with-project p body...)` binds a `*project*` dynamic var that
-`execute!` uses by default. Properties set in one call are visible
-in the next. Pass `:project` explicitly to opt out for a single
-call. deftask registrations are re-synced on every entry, so tasks
-defined after the project was created still work.
-
-Today every `(execute! …)` makes a fresh `Project` (~200 ms init,
-taskdef registration, etc.). A `(with-project p …)` macro that
-re-uses one across multiple invocations would make REPL-driven
-authoring feel instant.
-
-**Size:** small, ~30 lines.
+`(a/session opts)` and `(a/with-session [s opts] ...)` reuse one Ant
+`Project` across many calls. Properties set in one call are visible in
+the next, permanent `deftask` registrations are re-synced, and per-call
+synthetic references/targets are cleaned up in `finally`. Pass
+`:project` explicitly to opt out for a single call.
 
 
 ### Better error surface  ✅
