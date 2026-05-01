@@ -263,11 +263,18 @@ parameter expansion, `<antcall>` targeting, the lot.
 
 (a/describe :copy)
 ;; => {:tag :copy
+;;     :description "Copies a file or resource collection ..."
+;;     :manual-url "https://ant.apache.org/manual/Tasks/copy.html"
 ;;     :attrs {"todir" {:type java.io.File
 ;;                       :description "The directory to copy to."
 ;;                       :required "..."}
 ;;             ...}
 ;;     ...}
+
+(a/lint (t/mkdir))
+;; => [{:tag :mkdir
+;;      :path []
+;;      :errors {:dir ["missing required attribute (Required: Yes)"]}}]
 
 user=> (doc t/copy)
 clj-ant.tasks/copy

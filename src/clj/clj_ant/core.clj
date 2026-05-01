@@ -1529,6 +1529,8 @@
           :class \"org.apache.tools.ant.taskdefs.Copy\"
           :classes [\"...Copy\"]
           :kind  :task
+          :description \"Copies a file or resource collection ...\"
+          :manual-url \"https://ant.apache.org/manual/Tasks/copy.html\"
           :attrs {\"todir\" {:type File
                              :description \"The directory to copy to.\"
                              :required \"...\"}
@@ -1575,16 +1577,18 @@
                              (reduce (fn [acc [k v]]
                                        (if (contains? acc k) acc (assoc acc k v)))
                                      (sorted-map))))]
-        {:tag     (keyword n)
-         :class   (.getName ^Class (first klasses))
-         :classes (mapv #(.getName ^Class %) klasses)
-         :kind    kind
-         :attrs   (into (sorted-map)
-                        (map (fn [entry]
-                               [(key entry) (attr-record manual-attrs entry)]))
-                        (merged #(.getAttributeMap %)))
-         :nested  (merged #(.getNestedElementMap %))
-         :text?   (boolean (some #(.supportsCharacters %) helpers))}))))
+        (cond-> {:tag     (keyword n)
+                 :class   (.getName ^Class (first klasses))
+                 :classes (mapv #(.getName ^Class %) klasses)
+                 :kind    kind
+                 :attrs   (into (sorted-map)
+                                (map (fn [entry]
+                                       [(key entry) (attr-record manual-attrs entry)]))
+                                (merged #(.getAttributeMap %)))
+                 :nested  (merged #(.getNestedElementMap %))
+                 :text?   (boolean (some #(.supportsCharacters %) helpers))}
+          (:clj-ant/description wm) (assoc :description (:clj-ant/description wm))
+          (:clj-ant/manual-url wm)  (assoc :manual-url (:clj-ant/manual-url wm)))))))
 
 (defn plan
   "Pretty-print a element tree to *out*. Useful for sanity-checking a

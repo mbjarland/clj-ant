@@ -73,6 +73,8 @@
     (let [d (a/describe :copy)]
       (is (= :copy (:tag d)))
       (is (= :task (:kind d)))
+      (is (re-find #"Copies a file" (:description d)))
+      (is (= "https://ant.apache.org/manual/Tasks/copy.html" (:manual-url d)))
       (is (contains? (:attrs d) "todir"))
       (is (= File (get-in d [:attrs "todir" :type])))
       (is (re-find #"directory to copy to"
@@ -752,6 +754,11 @@
 
   (testing "valid trees return no lint issues"
     (is (empty? (a/lint (a/element :echo :message "x")))))
+
+  (testing "plain Required: Yes metadata reports missing attributes"
+    (let [issue (first (a/lint (a/element :mkdir)))]
+      (is (= :mkdir (:tag issue)))
+      (is (contains? (:errors issue) :dir))))
 
   (testing "explain is an alias for lint"
     (let [tree (a/element :copy :tdoir "out")]

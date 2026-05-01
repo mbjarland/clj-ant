@@ -212,6 +212,26 @@
                             [original-k suggestions])))))
               attrs*)))))
 
+(defn- plainly-required? [s]
+  (boolean (re-matches #"(?i)\s*yes\.?\s*" (or s ""))))
+
+(defn- missing-required-attrs [tag attrs]
+  (let [meta (wrapper-meta tag)]
+    (when-not (< 1 (count (:clj-ant/classes meta)))
+      (let [m (:clj-ant/attrs meta)
+            present (->> attrs
+                         keys
+                         (map (comp keyword str/lower-case name))
+                         set)]
+        (not-empty
+          (into {}
+                (keep (fn [[k {:keys [required]}]]
+                        (when (and (plainly-required? required)
+                                   (not (contains? present k)))
+                          [k [(str "missing required attribute"
+                                   (when required (str " (Required: " required ")")))]])))
+                m))))))
+
 ;; ---------------------------------------------------------------------------
 ;; Validation surface
 
@@ -256,6 +276,10 @@
   include `:suggestions` for likely misspelled attribute names. Empty
   vector means everything checks out.
 
+  Attributes with manual metadata of exactly `Required: Yes` are reported
+  as missing before Ant runs. Conditional requirements such as `Yes, unless
+  ...` are deliberately left to Ant.
+
   Threads parent context down so context-ambiguous nested tags
   (`:attribute` under <macrodef> vs <manifest>, `:element` under
   <scriptdef> vs <macrodef>, ...) validate against the correct
@@ -266,14 +290,17 @@
   ([element opts]
    (letfn [(walk [parent path n]
              (let [opts* (assoc opts :parent parent)
-                   here (when-some [e (validate (:tag n) (:attrs n) opts*)]
+                   validation-errors (validate (:tag n) (:attrs n) opts*)
+                   required-errors (missing-required-attrs (:tag n) (:attrs n))
+                   errors (merge-with into validation-errors required-errors)
+                   here (when (seq errors)
                           (let [suggestions (when (:closed? opts*)
                                               (attr-suggestions (:tag n)
                                                                 (:attrs n)
                                                                 opts*))]
                             [(cond-> {:tag (:tag n)
                                       :path (vec path)
-                                      :errors e}
+                                      :errors errors}
                                suggestions (assoc :suggestions suggestions))]))]
                 (concat
                   here

@@ -285,6 +285,13 @@
              html)
     html))
 
+(defn- manual-url [^File file section]
+  (let [parent (some-> file .getParentFile .getName)]
+    (when (and parent (.getName file))
+      (str "https://ant.apache.org/manual/"
+           parent "/" (.getName file)
+           (when (not-empty section) (str "#" section))))))
+
 (defn- read-attrs-from-html [html]
   (when-some [table (first-attr-table html)]
     (loop [rows (table-rows table)
@@ -330,6 +337,7 @@
           attrs (read-attrs-from-html relevant-html)]
       (cond-> {:manual-file (.getPath file)}
         section (assoc :manual-section section)
+        (manual-url file section) (assoc :manual-url (manual-url file section))
         description (assoc :description description)
         attrs (assoc :attrs attrs)))))
 
@@ -417,10 +425,12 @@
                             (str/join \newline (map nested-doc-line nested))))
         text-block  (when supports-text?
                       "  Body text: this element accepts a free-form text body.")
-        link        (case kind
-                      :task   (str "  https://ant.apache.org/manual/Tasks/" tag ".html")
-                      :type   (str "  https://ant.apache.org/manual/Types/" tag ".html")
-                      :nested "  Nested-only element discovered via introspection.")
+        link-url    (:manual-url manual)
+        link        (or (some->> link-url (str "  "))
+                        (case kind
+                          :task   (str "  https://ant.apache.org/manual/Tasks/" tag ".html")
+                          :type   (str "  https://ant.apache.org/manual/Types/" tag ".html")
+                          :nested "  Nested-only element discovered via introspection."))
         ;; Some nested tags are ambiguous: <attribute> on macrodef is
         ;; MacroDef$Attribute, on manifest is Manifest$Attribute.
         ;; The runner picks the right class at execute time based on
@@ -462,6 +472,10 @@
                      ", :clj-ant/class \"" class? "\""
                      ", :clj-ant/classes "
                      (pr-str (vec (cons class? (or other-classes []))))
+                     (when-some [description (:description manual)]
+                       (str ", :clj-ant/description " (pr-str description)))
+                     (when link-url
+                       (str ", :clj-ant/manual-url " (pr-str link-url)))
                      (when (seq recorded-manual-attrs)
                        (str ", :clj-ant/attrs " (pr-str recorded-manual-attrs)))
                      (when by-parent
