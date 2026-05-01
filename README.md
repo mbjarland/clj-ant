@@ -73,8 +73,11 @@ taskdefs. Compose them with the rest of your Clojure code freely.
 
 ```clojure
 ;; deps.edn
-{:deps {io.github.mbjarland/clj-ant {:mvn/version "RELEASE"}}}
+{:deps {io.github.mbjarland/clj-ant {:mvn/version "VERSION"}}}
 ```
+
+Replace `VERSION` with the current Clojars version shown by the badge
+above.
 
 Requires JDK 8+. Released jars include the compiled Java bridge
 class — downstream consumers do **not** need to run `javac`.
@@ -297,7 +300,7 @@ See [doc/babashka.md](doc/babashka.md).
 git clone https://github.com/mbjarland/clj-ant.git
 cd clj-ant
 clj -T:build javac     # one-time, compiles the Java bridge
-clj -M:test            # 32 tests, 107 assertions
+clj -M:test            # run the test suite
 ```
 
 Released jars include the pre-compiled bridge — only contributors

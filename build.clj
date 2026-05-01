@@ -11,10 +11,40 @@
             [deps-deploy.deps-deploy :as dd]))
 
 (def lib 'io.github.mbjarland/clj-ant)
-(def version (format "1.0.%s" (b/git-count-revs nil)))
+
+(defn- tag-version [tag]
+  (when (and tag (re-matches #"v\d+\.\d+\.\d+.*" tag))
+    (subs tag 1)))
+
+(defn- current-version []
+  (or (not-empty (System/getenv "CLJ_ANT_VERSION"))
+      (tag-version (System/getenv "GITHUB_REF_NAME"))
+      (format "1.0.%s" (b/git-count-revs nil))))
+
+(def version (current-version))
 (def class-dir "target/classes")
 (def basis (delay (b/create-basis {:project "deps.edn"})))
 (def jar-file (format "target/%s-%s.jar" (name lib) version))
+
+(def scm
+  {:url "https://github.com/mbjarland/clj-ant"
+   :connection "scm:git:git://github.com/mbjarland/clj-ant.git"
+   :developerConnection "scm:git:ssh://git@github.com/mbjarland/clj-ant.git"
+   :tag (or (System/getenv "GITHUB_REF_NAME") "HEAD")})
+
+(def pom-data
+  [[:description "Apache Ant's task ecosystem, fluent from Clojure."]
+   [:url "https://github.com/mbjarland/clj-ant"]
+   [:licenses
+    [:license
+     [:name "Eclipse Public License 1.0"]
+     [:url "https://www.eclipse.org/legal/epl-v10.html"]
+     [:distribution "repo"]]]
+   [:developers
+    [:developer
+     [:id "mbjarland"]
+     [:name "Morten Bjarland"]
+     [:url "https://github.com/mbjarland"]]]])
 
 (defn clean [_]
   (b/delete {:path "target"}))
@@ -39,7 +69,10 @@
                 :lib       lib
                 :version   version
                 :basis     @basis
-                :src-dirs  ["src/clj" "src/java"]})
+                :src-dirs  ["src/clj" "src/java"]
+                :src-pom   :none
+                :scm       scm
+                :pom-data  pom-data})
   (b/copy-dir {:src-dirs   ["src/clj"]
                :target-dir class-dir})
   (b/jar {:class-dir class-dir

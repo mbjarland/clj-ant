@@ -14,10 +14,9 @@ Legend:
 
 ### Repo + identity
 
-- ⏳ **Move (or mirror) the repo from Bitbucket to GitHub.**
-  Current `origin` is `bitbucket.org:mbjarland/clj-ant`. Clojars'
-  verified-group policy under `io.github.*` cross-checks the
-  GitHub repo exists. Either move outright or set up a mirror.
+- ✅ **Mirror the repo to GitHub.**
+  The repo is available at `github.com/mbjarland/clj-ant`, which is
+  the location Clojars' `io.github.*` verified-group policy checks.
 
 - ⏳ **Claim the verified group `io.github.mbjarland` on Clojars.**
   https://clojars.org/verified-group — one-time setup, requires
@@ -29,17 +28,9 @@ Legend:
 
 ### Build / publish
 
-- ⏳ **Add a `deploy` task to `build.clj`.** ~30 LOC using
-  `slipset/deps-deploy`:
-  ```clojure
-  (defn deploy [_]
-    (jar nil)
-    (deps-deploy/deploy {:installer :remote
-                         :sign-releases? false
-                         :artifact jar-file
-                         :pom-file (b/pom-path {:lib lib :class-dir class-dir})}))
-  ```
-  Plus the dep in a `:deploy` alias.
+- ✅ **Add a `deploy` task to `build.clj`.**
+  `build/deploy` uses `slipset/deps-deploy` and the existing
+  `:build` alias to publish the jar + generated POM to Clojars.
 
 - ⏳ **Wire `CLOJARS_USERNAME` / `CLOJARS_PASSWORD` deploy token.**
   Generate via Clojars web UI (deploy-only token, scoped to the
@@ -48,25 +39,24 @@ Legend:
 
 ### Continuous integration
 
-- ⏳ **`.github/workflows/ci.yml`** running on every push:
+- ✅ **`.github/workflows/ci.yml`** running on every push:
   ```yaml
   - clj -T:build javac
   - clj -M:test
   - clj -T:build jar
   ```
-  ~30 lines using `DeLaGuardo/setup-clojure`. Without CI, users
-  have no confidence in patch releases.
+  The workflow tests JDK 8, 11, 17, and 21.
 
 
 ## Strongly recommended — before public announcement
 
 ### Code
 
-- ⏳ **Lower `javac --release` from 11 to 8** in `build.clj`.
+- ✅ **Lower `javac --release` from 11 to 8** in `build.clj`.
   Our Java bridge uses nothing JDK 11+; Ant itself supports
   JDK 8. Lowering broadens compatibility for free.
 
-- ⏳ **Bump deps to latest safe versions:**
+- ✅ **Bump deps to latest safe versions:**
   - `metosin/malli` 0.16.4 → 0.20.1
   - `nrepl/nrepl` 1.3.0 → 1.7.0 (alias only)
   - `tools.build` v0.10.5 → v0.10.13
@@ -77,15 +67,14 @@ Legend:
 
 ### Documentation
 
-- ⏳ **README "Status" banner.** Make the alpha state explicit:
+- ✅ **README "Status" banner.** Make the alpha state explicit:
   > **Pre-1.0 alpha.** Architecture is stable; surface APIs may
   > shift slightly during the alpha period based on real-world
   > feedback. Once 1.0 lands, semver applies normally.
 
-- ⏳ **Getting Started snag-fix in README.** First-time users
-  must run `clj -T:build javac` once. Either document this
-  prominently or have `:test` / `:dev` aliases auto-run it.
-  Cleanest: add a `:dev` alias that depends on a setup step.
+- ✅ **Getting Started snag-fix in README.** First-time users
+  must run `clj -T:build javac` once when working from source; the
+  contributor quickstart documents that step prominently.
 
 - ❓ **Babashka pod manifest for the registry.**
   https://github.com/babashka/pod-registry — optional. Lets bb
@@ -123,7 +112,7 @@ Legend:
 - Sessions and prepare/run
 - The babashka pod
 - SSH bundling (Terrapin-fixed)
-- 32 tests / 107 assertions / multiple rounds of external review
+- Broad kaocha test suite / multiple rounds of external review
 
 **Don't** over-promise on:
 - `clj-ant.spec` and the `:by-parent` introspection paths — added
@@ -135,11 +124,8 @@ Legend:
 
 ## Suggested order of operations
 
-1. Lower `--release` to 8, bump three deps, verify tests, commit.
-2. Add CI workflow + `:deploy` build task. Commit, no push.
-3. Migrate repo to GitHub (preserves commits via push).
-4. Claim Clojars verified group.
-5. Push to GitHub, CI runs, fixes if any.
-6. Cut `v1.0.0-alpha.1`, push tag.
-7. `clj -T:build deploy`.
-8. Wait for cljdoc to pick up; share link in README.
+1. Claim Clojars verified group.
+2. Wire `CLOJARS_USERNAME` / `CLOJARS_PASSWORD` secrets.
+3. Cut `v1.0.0-alpha.1`, push tag.
+4. Confirm the release workflow deployed the tag-derived version.
+5. Wait for cljdoc to pick up; share link in README.
