@@ -1017,8 +1017,36 @@
         (when (seq errs)
           (throw (ex-info (str "Validation failed: " (count errs)
                                " issue(s)")
-                          {:errors (vec errs)})))))
+                           {:errors (vec errs)})))))
     (->Plan coerced (assoc opts :validate? false :clj-ant/prepared? true))))
+
+(defn lint
+  "Validate an element tree without running Ant. Returns a vector of issue
+  maps from `clj-ant.spec/validate-tree`; empty means no issues were found.
+
+  Unlike `execute! :validate? true`, lint defaults to `:closed? true` so it
+  catches misspelled attributes and can include `:suggestions`:
+
+      (lint (element :copy :tdoir \"out\"))
+      => [{:tag :copy
+           :path []
+           :errors {:tdoir [\"disallowed key\"]}
+           :suggestions {:tdoir [:todir]}}]"
+  [elements & {:as opts}]
+  (let [es (cond
+             (element? elements)    [elements]
+             (sequential? elements) (vec elements)
+             (map? elements)        [elements]
+             :else (throw (ex-info "lint expects an element or seq of elements"
+                                   {:value elements})))
+        vt (requiring-resolve 'clj-ant.spec/validate-tree)
+        opts* (merge {:closed? true} opts)]
+    (vec (mapcat #(vt (deep-coerce %) opts*) es))))
+
+(defn explain
+  "Alias for `lint`."
+  [elements & opts]
+  (apply lint elements opts))
 
 (defn run
   "Execute a previously-`prepare`d Plan. Re-runs are cheap when paired
@@ -1459,20 +1487,37 @@
         (map (fn [^java.util.Map$Entry e] [(.getKey e) (.getValue e)]))
         m))
 
+(defn- ^:no-doc wrapper-meta
+  "Lookup generated metadata for a task/type wrapper, if the generated
+  namespace is available on the classpath."
+  [tag]
+  (try
+    (when-some [v (requiring-resolve
+                    (symbol "clj-ant.tasks" (name tag)))]
+      (meta v))
+    (catch Throwable _ nil)))
+
+(defn- ^:no-doc attr-keyword [k]
+  (keyword (str/lower-case (name k))))
+
+(defn- ^:no-doc attr-record [manual-attrs [k c]]
+  (let [{:keys [description required]} (get manual-attrs (attr-keyword k))]
+    (cond-> {:type c}
+      description (assoc :description description)
+      required    (assoc :required required))))
+
 (defn- ^:no-doc nested-recorded-classes
   "Lookup every class the generator recorded for a nested-only tag
   (more than one when the tag is context-ambiguous). Returns nil if
   the wrapper isn't there."
   [tag]
   (try
-    (when-some [v (requiring-resolve
-                    (symbol "clj-ant.tasks" (name tag)))]
-      (let [m (meta v)]
-        (->> (or (:clj-ant/classes m)
-                 (when-some [c (:clj-ant/class m)] [c]))
-             (keep #(try (Class/forName %) (catch Throwable _ nil)))
-             vec
-             not-empty)))
+    (when-some [m (wrapper-meta tag)]
+      (->> (or (:clj-ant/classes m)
+               (when-some [c (:clj-ant/class m)] [c]))
+           (keep #(try (Class/forName %) (catch Throwable _ nil)))
+           vec
+           not-empty))
     (catch Throwable _ nil)))
 
 (defn describe
@@ -1484,7 +1529,11 @@
           :class \"org.apache.tools.ant.taskdefs.Copy\"
           :classes [\"...Copy\"]
           :kind  :task
-          :attrs {:todir File, :tofile File, ...}
+          :attrs {\"todir\" {:type File
+                             :description \"The directory to copy to.\"
+                             :required \"...\"}
+                   \"tofile\" {:type File, ...}
+                   ...}
           :nested {:fileset FileSet, ...}
           :text? true|false}
 
@@ -1500,9 +1549,11 @@
   [tag]
   (let [project (Project.) _ (.init project)
         n       (name tag)
+        wm      (wrapper-meta tag)
+        manual-attrs (:clj-ant/attrs wm)
         top-kind (cond
-                   (.containsKey (.getTaskDefinitions project) n)     :task
-                   (.containsKey (.getDataTypeDefinitions project) n) :type)
+                    (.containsKey (.getTaskDefinitions project) n)     :task
+                    (.containsKey (.getDataTypeDefinitions project) n) :type)
         top-klass (case top-kind
                     :task (.get (.getTaskDefinitions project) n)
                     :type (.get (.getDataTypeDefinitions project) n)
@@ -1528,7 +1579,10 @@
          :class   (.getName ^Class (first klasses))
          :classes (mapv #(.getName ^Class %) klasses)
          :kind    kind
-         :attrs   (merged #(.getAttributeMap %))
+         :attrs   (into (sorted-map)
+                        (map (fn [entry]
+                               [(key entry) (attr-record manual-attrs entry)]))
+                        (merged #(.getAttributeMap %)))
          :nested  (merged #(.getNestedElementMap %))
          :text?   (boolean (some #(.supportsCharacters %) helpers))}))))
 

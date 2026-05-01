@@ -74,6 +74,11 @@
       (is (= :copy (:tag d)))
       (is (= :task (:kind d)))
       (is (contains? (:attrs d) "todir"))
+      (is (= File (get-in d [:attrs "todir" :type])))
+      (is (re-find #"directory to copy to"
+                   (get-in d [:attrs "todir" :description])))
+      (is (re-find #"With the file attribute"
+                   (get-in d [:attrs "todir" :required])))
       (is (contains? (:nested d) "fileset"))
       (is (string? (:class d)))))
   (testing "describe returns nil for unknown tags"
@@ -735,6 +740,22 @@
       (is (vector? errs))
       ;; the bogus attribute is on the type, not the task
       (is (or (empty? errs) (every? :tag errs))))))
+
+(deftest lint-suggests-attribute-typos
+  (testing "lint validates without running and suggests likely attr names"
+    (let [issues (a/lint (a/element :copy :tdoir "out"))
+          issue  (first issues)]
+      (is (= 1 (count issues)))
+      (is (= :copy (:tag issue)))
+      (is (contains? (:errors issue) :tdoir))
+      (is (= [:todir] (get-in issue [:suggestions :tdoir])))))
+
+  (testing "valid trees return no lint issues"
+    (is (empty? (a/lint (a/element :echo :message "x")))))
+
+  (testing "explain is an alias for lint"
+    (let [tree (a/element :copy :tdoir "out")]
+      (is (= (a/lint tree) (a/explain tree))))))
 
 (deftest macrodef-via-runtime
   (testing "macrodef works because RuntimeConfigurable handles expansion"

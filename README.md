@@ -252,8 +252,22 @@ parameter expansion, `<antcall>` targeting, the lot.
 ### Validation (malli) and rich REPL
 
 ```clojure
+(a/lint (t/copy :tdoir "out"))
+;; => [{:tag :copy
+;;      :path []
+;;      :errors {:tdoir ["disallowed key"]}
+;;      :suggestions {:tdoir [:todir]}}]
+
 (a/ant :validate? true (t/copy :tdoir "out"))
 ;; ExceptionInfo: Validation failed: 1 issue(s)
+
+(a/describe :copy)
+;; => {:tag :copy
+;;     :attrs {"todir" {:type java.io.File
+;;                       :description "The directory to copy to."
+;;                       :required "..."}
+;;             ...}
+;;     ...}
 
 user=> (doc t/copy)
 clj-ant.tasks/copy
