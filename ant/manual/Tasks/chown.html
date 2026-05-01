@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Chown Task</title>
 </head>
@@ -30,7 +30,7 @@
 
 <p>Changes the owner of a file or all files inside specified directories. Right now it has effect
 only under Unix.  The owner attribute is equivalent to the corresponding argument for
-the <code>chown</code> command.</p>
+the <kbd>chown</kbd> command.</p>
 
 <p><a href="../Types/fileset.html">FileSet</a>s, <a href="../Types/dirset.html">DirSet</a>s
 or <a href="../Types/filelist.html">FileList</a>s can be specified using
@@ -41,7 +41,7 @@ elements.</p>
 arbitrary <a href="../Types/resources.html#collection">resource collections</a> as nested
 elements.</p>
 
-<p>By default this task will use a single invocation of the underlying <code>chown</code> command.
+<p>By default this task will use a single invocation of the underlying <kbd>chown</kbd> command.
 If you are working on a large number of files this may result in a command line that is too long for
 your operating system.  If you encounter such problems, you should set the <var>maxparallel</var>
 attribute of this task to a non-zero value.  The number to use highly depends on the length of your
@@ -51,16 +51,16 @@ may give you an approximation for the number you could use as initial value for 
 experiments.</p>
 
 <p>By default this task won't do anything unless it detects it is running on a Unix system.  If you
-know for sure that you have a <code>chown</code> executable on your <code>PATH</code> that is
-command line compatible with the Unix command, you can use the task's os attribute and set its value
-to your current os.</p>
+know for sure that you have a <kbd>chown</kbd> executable on your <code>PATH</code> that is command
+line compatible with the Unix command, you can use the task's <var>os</var> attribute and set its
+value to your current OS.</p>
 
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>file</td>
@@ -75,7 +75,7 @@ to your current os.</p>
   </tr>
   <tr>
     <td>parallel</td>
-    <td>process all specified files using a single <code>chown</code> command.</td>
+    <td>process all specified files using a single <kbd>chown</kbd> command.</td>
     <td>No; defaults to <q>true</q></td>
   </tr>
   <tr>
@@ -111,16 +111,20 @@ to your current os.</p>
   </tr>
 </table>
 <h3>Examples</h3>
-<pre>&lt;chown file="${dist}/start.sh" owner="coderjoe"/&gt;</pre>
-<p>makes the <samp>start.sh</samp> file belong to <samp>coderjoe</samp> on a UNIX system.</p>
 
+<p>Make the <samp>start.sh</samp> file belong to <samp>coderjoe</samp> on a UNIX system.</p>
+<pre>&lt;chown file="${dist}/start.sh" owner="coderjoe"/&gt;</pre>
+
+<p>Make all <samp>.sh</samp> files below <samp>${dist}/bin</samp> belong to <samp>coderjoe</samp> on
+a UNIX system.</p>
 <pre>
 &lt;chown owner="coderjoe"&gt;
   &lt;fileset dir="${dist}/bin" includes="**/*.sh"/&gt;
 &lt;/chown&gt;</pre>
-<p>makes all <samp>.sh</samp> files below <samp>${dist}/bin</samp> belong to <samp>coderjoe</samp>
-on a UNIX system.</p>
 
+<p>Make all files below <samp>shared/sources1</samp> (except those below any directory
+named <samp>trial</samp>) belong to <samp>coderjoe</samp> on a UNIX system. In addition, all files
+belonging to a FileSet with <var>id</var>=<code>other.shared.sources</code> get the same owner.</p>
 <pre>
 &lt;chown owner="coderjoe"&gt;
   &lt;fileset dir="shared/sources1"&gt;
@@ -128,10 +132,10 @@ on a UNIX system.</p>
   &lt;/fileset&gt;
   &lt;fileset refid="other.shared.sources"/&gt;
 &lt;/chown&gt;</pre>
-<p>makes all files below <samp>shared/sources1</samp> (except those below any directory
-named <samp>trial</samp>) belong to <samp>coderjoe</samp> on a UNIX system. In addition all files
-belonging to a FileSet with <var>id</var> <code>other.shared.sources</code> get the same owner.</p>
 
+<p>Make <samp>cgi</samp> scripts, files with a <samp>.old</samp> extension or directories beginning
+with <samp>private_</samp> belong to the user named <samp>webadmin</samp>. A directory ending
+in <samp>.old</samp> or a file beginning with <samp>private_</samp> would remain unaffected.</p>
 <pre>
 &lt;chown owner="webadmin" type="file"&gt;
   &lt;fileset dir="/web"&gt;
@@ -142,9 +146,6 @@ belonging to a FileSet with <var>id</var> <code>other.shared.sources</code> get 
     &lt;include name="**/private_*"/&gt;
   &lt;/dirset&gt;
 &lt;/chmod&gt;</pre>
-<p>makes <samp>cgi</samp> scripts, files with a <samp>.old</samp> extension or directories beginning
-with <samp>private_</samp> belong to the user named <samp>webadmin</samp>. A directory ending
-in <samp>.old</samp> or a file beginning with <samp>private_</samp> would remain unaffected.</p>
 
 </body>
 </html>

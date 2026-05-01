@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <title>XmlNamespaceSupport</title>
@@ -63,8 +64,8 @@
       URI of the XML namespace with which the type should be associated:
     </p>
     <pre>
-&lt;typedef resource="org/example/tasks.properties" uri="<a href="http://example.org/tasks">http://example.org/tasks</a>"/&gt;
-&lt;my:task xmlns:my="<a href="http://example.org/tasks">http://example.org/tasks</a>"&gt;
+&lt;typedef resource="org/example/tasks.properties" uri="http://example.org/tasks"/&gt;
+&lt;my:task xmlns:my="http://example.org/tasks"&gt;
     ...
 &lt;/my:task&gt;</pre>
     <p>As the above example demonstrates, the namespace URI needs to be specified at least
@@ -73,8 +74,8 @@
       the <var>xmlns</var> attribute. This mapping can happen at any level in the build file:
     </p>
     <pre>
-&lt;project name="test" xmlns:my="<a href="http://example.org/tasks">http://example.org/tasks</a>"&gt;
-    &lt;typedef resource="org/example/tasks.properties" uri="<a href="http://example.org/tasks">http://example.org/tasks</a>"/&gt;
+&lt;project name="test" xmlns:my="http://example.org/tasks"&gt;
+    &lt;typedef resource="org/example/tasks.properties" uri="http://example.org/tasks"/&gt;
     &lt;my:task&gt;
         ...
     &lt;/my:task&gt;
@@ -85,8 +86,8 @@
     </p>
     <pre>
 &lt;project name="test"&gt;
-    &lt;typedef resource="org/example/tasks.properties" uri="<a href="http://example.org/tasks">http://example.org/tasks</a>"/&gt;
-    &lt;task xmlns="<a href="http://example.org/tasks">http://example.org/tasks</a>"&gt;
+    &lt;typedef resource="org/example/tasks.properties" uri="http://example.org/tasks"/&gt;
+    &lt;task xmlns="http://example.org/tasks"&gt;
         ...
     &lt;/task&gt;
 &lt;/project&gt;</pre>
@@ -112,8 +113,8 @@
       nested <code>config</code> element, the build file snippet would look like this:
     </p>
     <pre>
-&lt;typedef resource="org/example/tasks.properties" uri="<a href="http://example.org/tasks">http://example.org/tasks</a>"/&gt;
-&lt;my:task xmlns:my="<a href="http://example.org/tasks">http://example.org/tasks</a>"&gt;
+&lt;typedef resource="org/example/tasks.properties" uri="http://example.org/tasks"/&gt;
+&lt;my:task xmlns:my="http://example.org/tasks"&gt;
     &lt;my:config a="foo" b="bar"/&gt;
     ...
 &lt;/my:task&gt;</pre>
@@ -122,8 +123,8 @@
       script:
     </p>
     <pre>
-&lt;typedef resource="org/example/tasks.properties" uri="<a href="http://example.org/tasks">http://example.org/tasks</a>"/&gt;
-&lt;task xmlns="<a href="http://example.org/tasks">http://example.org/tasks</a>"&gt;
+&lt;typedef resource="org/example/tasks.properties" uri="http://example.org/tasks"/&gt;
+&lt;task xmlns="http://example.org/tasks"&gt;
     &lt;config a="foo" b="bar"/&gt;
     ...
 &lt;/task&gt;</pre>
@@ -133,8 +134,8 @@
     </p>
     <pre>
 &lt;typedef resource="org/example/tasks.properties"
-    uri="<a href="http://example.org/tasks">http://example.org/tasks</a>"/&gt;
-&lt;my:task xmlns:my="<a href="http://example.org/tasks">http://example.org/tasks</a>"&gt;
+    uri="http://example.org/tasks"/&gt;
+&lt;my:task xmlns:my="http://example.org/tasks"&gt;
     &lt;config a="foo" b="bar"/&gt;
     ...
 &lt;/my:task&gt;</pre>
@@ -160,7 +161,7 @@
     <p>
     </p>
     <pre>
-&lt;my:task xmlns:my="<a href="http://example.org/tasks">http://example.org/tasks</a>"&gt;
+&lt;my:task xmlns:my="http://example.org/tasks"&gt;
     &lt;my:config a="foo" b="bar"/&gt;
     ...
 &lt;/my:task&gt;</pre>
@@ -168,7 +169,7 @@
       and
     </p>
     <pre>
-&lt;my:task xmlns:my="<a href="http://example.org/tasks">http://example.org/tasks</a>"&gt;
+&lt;my:task xmlns:my="http://example.org/tasks"&gt;
     &lt;my:config my:a="foo" my:b="bar"/&gt;
     ...
 &lt;/my:task&gt;</pre>
@@ -184,21 +185,21 @@
     <h3>Mixing Elements from Different Namespaces</h3>
 
     <p>
-      Now comes the difficult part: elements from different namespaces can be woven together
-      under certain circumstances. This has a lot to do with the Ant
-      1.6 <a href="../develop.html#nestedtype">add type introspection rules</a>: Ant types and
-      tasks are now free to accept arbitrary named types as nested elements, as long as the
-      concrete type implements the interface expected by the task/type. The most obvious example
-      for this is the <code>&lt;condition&gt;</code> task, which supports various nested
-      conditions, all of which extend the interface <code>Condition</code>. To integrate a
-      custom condition in Ant, you can now simply <code>&lt;typedef&gt;</code> the condition,
-      and then use it anywhere nested conditions are allowed (assuming the containing element
-      has a generic <code>add(Condition)</code> or <code>addConfigured(Condition)</code>
-      method):
+      Now comes the difficult part: elements from different namespaces can be woven together under
+      certain circumstances. This has a lot to do with the Ant
+      1.6 <a href="../develop.html#nestedtype">add type introspection rules</a>: Ant types and tasks
+      are now free to accept arbitrary named types as nested elements, as long as the concrete type
+      implements the interface expected by the task/type. The most obvious example for this is
+      the <code>&lt;condition&gt;</code> task, which supports various nested conditions, all of
+      which extend the interface <code class="code">Condition</code>. To integrate a custom
+      condition in Ant, you can now simply <code>&lt;typedef&gt;</code> the condition, and then use
+      it anywhere nested conditions are allowed (assuming the containing element has a
+      generic <code class="code">add(Condition)</code>
+      or <code class="code">addConfigured(Condition)</code> method):
     </p>
     <pre>
-&lt;typedef resource="org/example/conditions.properties" uri="<a href="http://example.org/conditions">http://example.org/conditions</a>"/&gt;
-&lt;condition property="prop" xmlns="<a href="http://example.org/conditions">http://example.org/conditions</a>"&gt;
+&lt;typedef resource="org/example/conditions.properties" uri="http://example.org/conditions"/&gt;
+&lt;condition property="prop" xmlns="http://example.org/conditions"&gt;
     &lt;and&gt;
         &lt;available file="bla.txt"/&gt;
         &lt;my:condition a="foo"/&gt;

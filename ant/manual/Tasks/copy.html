@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Copy Task</title>
 </head>
@@ -28,7 +28,8 @@
 <h3>Description</h3>
 <p>Copies a file or resource collection to a new file or directory.  By default, files are only
 copied if the source file is newer than the destination file, or when the destination file does not
-exist.  However, you can explicitly overwrite files with the <var>overwrite</var> attribute.</p>
+exist - please see the <var>granularity</var> attribute for Ant's idea of <em>newer</em>.
+However, you can explicitly overwrite files with the <code>overwrite</code> attribute.</p>
 
 <p><a href="../Types/resources.html#collection">Resource collections</a> are used to select a group
 of files to copy.  To use a resource collection, the <var>todir</var> attribute must be
@@ -46,9 +47,9 @@ note</a></em>.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>file</td>
@@ -183,17 +184,21 @@ the same <code>&lt;copy&gt;</code> task, all <code>&lt;filterchain&gt;</code> el
 first followed by <code>&lt;filterset&gt;</code> elements.</p>
 
 <h3>Examples</h3>
-<p><strong>Copy a single file</strong></p>
+
+<p>Copy a single file</p>
 <pre>&lt;copy file=&quot;myfile.txt&quot; tofile=&quot;mycopy.txt&quot;/&gt;</pre>
-<p><strong>Copy a single file to a directory</strong></p>
+
+<p>Copy a single file to a directory</p>
 <pre>&lt;copy file=&quot;myfile.txt&quot; todir=&quot;../some/other/dir&quot;/&gt;</pre>
-<p><strong>Copy a directory to another directory</strong></p>
+
+<p>Copy a directory to another directory</p>
 <pre>
 &lt;copy todir=&quot;../new/dir&quot;&gt;
   &lt;fileset dir=&quot;src_dir&quot;/&gt;
 &lt;/copy&gt;
 </pre>
-<p><strong>Copy a set of files to a directory</strong></p>
+
+<p>Copy a set of files to a directory</p>
 <pre>
 &lt;copy todir=&quot;../dest/dir&quot;&gt;
   &lt;fileset dir=&quot;src_dir&quot;&gt;
@@ -204,16 +209,17 @@ first followed by <code>&lt;filterset&gt;</code> elements.</p>
 &lt;copy todir=&quot;../dest/dir&quot;&gt;
   &lt;fileset dir=&quot;src_dir&quot; excludes=&quot;**/*.java&quot;/&gt;
 &lt;/copy&gt;</pre>
-<p><strong>Copy a set of files to a directory, appending <samp>.bak</samp> to the file name on the
-fly</strong></p>
+
+<p>Copy a set of files to a directory, appending <samp>.bak</samp> to the file name on the
+fly</p>
 <pre>
 &lt;copy todir=&quot;../backup/dir&quot;&gt;
   &lt;fileset dir=&quot;src_dir&quot;/&gt;
   &lt;globmapper from=&quot;*&quot; to=&quot;*.bak&quot;/&gt;
 &lt;/copy&gt;</pre>
 
-<p><strong>Copy a set of files to a directory, replacing <code>@TITLE@</code> with <samp>Foo
-Bar</samp> in all files.</strong></p>
+<p>Copy a set of files to a directory, replacing <code>@TITLE@</code> with <samp>Foo
+Bar</samp> in all files.</p>
 <pre>
 &lt;copy todir=&quot;../backup/dir&quot;&gt;
   &lt;fileset dir=&quot;src_dir&quot;/&gt;
@@ -222,8 +228,8 @@ Bar</samp> in all files.</strong></p>
   &lt;/filterset&gt;
 &lt;/copy&gt;</pre>
 
-<p><strong>Collect all items from the current <code>CLASSPATH</code> setting into a destination
-directory, flattening the directory structure.</strong></p>
+<p>Collect all items from the current <code>CLASSPATH</code> setting into a destination
+directory, flattening the directory structure.</p>
 <pre>
 &lt;copy todir=&quot;dest&quot; flatten=&quot;true&quot;&gt;
   &lt;path&gt;
@@ -231,12 +237,12 @@ directory, flattening the directory structure.</strong></p>
   &lt;/path&gt;
 &lt;/copy&gt;</pre>
 
-<p><strong>Copies some resources to a given directory.</strong></p>
+<p>Copies some resources to a given directory.</p>
 <pre>
 &lt;copy todir=&quot;dest&quot; flatten=&quot;true&quot;&gt;
   &lt;resources&gt;
     &lt;file file=&quot;src_dir/file1.txt&quot;/&gt;
-    &lt;url url=&quot;http://ant.apache.org/index.html&quot;/&gt;
+    &lt;url url=&quot;https://ant.apache.org/index.html&quot;/&gt;
   &lt;/resources&gt;
 &lt;/copy&gt;</pre>
 
@@ -245,7 +251,7 @@ resource would have returned its full path as source and target name and would n
 at all.  In general it is a good practice to use an explicit mapper together with resources that use
 an absolute path as their names.</p>
 
-<p><strong>Copies the two newest resources into a destination directory.</strong></p>
+<p>Copies the two newest resources into a destination directory.</p>
 <pre>
 &lt;copy todir=&quot;dest&quot; flatten=&quot;true&quot;&gt;
   &lt;first count=&quot;2&quot;&gt;
@@ -255,7 +261,7 @@ an absolute path as their names.</p>
         &lt;file file=&quot;src_dir/file1.txt&quot;/&gt;
         &lt;file file=&quot;src_dir/file2.txt&quot;/&gt;
         &lt;file file=&quot;src_dir/file3.txt&quot;/&gt;
-        &lt;url url=&quot;http://ant.apache.org/index.html&quot;/&gt;
+        &lt;url url=&quot;https://ant.apache.org/index.html&quot;/&gt;
       &lt;/resources&gt;
     &lt;/sort&gt;
   &lt;/first&gt;
@@ -279,8 +285,8 @@ default character encoding is Cp1252, on Unix it is usually UTF-8. For both of t
 are illegal byte sequences (more in UTF-8 than for Cp1252).</p>
 <p>How the Reader class deals with these illegal sequences is up to the implementation of the
 character decoder. The current Sun Java implementation is to map them to legal characters. Previous
-Sun Java (1.3 and lower) threw a MalformedInputException. IBM Java 1.4 also throws this exception.
-It is the mapping of the characters that cause the corruption.</p>
+Sun Java (1.3 and lower) threw a <code>MalformedInputException</code>. IBM Java 1.4 also throws this
+exception. It is the mapping of the characters that cause the corruption.</p>
 <p>On Unix, where the default is normally UTF-8, this is a <em>big</em> problem, as it is easy to
 edit a file to contain non US-ASCII characters from ISO-8859-1, for example the Danish &oelig;
 character. When this is copied (with filtering) by Ant, the character get converted to a question

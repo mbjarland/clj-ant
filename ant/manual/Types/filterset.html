@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,9 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>FilterSet Type</title>
 </head>
 
@@ -53,10 +54,10 @@ being filtered are all text files.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Default</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Default</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>begintoken</td>
@@ -90,14 +91,22 @@ being filtered are all text files.</p>
     <td><q>fail</q></td>
     <td>No</td>
   </tr>
+  <tr>
+    <td>refid</td>
+    <td>Makes this <code>filterset</code>
+      a <a href="../using.html#references">reference</a> to
+      a <code>filterset</code> defined elsewhere. If specified no
+      other attributes or nested elements are allowed.</td>
+    <td>No</td>
+  </tr>
 </table>
 
 <h3>Filter</h3>
 <table>
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>token</td>
@@ -114,9 +123,9 @@ being filtered are all text files.</p>
 <h3>Filtersfile</h3>
 <table>
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>file</td>

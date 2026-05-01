@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
   <head>
-    <meta http-equiv="Content-Language" content="en-us">
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
     <title>Concat</title>
   </head>
@@ -44,9 +44,9 @@
 
     <table class="attr">
       <tr>
-        <th>Attribute</th>
-        <th>Description</th>
-        <th>Required</th>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
       </tr>
       <tr>
         <td>destfile</td>
@@ -81,8 +81,8 @@
       <tr>
         <td>encoding</td>
         <td>Specifies the encoding for the input files. Please
-          see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html">Supported
-          Encodings</a> for a list of possible values.</td>
+          see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html"
+          target="_top">Supported Encodings</a> for a list of possible values.</td>
         <td>No; defaults to default JVM character encoding</td>
       </tr>
       <tr>
@@ -125,6 +125,15 @@
         <td>No; default is <q>false</q></td>
       </tr>
       <tr>
+        <td>filterbeforeconcat</td>
+        <td>If this attribute is set to <q>true</q>, the task applies the filterchain to each
+          input after applying <code>fixlastline</code>. If this attribute is <q>false</q>, concat
+          will apply the filterchain only once to the already concatenated inputs. Filtering of
+          <code>header</code> and <code>footer</code> is not affected by this setting.
+          <em>Since Ant 1.10.10</em></td>
+        <td>No; default is <q>false</q></td>
+      </tr>
+      <tr>
         <td>ignoreempty</td>
         <td><em>Since Ant 1.8.0</em> Specifies whether or not the file specified
           by <var>destfile</var> should be created if the source resource list is empty.
@@ -139,6 +148,13 @@
         <td>No</td>
       </tr>
     </table>
+
+    <h3>Nested Text</h3>
+    <p>You can specify input content as nested text of the task
+      directly - in which case the text is treated as an
+      implicit <a href="../Types/resources.html#string">string</a> with
+      a hard-coded encoding of UTF-8.<p>
+    <p>You must not mix nested text and specifying nested resources.</p>
 
     <h3>Parameters specified as nested elements</h3>
     <h4>resource collection</h4>
@@ -157,9 +173,9 @@
     <p>The text may be in-line or be in a file.</p>
     <table class="attr">
       <tr>
-        <th>Attribute</th>
-        <th>Description</th>
-        <th>Required</th>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
       </tr>
       <tr>
         <td>filtering</td>
@@ -185,27 +201,23 @@
 
     <h3>Examples</h3>
 
-    <p><strong>Concatenate a string to a file:</strong></p>
-
+    <p>Concatenate a string to a file:</p>
     <pre>&lt;concat destfile=&quot;README&quot;&gt;Hello, World!&lt;/concat&gt;</pre>
 
-    <p><strong>Concatenate a series of files to the console:</strong></p>
-
+    <p>Concatenate a series of files to the console:</p>
     <pre>
 &lt;concat&gt;
   &lt;fileset dir=&quot;messages&quot; includes=&quot;*important*&quot;/&gt;
 &lt;/concat&gt;</pre>
 
-    <p><strong>Concatenate a single file, appending if the destination file exists:</strong></p>
-
+    <p>Concatenate a single file, appending if the destination file exists:</p>
     <pre>
 &lt;concat destfile=&quot;NOTES&quot; append=&quot;true&quot;&gt;
   &lt;filelist dir=&quot;notes&quot; files=&quot;note.txt&quot;/&gt;
 &lt;/concat&gt;</pre>
 
-    <p><strong>Concatenate a series of files, update the destination file only if is older that all
-      the source files:</strong></p>
-
+    <p>Concatenate a series of files, update the destination file only if is older that all the
+      source files:</p>
     <pre>
 &lt;concat destfile=&quot;${docbook.dir}/all-sections.xml&quot;
         force=&quot;no&quot;&gt;
@@ -216,7 +228,7 @@
            excludes=&quot;introduction.xml,overview.xml&quot;/&gt;
 &lt;/concat&gt;</pre>
 
-    <p><strong>Concatenate a series of files, expanding Ant properties</strong></p>
+    <p>Concatenate a series of files, expanding Ant properties.</p>
     <pre>
 &lt;concat destfile="${build.dir}/subs"&gt;
   &lt;path&gt;
@@ -228,8 +240,8 @@
   &lt;/filterchain&gt;
 &lt;/concat&gt;</pre>
 
-    <p><strong>Filter the lines containing project from build.xml and output them to report.output,
-      prepending with a header</strong></p>
+    <p>Filter the lines containing project from <samp>build.xml</samp> and output them
+      to <samp>report.output</samp>, prepending with a header.</p>
     <pre>
 &lt;concat destfile="${build.dir}/report.output"&gt;
   &lt;header filtering="no" trimleading="yes"&gt;
@@ -244,7 +256,7 @@
   &lt;/filterchain&gt;
 &lt;/concat&gt;</pre>
 
-    <p><strong>Concatenate a number of binary files.</strong></p>
+    <p>Concatenate a number of binary files.</p>
     <pre>
 &lt;concat destfile="${build.dir}/dist.bin" binary="yes"&gt;
   &lt;fileset file="${src.dir}/scripts/dist.sh"/&gt;

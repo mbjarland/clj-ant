@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>JLink Task</title>
@@ -26,9 +27,14 @@
 <p><em>This task has been <u>deprecated</u>. Use a <a href="../Types/zipfileset.html">zipfileset</a>
 or <a href="../Tasks/zip.html#zipgroupfileset">zipgroupfileset</a> with
 the <a href="../Tasks/jar.html">Jar task</a> or <a href="../Tasks/zip.html">Zip task</a>
-instead.</em></p>
+instead.  For a task based on the JDK's jlink tool, see
+<a href="link.html">Link</a>.</em></p>
 
 <h3>Description</h3>
+<p><strong>For a task based on the JDK's jlink tool, see
+<a href="link.html">Link</a>.  This task is for something else
+entirely.</strong></p>
+
 <p>Links entries from sub-builds and libraries.</p>
 
 <p>The <code>jlink</code> task can be used to build jar and zip files, similar to
@@ -65,9 +71,9 @@ the <em>base</em> directory.</p>
 <h3>Parameters</h3>
 <table class="attr">
    <tr>
-     <th>Attribute</th>
-     <th>Description</th>
-     <th>Required</th>
+     <th scope="col">Attribute</th>
+     <th scope="col">Description</th>
+     <th scope="col">Required</th>
    </tr>
    <tr>
      <td>outfile</td>
@@ -123,7 +129,7 @@ entries to <samp>out.jar</samp>.</p>
 &lt;/jar&gt;
 </pre>
 
-<p>Suppose the file foo.jar contains two entries: <samp>bar.class</samp>
+<p>Suppose the file <samp>foo.jar</samp> contains two entries: <samp>bar.class</samp>
 and <samp>barnone/myClass.zip</samp>.  Suppose the path for file <samp>foo.jar</samp>
 is <samp>build/tempbuild/foo.jar</samp>. The following example will provide the
 entry <samp>tempbuild/foo.jar</samp> in the <samp>out.jar</samp>.</p>

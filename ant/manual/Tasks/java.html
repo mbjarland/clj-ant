@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Java Task</title>
 </head>
@@ -28,14 +28,16 @@
 <h3>Description</h3>
 <p>Executes a Java class within the running (Apache Ant) JVM or forks another JVM if specified.</p>
 <p>If odd things go wrong when you run this task, set <var>fork</var>=<q>true</q> to use a new
-JVM.</p>
+JVM. It is necessary to set <var>fork</var>=<q>true</q>, if the class being launched by
+  this task or any libraries being used by that class, call APIs like
+  <code>java.lang.System.exit()</code> or <code>java.lang.Runtime.exit()</code>.</p>
 
 <p><em>Since Ant 1.6.3</em>, you can interact with a forked JVM, as well as sending input to it via
 the <var>input</var> and <var>inputstring</var> attributes.</p>
 
 <h4 id="background">Running Ant as a background process on Unix(-like) systems</h4>
 
-<p>If you run Ant as a background process (like <code>ant &</code>) and use
+<p>If you run Ant as a background process (like <kbd>ant &amp;</kbd>) and use
 the <code>&lt;java&gt;</code> task with <var>spawn</var> set to <q>false</q> and <var>fork</var>
 to <q>true</q>, you must provide explicit input to the forked process or Ant will be suspended
 because it tries to read from the standard input.</p>
@@ -43,14 +45,14 @@ because it tries to read from the standard input.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr id="classname">
     <td>classname</td>
     <td>the Java class to execute.</td>
-    <td rowspan="3">Exactly one of the three</td>
+    <td rowspan="4">Exactly one of the four</td>
   </tr>
   <tr>
     <td>jar</td>
@@ -64,6 +66,13 @@ because it tries to read from the standard input.</p>
     <td class="left">The initial or main module to resolve (must have a <code>Main-Class</code>
       entry in the manifest).  <var>fork</var> must be set to <q>true</q> if this option is
       selected. <em>since Ant 1.9.7</em></td>
+  </tr>
+  <tr>
+    <td>sourcefile</td>
+    <td class="left">The location of a ".java" file or a file containing shebang with Java source code.
+      Set this attribute to run Java single file source programs, a feature introduced in Java 11.
+      <var>fork</var> must be set to <q>true</q> if this option is selected.
+      <em>since Ant 1.10.5</em></td>
   </tr>
   <tr>
     <td>args</td>
@@ -112,7 +121,7 @@ because it tries to read from the standard input.</p>
     <td>the command used to invoke JVM.  The command is resolved
       by <code>java.lang.Runtime.exec()</code>.  Ignored if <var>fork</var> is <q>false</q>.
     </td>
-    <td>No, default is <q>java</q></td>
+    <td>No, default is <kbd>java</kbd></td>
   </tr>
   <tr>
     <td>jvmargs</td>
@@ -211,6 +220,27 @@ because it tries to read from the standard input.</p>
       forked JVM will be the same as those of the JVM running Ant. <em>since Ant 1.7</em></td>
     <td>No; default is <q>false</q>, ignored if <var>fork</var> is <q>false</q></td>
   </tr>
+  <tr>
+    <td>discardOutput</td>
+    <td>Whether output should completely be discarded. This setting is
+      incompatible with any setting that redirects output to files or
+      properties.<br/>
+      If you set this to <q>true</q> error output will be discared as
+      well unless you redirect error output to files, properties or
+      enable <q>logError</q>.
+      <em>Since Ant 1.10.10</em>
+    </td>
+    <td>No; defaults to <q>false</q></td>
+  </tr>
+  <tr>
+    <td>discardError</td>
+    <td>Whether error output should completely be discarded. This
+      setting is incompatible with any setting that redirects error
+      output to files or properties as well as <q>logError</q>.
+      <em>Since Ant 1.10.10</em>
+    </td>
+    <td>No; defaults to <q>false</q></td>
+  </tr>
 </table>
 <h3>Parameters specified as nested elements</h3>
 <h4>arg and jvmarg</h4>
@@ -252,13 +282,17 @@ about <a href="exec.html#env">exec</a></p>
 
 <p><em>Since Ant 1.6</em>.</p>
 
+<p><strong>Note</strong>:<br/> This element is no longer supported when running on Java 18 and
+  higher versions. See <a href="../Types/permissions.html">permissions</a> for details</p>
+
 <p>Security permissions can be revoked and granted during the execution of the class via a
 nested <code>permissions</code> element. For more information please
 see <a href="../Types/permissions.html">permissions</a>.</p>
 <p>When the permission <code>RuntimePermission exitVM</code> has not been granted (or has been
 revoked) the <code>System.exit()</code> call will be intercepted and treated like indicated
 in <var>failonerror</var>.</p>
-<p><strong>Note</strong>:<br/> If you do not specify permissions, a set of default permissions will
+<p><strong>Note</strong>:<br/> When running on Java runtime versions lesser than 18,
+  if you do not specify permissions, a set of default permissions will
 be added to your Java invocation to make sure that the Ant run will continue or terminated as
 indicated by <var>failonerror</var>. All permissions not granted per default will be checked by
 whatever security manager was already in place. <code>exitVM</code> will be disallowed.</p>
@@ -311,10 +345,11 @@ project, <em>not</em> the directory in which the Java task is run. If you need t
 relative to the directory the task will be run in, you need to explicitly create the full path to
 the JAR file.</p>
 <p>When using the <var>jar</var> attribute, all classpath settings are ignored according
-to <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html">Oracle's
-specification</a>.
+to <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html"
+target="_top">Oracle's specification</a>.
 
 <h3>Examples</h3>
+<p>Run a class in this JVM with a new jar on the classpath</p>
 <pre>
 &lt;java classname=&quot;test.Main&quot;&gt;
   &lt;arg value=&quot;-h&quot;/&gt;
@@ -323,8 +358,10 @@ specification</a>.
     &lt;pathelement path=&quot;${java.class.path}&quot;/&gt;
   &lt;/classpath&gt;
 &lt;/java&gt;</pre>
-Run a class in this JVM with a new jar on the classpath
 
+<p>Run the JAR <samp>test.jar</samp> in this project's <samp>dist/lib</samp> directory, using the
+manifest supplied entry point, forking (as required), and with a maximum memory of 128 MB. Any non
+zero return code breaks the build.</p>
 <pre>
 &lt;java jar=&quot;dist/test.jar&quot;
       fork="true"
@@ -336,10 +373,9 @@ Run a class in this JVM with a new jar on the classpath
     &lt;pathelement path=&quot;${java.class.path}&quot;/&gt;
   &lt;/classpath&gt;
 &lt;/java&gt;</pre>
-<p>Run the JAR <samp>test.jar</samp> in this project's <samp>dist/lib</samp> directory.  using the
-manifest supplied entry point, forking (as required), and with a maximum memory of 128 MB. Any non
-zero return code breaks the build.</p>
 
+<p>Run the JAR <samp>dist/test.jar</samp> relative to the directory <code>${exec.dir}</code>, this
+being the same directory in which JVM is to start up.</p>
 <pre>
 &lt;java dir=&quot;${exec.dir}&quot;
       jar=&quot;${exec.dir}/dist/test.jar&quot;
@@ -352,12 +388,12 @@ zero return code breaks the build.</p>
     &lt;pathelement path=&quot;${java.class.path}&quot;/&gt;
   &lt;/classpath&gt;
 &lt;/java&gt;</pre>
-<p>Run the JAR <samp>dist/test.jar</samp> relative to the directory <code>${exec.dir}</code>, this
-being the same directory in which JVM is to start up.</p>
 
+<p>Run a given class with the current classpath.</p>
 <pre>&lt;java classname=&quot;test.Main&quot;/&gt;</pre>
-<p>Runs a given class with the current classpath.</p>
 
+<p>Add system properties and JVM properties to JVM as in <code>java
+-Xrunhprof:cpu=samples,file=log.txt,depth=3 -DDEBUG=true test.Main</code>
 <pre>
 &lt;java classname=&quot;test.Main&quot;
       fork=&quot;yes&quot; &gt;
@@ -365,31 +401,31 @@ being the same directory in which JVM is to start up.</p>
   &lt;arg value=&quot;-h&quot;/&gt;
   &lt;jvmarg value=&quot;-Xrunhprof:cpu=samples,file=log.txt,depth=3&quot;/&gt;
 &lt;/java&gt;</pre>
-<p>Add system properties and JVM properties to JVM as in <code>java
--Xrunhprof:cpu=samples,file=log.txt,depth=3 -DDEBUG=true test.Main</code>
 
+<p>Use a given Java implementation (other than the one Ant is currently using) to run the class. For
+documentation in the log <var>taskname</var> is used to change the <q>[java]</q> log-prefix
+to <q>[java1.4]</q>.</p>
 <pre>
 &lt;java classname=&quot;ShowJavaVersion&quot; classpath=&quot;.&quot;
       jvm=&quot;path-to-java14-home/bin/java&quot; fork=&quot;true&quot;
       taskname=&quot;java1.4&quot;/&gt;</pre>
-<p>Use a given Java implementation (other than the one Ant is currently using) to run the class.
-For documentation in the log <var>taskname</var> is used to change the <q>[java]</q> log-prefix
-to <q>[java1.4]</q>.</p>
 
 <p><strong>Note</strong>: you can not specify the (highly deprecated) MS
 JVM, <samp>jview.exe</samp>, as <var>jvm</var>, since it takes different parameters than other JVMs.
 That JVM can be started from <code>&lt;exec&gt;</code> if required.</p>
 
+<p>Run the module <samp>TestModule</samp> resolved on the modulepath <samp>lib/:dist/test.jar</samp>
+with a maximum memory of 128 MB. Any non zero return code breaks the build.</p>
 <pre>
 &lt;java fork=&quot;true&quot;
       failonerror=&quot;true&quot;
       maxmemory=&quot;128m&quot;
       module=&quot;TestModule&quot;
       modulepath=&quot;lib:dist/test.jar&quot;/&gt;</pre>
-<p>Runs the module <samp>TestModule</samp> resolved on the
+
+<p>Run the class <samp>Main</samp> in module <samp>TestModule</samp> resolved on the
 modulepath <samp>lib/:dist/test.jar</samp> with a maximum memory of 128 MB. Any non zero return code
 breaks the build.</p>
-
 <pre>
 &lt;java fork=&quot;true&quot;
       failonerror=&quot;true&quot;
@@ -401,8 +437,5 @@ breaks the build.</p>
     &lt;pathelement location=&quot;dist/test.jar&quot;/&gt;
   &lt;/modulepath&gt;
 &lt;/java&gt;</pre>
-<p>Runs the class <samp>Main</samp> in module <samp>TestModule</samp> resolved on the
-modulepath <samp>lib/:dist/test.jar</samp> with a maximum memory of 128 MB. Any non zero return code
-breaks the build.</p>
 </body>
 </html>

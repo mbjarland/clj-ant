@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Sync Task</title>
 </head>
@@ -38,9 +38,9 @@ present in the target dir, it will get removed from the target.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>todir</td>
@@ -56,10 +56,11 @@ present in the target dir, it will get removed from the target.</p>
     <td>includeEmptyDirs</td>
     <td>Copy any empty directories included in the resource
       collection(s).<br/><strong>Note</strong>: this attribute also controls the behavior for any
-      nested &lt;preserveintarget&gt; element.  If this attribute is <q>false</q> (the default)
-      empty directories that only exist in the target directory will be removed even if they are
-      matched by the patterns of &lt;preserveintarget&gt;.  This can be overridden by
-      &lt;preserveintarget&gt;'s <var>preserveEmptyDirs</var> attribute.</td>
+      nested <code>&lt;preserveintarget&gt;</code> element.  If this attribute is <q>false</q> (the
+      default) empty directories that only exist in the target directory will be removed even if
+      they are matched by the patterns of <code>&lt;preserveintarget&gt;</code>.  This can be
+      overridden by <code>&lt;preserveintarget&gt;</code>'s <var>preserveEmptyDirs</var>
+      attribute.</td>
     <td>No; defaults to <q>false</q></td>
   </tr>
   <tr>
@@ -104,9 +105,9 @@ to <q>false</q>.</p>
 <h5>Additional parameters</h5>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>preserveEmptyDirs</td>
@@ -120,12 +121,17 @@ to <q>false</q>.</p>
 
 <h3>Examples</h3>
 
+<p>Overwrite all files in <samp>site</samp> with newer files from <samp>generated-site</samp>,
+delete files from <samp>site</samp> that are not present in <samp>generated-site</samp>.</p>
+
 <pre>
 &lt;sync todir=&quot;site&quot;&gt;
   &lt;fileset dir=&quot;generated-site&quot;/&gt;
 &lt;/sync&gt;</pre>
-<p>overwrites all files in <samp>site</samp> with newer files from <samp>generated-site</samp>,
-deletes files from <samp>site</samp> that are not present in <samp>generated-site</samp>.</p>
+
+<p>Overwrite all files in <samp>site</samp> with newer files from <samp>generated-site</samp>,
+delete files from <samp>site</samp> that are not present in <samp>generated-site</samp> but keep all
+files in any <samp>CVS</samp> sub-directory.</p>
 
 <pre>
 &lt;sync todir=&quot;site&quot;&gt;
@@ -134,9 +140,6 @@ deletes files from <samp>site</samp> that are not present in <samp>generated-sit
     &lt;include name=&quot;**/CVS/**&quot;/&gt;
   &lt;/preserveintarget&gt;
 &lt;/sync&gt;</pre>
-<p>overwrites all files in <samp>site</samp> with newer files from <samp>generated-site</samp>,
-deletes files from <samp>site</samp> that are not present in <samp>generated-site</samp> but keeps
-all files in any <samp>CVS</samp> sub-directory.</p>
 
 </body>
 </html>

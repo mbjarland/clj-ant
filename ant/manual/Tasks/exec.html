@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-  <meta http-equiv="Content-Language" content="en-us">
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <title>Exec Task</title>
 </head>
@@ -46,13 +46,13 @@ should be more reliable, as would be something like</p>
 <h4>Windows Users</h4>
 <p>The <code>&lt;exec&gt;</code> task delegates to <code>Runtime.exec</code> which in turn
 apparently
-calls <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms682425(v=vs.85).aspx"> <code>::CreateProcess</code></a>. It
-is the latter Win32 function that defines the exact semantics of the call. In particular, if you do
-not put a file extension on the executable, only <samp>.EXE</samp> files are looked for,
-not <samp>.COM</samp>, <samp>.CMD</samp> or other file types listed in the environment
-variable <code>PATHEXT</code>. That is only used by the shell.</p>
+calls <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms682425(v=vs.85).aspx"
+target="_top"><code>::CreateProcess</code></a>. It is the latter Win32 function that defines the
+exact semantics of the call. In particular, if you do not put a file extension on the executable,
+only <samp>.EXE</samp> files are looked for, not <samp>.COM</samp>, <samp>.CMD</samp> or other file
+types listed in the environment variable <code>PATHEXT</code>. That is only used by the shell.</p>
 <p>Note that <samp>.bat</samp> files cannot in general by executed directly.  One normally needs to
-execute the command shell executable <code>cmd</code> using the <code>/c</code> switch.</p>
+execute the command shell executable <kbd>cmd</kbd> using the <kbd>/c</kbd> switch.</p>
 <pre>
 &lt;target name="help"&gt;
   &lt;exec executable="cmd"&gt;
@@ -62,55 +62,55 @@ execute the command shell executable <code>cmd</code> using the <code>/c</code> 
   &lt;/exec&gt;
 &lt;/target&gt;</pre>
 
-<p>A common problem is not having the executable on the PATH. In case you get an error
-message <code>Cannot run program "...":CreateProcess error=2. The system cannot find the path
-specified.</code> have a look at your <code>PATH</code> variable. Just type the command directly on
-the command line and if Windows finds it, Ant should do it too. (Otherwise ask on the user
-mailinglist for help.) If Windows can not execute the program add the directory of the program to
-the <code>PATH</code> (<code>set PATH=%PATH%;dirOfProgram</code>) or specify the absolute path in
+<p>A common problem is not having the executable on the <code>PATH</code>. In case you get an error
+message <code class="output">Cannot run program "...":CreateProcess error=2. The system cannot find
+the path specified.</code> have a look at your <code>PATH</code> variable. Just type the command
+directly on the command line and if Windows finds it, Ant should do it too. (Otherwise ask on the
+user mailinglist for help.) If Windows can not execute the program, add the directory of the program
+to the <code>PATH</code> (<code>set PATH=%PATH%;dirOfProgram</code>) or specify the absolute path in
 the <var>executable</var> attribute in your buildfile.</p>
 
 <h4>Cygwin Users</h4>
-<p>The <code>&lt;exec&gt;</code> task will not understand paths such as <code>/bin/sh</code> for the
-executable parameter.  This is because JVM in which Ant is running is a standard Windows executable
-and is not aware of the Cygwin environment (i.e., doesn't load <samp>cygwin1.dll</samp>).  The only
-work-around for this is to compile a JVM under Cygwin (at your own risk).  See for
-instance <a href="https://cdn.rawgit.com/AdoptOpenJDK/openjdk-jdk9/dev/common/doc/building.html#cygwin">OpenJDK
-build instructions for cygwin</a>.</p>
+<p>The <code>&lt;exec&gt;</code> task will not understand paths such as <q>/bin/sh</q> for
+the <var>executable</var> parameter.  This is because JVM in which Ant is running is a standard
+Windows executable and is not aware of the Cygwin environment (i.e., doesn't
+load <samp>cygwin1.dll</samp>).  The only work-around for this is to compile a JVM under Cygwin (at
+your own risk).  See for
+instance <a href="https://cdn.rawgit.com/AdoptOpenJDK/openjdk-jdk9/dev/common/doc/building.html#cygwin"
+target="_top">OpenJDK build instructions for cygwin</a>.</p>
 
 <h4>OpenVMS Users</h4>
-<p>The command specified using <code>executable</code> and <code>&lt;arg&gt;</code> elements is
+<p>The command specified using <var>executable</var> and <code>&lt;arg&gt;</code> elements is
 executed exactly as specified inside a temporary DCL script.  This has some implications:</p>
 <ul>
+  <li>the DCL script will be created inside
+  the <a href="../running.html#tmpdir">temporary directory</a>.</li>
   <li>paths have to be written in VMS style</li>
   <li>if your <var>executable</var> points to a DCL script remember to prefix it with
     an <q>@</q>-sign (e.g. <var>executable</var>=<q>@[FOO]BAR.COM</q>), just as you would in a DCL
     script</li>
 </ul>
-<p>For <code>&lt;exec&gt;</code> to work in an environment with a JVM older than version 1.4.1-2 it
-is also <em>required</em> that the logical <code>JAVA$FORK_SUPPORT_CHDIR</code> is set
-to <code>TRUE</code> in the job table (see the <em>JDK Release Notes</em>).</p>
 
 <p>Please note that JVM provided by HP doesn't follow OpenVMS' conventions of exit codes.  If you
 run a JVM with this task, the task may falsely claim that an error occurred (or silently ignore an
-error).  Don't use this task to run <code>JAVA.EXE</code>, use a <code>&lt;java&gt;</code> task with
+error).  Don't use this task to run <kbd>JAVA.EXE</kbd>, use a <code>&lt;java&gt;</code> task with
 the <var>fork</var> attribute set to <q>true</q> instead as this task will follow the JVM's
 interpretation of exit codes.</p>
 
 <h4>RedHat S/390 Users</h4>
-<p>It has been <a href="https://www.mail-archive.com/linux-390@vm.marist.edu/msg22223.html">reported
-on linux-390</a> that shell scripts invoked via the Ant Exec task must have their interpreter
-specified, i.e., the scripts must start with something like:</p>
+<p>It has been <a href="https://www.mail-archive.com/linux-390@vm.marist.edu/msg22223.html"
+target="_top">reported on linux-390</a> that shell scripts invoked via the Ant Exec task must have
+their interpreter specified, i.e., the scripts must start with something like:</p>
 
 <pre>#!/bin/bash</pre>
 <p>or the task will fail as follows:</p>
-<pre>
+<pre class="output">
 [exec] Warning: UNIXProcess.forkAndExec native error: Exec format error
 [exec] Result: 255</pre>
 
 <h4 id="background">Running Ant as a background process on Unix(-like) systems</h4>
 
-<p>If you run Ant as a background process (like <code>ant &</code>) and use
+<p>If you run Ant as a background process (like <kbd>ant &amp;</kbd>) and use
 the <code>&lt;exec&gt;</code> task with <var>spawn</var> set to <q>false</q>, you must provide
 explicit input to the forked process or Ant will be suspended because it tries to read from the
 standard input.</p>
@@ -118,9 +118,9 @@ standard input.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>command</td>
@@ -240,7 +240,7 @@ standard input.</p>
   <tr>
     <td>vmlauncher</td>
     <td>Run command using the JVM's execution facilities where available. If set to <q>false</q> the
-      underlying OS's shell, either directly or through the <code>antRun</code> scripts, will be
+      underlying OS's shell, either directly or through the <kbd>antRun</kbd> scripts, will be
       used.  Under some operating systems, this gives access to facilities not normally available
       through JVM including, under Windows, being able to execute scripts, rather than their
       associated interpreter.  If you want to specify the name of the executable as a relative path
@@ -262,6 +262,27 @@ standard input.</p>
       when resolving the location of the executable. <em>since Ant 1.6.3</em></td>
     <td>No; default is <q>false</q></td>
   </tr>
+  <tr>
+    <td>discardOutput</td>
+    <td>Whether output should completely be discarded. This setting is
+      incompatible with any setting that redirects output to files or
+      properties.<br/>
+      If you set this to <q>true</q> error output will be discared as
+      well unless you redirect error output to files, properties or
+      enable <q>logError</q>.
+      <em>Since Ant 1.10.10</em>
+    </td>
+    <td>No; defaults to <q>false</q></td>
+  </tr>
+  <tr>
+    <td>discardError</td>
+    <td>Whether error output should completely be discarded. This
+      setting is incompatible with any setting that redirects error
+      output to files or properties as well as <q>logError</q>.
+      <em>Since Ant 1.10.10</em>
+    </td>
+    <td>No; defaults to <q>false</q></td>
+  </tr>
 </table>
 <h3>Examples</h3>
 <pre>
@@ -278,9 +299,9 @@ elements. See <a href="../using.html#arg">Command line arguments</a>.</p>
 nested <code>&lt;env&gt;</code> elements.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>key</td>
@@ -323,27 +344,30 @@ property and have it assigned to the result code (barring immutability, of cours
 then <code>&lt;exec&gt;</code> halts the build unless <var>failifexecutionfails</var> is set
 to <q>false</q>. You can use that to run a program if it exists, but otherwise do nothing.</p>
 <p>What do those error codes mean? Well, they are OS dependent. On Windows boxes you have to look
-at <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms681382(v=vs.85).aspx"> the
-documentation</a>; <code>error=2</code> means 'no such program', which usually means it is not on
-the path. Any time you see such an error from any Ant task, it is usually not an Ant bug, but some
-configuration problem on your machine.</p>
+at <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms681382(v=vs.85).aspx"
+target="_top">the documentation</a>; <code>error=2</code> means 'no such program', which usually
+means it is not on the path. Any time you see such an error from any Ant task, it is usually not an
+Ant bug, but some configuration problem on your machine.</p>
 
 <h3>Examples</h3>
+
+<p>Start <kbd>emacs</kbd> on display 1 of the X Window System.</p>
 <pre>
 &lt;exec executable=&quot;emacs&quot;&gt;
   &lt;env key=&quot;DISPLAY&quot; value=&quot;:1.0&quot;/&gt;
 &lt;/exec&gt;
 </pre>
-<p>starts <code>emacs</code> on display 1 of the X Window System.</p>
 
+<p>Add <samp>${basedir}/bin</samp> to the <code>PATH</code> of the system command.</p>
 <pre>
 &lt;property environment=&quot;env&quot;/&gt;
 &lt;exec ... &gt;
   &lt;env key=&quot;PATH&quot; path=&quot;${env.PATH}:${basedir}/bin&quot;/&gt;
 &lt;/exec&gt;
 </pre>
-<p>adds <samp>${basedir}/bin</samp> to the <code>PATH</code> of the system command.</p>
 
+<p>Start the <samp>${browser}</samp> with the specified <samp>${file}</samp> and end the Ant
+process. The browser will remain.</p>
 <pre>
 &lt;property name="browser" location="C:/Program Files/Internet Explorer/iexplore.exe"/&gt;
 &lt;property name="file" location="ant/docs/manual/index.html"/&gt;
@@ -352,9 +376,12 @@ configuration problem on your machine.</p>
     &lt;arg value="${file}"/&gt;
 &lt;/exec&gt;
 </pre>
-<p>Starts the <samp>${browser}</samp> with the specified <samp>${file}</samp> and end the Ant
-process. The browser will remain.</p>
 
+<p>Send the string <q>blah before blah</q> to the <kbd>cat</kbd> executable, using
+an <a href="../Types/filterchain.html">&lt;inputfilterchain&gt;</a> to replace <q>before</q>
+with <q>after</q> on the way in. Output is sent to the file <samp>redirector.out</samp> and stored
+in a property of the same name. Similarly, error output is sent to a file and a property, both
+named <samp>redirector.err</samp>.</p>
 <pre>
 &lt;exec executable=&quot;cat&quot;&gt;
     &lt;redirector outputproperty=&quot;redirector.out&quot;
@@ -369,14 +396,9 @@ process. The browser will remain.</p>
 &lt;/exec&gt;
 </pre>
 
-<p>Sends the string <q>blah before blah</q> to the <code>cat</code> executable, using
-an <a href="../Types/filterchain.html">&lt;inputfilterchain&gt;</a> to replace <q>before</q>
-with <q>after</q> on the way in.  Output is sent to the file <samp>redirector.out</samp> and stored
-in a property of the same name.  Similarly, error output is sent to a file and a property, both
-named <samp>redirector.err</samp>.</p>
-
-<p><strong>Note</strong>: do not try to specify arguments using a simple arg-element and separate
-them by spaces. This results in only a single argument containing the entire string.</p>
+<p><strong>Note</strong>: do not try to specify arguments using a simple <code>arg</code>-element
+and separate them by spaces. This results in only a single argument containing the entire
+string.</p>
 <p><strong>Timeouts</strong>: If a timeout is specified, when it is reached the sub process is
 killed and a message printed to the log. The return value of the execution will be <q>-1</q>, which
 will halt the build if <var>failonerror</var>=<q>true</q>, but be ignored otherwise.</p>

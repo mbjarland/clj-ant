@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>MimeMail Task</title>
 </head>
@@ -31,16 +31,24 @@
 
 <h3>Description</h3>
 <p>Sends SMTP mail with MIME
-attachments.  <a href="https://www.oracle.com/technetwork/java/index-138643.html">JavaMail</a>
-and <a href="https://www.oracle.com/technetwork/java/javase/jaf-135115.html">Java Activation
-Framework</a> are required for this task.</p>
+attachments.  <a href="https://eclipse-ee4j.github.io/mail/"
+target="_top">Jakarta Mail</a>
+and <a href="https://eclipse-ee4j.github.io/jaf/" target="_top">Jakarta
+Activation</a> are required for this task. The Java
+Activation Framework is part of the standard class library for Java 6
+to Java 10 but the <code>java.activation</code> module has been
+deprecated in Java 9 and must be enabled explicitly when running on
+Java 10. Alternatively it can be provided as an external
+library. Javamail has become Jakarta Mail and the Java activation
+Framework has become Jakarta Activation and both are part of the
+Jakarta effort at Eclipse.</p>
 <p>Multiple files can be attached using <a href="../Types/fileset.html">FileSets.</a></p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>message</td>
@@ -91,11 +99,12 @@ Framework</a> are required for this task.</p>
   </tr>
 </table>
 <h3>Examples</h3>
-<p><strong>Send a single HTML file as the body of a message</strong></p>
+<p>Send a single HTML file as the body of a message</p>
 <pre>
 &lt;mimemail messageMimeType=&quot;text/html&quot; messageFile=&quot;overview-summary.html&quot;
           tolist=&quot;you&quot; subject=&quot;JUnit Test Results: ${TODAY}&quot; from=&quot;me&quot;/&gt;</pre>
-<p><strong>Sends all files in a directory as attachments</strong></p>
+
+<p>Send all files in a directory as attachments</p>
 <pre>
 &lt;mimemail message=&quot;See attached files&quot; tolist=&quot;you&quot; subject=&quot;Attachments&quot; from=&quot;me&quot;&gt;
     &lt;fileset dir=&quot;.&quot;&gt;

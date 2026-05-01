@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Local Task</title>
 </head>
@@ -42,9 +42,9 @@ examples section.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -52,6 +52,12 @@ examples section.</p>
     <td>Yes</td>
   </tr>
 </table>
+
+<h3>Parameters specified as nested elements</h3>
+<h4>Name</h4>
+<p>As an alternative to (or in conjunction with) the <code>name</code> attribute, the nested text of
+each of one or more nested <code>&lt;name&gt;</code> elements specifies a property name to declare in
+the local scope. <em>Since Ant 1.10.13</em></p>
 
 <h3>Examples</h3>
 
@@ -73,7 +79,7 @@ examples section.</p>
 
 <p>outputs</p>
 
-<pre>
+<pre class="output">
 step1:
      [echo] Before local: foo is foo
      [echo] After local: foo is bar
@@ -110,7 +116,7 @@ remainder of the target <q>step1</q>.</p>
 
 <p>outputs something similar to</p>
 
-<pre>
+<pre class="output">
     [echo] global 3: foo is foo
     [echo] global 1: foo is foo
     [echo] First sequential: foo is bar.1
@@ -171,5 +177,15 @@ come up with unique names in some cases.</p>
 <p>Each invocation gets its own property named <code>parent</code> and there will be no global
 property of that name at all.</p>
 
+<h4>Use of nested name elements</h4>
+This style declares and executes a single task, as compensation for requiring more lines of XML than
+would individual invocations using <code>@name</code>:
+<pre>
+&lt;local&gt;
+  &lt;name&gt;foo&lt;/name&gt;
+  &lt;name&gt;bar&lt;/name&gt;
+  &lt;name&gt;baz&lt;/name&gt;
+&lt;/local&gt;
+</pre>
 </body>
 </html>

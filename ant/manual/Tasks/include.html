@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,9 +15,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Language" content="en-us">
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <title>Include Task</title>
 </head>
@@ -32,8 +32,8 @@
 
   <p>On execution it will read another Ant file into the same project rewriting the included
     target <var>name</var>s and <var>depends</var> lists.  This is different
-    from <a href="https://ant.apache.org/faq.html#xml-entity-include">Entity Includes as explained
-    in the Ant FAQ</a> insofar as the target names get prefixed by the included
+    from <a href="https://ant.apache.org/faq.html#xml-entity-include" target="_top">Entity Includes
+    as explained in the Ant FAQ</a> insofar as the target names get prefixed by the included
     project's <var>name</var> or <var>as</var> attribute and do not appear as if the file was
     contained in the including file.</p>
 
@@ -135,9 +135,9 @@
 <table class="attr">
   <tbody>
     <tr>
-      <th>Attribute</th>
-      <th>Description</th>
-      <th>Required</th>
+      <th scope="col">Attribute</th>
+      <th scope="col">Description</th>
+      <th scope="col">Required</th>
     </tr>
     <tr>
       <td>file</td>
@@ -195,21 +195,21 @@ directory <samp>common</samp> inside the jar file <samp>common.jar</samp>.</p>
 <p>The short version: Use <code>import</code> if you intend to override a target, otherwise
 use <code>include</code>.</p>
 
-<p>When using <code>import</code> the imported targets are available by up to two names.  Their
+<p>When <code>import</code> is used, the imported targets are available by up to two names: their
 "normal" name without any prefix and potentially with a prefixed name (the value of
 the <var>as</var> attribute or the imported project's <var>name</var> attribute, if any).</p>
 
-<p>When using <code>include</code> the included targets are only available in the prefixed form.</p>
+<p>When <code>include</code> is used, the included targets are only available in the prefixed form.</p>
 
-<p>When using <code>import</code>, the imported target's <var>depends</var> attribute remains
+<p>When <code>import</code> is used, the imported target's <var>depends</var> attribute remains
 unchanged, i.e. it uses "normal" names and allows you to override targets in the dependency
 list.</p>
 
-<p>When using <code>include</code>, the included targets cannot be overridden and
+<p>When <code>include</code> is used, the included targets cannot be overridden and
 their <var>depends</var> attributes are rewritten so that prefixed names are used.  This allows
 writers of the included file to control which target is invoked as part of the dependencies.</p>
 
-<p>It is possible to <code>include</code> the same file more than once by using different prefixes,
+<p>It is possible to <code>include</code> the same file more than once by using different prefixes;
 it is not possible to <code>import</code> the same file more than once.</p>
 
 <h4>Examples</h4>
@@ -242,7 +242,7 @@ it is not possible to <code>import</code> the same file more than once.</p>
 
 <p>Running the build file will emit:</p>
 
-<pre>
+<pre class="output">
 setUp:
 
 nested.echo:
@@ -267,7 +267,7 @@ test:
 
 <p>Running the target build file will emit:</p>
 
-<pre>
+<pre class="output">
 nested.setUp:
 
 nested.echo:

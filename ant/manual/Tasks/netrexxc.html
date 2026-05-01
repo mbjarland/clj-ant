@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>NetRexxC Task</title>
 </head>
@@ -50,8 +50,9 @@ nested <code>&lt;include&gt;</code>, <code>&lt;exclude&gt;</code>
 and <code>&lt;patternset&gt;</code> elements.</p>
 <p>All attributes except <var>classpath</var>, <var>srcdir</var> and <var>destDir</var> are also
 available as properties in the form <code>ant.netrexxc.<i>attributename</i></code>,
-eg.<br/><code>&lt;property name="ant.netrexxc.verbose" value="noverbose"/&gt;</code><br/> or from the
-command line as<br/><code>ant -Dant.netrexxc.verbose=noverbose ...</code></p>
+eg.<br/><code class="code">&lt;property name="ant.netrexxc.verbose"
+value="noverbose"/&gt;</code><br/> or from the command line as<br/><kbd>ant
+-Dant.netrexxc.verbose=noverbose ...</kbd></p>
 <p><strong>Note</strong>: This task depends on external libraries not included in the Apache Ant
 distribution. See <a href="../install.html#librarydependencies">Library Dependencies</a> for more
 information.</p>
@@ -59,9 +60,9 @@ information.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>binary</td>
@@ -174,7 +175,7 @@ information.</p>
     <td>removeKeepExtension</td>
     <td>Tells whether the trailing <samp>.keep</samp> in <var>compile</var>=<q>false</q> mode should
       be removed so that the resulting Java source file really ends on <samp>.java</samp>. This
-      facilitates the use of the <code>javadoc</code> tool later on.</td>
+      facilitates the use of the <kbd>javadoc</kbd> tool later on.</td>
     <td>No</td>
   </tr>
   <tr>

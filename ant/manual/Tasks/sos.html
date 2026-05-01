@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
   <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
   <title>SOS Tasks</title>
@@ -40,15 +41,15 @@
 
 <p>These tasks provide an interface to
 the <a href="https://msdn.microsoft.com/en-us/library/3h0544kx(v=vs.80).aspx"
-target="_top">Microsoft Visual SourceSafe</a> SCM
-via <a href="https://sourcegear.com">SourceGear's</a> <a href="https://sourcegear.com/sos/">SourceOffSite</a>
+target="_top">Microsoft Visual SourceSafe</a> SCM via <a href="https://sourcegear.com"
+target="_top">SourceGear's</a> <a href="https://sourcegear.com/sos/" target="_top">SourceOffSite</a>
 product. SourceOffSite is an add-on to Microsoft's VSS, that allows remote development teams and
 tele-commuters that need fast and secure read/write access to a centralized SourceSafe database via
 any TCP/IP connection. SOS provides Linux, Solaris &amp; Windows
-clients. The <code>org.apache.tools.ant.taskdefs.optional.sos</code> package consists of a simple
-framework to support SOS functionality as well as some Apache Ant tasks encapsulating frequently
-used SOS commands.  Although it is possible to use these commands on the desktop, they were
-primarily intended to be used by automated build systems. These tasks have been tested with
+clients. The <code class="code">org.apache.tools.ant.taskdefs.optional.sos</code> package consists
+of a simple framework to support SOS functionality as well as some Apache Ant tasks encapsulating
+frequently used SOS commands.  Although it is possible to use these commands on the desktop, they
+were primarily intended to be used by automated build systems. These tasks have been tested with
 SourceOffSite version 3.5.1 connecting to VisualSourceSafe 6.0. The tasks have been tested with
 Linux, Solaris &amp; Windows 2000.</p>
 
@@ -87,15 +88,15 @@ Linux, Solaris &amp; Windows 2000.</p>
 <table class="attr">
   <thead>
     <tr>
-      <th>Attribute</th>
-      <th>Values</th>
-      <th>Required</th>
+      <th scope="col">Attribute</th>
+      <th scope="col">Values</th>
+      <th scope="col">Required</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>soscmd</td>
-      <td>Directory which contains <code>soscmd(.exe)</code></td>
+      <td>Directory which contains <kbd>soscmd(.exe)</kbd></td>
       <td>No; by default, the executable must be in the path</td>
     </tr>
     <tr>
@@ -174,6 +175,11 @@ Linux, Solaris &amp; Windows 2000.</p>
 
 <h3>Example</h3>
 
+<p>Connect to a SourceOffsite server on <samp>192.168.10.6:8888</samp>
+with <q>build</q>, <q>build</q> as the username &amp; password. The SourceSafe database resides on
+the same box as the SOS server &amp; the VSS database is at <samp>d:\vss\srcsafe.ini</samp>. Do a
+recursive <var>GetProject</var> on <samp>$/SourceRoot/project1</samp>, using <samp>tmp</samp> as the
+working directory.</p>
 <pre>
 &lt;sosget verbose=&quot;true&quot;
         recursive=&quot;true&quot;
@@ -183,11 +189,6 @@ Linux, Solaris &amp; Windows 2000.</p>
         projectpath=&quot;$/SourceRoot/project1&quot;
         sosserverpath=&quot;192.168.10.6:8888&quot;
         vssserverpath=&quot;d:\vss\srcsafe.ini&quot;/&gt;</pre>
-<p>Connects to a SourceOffsite server on <samp>192.168.10.6:8888</samp>
-with <q>build</q>, <q>build</q> as the username &amp; password. The SourceSafe database resides on
-the same box as the SOS server &amp; the VSS database is at <samp>d:\vss\srcsafe.ini</samp>. Does a
-recursive <var>GetProject</var> on <samp>$/SourceRoot/project1</samp>, using <samp>tmp</samp> as the
-working directory.</p>
 
 <hr/>
 <h2 id="SOSLabel">SOSLabel</h2>
@@ -199,15 +200,15 @@ working directory.</p>
 <table class="attr">
   <thead>
     <tr>
-      <th>Attribute</th>
-      <th>Values</th>
-      <th>Required</th>
+      <th scope="col">Attribute</th>
+      <th scope="col">Values</th>
+      <th scope="col">Required</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>soscmd</td>
-      <td>Directory which contains <code>soscmd(.exe)</code></td>
+      <td>Directory which contains <kbd>soscmd(.exe)</kbd></td>
       <td>No; by default, the executable must be in the path</td>
     </tr>
     <tr>
@@ -254,6 +255,11 @@ working directory.</p>
 </table>
 
 <h3>Example</h3>
+
+<p>Connect to a SourceOffsite server on <samp>192.168.10.6:8888</samp>
+with <q>build</q>, <q>build</q> as the username &amp; password. The SourceSafe database resides on
+the same box as the SOS server &amp; the VSS database is at <samp>d:\vss\srcsafe.ini</samp>. Label
+the <samp>$/SourceRoot/project1</samp> project with <q>test label</q>.</p>
 <pre>
 &lt;soslabel username=&quot;build&quot;
           password=&quot;build&quot;
@@ -261,10 +267,6 @@ working directory.</p>
           projectpath=&quot;$/SourceRoot/project1&quot;
           sosserverpath=&quot;192.168.10.6:8888&quot;
           vssserverpath=&quot;d:\vss\srcsafe.ini&quot;/&gt;</pre>
-<p>Connects to a SourceOffsite server on <samp>192.168.10.6:8888</samp>
-with <q>build</q>, <q>build</q> as the username &amp; password. The SourceSafe database resides on
-the same box as the SOS server &amp; the VSS database is at <samp>d:\vss\srcsafe.ini</samp>. Labels
-the <samp>$/SourceRoot/project1</samp> project with <q>test label</q>.</p>
 
 <hr/>
 <h2 id="SOSCheckIn">SOSCheckIn</h2>
@@ -275,15 +277,15 @@ the <samp>$/SourceRoot/project1</samp> project with <q>test label</q>.</p>
 <table class="attr">
   <thead>
     <tr>
-      <th>Attribute</th>
-      <th>Values</th>
-      <th>Required</th>
+      <th scope="col">Attribute</th>
+      <th scope="col">Values</th>
+      <th scope="col">Required</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>soscmd</td>
-      <td>Directory which contains <code>soscmd(.exe)</code></td>
+      <td>Directory which contains <kbd>soscmd(.exe)</kbd></td>
       <td>No; by default, the executable must be in the path</td>
     </tr>
     <tr>
@@ -356,6 +358,12 @@ the <samp>$/SourceRoot/project1</samp> project with <q>test label</q>.</p>
 </table>
 
 <h3>Example</h3>
+
+<p>Connect to a SourceOffsite server on <samp>server1:8888</samp> with <q>build</q>, <q>build</q> as
+the username &amp; password. The SourceSafe database resides on a different box
+(<samp>server2</samp>) &amp; the VSS database is on a share called <samp>vss</samp>. Check-in only
+the <samp>foobar.txt</samp> file adding a comment of <q>comment abc</q>. Extra status messages will
+be displayed on screen.</p>
 <pre>
 &lt;soscheckin username=&quot;build&quot;
             password=&quot;build&quot;
@@ -365,12 +373,6 @@ the <samp>$/SourceRoot/project1</samp> project with <q>test label</q>.</p>
             projectpath=&quot;$/SourceRoot/project1&quot;
             sosserverpath=&quot;server1:8888&quot;
             vssserverpath=&quot;\\server2\vss\srcsafe.ini&quot;/&gt;</pre>
-
-<p>Connects to a SourceOffsite server on <samp>server1:8888</samp> with <q>build</q>, <q>build</q>
-as the username &amp; password. The SourceSafe database resides on a different box
-(<samp>server2</samp>) &amp; the VSS database is on a share called <samp>vss</samp>. Checks-in only
-the <samp>foobar.txt</samp> file adding a comment of <q>comment abc</q>. Extra status messages will
-be displayed on screen.</p>
 
 <hr/>
 <h2 id="SOSCheckOut">SOSCheckOut</h2>
@@ -383,15 +385,15 @@ be displayed on screen.</p>
 <table class="attr">
   <thead>
     <tr>
-      <th>Attribute</th>
-      <th>Values</th>
-      <th>Required</th>
+      <th scope="col">Attribute</th>
+      <th scope="col">Values</th>
+      <th scope="col">Required</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>soscmd</td>
-      <td>Directory which contains <code>soscmd(.exe)</code></td>
+      <td>Directory which contains <kbd>soscmd(.exe)</kbd></td>
       <td>No; by default, the executable must be in the path</td>
     </tr>
     <tr>
@@ -458,6 +460,13 @@ be displayed on screen.</p>
 </table>
 
 <h3>Example</h3>
+
+<p>Connect to a SourceOffsite server on <samp>server1:8888</samp> with <q>build</q>, <q>build</q> as
+the username &amp; password. The SourceSafe database resides on a different box
+(<samp>server2</samp>) &amp; the VSS database is on a share
+called <samp>vss</samp>. Check-out <q>project1</q>, only the <samp>project1</samp> directory will be
+locked as the recursive option was not set. Extra status messages will be displayed on
+screen. The <code>soscmd(.exe)</code> file to be used resides in <samp>/usr/local/bin</samp>.</p>
 <pre>
 &lt;soscheckout soscmd=&quot;/usr/local/bin&quot;
              verbose=&quot;true&quot;
@@ -466,12 +475,6 @@ be displayed on screen.</p>
              projectpath=&quot;$/SourceRoot/project1&quot;
              sosserverpath=&quot;192.168.10.6:8888&quot;
              vssserverpath=&quot;\\server2\vss\srcsafe.ini&quot;/&gt;</pre>
-<p>Connects to a SourceOffsite server on <samp>server1:8888</samp> with <q>build</q>, <q>build</q>
-as the username &amp; password. The SourceSafe database resides on a different box
-(<samp>server2</samp>) &amp; the VSS database is on a share
-called <samp>vss</samp>. Checks-out <q>project1</q>, only the <samp>project1</samp> directory will
-be locked as the recursive option was not set. Extra status messages will be displayed on
-screen. The <code>soscmd(.exe)</code> file to be used resides in <samp>/usr/local/bin</samp>.</p>
 
 </body>
 </html>

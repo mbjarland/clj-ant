@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>ManifestClassPath Task</title>
 </head>
@@ -51,9 +51,9 @@ to be when deploying the jar.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>property</td>
@@ -84,15 +84,17 @@ a path defined elsewhere using the <code>&lt;classpath refid=&quot;pathid&quot;/
 This classpath must not be empty, and is required.</p>
 
 <h3>Examples</h3>
+
+<p>Assuming a path with <var>id</var>=<q>classpath</q> was already defined, convert this path
+relatively to the <samp>build/</samp> directory that will contain <samp>acme.jar</samp>, which can
+later be created with <code>&lt;jar&gt;</code> with a nested <code>&lt;manifest&gt;</code> element
+that lists an <code>&lt;attribute name="Class-Path" value="${jar.classpath}"/&gt;</code>.</p>
+
 <pre>
 &lt;manifestclasspath property="jar.classpath"
                    jarfile="build/acme.jar"&gt;
     &lt;classpath refid="classpath"/&gt;
 &lt;/manifestclasspath&gt;</pre>
-<p>Assuming a path of id <q>classpath</q> was already defined, convert this path relatively to
-the <samp>build/</samp> directory that will contain <samp>acme.jar</samp>, which can later be
-created with <code>&lt;jar&gt;</code> with a nested <code>&lt;manifest&gt;</code> element that lists
-an <code>&lt;attribute name="Class-Path" value="${jar.classpath}"/&gt;</code>.</p>
 
 </body>
 </html>

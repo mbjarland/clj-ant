@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Apache Ant User Manual</title>
 </head>
@@ -33,9 +33,9 @@ provide interest whilst waiting for your builds to complete...</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>imageurl</td>
@@ -69,13 +69,13 @@ that makes it clear to readers of the build exactly what is going on.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>useproxy</td>
-    <td>Use a proxy to access <var>imgurl</var>.<br/>Note: Only tested on JDK 1.2.2 and above</td>
+    <td>Use a proxy to access <var>imgurl</var>.</td>
     <td>No</td>
   </tr>
   <tr>
@@ -99,16 +99,17 @@ that makes it clear to readers of the build exactly what is going on.</p>
     <td>No</td>
   </tr>
 </table>
-<h3>Examples</h3>
-<pre>&lt;splash/&gt;</pre>
-<p>Splash <samp>images/ant_logo_large.gif</samp> from the classpath.</p>
-<pre>
-&lt;splash imageurl=&quot;http://jakarta.apache.org/images/jakarta-logo.gif&quot;
-        useproxy=&quot;true&quot;
-        showduration=&quot;5000&quot;/&gt;
 
-</pre>
-<p>Splashes the jakarta logo, for an initial period of 5 seconds.</p>
+<h3>Examples</h3>
+
+<p>Splash <samp>images/ant_logo_large.gif</samp> from the classpath.</p>
+<pre>&lt;splash/&gt;</pre>
+
+<p>Splash the Jakarta logo, for an initial period of 5 seconds.</p>
+<pre>
+&lt;splash imageurl=&quot;https://jakarta.apache.org/images/jakarta-logo.gif&quot;
+        useproxy=&quot;true&quot;
+        showduration=&quot;5000&quot;/&gt;</pre>
 
 <p>Splash with controlled progress and nondefault text</p>
 <pre>
@@ -126,8 +127,7 @@ that makes it clear to readers of the build exactly what is going on.</p>
     &lt;sleep seconds="1"/&gt;
     &lt;echo&gt;Progress: 100%&lt;/echo&gt;
     &lt;sleep seconds="3"/&gt;
-&lt;/target&gt;
-</pre>
+&lt;/target&gt;</pre>
 
 </body>
 </html>

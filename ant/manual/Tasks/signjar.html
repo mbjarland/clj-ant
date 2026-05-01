@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>SignJar Task</title>
 </head>
@@ -27,12 +27,13 @@
 <h2 id="signjar">SignJar</h2>
 <h3>Description</h3>
 <p>Signing a jar allows users to authenticate the publisher.</p>
-<p>Signs JAR files with the <a target="_blank"
-href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jarsigner.html"><code>jarsigner</code>
-command line tool</a>.  It will take a named file in the <var>jar</var> attribute, and an
-optional <var>destDir</var> or <var>signedJar</var> attribute. Nested paths are also supported; here
-only an (optional) <var>destDir</var> is allowed. If a destination directory or explicit JAR file
-name is not provided, JARs are signed in place.</p>
+<p>Signs JAR files with
+the <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jarsigner.html"
+target="_top"><kbd>jarsigner</kbd></a> command line tool.  It will take a named file in
+the <var>jar</var> attribute, and an optional <var>destDir</var> or <var>signedJar</var>
+attribute. Nested paths are also supported; here only an (optional) <var>destDir</var> is
+allowed. If a destination directory or explicit JAR file name is not provided, JARs are signed in
+place.</p>
 <p>Dependency rules</p>
 <ul>
   <li>Nonexistent destination JARs are created/signed</li>
@@ -46,9 +47,9 @@ name is not provided, JARs are signed in place.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>jar</td>
@@ -62,7 +63,9 @@ name is not provided, JARs are signed in place.</p>
   </tr>
   <tr>
     <td>storepass</td>
-    <td>password for keystore integrity.</td>
+    <td>password for keystore integrity. Ant will not use
+    the <code>-storepass</code> command line argument but send the
+    password to jarsigner when it prompts for it.</td>
     <td>Yes</td>
   </tr>
   <tr>
@@ -118,7 +121,7 @@ name is not provided, JARs are signed in place.</p>
   </tr>
   <tr>
     <td>maxmemory</td>
-    <td>Specifies the maximum memory the <code>jarsigner</code> JVM will use. Specified in the style
+    <td>Specifies the maximum memory the <kbd>jarsigner</kbd> JVM will use. Specified in the style
       of standard Java memory specs (e.g. <q>128m</q> = 128 MBytes)</td>
     <td>No</td>
   </tr>
@@ -149,9 +152,9 @@ name is not provided, JARs are signed in place.</p>
   </tr>
   <tr>
     <td>executable</td>
-    <td>Specify a particular <code>jarsigner</code> executable to use in place of the default binary
+    <td>Specify a particular <kbd>jarsigner</kbd> executable to use in place of the default binary
       (found in the same JDK as Apache Ant is running in).<br/>Must support the same command line
-      options as the Sun JDK <code>jarsigner</code> command.  <em>since Ant 1.8.0</em>.</td>
+      options as the Sun JDK <kbd>jarsigner</kbd> command.  <em>since Ant 1.8.0</em>.</td>
     <td>No</td>
   </tr>
   <tr>
@@ -175,13 +178,36 @@ name is not provided, JARs are signed in place.</p>
     <td>name of TSA digest algorithm. <em>since Ant 1.10.2</em></td>
     <td>No</td>
   </tr>
+  <tr>
+    <td>providername</td>
+    <td>name of a cryptographic service provider's name
+      when listed in the security properties file.
+      <em>since Ant 1.10.6</em>.</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>providerclass</td>
+    <td>name of a cryptographic service provider's master
+      class file when the service provider is not listed in the security
+      properties file.
+      <em>since Ant 1.10.6</em>.</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>providerarg</td>
+    <td>Represents an optional string input argument for
+      the constructor of provider_class_name. Ignored
+      if <code>providerclass</code> is not set.
+      <em>since Ant 1.10.6</em>.</td>
+    <td>No</td>
+  </tr>
 </table>
 <h3>Parameters as nested elements</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>path</td>
@@ -204,17 +230,30 @@ name is not provided, JARs are signed in place.</p>
       variables</a></td>
     <td>No, and only one can be supplied</td>
   </tr>
- </table>
+  <tr>
+    <td>arg</td>
+    <td>Use this to specify a <kbd>jarsigner</kbd>
+    <a href="../using.html#arg">command line argument</a> not
+    explicitly supported via an attribute.
+    <em>since Ant 1.10.6</em>.</td>
+    <td>No</td>
+  </tr>
+</table>
 
 <h3>Examples</h3>
-<p>For instructions on generating a code signing certificate, see the <a target="_blank"
-href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/keytool.html">keytool
-documentation</a> and/or instructions from your certificate authority.</p>
+<p>For instructions on generating a code signing certificate, see
+the <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/keytool.html"
+target="_top">keytool documentation</a> and/or instructions from your certificate authority.</p>
+
+<p>Sign the <samp>ant.jar</samp> with alias <q>apache-group</q> accessing the keystore and private
+key via <q>secret</q> password.</p>
 <pre>
 &lt;signjar jar=&quot;${dist}/lib/ant.jar&quot;
          alias=&quot;apache-group&quot; storepass=&quot;secret&quot;/&gt;</pre>
-<p>signs the <samp>ant.jar</samp> with alias <q>apache-group</q> accessing the keystore and private
-key via <q>secret</q> password.</p>
+
+<p>Sign all JAR files matching the <samp>dist/**/*.jar</samp> pattern, copying them to the
+directory <samp>signed</samp> afterwards. The flatten mapper means that they will all be copied to
+this directory, not to subdirectories.</p>
 <pre>
 &lt;signjar destDir="signed"
          alias="testonly" keystore="testkeystore"
@@ -225,9 +264,9 @@ key via <q>secret</q> password.</p>
   &lt;/path&gt;
   &lt;flattenmapper/&gt;
 &lt;/signjar&gt;</pre>
-<p>Sign all JAR files matching the <samp>dist/**/*.jar</samp> pattern, copying them to the
-directory <samp>signed</samp> afterwards. The flatten mapper means that they will all be copied to
-this directory, not to subdirectories.</p>
+
+<p>Sign all the JAR files in <samp>dist/**/*.jar</samp> <em>in-situ</em>. Lazy signing is used, so
+the files will only be signed if they are not already signed.</p>
 <pre>
 &lt;signjar alias="testonly" keystore="testkeystore"
          storepass="apacheant"
@@ -236,8 +275,11 @@ this directory, not to subdirectories.</p>
     &lt;fileset dir="dist" includes="**/*.jar"/&gt;
   &lt;/path&gt;
 &lt;/signjar&gt;</pre>
-<p>Sign all the JAR files in <samp>dist/**/*.jar</samp> <em>in-situ</em>. Lazy signing is used, so
-the files will only be signed if they are not already signed.</p>
+
+<p>Sign all the JAR files in <samp>dist/**/*.jar</samp> using the digest algorithm SHA1 and the
+signature algorithm MD5withRSA. This is especially useful when you want to use the JDK
+7 <kbd>jarsigner</kbd> (which uses SHA256 and SHA256withRSA as default) to create signed jars that
+will be deployed on platforms not supporting SHA256 and SHA256withRSA.</p>
 <pre>
 &lt;signjar alias="testonly" keystore="testkeystore"
          storepass="apacheant"
@@ -247,10 +289,7 @@ the files will only be signed if they are not already signed.</p>
     &lt;fileset dir="dist" includes="**/*.jar"/&gt;
   &lt;/path&gt;
 &lt;/signjar&gt;</pre>
-<p>Sign all the JAR files in <samp>dist/**/*.jar</samp> using the digest algorithm SHA1 and the
-signature algorithm MD5withRSA. This is especially useful when you want to use the JDK
-7 <code>jarsigner</code> (which uses SHA256 and SHA256withRSA as default) to create signed jars that
-will be deployed on platforms not supporting SHA256 and SHA256withRSA.</p>
+
 <h3>About timestamp signing</h3>
 
 <p>Timestamps record the date and time that a signature took place, allowing the signature to be
@@ -258,8 +297,8 @@ verified as of that point in time.  With trusted timestamping, users can verify 
 occurred before a certificate's expiration or revocation. Without this timestamp, users can only
 verify the signature as of their current date.</p>
 
-<p>Timestamped JAR files were introduced in Java 5 and supported <em>since Ant 1.7</em>. <em>Since
-Ant 1.9.5</em>, Ant can use unauthenticated proxies for this signing process.</p>
+<p>Timestamped JAR files were introduced in Java 5; they are supported <em>since Ant
+1.7</em>. Unauthenticated proxies can be used to access TSAs <em>since Ant 1.9.5</em>.</p>
 
 <p>Common public timestamp authorities include</p>
 <ul>

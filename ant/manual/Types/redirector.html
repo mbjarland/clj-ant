@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Redirector Type</title>
 </head>
@@ -36,9 +36,9 @@ specify source (input) and destination (output/error) files.</p>
 <p>The <code>&lt;redirector&gt;</code> element accepts the following attributes:</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>output</td>
@@ -128,6 +128,27 @@ specify source (input) and destination (output/error) files.</p>
       <em>Since Ant 1.9.4</em>
     </td>
     <td>No; default is <q>false</q></td>
+  </tr>
+  <tr>
+    <td>discardOutput</td>
+    <td>Whether output should completely be discarded. This setting is
+      incompatible with any setting that redirects output to files or
+      properties.<br/>
+      If you set this to <q>true</q> error output will be discared as
+      well unless you redirect error output to files, properties or
+      enable <q>logError</q>.
+      <em>Since Ant 1.10.10</em>
+    </td>
+    <td>No; defaults to <q>false</q></td>
+  </tr>
+  <tr>
+    <td>discardError</td>
+    <td>Whether error output should completely be discarded. This
+      setting is incompatible with any setting that redirects error
+      output to files or properties as well as <q>logError</q>.
+      <em>Since Ant 1.10.10</em>
+    </td>
+    <td>No; defaults to <q>false</q></td>
   </tr>
 </table>
 <h3>Parameters specified as nested elements</h3>

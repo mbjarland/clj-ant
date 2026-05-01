@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>JSPC Task</title>
 </head>
@@ -31,9 +31,10 @@ the task shipping with Tomcat instead.</em>  This task is only tested against To
 known problems with Tomcat 5.x that won't get fixed in Ant, please use Tomcat's <code>jspc</code>
 task instead.<br/>  Instead of relying on container-specific JSP compilers we suggest deploying the
 raw files (<samp>*.jsp</samp>) and use the container build-in functions: after deploying run a test
-suite (e.g. with <a href="https://attic.apache.org/projects/jakarta-cactus.html">Cactus</a>
-or <a href="http://httpunit.sourceforge.net/">HttpUnit</a>) against the deployed web application. So
-you'll get the test result <em>and</em> the compiled JSPs.</p>
+suite (e.g. with <a href="https://attic.apache.org/projects/jakarta-cactus.html"
+target="_top">Cactus</a> or <a href="http://httpunit.sourceforge.net/" target="_top">HttpUnit</a>)
+against the deployed web application. So you'll get the test result <em>and</em> the compiled
+JSPs.</p>
 <h3>Description</h3>
 
 <p>Apache Ant task to run the JSP compiler and turn JSP pages into Java source files.</p>
@@ -47,8 +48,8 @@ dependencies, or <code>&lt;jsp:include&gt;</code> references.</p>
 
 <p>By default the task uses the Jasper JSP compiler. This means the task
 needs <samp>jasper.jar</samp> and <samp>jasper-runtime.jar</samp>, which come with builds of Tomcat
-4/Catalina from the <a href="https://tomcat.apache.org/">Apache Tomcat project</a>, and any other
-jar files which may be needed in future versions (it changes).</p>
+4/Catalina from the <a href="https://tomcat.apache.org/" target="_top">Apache Tomcat project</a>,
+and any other jar files which may be needed in future versions (it changes).</p>
 
 <p>We recommend (in March 2003) Tomcat version 4.1.x for the most robust version of Jasper.</p>
 
@@ -66,9 +67,9 @@ go.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>destdir</td>
@@ -202,9 +203,9 @@ a <samp>WEB-INF</samp> subdirectory beneath it.  When used, the task hands off a
 checking to the compiler.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>basedir</td>
@@ -212,7 +213,11 @@ checking to the compiler.</p>
     <td>Yes</td>
   </tr>
 </table>
+
 <h3>Example</h3>
+<p>Build all <samp>.jsp</samp> files under <samp>src/war</samp> into the
+destination <samp>/gensrc</samp>, in a package hierarchy beginning
+with <samp>com.i3sp.jsp</samp>.</p>
 <pre>
 &lt;jspc srcdir="${basedir}/src/war"
       destdir="${basedir}/gensrc"
@@ -221,9 +226,10 @@ checking to the compiler.</p>
       verbose="9"&gt;
   &lt;include name="**/*.jsp"/&gt;
 &lt;/jspc&gt;</pre>
-<p>Build all <samp>.jsp</samp> files under <samp>src/war</samp> into the
-destination <samp>/gensrc</samp>, in a package hierarchy beginning
-with <samp>com.i3sp.jsp</samp>.</p>
+
+<p>Generate <samp>.java</samp> files from <samp>.jsp</samp> files, then <code>javac</code> them down
+to bytecode. Include <samp>lib/taglibs.jar</samp> in the Java compilation. Dependency checking is
+used to scrub the <samp>.java</samp> files if class dependencies indicate it is needed.</p>
 <pre>
 &lt;jspc destdir="interim"
       verbose="1"
@@ -240,9 +246,6 @@ with <samp>com.i3sp.jsp</samp>.</p>
          destdir="build"
          classpath="lib/taglibs.jar"
          debug="on"/&gt;</pre>
-<p>Generate <samp>.java</samp> files from <samp>.jsp</samp> files then <code>javac</code> them down
-to bytecodes. Include <samp>lib/taglibs.jar</samp> in the Java compilation.  Dependency checking is
-used to scrub the <samp>.java</samp> files if class dependencies indicate it is needed.</p>
 
 <h4>Notes</h4>
 <p>Using the <var>package</var> attribute it is possible to identify the

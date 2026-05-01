@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Depend Task</title>
 </head>
@@ -40,7 +40,8 @@ class references encoded into the class files by the compiler. This is generally
 the Java source files.</p>
 
 <p>To learn more about how this information is obtained from the class files, please refer
-to <a href="https://docs.oracle.com/javase/specs/">the Java Virtual Machine Specification</a></p>
+to <a href="https://docs.oracle.com/javase/specs/" target="_top">the Java Virtual Machine
+Specification</a></p>
 
 <p>Since a class' dependencies only change when the class itself changes, the
 <code>depend</code> task is able to cache dependency information. Only those class files which have
@@ -55,10 +56,10 @@ relation to determine, for each class, which other classes are dependent upon it
 class. The class files of the invalidated classes are removed, triggering the compilation of the
 affected classes.</p>
 
-<p>The <code>depend</code> task supports an attribute, <var>closure</var> which controls
+<p>The <code>depend</code> task supports an attribute, <var>closure</var>, which controls
 whether <code>depend</code> will only consider direct class-class relationships or whether it will
 also consider transitive, indirect relationships. For example, say there are three classes, A, which
-depends on B, which in-turn depend on C. Now say that class C is out of
+depends on B, which in-turn depends on C. Now say that class C is out of
 date. Without <var>closure</var>, only class B would be removed
 by <code>depend</code>. With <var>closure</var> set, class A would also be removed. Normally direct
 relationships are sufficient&mdash;it is unusual for a class to depend on another without having a
@@ -70,7 +71,7 @@ present, <code>depend</code> will check class dependencies against classes and j
 classpath.  Any classes which depend on an element from this classpath and which are older than that
 element will be deleted. A typical example where you would use this facility would be where you are
 building a utility jar and want to make sure classes which are out of date with respect to this jar
-are rebuilt. You should <strong>not</strong> include jars in this classpath which you do not expect
+are rebuilt. In this classpath, you should <strong>not</strong> include jars that you do not expect
 to change, such as the JDK runtime jar or third party jars, since doing so will just slow down the
 dependency check. This means that if you do use a classpath for the <code>depend</code> task it may
 be different from the classpath necessary to actually compile your code.</p>
@@ -82,18 +83,17 @@ relationship complexity and how many class files are out of date. The decision a
 cheaper to just recompile all classes or to use the <code>depend</code> task will depend on the size
 of your project and how interrelated your classes are.</p>
 
-
 <h3>Limitations</h3>
 
-<p>There are some source dependencies which <code>depend</code> will not detect.</p>
+<p>There are some source dependencies which <code>depend</code> will not detect:</p>
 
 <ul>
 <li>If the Java compiler optimizes away a class relationship, there can be a source dependency
 without a class dependency.</li>
 
-<li>Non public classes cause two problems. Firstly depend cannot relate the class file to a source
+<li>Non-public classes cause two problems. Firstly, depend cannot relate the class file to a source
 file. In the future this may be addressed using the source file attribute in the
-classfile. Secondly, neither <code>depend</code> nor the compiler tasks can detect when a non public
+classfile. Secondly, neither <code>depend</code> nor the compiler tasks can detect when a non-public
 class is missing. Inner classes are handled by the <code>depend</code> task.</li>
 </ul>
 
@@ -109,9 +109,9 @@ public final class Constants {
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>srcDir</td>
@@ -151,7 +151,7 @@ public final class Constants {
   </tr>
   <tr>
     <td>warnOnRmiStubs</td>
-    <td>Flag to disable warnings about files that look like <code>rmic</code> generated
+    <td>Flag to disable warnings about files that look like <kbd>rmic</kbd> generated
       stub/skeleton classes and have no <samp>.java</samp> source. Useful when doing RMI
       development.</td>
     <td>No; default <q>true</q></td>
@@ -169,27 +169,26 @@ as well as the nested <code>&lt;include&gt;</code>, <code>&lt;exclude&gt;</code>
 and <code>&lt;patternset&gt;</code> elements.</p>
 
 <h3>Examples</h3>
+
+<p>Remove any classes in the <samp>${build.classes}</samp> directory that depend on out-of-date
+classes. Classes are considered out-of-date with respect to the source in
+the <samp>${java.dir}</samp> directory, using the same mechanism as the <code>&lt;javac&gt;</code>
+task. In this example, the <code>&lt;depend&gt;</code> task caches its dependency information in
+the <samp>depcache</samp> directory.</p>
 <pre>
 &lt;depend srcdir=&quot;${java.dir}&quot;
         destdir=&quot;${build.classes}&quot;
         cache=&quot;depcache&quot;
         closure=&quot;yes&quot;/&gt;</pre>
 
-<p>removes any classes in the <samp>${build.classes}</samp> directory that depend on out-of-date
-classes. Classes are considered out-of-date with respect to the source in
-the <samp>${java.dir}</samp> directory, using the same mechanism as the <code>&lt;javac&gt;</code>
-task. In this example, the <code>&lt;depend&gt;</code> task caches its dependency information in
-the <samp>depcache</samp> directory.</p>
-
+<p>Do the same as the previous example, but explicitly include all <samp>.java</samp> files, except
+those that match the list given in <samp>${java.dir}/build_excludes</samp>.</p>
 <pre>
 &lt;depend srcdir=&quot;${java.dir}&quot; destdir=&quot;${build.classes}&quot;
         cache=&quot;depcache&quot; closure=&quot;yes&quot;&gt;
   &lt;include name=&quot;**/*.java&quot;/&gt;
   &lt;excludesfile name=&quot;${java.dir}/build_excludes&quot;/&gt;
 &lt;/depend&gt;</pre>
-
-<p>does the same as the previous example, but explicitly includes all <samp>.java</samp> files,
-except those that match the list given in <samp>${java.dir}/build_excludes</samp>.</p>
 
 </body>
 </html>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Antversion Task</title>
 </head>
@@ -32,13 +32,13 @@ as condition).</p>
 
 <table class="attr">
   <tr>
-    <th rowspan="2">Attribute</th>
-    <th rowspan="2">Description</th>
-    <th colspan="2">Required</th>
+    <th scope="col" rowspan="2">Attribute</th>
+    <th scope="col" rowspan="2">Description</th>
+    <th scope="col" colspan="2">Required</th>
   </tr>
   <tr>
-    <th>Task</th>
-    <th>Condition</th>
+    <th scope="col">Task</th>
+    <th scope="col">Condition</th>
   </tr>
   <tr>
     <td>atleast</td>
@@ -62,26 +62,26 @@ as condition).</p>
 
 <h3>Examples</h3>
 
+<p>Store the current Ant version in the property <code>antversion</code>.</p>
 <pre>&lt;antversion property=&quot;antversion&quot;/&gt;</pre>
-<p>Stores the current Ant version in the property <code>antversion</code>.</p>
 
+<p>Store the Ant version in the property <code>antversion</code> if the current Ant version is 1.6.0
+or higher. Otherwise the property remains unset.</p>
 <pre>&lt;antversion property=&quot;antversion&quot; atleast=&quot;1.6&quot;/&gt;</pre>
-<p>Stores the Ant version in the property <code>antversion</code> if the current Ant version is
-1.6.0 or higher. Otherwise the property remains unset.</p>
 
-<pre>&lt;antversion property=&quot;ant-is-exact-7&quot; exactly=&quot;1.7.0&quot;/&gt;</pre>
-<p>Sets the property <code>ant-is-exact-7</code> if Ant 1.7.0 is running. Neither 1.6.5 nor 1.7.1
+<p>Set the property <code>ant-is-exact-7</code> if Ant 1.7.0 is running. Neither 1.6.5 nor 1.7.1
 would match.</p>
+<pre>&lt;antversion property=&quot;ant-is-exact-7&quot; exactly=&quot;1.7.0&quot;/&gt;</pre>
 
+<p>Set <code>Ant17isOnline</code> if Ant 1.7.0 is running and can get a non-error-response from the
+Ant homepage.</p>
 <pre>
 &lt;condition property=&quot;Ant17isOnline&quot;&gt;
   &lt;and&gt;
     &lt;antversion exactly=&quot;1.7.0&quot;/&gt;
-    &lt;http url=&quot;http://ant.apache.org&quot;/&gt;
+    &lt;http url=&quot;https://ant.apache.org&quot;/&gt;
   &lt;/and&gt;
 &lt;/condition&gt;</pre>
-<p>Sets <code>Ant17isOnline</code> if Ant 1.7.0 is running and can get a non-error-response from the
-Ant homepage.</p>
 
 </body>
 </html>

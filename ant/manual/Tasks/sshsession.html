@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>SSHSESSION Task</title>
 </head>
@@ -42,9 +42,9 @@ JSCh earlier than 0.1.28.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>host</td>
@@ -61,7 +61,6 @@ JSCh earlier than 0.1.28.</p>
     <td>The port to connect to on the remote host.</td>
     <td>No; defaults to <q>22</q></td>
   </tr>
-  <tr>
   <tr>
     <td>localtunnels</td>
     <td>A comma-delimited list of colon-delimited <samp>lport:rhost:rport</samp> triplets defining
@@ -112,6 +111,14 @@ JSCh earlier than 0.1.28.</p>
     <td>No; defaults to an empty string</td>
   </tr>
   <tr>
+    <td>sshConfig</td>
+    <td>Location of the file holding the OpenSSH style configuration (e.g. <code>${user.home}/.ssh/config</code>).
+        The username and the key file are read from the configuration file,
+        unless they are already specified in the task parameters.
+        <em>since Ant 1.10.8</em></td>
+    <td>No</td>
+  </tr>
+  <tr>
     <td>timeout</td>
     <td>Give up if the connection cannot be established within the specified time (given in
       milliseconds).</td>
@@ -128,9 +135,9 @@ both sets of tunnels will be established.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>lport</td>
@@ -157,9 +164,9 @@ both sets of tunnels will be established.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>rport</td>
@@ -179,14 +186,41 @@ both sets of tunnels will be established.</p>
   </tr>
 </table>
 
+<h4 id="additionalConfig">additionalConfig</h4>
+
+<p><em>since Ant 1.10.10</em></p>
+
+<p>Adds configuration settings for the JSch Session created that are
+  not directly supported by specific Ant attributes.</p>
+
+<table class="attr">
+  <tr>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
+  </tr>
+  <tr>
+    <td>key</td>
+    <td>The key of the configuration setting.</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>value</td>
+    <td>The value of the configuration setting.</td>
+    <td>Yes</td>
+  </tr>
+</table>
+
 <h4 id="Sequential">sequential</h4>
 <p>The <code>sequential</code> element is a required parameter.  It is a container for nested Tasks
 which are to be executed once the SSH connection is established and all local and/or remote tunnels
 established.</p>
 
 <h3>Examples</h3>
-<p><strong>Connect to a remote machine using password authentication, forward the local CVS port to
-the remote host, and execute a CVS command locally, which can use the tunnel.</strong></p>
+
+<p>Connect to a remote machine using password authentication, forward the local CVS port to the
+remote host, and execute a CVS command locally, which can use the tunnel.</p>
+
 <pre>
 &lt;sshsession host=&quot;somehost&quot;
             username=&quot;dude&quot;
@@ -200,7 +234,8 @@ the remote host, and execute a CVS command locally, which can use the tunnel.</s
   &lt;/sequential&gt;
 &lt;/sshsession&gt;</pre>
 
-<p><strong>Do the same thing using nested <code>localtunnel</code> element.</strong></p>
+<p>Do the same thing using nested <code>localtunnel</code> element.</p>
+
 <pre>
 &lt;sshsession host=&quot;somehost&quot;
             username=&quot;dude&quot;
@@ -214,9 +249,9 @@ the remote host, and execute a CVS command locally, which can use the tunnel.</s
   &lt;/sequential&gt;
 &lt;/sshsession&gt;</pre>
 
-<p><strong>Connect to a remote machine using key authentication, forward port 1080 to port 80 of an
-intranet server which is not directly accessible, then run a <code>get</code> task using that
-tunnel.</strong></p>
+<p>Connect to a remote machine using key authentication, forward port 1080 to port 80 of an intranet
+server which is not directly accessible, then run a <code>get</code> task using that tunnel.</p>
+
 <pre>
 &lt;sshsession host=&quot;somehost&quot;
             username=&quot;dude&quot;
@@ -231,6 +266,7 @@ tunnel.</strong></p>
 <p><strong>Security Note</strong>: Hardcoding passwords or passphrases and/or usernames
 in <code>sshsession</code> task can be a serious security hole. Consider using variable substitution
 and include the password on the command line. For example:</p>
+
 <pre>
 &lt;sshsession host=&quot;somehost&quot;
             username=&quot;${username}&quot;
@@ -242,9 +278,9 @@ and include the password on the command line. For example:</p>
 &lt;/sshsession&gt;</pre>
 
 <p>Invoking Ant with the following command line:</p>
-<pre>ant -Dusername=me -Dpassword=mypassword target1 target2</pre>
+<pre class="input">ant -Dusername=me -Dpassword=mypassword target1 target2</pre>
 <p>is slightly better, but the username/password is exposed to all users on an Unix system (via
-the <code>ps</code> command). The best approach is to use the <code>&lt;input&gt;</code> task and/or
+the <kbd>ps</kbd> command). The best approach is to use the <code>&lt;input&gt;</code> task and/or
 retrieve the password from a (secured) <samp>.properties</samp> file.</p>
 </body>
 </html>

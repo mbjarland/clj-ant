@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Ant Task</title>
 </head>
@@ -70,9 +70,9 @@ outside of targets in the new project&mdash;but not those defined inside of targ
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>antfile</td>
@@ -136,9 +136,9 @@ their <var>id</var>.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>refid</td>
@@ -167,9 +167,9 @@ using the <var>target</var> attribute.  These will be executed as if Ant had bee
 single target whose dependencies are the targets so specified, in the order specified.</p>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -201,9 +201,9 @@ table shows the details:</p>
 
 <table>
   <tr>
-    <th><var>dir</var> attribute</th>
-    <th><var>inheritAll</var> attribute</th>
-    <th>new project's <var>basedir</var></th>
+    <th scope="col"><var>dir</var> attribute</th>
+    <th scope="col"><var>inheritAll</var> attribute</th>
+    <th scope="col">new project's <var>basedir</var></th>
   </tr>
   <tr>
     <td>value provided</td>
@@ -236,10 +236,10 @@ omitted an even more complex situation arises:</p>
 
 <table>
   <tr>
-    <th>parent <var>dir</var> attribute</th>
-    <th>parent <var>inheritAll</var> attribute</th>
-    <th>current <var>inheritAll</var> attribute</th>
-    <th>new project's <var>basedir</var></th>
+    <th scope="col">parent <var>dir</var> attribute</th>
+    <th scope="col">parent <var>inheritAll</var> attribute</th>
+    <th scope="col">current <var>inheritAll</var> attribute</th>
+    <th scope="col">new project's <var>basedir</var></th>
   </tr>
   <tr>
     <td>value provided</td>
@@ -281,7 +281,7 @@ omitted an even more complex situation arises:</p>
 the above table recursively.</p>
 
 <p>If the <var>basedir</var> of the outermost build has been specified as a property on the command
-line (i.e. <code>-Dbasedir=some-value</code> or a <code>-propertyfile</code> argument) the value
+line (i.e. <kbd>-Dbasedir=some-value</kbd> or a <kbd>-propertyfile</kbd> argument) the value
 provided will get an even higher priority.  For any <code>&lt;ant&gt;</code> task that doesn't
 specify a <var>dir</var> attribute, the new project's <var>basedir</var> will be the value specified
 on the command line&mdash;no matter how deeply nested into layers of build files the task may
@@ -293,6 +293,7 @@ will be set to the specified value of the property element unless the correspond
 the <var>dir</var> attribute explicitly.</p>
 
 <h3>Examples</h3>
+<p>These are different ways of using the task:</p>
 <pre>
 &lt;ant antfile=&quot;subproject/subbuild.xml&quot; target=&quot;compile&quot;/&gt;
 
@@ -325,12 +326,12 @@ this:</p>
 &lt;/path&gt;</pre>
 
 <p>and the called build file (<samp>subbuild.xml</samp>) also defines a <code>&lt;path&gt;</code>
-with the <var>id</var> <samp>path1</samp>, but <samp>path2</samp> is not defined:</p>
+with the <var>id</var> <samp>path1</samp>, but <samp>path2</samp> is not defined; then</p>
 
 <pre>&lt;ant antfile=&quot;subbuild.xml&quot; inheritrefs=&quot;true&quot;/&gt;</pre>
 
 <p>will not override <samp>subbuild</samp>'s definition of <samp>path1</samp>, but make the parent's
-definition of <samp>path2</samp> available in the <samp>subbuild</samp>.</p>
+definition of <samp>path2</samp> available in the <samp>subbuild</samp>, whereas</p>
 
 <pre>&lt;ant antfile=&quot;subbuild.xml&quot;/&gt;</pre>
 
@@ -338,14 +339,14 @@ definition of <samp>path2</samp> available in the <samp>subbuild</samp>.</p>
 
 <pre>&lt;ant antfile=&quot;subbuild.xml&quot; inheritrefs=&quot;false&quot;/&gt;</pre>
 
-<p>will neither override <samp>path1</samp> nor copy <samp>path2</samp>.</p>
+<p>will neither override <samp>path1</samp> nor copy <samp>path2</samp>, while</p>
 
 <pre>
 &lt;ant antfile=&quot;subbuild.xml&quot; inheritrefs=&quot;false&quot;&gt;
   &lt;reference refid=&quot;path1&quot;/&gt;
 &lt;/ant&gt;</pre>
 
-<p>will override <samp>subbuild</samp>'s definition of <samp>path1</samp>.</p>
+<p>will override <samp>subbuild</samp>'s definition of <samp>path1</samp>, and</p>
 
 <pre>
 &lt;ant antfile=&quot;subbuild.xml&quot; inheritrefs=&quot;false&quot;&gt;

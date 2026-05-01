@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Javah Task</title>
 </head>
@@ -28,11 +28,7 @@
 <h3>Description</h3>
 <p>Generates JNI headers from a Java class.</p>
 <p>When this task executes, it will generate the C header and source files that are needed to
-implement native methods. JNI operates differently depending on
-whether <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javah.html">JDK
-1.2+</a>
-or <a href="https://web.archive.org/web/20021018232717/http://java.sun.com/products/jdk/1.1/docs/tooldocs/win32/javah.html">pre-1.2
-JDK</a> systems are used.</p>
+implement native methods.
 
 <p>If you are building with Java 8 or above consider
 using <a href="javac.html"><code>javac</code></a>'s <var>nativeheaderdir</var> attribute instead
@@ -47,25 +43,26 @@ attribute:</p>
 <ul>
   <li><q>default</q>&mdash;the default compiler for the platform.</li>
   <li><q>sun</q>&mdash;the standard compiler of the JDK.</li>
-  <li><q>kaffeh</q>&mdash;the native standard compiler of <a href="http://www.kaffe.org" target="_top">Kaffe</a>.</li>
+  <li><q>kaffeh</q>&mdash;the native standard compiler of <a href="https://github.com/kaffe/kaffe"
+    target="_top">Kaffe</a>.</li>
   <li><q>gcjh</q>&mdash;the native standard compiler
     of <a href="https://gcc.gnu.org/gcc-7/changes.html#java" target="_top">gcj and
     gij</a>. <em>Since Apache Ant 1.8.2</em></li>
-  <li><q>forking</q>&mdash;runs the <code>javah</code> executable via its command line interface in
+  <li><q>forking</q>&mdash;runs the <kbd>javah</kbd> executable via its command line interface in
     a separate process. Default when not running on Kaffe or gcj/gij <em>since Ant 1.9.8</em></li>
 </ul>
 
 <p><strong>Note</strong>: if you are using this task to work on multiple files the command line may
-become too long on some operating systems.  Unfortunately the <code>javah</code> command doesn't
-support command argument files the way <code>javac</code> (for example) does, so all that can be
+become too long on some operating systems.  Unfortunately the <kbd>javah</kbd> command doesn't
+support command argument files the way <kbd>javac</kbd> (for example) does, so all that can be
 done is breaking the amount of classes to compile into smaller chunks.</p>
 
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>class</td>
@@ -80,18 +77,20 @@ done is breaking the amount of classes to compile into smaller chunks.</p>
   </tr>
   <tr>
     <td>destdir</td>
-    <td class="left">sets the directory where <code>javah</code> saves the header files or the stub
+    <td class="left">sets the directory where <kbd>javah</kbd> saves the header files or the stub
       files.</td>
   </tr>
   <tr>
     <td>force</td>
-    <td>specifies that output files should always be written (JDK 1.2 only)</td>
+    <td>specifies that output files should always be written 
+    (only when using an external javah of JDK 1.2)</td>
     <td>No</td>
   </tr>
   <tr>
     <td>old</td>
     <td>specifies that old JDK 1.0-style header files should be generated (otherwise output file
-      contain JNI-style native method function prototypes) (JDK 1.2 only)</td>
+      contain JNI-style native method function prototypes) 
+      (only when using an external javah of JDK 1.2)</td>
     <td>No</td>
   </tr>
   <tr>
@@ -101,8 +100,7 @@ done is breaking the amount of classes to compile into smaller chunks.</p>
   </tr>
   <tr>
     <td>verbose</td>
-    <td>causes <code>Javah</code> to print a message concerning the status of the generated
-      files</td>
+    <td>causes <kbd>javah</kbd> to print a message concerning the status of the generated files</td>
     <td>No</td>
   </tr>
   <tr>
@@ -139,9 +137,9 @@ can be used to enable arguments only if a given compiler implementation will be 
 
 <table class="attr">
 <tr>
-  <th>Attribute</th>
-  <th>Description</th>
-  <th>Required</th>
+  <th scope="col">Attribute</th>
+  <th scope="col">Description</th>
+  <th scope="col">Required</th>
 </tr>
   <tr>
     <td>value</td>
@@ -184,29 +182,35 @@ using one of the built-in compilers.</p>
 
 <h4>Any nested element of a type that implements JavahAdapter</h4>
 <p><em>Since Ant 1.8.0</em></p>
-<p>If a defined type implements the <code>JavahAdapter</code> interface a nested element of that
-type can be used as an alternative to the <var>implementation</var> attribute.</p>
+<p>If a defined type implements the <code class="code">JavahAdapter</code> interface a nested
+element of that type can be used as an alternative to the <var>implementation</var> attribute.</p>
 
 <h3>Examples</h3>
-<pre>&lt;javah destdir=&quot;c&quot; class=&quot;org.foo.bar.Wibble&quot;/&gt;</pre>
-<p>makes a JNI header of the named class, using the JDK 1.2 JNI model. Assuming the
+<p>Make a JNI header of the named class, using the JDK 1.2 JNI model. Assuming the
 directory <samp>c</samp> already exists, the file <samp>org_foo_bar_Wibble.h</samp> is created
 there. If this file already exists, it is left unchanged.</p>
+<pre>&lt;javah destdir=&quot;c&quot; class=&quot;org.foo.bar.Wibble&quot;/&gt;</pre>
+
+<p>This is similar to the previous example, except the output is written to a file
+called <samp>wibble.h</samp> in the current directory.</p>
 <pre>
 &lt;javah outputFile=&quot;wibble.h&quot;&gt;
   &lt;class name=&quot;org.foo.bar.Wibble,org.foo.bar.Bobble&quot;/&gt;
 &lt;/javah&gt;</pre>
-<p>is similar to the previous example, except the output is written to a file
-called <samp>wibble.h</samp> in the current directory.</p>
+
+<p>Write three header files, one for each of the classes named. Because the <var>force</var> option
+is set, these header files are always written when the <code>Javah</code> task is invoked, even if
+they already exist.</p>
 <pre>
 &lt;javah destdir=&quot;c&quot; force=&quot;yes&quot;&gt;
   &lt;class name=&quot;org.foo.bar.Wibble&quot;/&gt;
   &lt;class name=&quot;org.foo.bar.Bobble&quot;/&gt;
   &lt;class name=&quot;org.foo.bar.Tribble&quot;/&gt;
 &lt;/javah&gt;</pre>
-<p>writes three header files, one for each of the classes named. Because the force option is set,
-these header files are always written when the <code>Javah</code> task is invoked, even if they
-already exist.</p>
+
+<p>Write the headers for the three classes using the 'old' JNI format, then write the
+corresponding <samp>.c</samp> stubs. The <var>verbose</var> option will cause <code>Javah</code> to
+describe its progress.</p>
 <pre>
 &lt;javah destdir=&quot;c&quot; verbose=&quot;yes&quot; old=&quot;yes&quot; force=&quot;yes&quot;&gt;
   &lt;class name=&quot;org.foo.bar.Wibble&quot;/&gt;
@@ -218,12 +222,10 @@ already exist.</p>
   &lt;class name=&quot;org.foo.bar.Bobble&quot;/&gt;
   &lt;class name=&quot;org.foo.bar.Tribble&quot;/&gt;
 &lt;/javah&gt;</pre>
-<p>writes the headers for the three classes using the 'old' JNI format, then writes the
-corresponding <samp>.c</samp> stubs. The verbose option will cause <code>Javah</code> to describe
-its progress.</p>
 
-<p>If you want to use a custom JavahAdapter <code>org.example.MyAdapter</code> you can either use
-the implementation attribute:</p>
+<p>If you want to use a
+custom <code class="code">JavahAdapter</code> <code>org.example.MyAdapter</code> you can either use
+the <var>implementation</var> attribute:</p>
 <pre>
 &lt;javah destdir="c" class="org.foo.bar.Wibble"
        implementation="org.example.MyAdapter"/&gt;</pre>

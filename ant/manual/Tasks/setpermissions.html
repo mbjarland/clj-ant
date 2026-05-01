@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>SetPermissions Task</title>
 </head>
@@ -42,15 +42,15 @@ different sets of permissions to apply to either type of resource.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>permissions</td>
     <td>The permissions to set as comma separated list of names
-      of <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/attribute/PosixFilePermission.html">PosixFilePermission</a>
-      values.</td>
+      of <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/attribute/PosixFilePermission.html"
+      target="_top">PosixFilePermission</a> values.</td>
     <td>No</td>
   </tr>
   <tr>
@@ -73,24 +73,34 @@ different sets of permissions to apply to either type of resource.</p>
     <td>Whether to stop the build if setting permissions fails.</td>
     <td>No; defaults to <q>true</q></td>
   </tr>
+  <tr>
+    <td>actOnLinkTargets</td>
+    <td>Whether to set the permissions of the targets of symbolic
+    links or Windows junctions instead of the links
+    themselves. <em>since Ant 1.10.16</em>.</td>
+    <td>No; defaults to <q>true</q></td>
+  </tr>
 </table>
 <h3>Parameters specified as nested elements</h3>
 
 <h4>any resource collection</h4>
 <p><a href="../Types/resources.html#collection">resource collections</a> are used to select groups
 of resources.</p>
+
 <h3>Examples</h3>
+
+<p>Make the <samp>start.sh</samp> file readable and executable for anyone and in addition writable
+by the owner.</p>
 <pre>
 &lt;setpermissions mode=&quot;755&quot;&gt;
   &lt;file file=&quot;${dist}/start.sh&quot;/&gt;
 &lt;/setpermissions&gt;</pre>
-<p>makes the <samp>start.sh</samp> file readable and executable for anyone and in addition writable
+
+<p>Make the <samp>start.sh</samp> file readable and executable for anyone and in addition writable
 by the owner.</p>
 <pre>
 &lt;setpermissions permissions=&quot;OWNER_READ,OWNER_WRITE,OWNER_EXECUTE,OTHERS_READ,OTHERS_EXECUTE,GROUP_READ,GROUP_EXECUTE&quot;&gt;
   &lt;file file=&quot;${dist}/start.sh&quot;/&gt;
 &lt;/setpermissions&gt;</pre>
-<p>makes the <samp>start.sh</samp> file readable and executable for anyone and in addition writable
-by the owner.</p>
 </body>
 </html>

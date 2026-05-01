@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>JUnit Task</title>
@@ -25,19 +26,25 @@
 <h3>Description</h3>
 
 <p>This task runs tests from the JUnit testing framework. The latest version of the framework can be
-found at <a href="https://junit.org">https://junit.org</a>.  This task has been tested with JUnit
-3.0 up to JUnit 3.8.2; it won't work with versions prior to JUnit 3.0. It also works with JUnit 4.x,
-including "pure" JUnit 4 tests using only annotations and no <code>JUnit4TestAdapter</code>.</p>
+found at <a href="https://junit.org" target="_top">https://junit.org</a>.  This task has been tested
+with JUnit 3.0 up to JUnit 3.8.2; it won't work with versions prior to JUnit 3.0. It also works with
+JUnit 4.x, including "pure" JUnit 4 tests using only annotations and
+no <code>JUnit4TestAdapter</code>.</p>
 <p><strong>Note</strong>: This task depends on external libraries not included
 in the Apache Ant distribution.  See <a href="../install.html#librarydependencies">
 Library Dependencies</a> for more information.</p>
+
+<p><strong>Note: </strong>It is necessary to set <var>fork</var>=<q>true</q>, if the test(s)
+  being launched by this task or any libraries being used by the test(s), call APIs like
+<code>java.lang.System.exit()</code> or <code>java.lang.Runtime.exit()</code>.</p>
+
 <p><strong>Note</strong>: You must have <samp>junit.jar</samp> available.  You can do one of:</p>
 <ol>
   <li>Put both <samp>junit.jar</samp> and <samp>ant-junit.jar</samp>
     in <code>ANT_HOME/lib</code>.</li>
   <li>Do not put either in <code>ANT_HOME/lib</code>, and instead include their locations in
     your <code>CLASSPATH</code> environment variable.</li>
-  <li>Add both JARs to your classpath using <code>-lib</code>.</li>
+  <li>Add both JARs to your classpath using <kbd>-lib</kbd>.</li>
   <li>Specify the locations of both JARs using a <code>&lt;classpath&gt;</code> element in
     a <code>&lt;taskdef&gt;</code> in the build file.</li>
   <li>Leave <samp>ant-junit.jar</samp> in its default location in <code>ANT_HOME/lib</code> but
@@ -53,9 +60,9 @@ for details.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>printsummary</td>
@@ -128,7 +135,7 @@ for details.</p>
     <td>jvm</td>
     <td>The command used to invoke JVM.  The command is resolved
       by <code>java.lang.Runtime.exec()</code>.</td>
-    <td>No; default is <q>java</q>, ignored if <var>fork</var> is <q>false</q></td>
+    <td>No; default is <kbd>java</kbd>, ignored if <var>fork</var> is <q>false</q></td>
   </tr>
   <tr>
     <td>dir</td>
@@ -226,7 +233,7 @@ the following string patterns:</p>
 <h3 id="nested">Parameters specified as nested elements</h3>
 
 <p>The <code>&lt;junit&gt;</code> task supports a nested <code>&lt;classpath&gt;</code> element that
-represents a <a href="../using.html#path">PATH like structure</a>.</p>
+represents a <a href="../using.html#path">path-like structure</a>.</p>
 
 <p><em>Since Ant 1.7</em>, this classpath may be used to refer to <samp>junit.jar</samp> as well as
 your tests and the tested code.</p>
@@ -238,7 +245,7 @@ nested <code>&lt;jvmarg&gt;</code> elements. For example:</p>
 
 <pre>
 &lt;junit fork=&quot;yes&quot;&gt;
-  &lt;jvmarg value=&quot;-Djava.compiler=NONE&quot;/&gt;
+  &lt;jvmarg value=&quot;-Dfoo=bar&quot;/&gt;
   ...
 &lt;/junit&gt;
 </pre>
@@ -285,12 +292,15 @@ element's attributes, see the description in the <a href="../Tasks/exec.html#env
 <p><em>Since Ant 1.6</em>.</p>
 
 <p>The location of bootstrap class files can be specified using
-this <a href="../using.html#path">PATH like structure</a>&mdash;will be ignored if <var>fork</var>
+this <a href="../using.html#path">path-like structure</a>&mdash;will be ignored if <var>fork</var>
 is <q>false</q> or the target JVM doesn't support it (i.e. Java 1.1).</p>
 
 <h4>permissions</h4>
 
 <p><em>Since Ant 1.6</em>.</p>
+
+<p><strong>Note</strong>:<br/> This element is no longer supported when running on Java 18 and
+  higher versions. See <a href="../Types/permissions.html">permissions</a> for details</p>
 
 <p>Security permissions can be revoked and granted during the execution of the class via a
 nested <code>permissions</code> element. For more information please
@@ -311,7 +321,7 @@ an <a href="../Types/assertions.html"><code>&lt;assertions&gt;</code></a> subele
 
 <p><em>Since Ant 1.9.8</em></p>
 
-<p>The location of modules can be specified using this <a href="../using.html#path">PATH like
+<p>The location of modules can be specified using this <a href="../using.html#path">path-like
 structure</a>.<br/>The <code>modulepath</code> requires <var>fork</var> to be set to <q>true</q>.
 
 <h4>upgrademodulepath</h4>
@@ -319,7 +329,7 @@ structure</a>.<br/>The <code>modulepath</code> requires <var>fork</var> to be se
 <p><em>Since Ant 1.9.8</em></p>
 
 <p>The location of modules that replace upgradeable modules in the runtime image can be specified
-using this <a href="../using.html#path">PATH like
+using this <a href="../using.html#path">path-like
 structure</a>.<br/>The <code>upgrademodulepath</code> requires <var>fork</var> to be set
 to <q>true</q>.</p>
 
@@ -334,24 +344,25 @@ of <code>&lt;test&gt;</code>.</p>
 emits plain text.  The formatter named <q>brief</q> will only print detailed information for test
 cases that failed, while <q>plain</q> gives a little statistics line for all test cases.  Custom
 formatters that need to
-implement <code>org.apache.tools.ant.taskdefs.optional.junit.JUnitResultFormatter</code> can be
-specified.</p>
+implement <code class="code">org.apache.tools.ant.taskdefs.optional.junit.JUnitResultFormatter</code>
+can be specified.</p>
 
 <p>If you use the XML formatter, it may not include the same output that your tests have written as
 some characters are illegal in XML documents and will be dropped.</p>
 
 <p>The fourth formatter named <q>failure</q> (<em>since Ant 1.8.0</em>) collects all
-failing <code>testXXX()</code> methods and creates a new <code>TestCase</code> which delegates only
-these failing methods. The name and the location can be specified via Java System property or Ant
+failing <code class="code">testXXX()</code> methods and creates a
+new <code class="code">TestCase</code> which delegates only these failing methods. The name and the
+location can be specified via Java system property or Ant
 property <code>ant.junit.failureCollector</code>. The value has to point to the directory and the
 name of the resulting class (without suffix). It defaults
 to <samp><i>java-tmp-dir</i>/FailedTests</samp>.</p>
 
 <table class="attr">
 <tr>
-  <th>Attribute</th>
-  <th>Description</th>
-  <th>Required</th>
+  <th scope="col">Attribute</th>
+  <th scope="col">Description</th>
+  <th scope="col">Required</th>
 </tr>
   <tr>
     <td>type</td>
@@ -361,7 +372,7 @@ to <samp><i>java-tmp-dir</i>/FailedTests</samp>.</p>
   </tr>
   <tr>
     <td>classname</td>
-    <td>Name of a custom formatter class.</td>
+    <td class="left">Name of a custom formatter class.</td>
   </tr>
   <tr>
     <td>extension</td>
@@ -393,9 +404,9 @@ to <samp><i>java-tmp-dir</i>/FailedTests</samp>.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -479,14 +490,14 @@ to <samp><i>java-tmp-dir</i>/FailedTests</samp>.</p>
   <tr>
     <td>skipNonTests</td>
     <td>Do not pass any classes that do not contain JUnit tests to the test runner.  This prevents
-      non tests from appearing as test errors in test results.<br/> Tests are identified by looking
+      non tests from appearing as test errors in test results.<br/>Tests are identified by looking
       for the <code>@Test</code> annotation on any methods in concrete classes that don't
       extend <code>junit.framework.TestCase</code>, or for public/protected methods with names
       starting with <q>test</q> in concrete classes that
       extend <code>junit.framework.TestCase</code>.  Classes marked with the JUnit
       4 <code>org.junit.runner.RunWith</code> or <code>org.junit.runner.Suite.SuiteClasses</code>
       annotations are also passed to JUnit for execution, as is any class with a public/protected
-      no-argument <code>suite</code> method.</td>
+      no-argument <code>suite()</code> method.</td>
     <td>No; default is <q>false</q></td>
   </tr>
 </table>
@@ -507,9 +518,9 @@ only <code>&lt;fileset&gt;</code> has been supported.</p>
 
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>fork</td>
@@ -568,10 +579,11 @@ only <code>&lt;fileset&gt;</code> has been supported.</p>
       non tests from appearing as test errors in test results.<br/>Tests are identified by looking
       for the <code>@Test</code> annotation on any methods in concrete classes that don't
       extend <code>junit.framework.TestCase</code>, or for public/protected methods with names
-      starting with 'test' in concrete classes that extend <code>junit.framework.TestCase</code>.
-      Classes marked with the JUnit4 <code>org.junit.runner.RunWith</code>
-      or <code>org.junit.runner.Suite.SuiteClasses</code> annotations are also passed to JUnit for
-      execution, as is any class with a public/protected no-argument <code>suite</code> method.</td>
+      starting with <q>test</q> in concrete classes that
+      extend <code>junit.framework.TestCase</code>.  Classes marked with the JUnit
+      4 <code>org.junit.runner.RunWith</code> or <code>org.junit.runner.Suite.SuiteClasses</code>
+      annotations are also passed to JUnit for execution, as is any class with a public/protected
+      no-argument <code>suite()</code> method.</td>
     <td>No; default is <q>false</q></td>
   </tr>
 </table>
@@ -582,25 +594,26 @@ elements.</p>
 <h3>Forked tests and <code>tearDown()</code></h3>
 
 <p>If a forked test runs into a timeout, Ant will terminate the JVM process it has created, which
-probably means the test's <code>tearDown()</code> method will never be called.  The same is true if
-the forked JVM crashes for some other reason.</p>
+probably means the test's <code class="code">tearDown()</code> method will never be called.  The
+same is true if the forked JVM crashes for some other reason.</p>
 
 <p><em>Since Ant 1.8.0</em>, a special formatter is distributed with Ant that tries to load the
-testcase that was in the forked JVM and invoke that class' <code>tearDown()</code> method.  This
-formatter has the following limitations:</p>
+testcase that was in the forked JVM and invoke that class' <code class="code">tearDown()</code>
+method.  This formatter has the following limitations:</p>
 
 <ul>
   <li>It runs in the same JVM as Ant itself, this is a different JVM than the one that was executing
     the test and it may see a different classloader (and thus may be unable to load the test
     class).</li>
   <li>It cannot determine which test was run when the timeout/crash occurred if the forked JVM was
-    running multiple test.  I.e. the formatter cannot work with any <var>forkMode</var> other
-    than <q>perTest</q> and it won't do anything if the test class contains a <code>suite()</code>
-    method.</li>
+    running multiple tests.  I.e. the formatter cannot work with any <var>forkMode</var> other
+    than <q>perTest</q> and it won't do anything if the test class contains
+    a <code class="code">suite()</code> method.</li>
 </ul>
 
-<p>If the formatter recognizes an incompatible <var>forkMode</var> or a <code>suite</code> method or
-fails to load the test class it will silently do nothing.</p>
+<p>If the formatter recognizes an incompatible <var>forkMode</var> or
+a <code class="code">suite()</code> method or fails to load the test class it will silently do
+nothing.</p>
 
 <p>The formatter doesn't have any effect on tests that were not forked or didn't cause timeouts or
 JVM crashes.</p>
@@ -626,24 +639,29 @@ can ensure they will be generated even if the build file disables them.</p>
 
 <h3>Examples</h3>
 
+<p>Run the test defined in <code>my.test.TestCase</code> in the same VM. No output will be generated
+unless the test fails.</p>
 <pre>
 &lt;junit&gt;
     &lt;test name="my.test.TestCase"/&gt;
 &lt;/junit&gt;</pre>
 
-<p>Runs the test defined in <code>my.test.TestCase</code> in the same VM. No output will be
-generated unless the test fails.</p>
-
+<p>Run the test defined in <code>my.test.TestCase</code> in a separate JVM. At the end of the test,
+a one-line summary will be printed. A detailed report of the test can be found
+in <samp>TEST-my.test.TestCase.txt</samp>. The build process will be stopped if the test fails.</p>
 <pre>
 &lt;junit printsummary="yes" fork="yes" haltonfailure="yes"&gt;
     &lt;formatter type="plain"/&gt;
     &lt;test name="my.test.TestCase"/&gt;
 &lt;/junit&gt;</pre>
 
-<p>Runs the test defined in <code>my.test.TestCase</code> in a separate JVM.  At the end of the
-test, a one-line summary will be printed. A detailed report of the test can be found
-in <samp>TEST-my.test.TestCase.txt</samp>. The build process will be stopped if the test fails.</p>
-
+<p>Run <code>my.test.TestCase</code> in the same JVM, ignoring the given <code>CLASSPATH</code>;
+only a warning is printed if this test fails. In addition to the plain text test results, for this
+test a XML result will be output to <samp>result.xml</samp>. Then, for each matching file in the
+directory defined for <samp>${src.tests}</samp>, a test is run in a separate JVM. If a test fails,
+the build process is aborted. Results are collected in files
+named <samp>TEST-</samp><var>name</var><samp>.txt</samp> and written
+to <samp>${reports.tests}</samp>.</p>
 <pre>
 &lt;junit printsummary="yes" haltonfailure="yes"&gt;
     &lt;classpath&gt;
@@ -665,14 +683,14 @@ in <samp>TEST-my.test.TestCase.txt</samp>. The build process will be stopped if 
     &lt;/batchtest&gt;
 &lt;/junit&gt;</pre>
 
-<p>Runs <code>my.test.TestCase</code> in the same JVM, ignoring the given <code>CLASSPATH</code>;
-only a warning is printed if this test fails. In addition to the plain text test results, for this
-test a XML result will be output to <samp>result.xml</samp>.  Then, for each matching file in the
-directory defined for <samp>${src.tests}</samp> a test is run in a separate JVM. If a test fails,
-the build process is aborted. Results are collected in files
-named <samp>TEST-</samp><var>name</var><samp>.txt</samp> and written
-to <samp>${reports.tests}</samp>.</p>
-
+<p>On the first run, all tests are collected via the <code>&lt;batchtest/&gt;</code>
+element. Its <var>plain</var> formatter shows the output on the console. The <var>failure</var>
+formatter creates a Java source file in <samp>${build.dir}/failingTests/FailedTests.java</samp>
+which extends <code class="code">junit.framework.TestCase</code> and returns from
+a <code class="code">suite()</code> method a test suite for the failing tests.<br/>On a second run
+the collector class exists and instead of the <code>&lt;batchtest/&gt;</code> the
+single <code>&lt;test/&gt;</code> will run. So only the failing test cases are re-run. The two
+nested formatters are for displaying (for the user) and for updating the collector class.</p>
 <pre>
 &lt;target name=&quot;test&quot;&gt;
     &lt;property name=&quot;collector.dir&quot; value=&quot;${build.dir}/failingTests&quot;/&gt;
@@ -704,14 +722,17 @@ to <samp>${reports.tests}</samp>.</p>
         &lt;/test&gt;
     &lt;/junit&gt;
 &lt;/target&gt;</pre>
-<p>On the first run all tests are collected via the <code>&lt;batchtest/&gt;</code>
-element. Its <var>plain</var> formatter shows the output on the console. The <var>failure</var>
-formatter creates a Java source file in <samp>${build.dir}/failingTests/FailedTests.java</samp>
-which extends <code>junit.framework.TestCase</code> and returns from a <code>suite()</code> method a
-test suite for the failing tests.<br/>  On a second run the collector class exists and instead of
-the <code>&lt;batchtest/&gt;</code> the single <code>&lt;test/&gt;</code> will run. So only the
-failing test cases are re-run.  The two nested formatters are for displaying (for the user) and for
-updating the collector class.</p>
+
+<p>Run <code>my.test.TestCase</code> as a white-box test in the forked JVM given by
+the <code>platform.java</code> property. The JUnit library is a part of an unnamed module while the
+tested project and required modules are on the module path. The tests do not have module-info file
+and are executed in the project module given by <code>module.name</code>
+property.<br/>The <kbd>--patch-module</kbd> Java option executes the tests built
+into <samp>${build.test.classes}</samp> in a module given by <code>module.name</code>
+property.<br/>The <kbd>--add-modules</kbd> Java option enables the tested
+module.<br/>The <kbd>--add-reads</kbd> Java option makes the unnamed module containing JUnit
+readable by tested module.<br/>The <kbd>--add-exports</kbd> Java option makes the non-exported test
+package <code>my.test</code> accessible from the unnamed module containing JUnit.</p>
 <pre>
 &lt;junit fork="true"
        jvm="${platform.java}"&gt;
@@ -727,18 +748,15 @@ updating the collector class.</p>
     &lt;/modulepath&gt;
     &lt;formatter type="plain"/&gt;
     &lt;test name="my.test.TestCase"/&gt;
-&lt;/junit&gt;
-</pre>
-<p>Runs <code>my.test.TestCase</code> as a white-box test in the forked JVM given by
-the <code>platform.java</code> property.  The JUnit library is a part of an unnamed module while the
-tested project and required modules are on the module path. The tests do not have module-info file
-and are executed in the project module given by <code>module.name</code> property.<br/>
-The <code>--patch-module</code> Java option executes the tests built
-into <samp>${build.test.classes}</samp> in a module given by <code>module.name</code> property.<br/>
-The <code>--add-modules</code> Java option enables the tested module.<br/>
-The <code>--add-reads</code> Java option makes the unnamed module containing JUnit readable by
-tested module.<br/>  The <code>--add-exports</code> Java option makes the non-exported test
-package <code>my.test</code> accessible from the unnamed module containing JUnit.</p>
+&lt;/junit&gt;</pre>
+
+<p>Run <code>my.test.TestCase</code> as a black-box test in the forked JVM given by
+the <code>platform.java</code> property. The JUnit library is used as an automatic module. The
+tests' module-info requires the tested module and JUnit.<br/>The <kbd>--add-modules</kbd> Java
+option enables the test module.<br/>The <kbd>--add-exports</kbd> Java option makes the non-exported
+test package <code>my.test</code> accessible from the JUnit module and Ant's test runner. Another
+possibility is to export the test package in the tests' module-info by <code>exports my.test</code>
+directive.</p>
 <pre>
 &lt;junit fork="true"
        jvm="${platform.java}"&gt;
@@ -749,14 +767,6 @@ package <code>my.test</code> accessible from the unnamed module containing JUnit
     &lt;/modulepath&gt;
     &lt;formatter type="plain"/&gt;
     &lt;test name="my.test.TestCase"/&gt;
-&lt;/junit&gt;
-</pre>
-<p>Runs <code>my.test.TestCase</code> as a black-box test in the forked JVM given by
-the <code>platform.java</code> property.  The JUnit library is used as an automatic module. The
-tests' module-info requires the tested module and JUnit.<br/>  The <code>--add-modules</code> Java
-option enables the test module.<br/>  The <code>--add-exports</code> Java option makes the
-non-exported test package <code>my.test</code> accessible from the JUnit module and Ant's test
-runner.  Another possibility is to export the test package in the tests' module-info
-by <code>exports my.test</code> directive.</p>
+&lt;/junit&gt;</pre>
 </body>
 </html>

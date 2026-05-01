@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Parallel Task</title>
 </head>
@@ -46,9 +46,9 @@ times on a multicore CPU.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>threadCount</td>
@@ -99,8 +99,8 @@ complete without waiting for other nested tasks to complete in other threads.</p
 is not set, the remaining tasks in other threads will continue to run until all threads have
 completed. In this situation, the <code>parallel</code> task will also fail.</p>
 
-<p>The <code>parallel</code> task may be combined with the <a href="sequential.html"> sequential</a>
-task to define sequences of tasks to be executed on each thread within the parallel block</p>
+<p>The <code>parallel</code> task may be combined with the <a href="sequential.html">sequential</a>
+task to define sequences of tasks to be executed on each thread within the parallel block.</p>
 
 <p>The <var>threadCount</var> attribute can be used to place a maximum number of available threads
 for the execution.  When not present all child tasks will be executed at once.  When present then
@@ -125,9 +125,9 @@ occur.  This is not a replacement for Java Language level thread semantics and i
 
 <h4>daemons</h4>
 <p>The <code>parallel</code> task supports a <code>&lt;daemons&gt;</code> nested element. This is a
-list of tasks which are to be run in parallel daemon threads. The parallel task will not wait for
-these tasks to complete. Being daemon threads, however, they will not prevent Ant from completing,
-whereupon the threads are terminated. Failures in daemon threads which occur before
+list of tasks which are to be run in parallel daemon threads. The <code>parallel</code> task will
+not wait for these tasks to complete. Being daemon threads, however, they will not prevent Ant from
+completing, whereupon the threads are terminated. Failures in daemon threads which occur before
 the <code>parallel</code> task itself finishes will be reported and can cause <code>parallel</code>
 to throw an exception. Failures which occur after <code>parallel</code> has completed are not
 reported.</p>
@@ -136,6 +136,16 @@ reported.</p>
 from Ant. By using <code>&lt;daemons&gt;</code> such servers do not halt the build.</p>
 
 <h3>Examples</h3>
+<p>This is a typical pattern for testing a server application. In one thread the server is started
+(the <code>&lt;wlrun&gt;</code> task). The other thread consists of a three tasks which are
+performed in sequence. The <code>&lt;sleep&gt;</code> task is used to give the server time to come
+up. Another task which is capable of validating that the server is available could be used in place
+of the <code>&lt;sleep&gt;</code> task. The <code>&lt;junit&gt;</code> test harness then runs, again
+in its own JVM. Once the tests are complete, the server is stopped
+(using <code>&lt;wlstop&gt;</code> in this example), allowing both threads to
+complete. The <code>&lt;parallel&gt;</code> task will also complete at this time and the build will
+then continue.</p>
+
 <pre>
 &lt;parallel&gt;
   &lt;wlrun ... &gt;
@@ -145,15 +155,14 @@ from Ant. By using <code>&lt;daemons&gt;</code> such servers do not halt the bui
     &lt;wlstop/&gt;
   &lt;/sequential&gt;
 &lt;/parallel&gt;</pre>
-<p>This example represents a typical pattern for testing a server application.  In one thread the
-server is started (the <code>&lt;wlrun&gt;</code> task).  The other thread consists of a three tasks
-which are performed in sequence. The <code>&lt;sleep&gt;</code> task is used to give the server time
-to come up. Another task which is capable of validating that the server is available could be used
-in place of the <code>&lt;sleep&gt;</code> task. The <code>&lt;junit&gt;</code> test harness then
-runs, again in its own JVM. Once the tests are complete, the server is stopped
-(using <code>&lt;wlstop&gt;</code> in this example), allowing both threads to complete. The
-<code>&lt;parallel&gt;</code> task will also complete at this time and the build will then
-continue.</p>
+
+<p>Here, two independent tasks run to achieve better resource utilization during the build. In this
+instance, some servlets are being compiled in one thread and a set of JSPs is being precompiled in
+another. Developers need to be careful that the two tasks are independent, both in terms of their
+dependencies and in terms of their potential interactions in Ant's external environment. Here we
+set <var>fork</var>=<q>true</q> for the <code>&lt;javac&gt;</code> task, so that it runs in a new
+process; if the <code>&lt;wljspc&gt;</code> task used the <kbd>javac</kbd> compiler in-VM (it may),
+concurrency problems may arise.</p>
 
 <pre>
 &lt;parallel&gt;
@@ -161,13 +170,12 @@ continue.</p>
   &lt;wljspc ...&gt; &lt;!-- precompile JSPs --&gt;
 &lt;/parallel&gt;</pre>
 
-<p>This example shows two independent tasks being run to achieve better resource utilization during
-the build. In this instance, some servlets are being compiled in one thread and a set of JSPs is
-being precompiled in another. Developers need to be careful that the two tasks are independent, both
-in terms of their dependencies and in terms of their potential interactions in Ant's external
-environment. Here we set <var>fork</var>=<q>true</q> for the <code>&lt;javac&gt;</code> task, so
-that it runs in a new process; if the <code>&lt;wljspc&gt;</code> task used the <code>javac</code>
-compiler in-VM (it may), concurrency problems may arise.</p>
+<p>This example represents a typical need for use of the <var>threadCount</var>
+and <var>threadsPerProcessor</var> attributes. Spinning up all 40 of those tasks could cripple the
+system for memory and CPU time. By limiting the number of concurrent executions you can reduce
+contention for CPU, memory and disk IO, and so actually finish faster. This is also a good candidate
+for use of <var>threadCount</var> (and possibly <var>threadsPerProcessor</var>) because each task is
+independent (every new JVM is forked) and has no dependencies on the other tasks.</p>
 
 <pre>
  &lt;macrodef name="dbpurge"&gt;
@@ -190,13 +198,6 @@ compiler in-VM (it may), concurrency problems may arise.</p>
   &lt;dbpurge file="db/eight"/&gt;
   &lt;!-- repeated about 40 times --&gt;
 &lt;/parallel&gt;</pre>
-
-<p>This example represents a typical need for use of the <var>threadCount</var>
-and <var>threadsPerProcessor</var> attributes.  Spinning up all 40 of those tasks could cripple the
-system for memory and CPU time.  By limiting the number of concurrent executions you can reduce
-contention for CPU, memory and disk IO, and so actually finish faster.  This is also a good
-candidate for use of <var>threadCount</var> (and possibly <var>threadsPerProcessor</var>) because
-each task is independent (every new JVM is forked) and has no dependencies on the other tasks.</p>
 
 </body>
 </html>

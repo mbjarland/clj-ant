@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>SCP Task</title>
 </head>
@@ -40,9 +40,9 @@ information.  This task has been tested with <code>jsch-0.1.2</code> and later.<
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>file</td>
@@ -143,6 +143,14 @@ information.  This task has been tested with <code>jsch-0.1.2</code> and later.<
     <td>No; defaults to an empty string</td>
   </tr>
   <tr>
+    <td>sshConfig</td>
+    <td>Location of the file holding the OpenSSH style configuration (e.g. <code>${user.home}/.ssh/config</code>).
+        The username and the key file are read from the configuration file,
+        unless they are already specified in the task parameters.
+        <em>since Ant 1.10.8</em></td>
+    <td>No</td>
+  </tr>
+  <tr>
     <td>verbose</td>
     <td>Determines whether SCP outputs verbosely to the user. Currently this means outputting
       dots/stars showing the progress of a file transfer.  <em>since Ant 1.6.2</em></td>
@@ -209,40 +217,67 @@ set.</p>
 
 <p>Prior to Ant 1.9.7 only <code>&lt;fileset&gt;</code> has been supported as a nested element.</p>
 
+<h4 id="additionalConfig">additionalConfig</h4>
+
+<p><em>since Ant 1.10.10</em></p>
+
+<p>Adds configuration settings for the JSch Session created that are
+  not directly supported by specific Ant attributes.</p>
+
+<table class="attr">
+  <tr>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
+  </tr>
+  <tr>
+    <td>key</td>
+    <td>The key of the configuration setting.</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>value</td>
+    <td>The value of the configuration setting.</td>
+    <td>Yes</td>
+  </tr>
+</table>
+
 <h3>Examples</h3>
-<p><strong>Copy a single local file to a remote machine</strong></p>
+<p>Copy a single local file to a remote machine:</p>
 <pre>&lt;scp file=&quot;myfile.txt&quot; todir=&quot;user:password@somehost:/home/chuck&quot;/&gt;</pre>
 
-<p><strong>Copy a single local file to a remote machine with separate <var>password</var>
-attribute</strong></p>
+<p>Copy a single local file to a remote machine with separate <var>password</var>
+attribute:</p>
 <pre>&lt;scp file=&quot;myfile.txt&quot; todir=&quot;user@somehost:/home/chuck&quot; password=&quot;password&quot;/&gt;</pre>
 
-<p><strong>Copy a single local file to a remote machine using key base authentication.</strong></p>
+<p>Copy a single local file to a remote machine using key base authentication:</p>
 <pre>
 &lt;scp file=&quot;myfile.txt&quot;
      todir=&quot;user@somehost:/home/chuck&quot;
      keyfile=&quot;${user.home}/.ssh/id_dsa&quot;
      passphrase=&quot;my extremely secret passphrase&quot;/&gt;</pre>
 
-<p><strong>Copy a single remote file to a local directory</strong></p>
+<p>Copy a single remote file to a local directory:</p>
 <pre>&lt;scp file=&quot;user:password@somehost:/home/chuck/myfile.txt&quot; todir=&quot;../some/other/dir&quot;/&gt;</pre>
 
-<p><strong>Copy a remote directory to a local directory</strong></p>
+<p>Copy a remote directory to a local directory:</p>
 <pre>&lt;scp file=&quot;user:password@somehost:/home/chuck/*&quot; todir=&quot;/home/sara&quot;/&gt;</pre>
 
-<p><strong>Copy a local directory to a remote directory</strong></p>
+<p>Copy a local directory to a remote directory:</p>
 <pre>
 &lt;scp todir=&quot;user:password@somehost:/home/chuck/&quot;&gt;
   &lt;fileset dir=&quot;src_dir&quot;/&gt;
 &lt;/scp&gt;</pre>
-<p><strong>Copy a set of files to a directory</strong></p>
+
+<p>Copy a set of files to a directory:</p>
 <pre>
 &lt;scp todir=&quot;user:password@somehost:/home/chuck&quot;&gt;
   &lt;fileset dir=&quot;src_dir&quot;&gt;
     &lt;include name=&quot;**/*.java&quot;/&gt;
   &lt;/fileset&gt;
 &lt;/scp&gt;</pre>
-<p><strong>Copy a set of files to a remote directory in reverse last-modified order</strong></p>
+
+<p>Copy a set of files to a remote directory in reverse last-modified order:</p>
 <pre>
 &lt;scp todir=&quot;user:password@somehost:/home/chuck&quot;&gt;
   &lt;sort&gt;
@@ -259,10 +294,11 @@ attribute</strong></p>
 can be a serious security hole.  Consider using variable substitution and include the password on
 the command line.  For example:</p>
 <pre>&lt;scp todir=&quot;${username}:${password}@host:/dir&quot; ...&gt;</pre>
+
 <p>Invoking Ant with the following command line:</p>
-<pre>ant -Dusername=me -Dpassword=mypassword target1 target2</pre>
-<p>Is slightly better, but the username/password is exposed to all users on an Unix system (via
-the <code>ps</code> command). The best approach is to use the <code>&lt;input&gt;</code> task and/or
+<pre class="input">ant -Dusername=me -Dpassword=mypassword target1 target2</pre>
+<p>is slightly better, but the username/password is exposed to all users on an Unix system (via
+the <kbd>ps</kbd> command). The best approach is to use the <code>&lt;input&gt;</code> task and/or
 retrieve the password from a (secured) <samp>.properties</samp> file.</p>
 
 <p><strong>Unix Note</strong>: File permissions are not retained when files are downloaded; they end

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Symlink Task</title>
 </head>
@@ -35,9 +35,9 @@ set of property files to create links from.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>action</td>
@@ -93,7 +93,7 @@ case.</p>
 in <samp>subdir</samp>:</p>
 <pre>&lt;symlink link="${dir.top}/foo" resource="${dir.top}/subdir/bar.foo"/&gt;</pre>
 
-<p>Record all links in <samp>subdir</samp> and it's descendants in files
+<p>Record all links in <samp>subdir</samp> and its descendants in files
 named <samp>dir.links</samp></p>
 <pre>
 &lt;symlink action="record" linkfilename="dir.links"&gt;
@@ -111,14 +111,14 @@ named <samp>dir.links</samp></p>
 
 <p><strong>Java 1.2 and earlier</strong>: Due to limitations on executing system level commands in
 Java versions earlier than 1.3 this task may have difficulty operating with a relative path
-in <code>ANT_HOME</code>. The typical symptom is an IOException where Apache Ant can't
+in <code>ANT_HOME</code>. The typical symptom is an <code>IOException</code> where Apache Ant can't
 find <samp>/some/working/directory${ANT_HOME}/bin/antRun</samp> or something similar. The workaround
 is to change your <code>ANT_HOME</code> environment variable to an absolute path, which will remove
 the <samp>/some/working/directory</samp> portion of the above path and allow Ant to find the correct
 command line execution script.</p>
 
 <p><strong>Note</strong>: <em>Since Ant 1.10.2</em>, this task relies on the symbolic link support
-introduced in Java 7 through the <code>java.nio.file.Files</code> APIs</p>
+introduced in Java 7 through the <code class="code">java.nio.file.Files</code> APIs</p>
 
 </body>
 </html>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>LoadProperties Task</title>
@@ -37,9 +38,9 @@ the <a href="property.html"><code>&lt;property&gt;</code></a> task.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>srcFile</td>
@@ -96,14 +97,17 @@ resource collection</h4>
 <p>for use with the <var>resource</var> attribute.</p>
 
 <h3>Examples</h3>
+
+<p>Load contents of <samp>file.properties</samp> as Ant properties.</p>
 <pre>&lt;loadproperties srcFile="file.properties"/&gt;</pre>
 <p>or</p>
 <pre>
 &lt;loadproperties&gt;
     &lt;file file="file.properties"/&gt;
 &lt;/loadproperties&gt;</pre>
-<p>Load contents of file.properties as Ant properties.</p>
 
+<p>Read the lines that contain the string <q>import.</q> from the file <samp>file.properties</samp>
+and load them as Ant properties.</p>
 <pre>
 &lt;loadproperties srcFile="file.properties"&gt;
     &lt;filterchain&gt;
@@ -112,17 +116,15 @@ resource collection</h4>
         &lt;/linecontains&gt;
     &lt;/filterchain&gt;
 &lt;/loadproperties&gt;</pre>
-<p>Read the lines that contain the string <q>import.</q>  from the file <samp>file.properties</samp>
-and load them as Ant properties.</p>
 
+<p>Load contents of <samp>https://example.org/url.properties.gz</samp>, uncompress it on the fly and
+load the contents as Ant properties.</p>
 <pre>
 &lt;loadproperties&gt;
     &lt;<a href="../Types/resources.html#gzipresource">gzipresource</a>&gt;
-        &lt;<a href="../Types/resources.html#url">url</a> url="http://example.org/url.properties.gz"/&gt;
+        &lt;<a href="../Types/resources.html#url">url</a> url="https://example.org/url.properties.gz"/&gt;
     &lt;/gzipresource&gt;
 &lt;/loadproperties&gt;</pre>
-<p>Load contents of <samp>http://example.org/url.properties.gz</samp>, uncompress it on the fly and
-load the contents as Ant properties.</p>
 
 </body>
 </html>

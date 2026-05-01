@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>Apache Ant User Manual</title>
 </head>
@@ -60,9 +60,9 @@ alternative.</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>file</td>
@@ -104,7 +104,7 @@ alternative.</p>
   <!--tr>
     <td>parallel</td>
     <td>process all specified files using a single
-      <code>chmod</code> command.</td>
+      <kbd>chmod</kbd> command.</td>
     <td>No; defaults to <q>true</q></td>
   </tr>
   <tr>
@@ -129,16 +129,17 @@ alternative.</p>
 
 <h3>Examples</h3>
 
+<p>Make the <code>run.bat</code> file read-only and hidden.</p>
 <pre>&lt;attrib file=&quot;${dist}/run.bat&quot; readonly=&quot;true&quot; hidden=&quot;true&quot;/&gt;</pre>
 
-<p>makes the <code>run.bat</code> file read-only and hidden.</p>
-
+<p>Make all <samp>.xml</samp> files below <samp>${meta.inf}</samp> readable.</p>
 <pre>&lt;attrib readonly=&quot;false&quot;&gt;
   &lt;fileset dir=&quot;${meta.inf}&quot; includes=&quot;**/*.xml&quot;/&gt;
 &lt;/attrib&gt;</pre>
 
-<p>makes all <samp>.xml</samp> files below <samp>${meta.inf}</samp> readable.</p>
-
+<p>Make all files below <samp>shared/sources1</samp> (except those below any directory
+named <samp>trial</samp>) read-only and archived. In addition all files belonging to a FileSet
+with <var>id</var> <samp>other.shared.sources</samp> get the same attributes.</p>
 <pre>
 &lt;attrib readonly=&quot;true&quot; archive=&quot;true&quot;&gt;
   &lt;fileset dir=&quot;shared/sources1&quot;&gt;
@@ -146,10 +147,6 @@ alternative.</p>
   &lt;/fileset&gt;
   &lt;fileset refid=&quot;other.shared.sources&quot;/&gt;
 &lt;/attrib&gt;</pre>
-
-<p>makes all files below <samp>shared/sources1</samp> (except those below any directory
-named <samp>trial</samp>) read-only and archived. In addition all files belonging to a FileSet
-with <var>id</var> <samp>other.shared.sources</samp> get the same attributes.</p>
 
 </body>
 </html>

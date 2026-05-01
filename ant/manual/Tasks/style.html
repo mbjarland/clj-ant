@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -6,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,10 +15,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html>
+<html lang="en">
 
 <head>
-<meta http-equiv="Content-Language" content="en-us">
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 <title>XSLT Task</title>
 </head>
@@ -29,12 +29,6 @@
 <h3>Description</h3>
 <p>Process a set of documents via XSLT.</p>
 <p>This is useful for building views of XML based documentation, or for generating code.</p>
-<p><strong>Note</strong>: If you are using JDK 1.4 or higher, this task does not require external
-libraries not supplied in the Apache Ant distribution. However, often the built in XSL engine is not
-as up to date as a fresh download, so an update is still highly recommended in particular since the
-built-in XSLT processors of Java 5 (and to a certain extent Java 6) are known to have serious
-issues.  See <a href="../install.html#librarydependencies">Library Dependencies</a> for more
-information.</p>
 <p>It is possible to refine the set of files that are being processed. This can be done with
 the <var>includes</var>, <var>includesfile</var>, <var>excludes</var>, <var>excludesfile</var>
 and <var>defaultexcludes</var> attributes. With the <var>includes</var> or <var>includesfile</var>
@@ -45,7 +39,7 @@ whether you want to use default exclusions or not. See the section
 on <a href="../dirtasks.html#directorybasedtasks">directory based tasks</a>, on how the
 inclusion/exclusion of files works, and how to write patterns.</p>
 <p>This task forms an implicit <a href="../Types/fileset.html">FileSet</a> and supports all
-attributes of <code>&lt;fileset&gt;</code> (<code>dir</code> becomes <code>basedir</code>) as well
+attributes of <code>&lt;fileset&gt;</code> (<var>dir</var> becomes <var>basedir</var>) as well
 as the nested <code>&lt;include&gt;</code>, <code>&lt;exclude&gt;</code>
 and <code>&lt;patternset&gt;</code> elements.</p>
 
@@ -55,7 +49,7 @@ stylesheets to all files contain in them as well.  Since the default <var>includ
 is <code>**</code> this means it will apply the stylesheet to all files.  If you specify
 an <var>excludes</var> pattern, it may still work on the files matched by those patterns because the
 parent directory has been matched.  If this behavior is not what you want, set
-the <var>scanincludedirectories</var> attribute to false.</p>
+the <var>scanincludedirectories</var> attribute to <q>false</q>.</p>
 
 <p><em>Since Ant 1.7</em>, this task supports
 nested <a href="../Types/resources.html#collection">resource collections</a> in addition to (or
@@ -81,9 +75,9 @@ path-like structure).</p>
 <h3>Parameters</h3>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>basedir</td>
@@ -237,6 +231,15 @@ path-like structure).</p>
       1.8.0</em>.</td>
     <td>No; default is <q>true</q></td>
   </tr>
+  <tr>
+    <td>granularity</td>
+    <td>The number of milliseconds leeway to give before deciding a
+      file is out of date with respect of the source file or stylesheet. This is
+      needed because not every file system supports tracking the last modified time to the
+      millisecond level. This can also be useful if source and target files live on separate
+      machines with clocks being out of sync. <em>since Ant 1.10.16</em>.</td>
+    <td>No; default is 1 second, or 2 seconds on DOS systems</td>
+  </tr>
 </table>
 <h3>Parameters specified as nested elements</h3>
 
@@ -262,9 +265,9 @@ resolution.</p>
 <h5>Parameters</h5>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -319,14 +322,14 @@ for primitive types).</p>
 
 <h4>outputproperty (<var>trax</var> processors only)</h4>
 <p>Used to specify how you wish the result tree to be output as specified in
-the <a href="https://www.w3.org/TR/xslt#output"> XSLT specifications</a>.
+the <a href="https://www.w3.org/TR/xslt#output" target="_top">XSLT specifications</a>.
 
 <h5>Parameters</h5>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -347,9 +350,9 @@ the <a href="https://www.w3.org/TR/xslt#output"> XSLT specifications</a>.
 <h5>Parameters</h5>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -383,9 +386,9 @@ documentation of your processor.  For example, in Xalan 2.x:</p>
 <h6>Parameters</h6>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
@@ -405,7 +408,7 @@ documentation of your processor.  For example, in Xalan 2.x:</p>
   <tr>
     <td>classloaderforpath</td>
     <td class="left">Value of the attribute is a classloader that uses the classpath specified by a
-      path that is the project reference with the given id. <em>since Ant 1.9.8</em></td>
+      path that is the project reference with the given <var>id</var>. <em>since Ant 1.9.8</em></td>
   </tr>
 </table>
 </blockquote>
@@ -436,9 +439,9 @@ is <var>http://javax.xml.XMLConstants/feature/secure-processing</var>.
 <h6>Parameters</h6>
 <table class="attr">
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th scope="col">Attribute</th>
+    <th scope="col">Description</th>
+    <th scope="col">Required</th>
   </tr>
   <tr>
     <td>name</td>
