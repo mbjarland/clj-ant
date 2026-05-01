@@ -18,41 +18,49 @@ children of any task.
 ```clojure
 (require '[clj-ant.core  :as a]
          '[clj-ant.tasks :as t]
-         '[slack.api     :as slack])
+         '[clojure.string :as str])
 
-;; Find every config file changed in the last 5 minutes -- in Clojure --
-;; render it with Ant's streaming token-replacement, scp the bundle to
-;; the remote, restart the service, ping Slack. One expression.
-(let [since   (- (System/currentTimeMillis) (* 5 60 1000))
-      version "1.2.3"]
-  (a/ant
-    (t/copy :todir "deploy/etc"
-      ;; A live Clojure seq, dropped into the Ant tree as a child:
-      (->> (a/files (t/fileset :dir "etc/templates"))
-           (filter #(> (.lastModified %) since)))
-      ;; Ant's filterchain, streaming through every file:
-      (t/filterchain
-        (t/tokenfilter
-          (t/replacestring :from "@VERSION@" :to version))))
+;; Build a release zip from ordinary files and files inside archives.
+;; The plan is data, so lint it before Ant touches the filesystem.
+(let [version "1.2.3"
+      app-dir "target/release/app"
+      configs (->> (a/files (t/fileset :dir "etc"
+                                       :includes "**/*.tmpl,**/*.properties"
+                                       :excludes "**/secrets/**"))
+                   (remove #(str/ends-with? (.getName %) ".bak")))
+      plan [(t/delete :dir "target/release")
+            (t/mkdir :dir app-dir)
 
-    (t/scp     :file (str "app-" version ".jar")
-               :todir "deploy@web-1:/srv/"
-               :keyfile "~/.ssh/id_ed25519" :trust "true")
-    (t/sshexec :host "web-1" :username "deploy"
-               :keyfile "~/.ssh/id_ed25519" :trust "true"
-               :command "systemctl --user restart app")
+            ;; A live Clojure seq of java.io.File values, copied by Ant.
+            ;; The filterchain streams token replacement; no temp strings.
+            (t/copy :todir (str app-dir "/conf")
+              configs
+              (t/filterchain
+                (t/tokenfilter
+                  (t/replacestring :from "@VERSION@" :to version))))
 
-    ;; Arbitrary Clojure as the next step in the chain. `task`
-    ;; returns an element; when the build reaches it the fn fires,
-    ;; same as any other task -- not just a registration.
-    (a/task #(slack/post webhook (str ":rocket: shipped v" version)))))
+            ;; Copy directly from inside zip/jar files, without unpacking
+            ;; them first. zipfileset is just another Ant resource collection.
+            (t/copy :todir (str app-dir "/public")
+              (t/zipfileset :src "vendor/admin-ui.zip"
+                            :includes "dist/**"
+                            :prefix "admin"))
+            (t/copy :todir (str app-dir "/licenses")
+              (t/zipfileset :src "target/app.jar"
+                            :includes "META-INF/LICENSE*,META-INF/NOTICE*"))
+
+            (t/zip :destfile (str "target/app-" version ".zip")
+              (t/fileset :dir app-dir))]]
+  (when-some [issues (seq (a/lint plan))]
+    (throw (ex-info "Invalid Ant plan" {:issues issues})))
+  (a/ant plan))
 ```
 
-That single expression weaves five things vanilla Clojure can't
-compose cleanly: file scanning with Ant's pattern grammar, a Clojure
-filter on the result, streaming token substitution at copy time,
-SSH + remote command execution, and inline Clojure as an Ant task.
-No XML, no `ProcessBuilder`, no shell-out for SSH.
+That single expression weaves together things vanilla Clojure rarely
+composes cleanly: Ant's pattern grammar, lazy resource collections,
+Clojure filtering, streaming text transforms, archive-entry copying,
+plan validation, and zip creation. No XML, no shelling out to `zip` /
+`unzip`, no temporary extraction just to grab files from a jar.
 
 
 ## Why
@@ -307,7 +315,8 @@ inline.
 
 `<scp>` and `<sshexec>` ship with the Terrapin-fixed `com.github.mwiede`
 JSch fork (CVE-2023-48795 patched). The everyday "deploy and restart"
-chain is one expression — see the example at the top of this README.
+chain is one expression; see [doc/examples.md](doc/examples.md) for the
+SSH recipes.
 
 ### Babashka pod
 
