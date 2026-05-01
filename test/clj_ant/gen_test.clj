@@ -10,6 +10,8 @@
   (testing "task pages expose prose plus attribute table metadata"
     (let [info (manual-info "copy")]
       (is (re-find #"Copies a file" (:description info)))
+      (is (= "https://ant.apache.org/manual/Tasks/copy.html"
+             (:manual-url info)))
       (is (= "The file to copy."
              (get-in info [:attrs :file :description])))
       (is (re-find #"Yes" (get-in info [:attrs :file :required])))
