@@ -1,9 +1,15 @@
 #!/usr/bin/env bb
 
 (ns bb-pod-smoke
-  (:require [babashka.pods :as pods]))
+  (:require [babashka.pods :as pods]
+            [clojure.edn :as edn]))
 
-(pods/load-pod ["clojure" "-M:pod"])
+(def pod-command
+  (if-some [cmd (System/getenv "CLJ_ANT_POD_CMD")]
+    (edn/read-string cmd)
+    ["clojure" "-M:pod"]))
+
+(pods/load-pod pod-command)
 
 (require '[clj-ant.pod :as a]
          '[clj-ant.tasks :as t])

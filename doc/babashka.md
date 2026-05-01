@@ -27,6 +27,17 @@ protocol change: the registry expects downloadable artifacts with a pod
 entry point, while clj-ant currently ships the JVM entry point directly.
 `bin/bb-pod-smoke.clj` is the CI smoke test for that public pod surface.
 
+Registry-compatible JVM artifacts are built with:
+
+```shell
+clojure -T:build pod-artifacts
+```
+
+That creates `target/pod-registry/pod-clj-ant-<version>-jvm-unix.zip`
+for Linux/macOS and `target/pod-registry/pod-clj-ant-<version>-jvm-windows.zip`
+for Windows. Each zip contains a launcher executable plus the standalone
+pod jar; Java must be available on the user's PATH.
+
 
 ## What you get
 

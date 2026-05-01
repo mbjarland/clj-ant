@@ -8,8 +8,10 @@
       clj -T:build check     ; lint, test, build jar
       clj -T:build clean
       clj -T:build jar
+      clj -T:build pod-artifacts
       clj -T:build install"
-  (:require [clojure.tools.build.api :as b]
+  (:require [clojure.java.io :as io]
+            [clojure.tools.build.api :as b]
             [deps-deploy.deps-deploy :as dd]))
 
 (def lib 'io.github.mbjarland/clj-ant)
@@ -25,8 +27,13 @@
 
 (def version (current-version))
 (def class-dir "target/classes")
+(def pod-class-dir "target/pod-classes")
+(def pod-artifact-dir "target/pod-registry")
+(def pod-work-dir (str pod-artifact-dir "/work"))
 (def basis (delay (b/create-basis {:project "deps.edn"})))
 (def jar-file (format "target/%s-%s.jar" (name lib) version))
+(def pod-uber-file
+  (format "%s/pod-clj-ant-%s-standalone.jar" pod-artifact-dir version))
 
 (def scm
   {:url "https://github.com/mbjarland/clj-ant"
@@ -84,6 +91,79 @@
             ;; the compiled bridge usable on the supported JDK floor.
             :javac-opts (javac-opts)})
   (println "> compiled src/java -> target/classes"))
+
+(defn- posix-pod-launcher []
+  (str "#!/usr/bin/env sh\n"
+       "set -eu\n"
+       "DIR=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\n"
+       "exec java ${JAVA_OPTS:-} -cp \"$DIR/pod-clj-ant.jar\" "
+       "clojure.main -m clj-ant.pod \"$@\"\n"))
+
+(defn- windows-pod-launcher []
+  (str "@echo off\r\n"
+       "setlocal\r\n"
+       "set DIR=%~dp0\r\n"
+       "java %JAVA_OPTS% -cp \"%DIR%pod-clj-ant.jar\" "
+       "clojure.main -m clj-ant.pod %*\r\n"))
+
+(defn- write-launcher! [path content executable?]
+  (io/make-parents path)
+  (spit path content)
+  (when executable?
+    (.setExecutable (io/file path) true false))
+  path)
+
+(defn- build-pod-uber! []
+  (b/delete {:path pod-class-dir})
+  (io/make-parents pod-uber-file)
+  (b/javac {:src-dirs   ["src/java"]
+            :class-dir  pod-class-dir
+            :basis      @basis
+            :javac-opts (javac-opts)})
+  (b/copy-dir {:src-dirs   ["src/clj"]
+               :target-dir pod-class-dir})
+  (b/uber {:class-dir pod-class-dir
+           :uber-file pod-uber-file
+           :basis     @basis
+           :manifest  {"Implementation-Title" "pod-clj-ant"
+                       "Implementation-Version" version}})
+  (println "> standalone pod jar created at" pod-uber-file))
+
+(defn- stage-pod-package! [{:keys [classifier executable launcher]}]
+  (let [package-name (format "pod-clj-ant-%s-%s" version classifier)
+        package-dir  (str pod-work-dir "/" package-name)
+        jar-path     (str package-dir "/pod-clj-ant.jar")
+        launcher-path (str package-dir "/" executable)
+        zip-file     (format "%s/%s.zip" pod-artifact-dir package-name)]
+    (b/delete {:path package-dir})
+    (b/delete {:path zip-file})
+    (io/make-parents jar-path)
+    (io/copy (io/file pod-uber-file) (io/file jar-path))
+    (write-launcher! launcher-path launcher (= executable "pod-clj-ant"))
+    (b/zip {:src-dirs [package-dir]
+            :zip-file zip-file})
+    zip-file))
+
+(defn pod-artifacts
+  "Build babashka pod-registry artifacts.
+
+  Produces a standalone JVM pod jar plus zip files containing executable
+  launchers. The Unix artifact can be used for Linux and macOS on any JVM
+  architecture; the Windows artifact contains a .bat launcher. Set
+  CLJ_ANT_VERSION to force the release version in artifact names."
+  [_]
+  (b/delete {:path pod-artifact-dir})
+  (build-pod-uber!)
+  (let [zips [(stage-pod-package! {:classifier "jvm-unix"
+                                   :executable "pod-clj-ant"
+                                   :launcher (posix-pod-launcher)})
+              (stage-pod-package! {:classifier "jvm-windows"
+                                   :executable "pod-clj-ant.bat"
+                                   :launcher (windows-pod-launcher)})]]
+    (println "> pod registry zip artifacts:")
+    (doseq [zip-file zips]
+      (println " " zip-file))
+    zips))
 
 (defn jar [_]
   (clean nil)
