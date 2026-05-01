@@ -84,9 +84,9 @@ Legend:
 
 ## Nice to have — post-launch
 
-- ❓ **CHANGELOG.md** with real entries on each tagged release.
-  Currently a placeholder. Switch to `keepachangelog.com` format
-  once we cut versions.
+- ✅ **CHANGELOG.md** with real unreleased entries.
+  It now follows `keepachangelog.com` format and can be promoted into
+  tagged release notes when the first alpha is cut.
 
 - ❓ **cljdoc auto-publish.** Free with Clojars; just needs the
   artifact to land. cljdoc reads `doc/` folder and assembles a
