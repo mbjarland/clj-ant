@@ -69,22 +69,22 @@
   "Reify a ResourceCollection over a (possibly lazy) Clojure seq of File
   / Resource / path-string. Pulls FileResource instances on demand."
   [files]
-  (let [->res (fn [x]
-                (cond
-                  (instance? Resource x) x
-                  (instance? File x)
-                  (org.apache.tools.ant.types.resources.FileResource. ^File x)
-                  :else
-                  (org.apache.tools.ant.types.resources.FileResource.
-                    ^File (io/file x))))
+  (let [->res      (fn [x]
+                     (cond
+                       (instance? Resource x) x
+                       (instance? File x)
+                       (org.apache.tools.ant.types.resources.FileResource. ^File x)
+                       :else
+                       (org.apache.tools.ant.types.resources.FileResource.
+                         ^File (io/file x))))
         size-cache (delay (count files))]
     (reify ResourceCollection
       (iterator [_]
         (let [s (atom (seq files))]
           (reify java.util.Iterator
             (hasNext [_] (boolean (seq @s)))
-            (next    [_] (let [v (->res (first @s))]
-                           (swap! s next) v)))))
+            (next [_] (let [v (->res (first @s))]
+                        (swap! s next) v)))))
       (size [_] @size-cache)
       (isFilesystemOnly [_] true))))
 
@@ -238,18 +238,18 @@
   (doto (DefaultLogger.)
     (.setMessageOutputLevel
       (case level
-        :error   Project/MSG_ERR
-        :warn    Project/MSG_WARN
-        :info    Project/MSG_INFO
+        :error Project/MSG_ERR
+        :warn Project/MSG_WARN
+        :info Project/MSG_INFO
         :verbose Project/MSG_VERBOSE
-        :debug   Project/MSG_DEBUG))
-    (.setOutputPrintStream  ^PrintStream out)
-    (.setErrorPrintStream   ^PrintStream err)
+        :debug Project/MSG_DEBUG))
+    (.setOutputPrintStream ^PrintStream out)
+    (.setErrorPrintStream ^PrintStream err)
     (.setEmacsMode (boolean emacs?))))
 
 (declare make-project)
 
-(def ^{:doc "If non-nil, `execute!` reuses this Project instead of
+(def ^{:doc     "If non-nil, `execute!` reuses this Project instead of
   building a fresh one. Bind via `with-project` / `with-session`
   for REPL-driven workflows where the per-call init adds up."
        :dynamic true}
@@ -391,13 +391,13 @@
 (defn- xml->element
   "Convert one node from clojure.xml's representation to ours."
   [{:keys [tag attrs content]}]
-  (let [child-maps   (filterv map? content)
-        text-pieces  (filter string? content)
-        text         (when (seq text-pieces)
-                       (let [s (apply str text-pieces)]
-                         ;; Drop whitespace-only inter-element text.
-                         (when (some #(not (Character/isWhitespace %)) s)
-                           s)))]
+  (let [child-maps  (filterv map? content)
+        text-pieces (filter string? content)
+        text        (when (seq text-pieces)
+                      (let [s (apply str text-pieces)]
+                        ;; Drop whitespace-only inter-element text.
+                        (when (some #(not (Character/isWhitespace %)) s)
+                          s)))]
     (->Element tag (or attrs {}) (mapv xml->element child-maps) text)))
 
 (defn- ->source-dir
@@ -438,26 +438,26 @@
   element."
   [src]
   (let [src-dir (->source-dir src)
-        parsed (cond
-                 (and (string? src) (re-find #"^\s*<" src))
-                 (xml/parse (java.io.ByteArrayInputStream.
-                              (.getBytes ^String src "UTF-8")))
-                 :else (xml/parse src))
-        elt (xml->element parsed)]
+        parsed  (cond
+                  (and (string? src) (re-find #"^\s*<" src))
+                  (xml/parse (java.io.ByteArrayInputStream.
+                               (.getBytes ^String src "UTF-8")))
+                  :else (xml/parse src))
+        elt     (xml->element parsed)]
     (cond-> elt
-      src-dir (update :attrs assoc :clj-ant/source-dir src-dir))))
+            src-dir (update :attrs assoc :clj-ant/source-dir src-dir))))
 
 (defn- xml-name [x]
   (cond
     (keyword? x) (if-some [ns (namespace x)] (str ns ":" (name x)) (name x))
-    (symbol? x)  (if-some [ns (namespace x)] (str ns ":" (name x)) (name x))
-    :else        (str x)))
+    (symbol? x) (if-some [ns (namespace x)] (str ns ":" (name x)) (name x))
+    :else (str x)))
 
 (defn- xml-escape [s attr?]
   (cond-> (str/replace (str s) "&" "&amp;")
-    true  (str/replace "<" "&lt;")
-    true  (str/replace ">" "&gt;")
-    attr? (str/replace "\"" "&quot;")))
+          true (str/replace "<" "&lt;")
+          true (str/replace ">" "&gt;")
+          attr? (str/replace "\"" "&quot;")))
 
 (declare attr->string)
 
@@ -482,16 +482,16 @@
                               {:child-type :java-child}))
 
               (or (element? n) (and (map? n) (contains? n :tag)))
-              (let [tag (xml-name (:tag n))
-                    attrs (->> (:attrs n)
-                               (remove (fn [[k _]] (= "clj-ant" (namespace k))))
-                               (sort-by (comp xml-name first)))
+              (let [tag      (xml-name (:tag n))
+                    attrs    (->> (:attrs n)
+                                  (remove (fn [[k _]] (= "clj-ant" (namespace k))))
+                                  (sort-by (comp xml-name first)))
                     attr-str (apply str
                                     (for [[k v] attrs]
                                       (str " " (xml-name k) "=\""
                                            (xml-escape (attr->string v) true)
                                            "\"")))
-                    text (:text n)
+                    text     (:text n)
                     children (:children n)]
                 (if (or text (seq children))
                   (str "<" tag attr-str ">"
@@ -586,10 +586,10 @@
          ;; pass through verbatim; the runner refuses at execute time if
          ;; they would shadow something.
          tag (or tag
-                  (keyword (str "clj-ant-inline-"
-                                (swap! inline-task-counter inc))))]
+                 (keyword (str "clj-ant-inline-"
+                               (swap! inline-task-counter inc))))]
      (with-meta (element tag)
-                 {:clj-ant/inline-fn f}))))
+                {:clj-ant/inline-fn f}))))
 
 (defn- ^:no-doc collect-inline-tasks
   "Walk `elements` and return [{:tag <kw> :fn <fn>} ...] for every
@@ -632,16 +632,16 @@
     - File / anything else: `(str v)`."
   ^String [v]
   (cond
-    (string? v)     v
-    (keyword? v)    (name v)
-    (symbol? v)     (name v)
+    (string? v) v
+    (keyword? v) (name v)
+    (symbol? v) (name v)
     (sequential? v) (clojure.string/join ","
-                                          (map #(cond
-                                                  (keyword? %) (name %)
-                                                  (symbol? %)  (name %)
-                                                  :else        (str %))
-                                               v))
-    :else           (str v)))
+                                         (map #(cond
+                                                 (keyword? %) (name %)
+                                                 (symbol? %) (name %)
+                                                 :else (str %))
+                                              v))
+    :else (str v)))
 
 (defn- target-name
   "Return the non-blank Ant target name for an element, or nil."
@@ -655,7 +655,7 @@
   [element]
   (or (target-name (:attrs element))
       (throw (ex-info "Target elements require a non-empty :name attribute"
-                      {:tag (:tag element)
+                      {:tag   (:tag element)
                        :attrs (:attrs element)}))))
 
 ;; Per-project monotonic counter for synthetic reference ids. Counter
@@ -671,11 +671,11 @@
   nil)
 
 (defn- next-ref-id! [^Project project]
-  (let [k "_clj-ant.ref-counter"
-        n (or (.getReference project k)
-              (let [a (atom 0)]
-                (.addReference project k a)
-                a))
+  (let [k      "_clj-ant.ref-counter"
+        n      (or (.getReference project k)
+                   (let [a (atom 0)]
+                     (.addReference project k a)
+                     a))
         ref-id (str "_clj-ant.ref-" (swap! n inc))]
     (when-some [ctx *execute-ctx*]
       (swap! (:refs-added ctx) conj ref-id))
@@ -684,17 +684,17 @@
 (defn- java-child->ue
   ^UnknownElement [^JavaChild jc ^Project project ^Target target]
   (let [{:keys [object tag]} jc
-        ref-id  (next-ref-id! project)
-        _       (.addReference project ref-id object)
+        ref-id   (next-ref-id! project)
+        _        (.addReference project ref-id object)
         tag-name (name (or tag :resources))
-        ue      (doto (UnknownElement. tag-name)
-                  (.setProject project)
-                  (.setOwningTarget target)
-                  (.setQName tag-name)
-                  (.setTaskName tag-name)
-                  (.setLocation Location/UNKNOWN_LOCATION))
-        wrap    (doto (RuntimeConfigurable. ue tag-name)
-                  (.setAttribute "refid" ref-id))]
+        ue       (doto (UnknownElement. tag-name)
+                   (.setProject project)
+                   (.setOwningTarget target)
+                   (.setQName tag-name)
+                   (.setTaskName tag-name)
+                   (.setLocation Location/UNKNOWN_LOCATION))
+        wrap     (doto (RuntimeConfigurable. ue tag-name)
+                   (.setAttribute "refid" ref-id))]
     (.setRuntimeConfigurableWrapper ue wrap)
     ue))
 
@@ -750,243 +750,243 @@
   [elements & {:as opts}]
   (binding [*execute-ctx* {:refs-added    (atom #{})
                            :targets-added (atom #{})}]
-   (let [elements (cond
-                   (element? elements)    [elements]
-                   (sequential? elements) (vec elements)
-                   (map? elements)        [elements]
-                   :else (throw (ex-info "execute! expects an element or seq of elements"
-                                         {:value elements})))
-        ;; A single :project element (e.g. from `from-xml`) is a
-        ;; syntactic wrapper -- lift its basedir/name/default into
-        ;; execute options and run its children. Caller opts win.
-        ;;
-        ;; Basedir resolution matches Ant: relative basedir attrs are
-        ;; resolved against :clj-ant/source-dir (the directory of
-        ;; the on-disk build.xml, captured by from-xml). Missing
-        ;; basedir falls back to the source-dir. Without a source
-        ;; dir we keep the legacy "process cwd" behaviour.
-        [elements opts]
-        (if (and (= 1 (count elements))
-                 (= :project (:tag (first elements))))
-          (let [root    (first elements)
-                a       (:attrs root)
-                src-dir (:clj-ant/source-dir a)
-                resolved-basedir
-                (when-some [bd (or (:basedir a) (and src-dir (.getPath ^File src-dir)))]
-                  (let [f (io/file bd)]
-                    (if (or (.isAbsolute f) (nil? src-dir))
-                      f
-                      (io/file src-dir bd))))
-                from-file (cond-> {}
-                            resolved-basedir (assoc :basedir resolved-basedir)
-                            (:name a)        (assoc :name    (:name a))
-                            (:default a)     (assoc :default (:default a)))]
-            [(vec (:children root)) (merge from-file opts)])
-          [elements opts])
-        _       (when (:validate? opts)
-                  (let [vt   (requiring-resolve 'clj-ant.spec/validate-tree)
-                        vopt (select-keys opts [:closed?])
-                        errs (mapcat #(vt % vopt) elements)]
-                    (when (seq errs)
-                      (throw (ex-info
-                               (str "Validation failed: " (count errs)
-                                    " issue(s)")
-                               {:errors (vec errs)})))))
-        ;; Project resolution precedence (most explicit wins):
-        ;;   :project opt  >  :session opt  >  *project* binding  >
-        ;;   make-project opts (fresh)
-        ;; Matches the docstring promise that an explicit :project on
-        ;; a single call opts out of an enclosing session.
-        project ^Project (or (:project opts)
-                             (when-some [s (:session opts)] (:project s))
-                             *project*
-                             (make-project opts))
-        ;; Sync deftask registrations only if the global registry has
-        ;; changed since this project last saw it. With many calls to
-        ;; the same with-project, this is the steady-state fast path.
-        _       (sync-deftasks! project)
-        ;; Inline tasks created via `task`. We add their fns to the
-        ;; registry just for this run and remove them in `finally`,
-        ;; so a long REPL session doesn't leak per-call inline tasks.
-        ;;
-        ;; Collision policy: an explicit tag that already maps to a
-        ;; non-ClojureTask definition (built-in task or some other
-        ;; deftask under a *different* class) is refused outright --
-        ;; better to fail loudly than to silently rebind <echo> for
-        ;; the rest of the build, or to clobber a deftask on cleanup.
-        ;; A tag that already maps to ClojureTask (i.e. an existing
-        ;; deftask of the same name) IS refused too: we would
-        ;; otherwise overwrite its fn during the build and remove its
-        ;; entry on cleanup.
-        ;;
-        ;; Save/restore: anonymous tags use a distinct prefix and
-        ;; can't collide. We still snapshot prior task definitions
-        ;; per inline tag so any future widening of the policy is
-        ;; safe by construction.
-        inline-tasks (collect-inline-tasks elements)
-        _ (doseq [{:keys [tag]} inline-tasks]
-            (let [n (clojure.core/name tag)
-                  prior (.get (.getTaskDefinitions project) n)]
-              (when prior
-                (throw
-                  (ex-info
-                    (str "(a/task " (pr-str tag) " ...) collides with an "
-                         "existing task definition (" (.getName ^Class prior)
-                         "). Use a different tag, or `deftask` if you want "
-                         "a permanent named task.")
-                    {:tag tag :existing (.getName ^Class prior)})))
-              (when (.containsKey ClojureTask/REGISTRY n)
-                (throw
-                  (ex-info
-                    (str "(a/task " (pr-str tag) " ...) collides with an "
-                         "existing deftask under the same name.")
-                    {:tag tag})))))
-        prior-defs (reduce (fn [m {:keys [tag]}]
+    (let [elements         (cond
+                             (element? elements) [elements]
+                             (sequential? elements) (vec elements)
+                             (map? elements) [elements]
+                             :else (throw (ex-info "execute! expects an element or seq of elements"
+                                                   {:value elements})))
+          ;; A single :project element (e.g. from `from-xml`) is a
+          ;; syntactic wrapper -- lift its basedir/name/default into
+          ;; execute options and run its children. Caller opts win.
+          ;;
+          ;; Basedir resolution matches Ant: relative basedir attrs are
+          ;; resolved against :clj-ant/source-dir (the directory of
+          ;; the on-disk build.xml, captured by from-xml). Missing
+          ;; basedir falls back to the source-dir. Without a source
+          ;; dir we keep the legacy "process cwd" behaviour.
+          [elements opts]
+          (if (and (= 1 (count elements))
+                   (= :project (:tag (first elements))))
+            (let [root      (first elements)
+                  a         (:attrs root)
+                  src-dir   (:clj-ant/source-dir a)
+                  resolved-basedir
+                            (when-some [bd (or (:basedir a) (and src-dir (.getPath ^File src-dir)))]
+                              (let [f (io/file bd)]
+                                (if (or (.isAbsolute f) (nil? src-dir))
+                                  f
+                                  (io/file src-dir bd))))
+                  from-file (cond-> {}
+                                    resolved-basedir (assoc :basedir resolved-basedir)
+                                    (:name a) (assoc :name (:name a))
+                                    (:default a) (assoc :default (:default a)))]
+              [(vec (:children root)) (merge from-file opts)])
+            [elements opts])
+          _                (when (:validate? opts)
+                             (let [vt   (requiring-resolve 'clj-ant.spec/validate-tree)
+                                   vopt (select-keys opts [:closed?])
+                                   errs (mapcat #(vt % vopt) elements)]
+                               (when (seq errs)
+                                 (throw (ex-info
+                                          (str "Validation failed: " (count errs)
+                                               " issue(s)")
+                                          {:errors (vec errs)})))))
+          ;; Project resolution precedence (most explicit wins):
+          ;;   :project opt  >  :session opt  >  *project* binding  >
+          ;;   make-project opts (fresh)
+          ;; Matches the docstring promise that an explicit :project on
+          ;; a single call opts out of an enclosing session.
+          project          ^Project (or (:project opts)
+                                        (when-some [s (:session opts)] (:project s))
+                                        *project*
+                                        (make-project opts))
+          ;; Sync deftask registrations only if the global registry has
+          ;; changed since this project last saw it. With many calls to
+          ;; the same with-project, this is the steady-state fast path.
+          _                (sync-deftasks! project)
+          ;; Inline tasks created via `task`. We add their fns to the
+          ;; registry just for this run and remove them in `finally`,
+          ;; so a long REPL session doesn't leak per-call inline tasks.
+          ;;
+          ;; Collision policy: an explicit tag that already maps to a
+          ;; non-ClojureTask definition (built-in task or some other
+          ;; deftask under a *different* class) is refused outright --
+          ;; better to fail loudly than to silently rebind <echo> for
+          ;; the rest of the build, or to clobber a deftask on cleanup.
+          ;; A tag that already maps to ClojureTask (i.e. an existing
+          ;; deftask of the same name) IS refused too: we would
+          ;; otherwise overwrite its fn during the build and remove its
+          ;; entry on cleanup.
+          ;;
+          ;; Save/restore: anonymous tags use a distinct prefix and
+          ;; can't collide. We still snapshot prior task definitions
+          ;; per inline tag so any future widening of the policy is
+          ;; safe by construction.
+          inline-tasks     (collect-inline-tasks elements)
+          _                (doseq [{:keys [tag]} inline-tasks]
+                             (let [n     (clojure.core/name tag)
+                                   prior (.get (.getTaskDefinitions project) n)]
+                               (when prior
+                                 (throw
+                                   (ex-info
+                                     (str "(a/task " (pr-str tag) " ...) collides with an "
+                                          "existing task definition (" (.getName ^Class prior)
+                                          "). Use a different tag, or `deftask` if you want "
+                                          "a permanent named task.")
+                                     {:tag tag :existing (.getName ^Class prior)})))
+                               (when (.containsKey ClojureTask/REGISTRY n)
+                                 (throw
+                                   (ex-info
+                                     (str "(a/task " (pr-str tag) " ...) collides with an "
+                                          "existing deftask under the same name.")
+                                     {:tag tag})))))
+          prior-defs       (reduce (fn [m {:keys [tag]}]
+                                     (let [n (clojure.core/name tag)]
+                                       (assoc m n (.get (.getTaskDefinitions project) n))))
+                                   {}
+                                   inline-tasks)
+          _                (doseq [{:keys [tag fn]} inline-tasks]
                              (let [n (clojure.core/name tag)]
-                               (assoc m n (.get (.getTaskDefinitions project) n))))
-                           {}
-                           inline-tasks)
-        _ (doseq [{:keys [tag fn]} inline-tasks]
-            (let [n (clojure.core/name tag)]
-              (.put ClojureTask/REGISTRY n (clojure.core/fn [_] (fn)))
-              (.addTaskDefinition project n ClojureTask)))
-        events  (when (:capture? opts) (atom []))
-        on-event (:on-event opts)
-        emit    (fn [m]
-                  (when events   (swap! events conj m))
-                  (when on-event (on-event m))
-                  nil)
-        rec     (when (or events on-event)
-                  (reify BuildListener
-                    (buildStarted   [_ _] (emit {:phase :started}))
-                    (buildFinished  [_ e]
-                      (emit {:phase :finished
-                             :error (some-> ^BuildEvent e .getException
-                                            .getMessage)}))
-                    (targetStarted  [_ e]
-                      (emit {:phase :target-started
-                             :target (some-> ^BuildEvent e .getTarget .getName)}))
-                    (targetFinished [_ e]
-                      (emit {:phase :target-finished
-                             :target (some-> ^BuildEvent e .getTarget .getName)
-                             :error (some-> ^BuildEvent e .getException
-                                             .getMessage)}))
-                    (taskStarted    [_ e]
-                      (emit {:phase :task-started
-                             :task  (some-> ^BuildEvent e .getTask .getTaskName)}))
-                    (taskFinished   [_ e]
-                      (emit {:phase :task-finished
-                             :task  (some-> ^BuildEvent e .getTask .getTaskName)
-                             :error (some-> ^BuildEvent e .getException
-                                             .getMessage)}))
-                    (messageLogged  [_ e]
-                      (emit {:phase   :message
-                             :message (.getMessage  ^BuildEvent e)
-                             :level   (.getPriority ^BuildEvent e)}))))
-        ;; Split target elements from regular task/type elements. Targets get
-        ;; their own Target instance + addOrReplaceTarget; regular elements
-        ;; go onto an implicit unnamed target that runs by default.
-        target-elements (filter #(= :target (:tag %)) elements)
-        task-elements   (remove #(= :target (:tag %)) elements)
-        implicit  (doto (Target.)
-                    (.setName "")
-                    (.setProject project))
-        _         (.addOrReplaceTarget project implicit)
-        ;; Register named targets.
-        named-tgts (mapv (fn [n]
-                            (let [{:keys [attrs children]} n
-                                  name (require-target-name! n)
-                                  t (doto (Target.)
-                                      (.setName        name)
-                                      (.setProject     project)
-                                      (.setDescription (:description attrs)))
-                                 deps (:depends attrs)
-                                 deps-str (cond
-                                            (nil? deps) nil
-                                            (sequential? deps)
-                                            (clojure.string/join ","
-                                                                 (map clojure.core/name deps))
-                                            :else (str deps))]
-                             (when deps-str (.setDepends t deps-str))
-                             (when-some [v (:if attrs)]     (.setIf t (str v)))
-                             (when-some [v (:unless attrs)] (.setUnless t (str v)))
-                             (.addOrReplaceTarget project t)
-                             (when-some [ctx *execute-ctx*]
-                               (swap! (:targets-added ctx) conj (.getName t)))
-                             (doseq [c children]
-                               (.addTask t (->unknown-element c project t)))
-                             t))
-                         target-elements)
-        ues       (mapv #(->unknown-element % project implicit) task-elements)
-        _         (doseq [^UnknownElement ue ues] (.addTask implicit ue))
-        ;; Pick what to actually run. Tasks at the top level of a
-        ;; build.xml -- <property>, <typedef>, <import> -- live on
-        ;; the implicit unnamed target. They have to run BEFORE any
-        ;; named target so subsequent targets see their effects.
-        explicit-targets (or (:targets opts)
-                             (when (seq named-tgts)
-                               [(or (:default opts)
-                                    (.getName ^Target (first named-tgts)))]))
-        targets-to-run   (cond
-                           (and (seq ues) (seq explicit-targets))
-                           (cons "" explicit-targets)
-                           (seq explicit-targets) explicit-targets
-                           :else                 [""])]
-    (when rec (.addBuildListener project rec))
-    (when-some [d (:default opts)] (.setDefault project (str d)))
-    (.fireBuildStarted project)
-    (let [error (try
-                  (let [v (java.util.Vector.)]
-                    (doseq [t targets-to-run] (.add v (str t)))
-                    (.executeTargets project v))
-                  nil
-                  (catch Throwable t
-                    ;; Surface enough context to figure out which
-                    ;; element blew up. Ant's BuildException knows
-                    ;; the Location and message but not the Clojure
-                    ;; tree; we hold the input. Wrap so the user
-                    ;; sees both, while keeping the original
-                    ;; throwable as :cause for full stack access.
-                    (let [root (loop [e t]
-                                 (if-some [c (.getCause e)] (recur c) e))]
-                      (ex-info (str "Ant build failed: "
-                                    (or (.getMessage t) (.getMessage root)))
-                               {:clj-ant/error  true
-                                :clj-ant/elements elements
-                                :clj-ant/targets  (vec targets-to-run)
-                                :ant/exception-class (.getName (class root))
-                                :ant/message      (.getMessage root)}
-                               t))))]
-      (try
-        (.fireBuildFinished project error)
-        (cond-> {:project project
-                 :target  implicit
-                 :targets named-tgts
-                 :tasks   ues}
-          events       (assoc :events @events)
-          (some? error) (assoc :error error))
-        ;; Detach everything we attached to the project during this
-        ;; call -- listener, inline-task definitions, synthetic refids
-        ;; we minted for JavaChild, and named targets we addOrReplace'd.
-        ;; Without this, with-session reuse would grow the project's
-        ;; references and target tables monotonically across calls.
-        (finally
-          (when rec (.removeBuildListener project rec))
-          (doseq [{:keys [tag]} inline-tasks]
-            (let [n (clojure.core/name tag)]
-              (.remove ClojureTask/REGISTRY n)
-              (if-some [prior (get prior-defs n)]
-                (.addTaskDefinition project n prior)
-                (.remove (.getTaskDefinitions project) n))))
-          (doseq [ref-id @(:refs-added *execute-ctx*)]
-            (.. project getReferences (remove ref-id)))
-          (doseq [tn @(:targets-added *execute-ctx*)]
-            ;; Skip the implicit unnamed target -- it's just a
-            ;; convenient anchor for top-level tasks; keeping it on
-            ;; the project across calls is harmless and avoids
-            ;; constant rebuilding.
-            (when (not= "" tn)
-              (.. project getTargets (remove tn))))))))))
+                               (.put ClojureTask/REGISTRY n (clojure.core/fn [_] (fn)))
+                               (.addTaskDefinition project n ClojureTask)))
+          events           (when (:capture? opts) (atom []))
+          on-event         (:on-event opts)
+          emit             (fn [m]
+                             (when events (swap! events conj m))
+                             (when on-event (on-event m))
+                             nil)
+          rec              (when (or events on-event)
+                             (reify BuildListener
+                               (buildStarted [_ _] (emit {:phase :started}))
+                               (buildFinished [_ e]
+                                 (emit {:phase :finished
+                                        :error (some-> ^BuildEvent e .getException
+                                                       .getMessage)}))
+                               (targetStarted [_ e]
+                                 (emit {:phase  :target-started
+                                        :target (some-> ^BuildEvent e .getTarget .getName)}))
+                               (targetFinished [_ e]
+                                 (emit {:phase  :target-finished
+                                        :target (some-> ^BuildEvent e .getTarget .getName)
+                                        :error  (some-> ^BuildEvent e .getException
+                                                        .getMessage)}))
+                               (taskStarted [_ e]
+                                 (emit {:phase :task-started
+                                        :task  (some-> ^BuildEvent e .getTask .getTaskName)}))
+                               (taskFinished [_ e]
+                                 (emit {:phase :task-finished
+                                        :task  (some-> ^BuildEvent e .getTask .getTaskName)
+                                        :error (some-> ^BuildEvent e .getException
+                                                       .getMessage)}))
+                               (messageLogged [_ e]
+                                 (emit {:phase   :message
+                                        :message (.getMessage ^BuildEvent e)
+                                        :level   (.getPriority ^BuildEvent e)}))))
+          ;; Split target elements from regular task/type elements. Targets get
+          ;; their own Target instance + addOrReplaceTarget; regular elements
+          ;; go onto an implicit unnamed target that runs by default.
+          target-elements  (filter #(= :target (:tag %)) elements)
+          task-elements    (remove #(= :target (:tag %)) elements)
+          implicit         (doto (Target.)
+                             (.setName "")
+                             (.setProject project))
+          _                (.addOrReplaceTarget project implicit)
+          ;; Register named targets.
+          named-tgts       (mapv (fn [n]
+                                   (let [{:keys [attrs children]} n
+                                         name     (require-target-name! n)
+                                         t        (doto (Target.)
+                                                    (.setName name)
+                                                    (.setProject project)
+                                                    (.setDescription (:description attrs)))
+                                         deps     (:depends attrs)
+                                         deps-str (cond
+                                                    (nil? deps) nil
+                                                    (sequential? deps)
+                                                    (clojure.string/join ","
+                                                                         (map clojure.core/name deps))
+                                                    :else (str deps))]
+                                     (when deps-str (.setDepends t deps-str))
+                                     (when-some [v (:if attrs)] (.setIf t (str v)))
+                                     (when-some [v (:unless attrs)] (.setUnless t (str v)))
+                                     (.addOrReplaceTarget project t)
+                                     (when-some [ctx *execute-ctx*]
+                                       (swap! (:targets-added ctx) conj (.getName t)))
+                                     (doseq [c children]
+                                       (.addTask t (->unknown-element c project t)))
+                                     t))
+                                 target-elements)
+          ues              (mapv #(->unknown-element % project implicit) task-elements)
+          _                (doseq [^UnknownElement ue ues] (.addTask implicit ue))
+          ;; Pick what to actually run. Tasks at the top level of a
+          ;; build.xml -- <property>, <typedef>, <import> -- live on
+          ;; the implicit unnamed target. They have to run BEFORE any
+          ;; named target so subsequent targets see their effects.
+          explicit-targets (or (:targets opts)
+                               (when (seq named-tgts)
+                                 [(or (:default opts)
+                                      (.getName ^Target (first named-tgts)))]))
+          targets-to-run   (cond
+                             (and (seq ues) (seq explicit-targets))
+                             (cons "" explicit-targets)
+                             (seq explicit-targets) explicit-targets
+                             :else [""])]
+      (when rec (.addBuildListener project rec))
+      (when-some [d (:default opts)] (.setDefault project (str d)))
+      (.fireBuildStarted project)
+      (let [error (try
+                    (let [v (java.util.Vector.)]
+                      (doseq [t targets-to-run] (.add v (str t)))
+                      (.executeTargets project v))
+                    nil
+                    (catch Throwable t
+                      ;; Surface enough context to figure out which
+                      ;; element blew up. Ant's BuildException knows
+                      ;; the Location and message but not the Clojure
+                      ;; tree; we hold the input. Wrap so the user
+                      ;; sees both, while keeping the original
+                      ;; throwable as :cause for full stack access.
+                      (let [root (loop [e t]
+                                   (if-some [c (.getCause e)] (recur c) e))]
+                        (ex-info (str "Ant build failed: "
+                                      (or (.getMessage t) (.getMessage root)))
+                                 {:clj-ant/error       true
+                                  :clj-ant/elements    elements
+                                  :clj-ant/targets     (vec targets-to-run)
+                                  :ant/exception-class (.getName (class root))
+                                  :ant/message         (.getMessage root)}
+                                 t))))]
+        (try
+          (.fireBuildFinished project error)
+          (cond-> {:project project
+                   :target  implicit
+                   :targets named-tgts
+                   :tasks   ues}
+                  events (assoc :events @events)
+                  (some? error) (assoc :error error))
+          ;; Detach everything we attached to the project during this
+          ;; call -- listener, inline-task definitions, synthetic refids
+          ;; we minted for JavaChild, and named targets we addOrReplace'd.
+          ;; Without this, with-session reuse would grow the project's
+          ;; references and target tables monotonically across calls.
+          (finally
+            (when rec (.removeBuildListener project rec))
+            (doseq [{:keys [tag]} inline-tasks]
+              (let [n (clojure.core/name tag)]
+                (.remove ClojureTask/REGISTRY n)
+                (if-some [prior (get prior-defs n)]
+                  (.addTaskDefinition project n prior)
+                  (.remove (.getTaskDefinitions project) n))))
+            (doseq [ref-id @(:refs-added *execute-ctx*)]
+              (.. project getReferences (remove ref-id)))
+            (doseq [tn @(:targets-added *execute-ctx*)]
+              ;; Skip the implicit unnamed target -- it's just a
+              ;; convenient anchor for top-level tasks; keeping it on
+              ;; the project across calls is harmless and avoids
+              ;; constant rebuilding.
+              (when (not= "" tn)
+                (.. project getTargets (remove tn))))))))))
 
 ;; ---------------------------------------------------------------------------
 ;; Targets
@@ -1061,12 +1061,12 @@
   additional optimisation on top, removing per-call coercion +
   validation walks."
   [elements & {:as opts}]
-  (let [es (cond
-             (element? elements)    [elements]
-             (sequential? elements) (vec elements)
-             (map? elements)        [elements]
-             :else (throw (ex-info "prepare expects an element or seq of elements"
-                                   {:value elements})))
+  (let [es      (cond
+                  (element? elements) [elements]
+                  (sequential? elements) (vec elements)
+                  (map? elements) [elements]
+                  :else (throw (ex-info "prepare expects an element or seq of elements"
+                                        {:value elements})))
         coerced (mapv deep-coerce es)]
     (when (:validate? opts)
       (let [vt   (requiring-resolve 'clj-ant.spec/validate-tree)
@@ -1075,7 +1075,7 @@
         (when (seq errs)
           (throw (ex-info (str "Validation failed: " (count errs)
                                " issue(s)")
-                           {:errors (vec errs)})))))
+                          {:errors (vec errs)})))))
     (->Plan coerced (assoc opts :validate? false :clj-ant/prepared? true))))
 
 (defn lint
@@ -1091,13 +1091,13 @@
            :errors {:tdoir [\"disallowed key\"]}
            :suggestions {:tdoir [:todir]}}]"
   [elements & {:as opts}]
-  (let [es (cond
-             (element? elements)    [elements]
-             (sequential? elements) (vec elements)
-             (map? elements)        [elements]
-             :else (throw (ex-info "lint expects an element or seq of elements"
-                                   {:value elements})))
-        vt (requiring-resolve 'clj-ant.spec/validate-tree)
+  (let [es    (cond
+                (element? elements) [elements]
+                (sequential? elements) (vec elements)
+                (map? elements) [elements]
+                :else (throw (ex-info "lint expects an element or seq of elements"
+                                      {:value elements})))
+        vt    (requiring-resolve 'clj-ant.spec/validate-tree)
         opts* (merge {:closed? true} opts)]
     (vec (mapcat #(vt (deep-coerce %) opts*) es))))
 
@@ -1133,8 +1133,8 @@
 ;; .interrupt it) and an atom flagging caller intent.
 
 (deftype ^:no-doc Run [^clojure.lang.IDeref result
-                        ^clojure.lang.IDeref thread
-                        ^clojure.lang.Atom   cancelled?]
+                       ^clojure.lang.IDeref thread
+                       ^clojure.lang.Atom cancelled?]
   clojure.lang.IDeref
   (deref [_] @result)
   clojure.lang.IBlockingDeref
@@ -1166,24 +1166,24 @@
         body       (fn []
                      (deliver thread-p (Thread/currentThread))
                      (deliver result
-                       (try
-                         ;; Annotate caller intent on the result.
-                         ;; Ant tasks vary in honouring interrupts:
-                         ;; <get>/<scp>/<sshexec> abort cleanly,
-                         ;; <sleep> swallows the interrupt and the
-                         ;; build finishes normally. Either way the
-                         ;; user asked for cancel, so :cancelled?
-                         ;; should be on the result map.
-                         (let [r (apply execute! nodes
-                                        (mapcat identity opts))]
-                           (cond-> r @cancelled? (assoc :cancelled? true)))
-                         (catch InterruptedException _
-                           (reset! cancelled? true)
-                           {:cancelled? true})
-                         (catch Throwable t
-                           (if @cancelled?
-                             {:cancelled? true :error t}
-                             {:error t})))))]
+                              (try
+                                ;; Annotate caller intent on the result.
+                                ;; Ant tasks vary in honouring interrupts:
+                                ;; <get>/<scp>/<sshexec> abort cleanly,
+                                ;; <sleep> swallows the interrupt and the
+                                ;; build finishes normally. Either way the
+                                ;; user asked for cancel, so :cancelled?
+                                ;; should be on the result map.
+                                (let [r (apply execute! nodes
+                                               (mapcat identity opts))]
+                                  (cond-> r @cancelled? (assoc :cancelled? true)))
+                                (catch InterruptedException _
+                                  (reset! cancelled? true)
+                                  {:cancelled? true})
+                                (catch Throwable t
+                                  (if @cancelled?
+                                    {:cancelled? true :error t}
+                                    {:error t})))))]
     (doto (Thread. ^Runnable body "clj-ant-async")
       (.setDaemon true)
       (.start))
@@ -1221,7 +1221,7 @@
   [paths]
   (into {}
         (for [^String p paths
-              ^File   f (file-seq (io/file p))
+              ^File f   (file-seq (io/file p))
               :when (.isFile f)]
           [(.getAbsolutePath f) (.lastModified f)])))
 
@@ -1350,15 +1350,15 @@
                    :else
                    (org.apache.tools.ant.types.resources.FileResource.
                      ^File (io/file x))))
-         rc (reify ResourceCollection
-              (iterator [_]
-                (let [s (atom (seq files))]
-                  (reify java.util.Iterator
-                    (hasNext [_] (boolean (seq @s)))
-                    (next    [_] (let [v (->res (first @s))]
+         rc    (reify ResourceCollection
+                 (iterator [_]
+                   (let [s (atom (seq files))]
+                     (reify java.util.Iterator
+                       (hasNext [_] (boolean (seq @s)))
+                       (next [_] (let [v (->res (first @s))]
                                    (swap! s next) v)))))
-              (size [_] (or size (count files)))
-              (isFilesystemOnly [_] (boolean filesystem-only?)))]
+                 (size [_] (or size (count files)))
+                 (isFilesystemOnly [_] (boolean filesystem-only?)))]
      (->JavaChild rc :resources))))
 
 ;; ---------------------------------------------------------------------------
@@ -1457,18 +1457,18 @@
   (datafy [n] (into {} n))
 
   UnknownElement
-  (datafy [ue] {:tag    (.getTag ue)
-                :line   (.. ue (getLocation) (getLineNumber))
-                :class  (some-> (.getRealThing ue) class .getName)
-                :name   (.getTaskName ue)})
+  (datafy [ue] {:tag   (.getTag ue)
+                :line  (.. ue (getLocation) (getLineNumber))
+                :class (some-> (.getRealThing ue) class .getName)
+                :name  (.getTaskName ue)})
 
   Resource
-  (datafy [r] (cond-> {:name (.getName r)
-                       :exists? (.isExists r)
-                       :size (.getSize r)
+  (datafy [r] (cond-> {:name       (.getName r)
+                       :exists?    (.isExists r)
+                       :size       (.getSize r)
                        :directory? (.isDirectory r)}
-                (instance? FileProvider r)
-                (assoc :file (.getFile ^FileProvider r)))))
+                      (instance? FileProvider r)
+                      (assoc :file (.getFile ^FileProvider r)))))
 
 ;; ---------------------------------------------------------------------------
 ;; Plan: print a tree of what would execute, without executing.
@@ -1502,7 +1502,7 @@
       (elements tree #(= :scp (:tag %)))
       (elements tree #(and (= :javac (:tag %))
                            (= \"false\" (-> % :attrs :debug))))"
-  ([tree]      (filter node-like? (tree-seq node-like? :children tree)))
+  ([tree] (filter node-like? (tree-seq node-like? :children tree)))
   ([tree pred] (filter pred (elements tree))))
 
 (defn transform
@@ -1556,8 +1556,8 @@
 (defn- ^:no-doc attr-record [manual-attrs [k c]]
   (let [{:keys [description required]} (get manual-attrs (attr-keyword k))]
     (cond-> {:type c}
-      description (assoc :description description)
-      required    (assoc :required required))))
+            description (assoc :description description)
+            required (assoc :required required))))
 
 (defn- ^:no-doc nested-recorded-classes
   "Lookup every class the generator recorded for a nested-only tag
@@ -1607,20 +1607,20 @@
   (let [cache-key (keyword (name tag))]
     (or (get @describe-cache cache-key)
         (when-some [d
-                    (let [project (Project.) _ (.init project)
-                          n       (name tag)
-                          wm      (wrapper-meta tag)
+                    (let [project      (Project.) _ (.init project)
+                          n            (name tag)
+                          wm           (wrapper-meta tag)
                           manual-attrs (:clj-ant/attrs wm)
-                          top-kind (cond
-                                     (.containsKey (.getTaskDefinitions project) n)     :task
-                                     (.containsKey (.getDataTypeDefinitions project) n) :type)
-                          top-klass (case top-kind
-                                      :task (.get (.getTaskDefinitions project) n)
-                                      :type (.get (.getDataTypeDefinitions project) n)
-                                      nil)
-                          klasses (or (when top-klass [top-klass])
-                                      (nested-recorded-classes tag))
-                          kind    (or top-kind (when (seq klasses) :nested))]
+                          top-kind     (cond
+                                         (.containsKey (.getTaskDefinitions project) n) :task
+                                         (.containsKey (.getDataTypeDefinitions project) n) :type)
+                          top-klass    (case top-kind
+                                         :task (.get (.getTaskDefinitions project) n)
+                                         :type (.get (.getDataTypeDefinitions project) n)
+                                         nil)
+                          klasses      (or (when top-klass [top-klass])
+                                           (nested-recorded-classes tag))
+                          kind         (or top-kind (when (seq klasses) :nested))]
                       (when (seq klasses)
                         (let [helpers (mapv #(IntrospectionHelper/getHelper project %) klasses)
                               ;; Merge attrs and nested across all classes. For ambiguous
@@ -1645,8 +1645,8 @@
                                                   (merged #(.getAttributeMap %)))
                                    :nested  (merged #(.getNestedElementMap %))
                                    :text?   (boolean (some #(.supportsCharacters %) helpers))}
-                            (:clj-ant/description wm) (assoc :description (:clj-ant/description wm))
-                            (:clj-ant/manual-url wm)  (assoc :manual-url (:clj-ant/manual-url wm))))))]
+                                  (:clj-ant/description wm) (assoc :description (:clj-ant/description wm))
+                                  (:clj-ant/manual-url wm) (assoc :manual-url (:clj-ant/manual-url wm))))))]
           (swap! describe-cache assoc cache-key d)
           d))))
 
