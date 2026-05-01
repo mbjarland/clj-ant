@@ -20,47 +20,46 @@ children of any task.
          '[clj-ant.tasks :as t]
          '[clojure.string :as str])
 
-;; Build a release zip from ordinary files and files inside archives.
-;; The plan is data, so lint it before Ant touches the filesystem.
+;; Build a distributable site from normal files plus selected entries
+;; inside zip/jar files. No shelling out, no temporary unzip step.
 (let [version "1.2.3"
-      app-dir "target/release/app"
-      configs (->> (a/files (t/fileset :dir "etc"
-                                       :includes "**/*.tmpl,**/*.properties"
-                                       :excludes "**/secrets/**"))
-                   (remove #(str/ends-with? (.getName %) ".bak")))
-      plan [(t/delete :dir "target/release")
-            (t/mkdir :dir app-dir)
+      out     "target/site"
+      docs    (->> (a/files (t/fileset :dir "doc" :includes "**/*.md"))
+                   (remove #(str/includes? (.getName %) "draft")))]
+  (a/ant
+    (t/delete :dir out)
+    (t/mkdir :dir out)
 
-            ;; A live Clojure seq of java.io.File values, copied by Ant.
-            ;; The filterchain streams token replacement; no temp strings.
-            (t/copy :todir (str app-dir "/conf")
-              configs
-              (t/filterchain
-                (t/tokenfilter
-                  (t/replacestring :from "@VERSION@" :to version))))
+    ;; Clojure decides which files matter; Ant does the copying.
+    (t/copy :todir (str out "/docs") docs)
 
-            ;; Copy directly from inside zip/jar files, without unpacking
-            ;; them first. zipfileset is just another Ant resource collection.
-            (t/copy :todir (str app-dir "/public")
-              (t/zipfileset :src "vendor/admin-ui.zip"
-                            :includes "dist/**"
-                            :prefix "admin"))
-            (t/copy :todir (str app-dir "/licenses")
-              (t/zipfileset :src "target/app.jar"
-                            :includes "META-INF/LICENSE*,META-INF/NOTICE*"))
+    ;; Copy only built browser assets from a vendor zip.
+    (t/copy :todir (str out "/assets")
+      (t/zipfileset :src "vendor/admin-ui.zip"
+                    :includes "dist/**"
+                    :prefix "admin"))
 
-            (t/zip :destfile (str "target/app-" version ".zip")
-              (t/fileset :dir app-dir))]]
-  (when-some [issues (seq (a/lint plan))]
-    (throw (ex-info "Invalid Ant plan" {:issues issues})))
-  (a/ant plan))
+    ;; Pull legal metadata out of the app jar the same way.
+    (t/copy :todir (str out "/licenses")
+      (t/zipfileset :src (str "target/app-" version ".jar")
+                    :includes "META-INF/LICENSE*,META-INF/NOTICE*"))
+
+    ;; Stream token replacement while copying config templates.
+    (t/copy :todir (str out "/conf")
+      (t/fileset :dir "etc" :includes "**/*.tmpl")
+      (t/filterchain
+        (t/tokenfilter
+          (t/replacestring :from "@VERSION@" :to version))))
+
+    (t/zip :destfile (str "target/site-" version ".zip")
+      (t/fileset :dir out))))
 ```
 
 That single expression weaves together things vanilla Clojure rarely
 composes cleanly: Ant's pattern grammar, lazy resource collections,
 Clojure filtering, streaming text transforms, archive-entry copying,
-plan validation, and zip creation. No XML, no shelling out to `zip` /
-`unzip`, no temporary extraction just to grab files from a jar.
+and zip creation. No XML, no shelling out to `zip` / `unzip`, no
+temporary extraction just to grab files from a jar.
 
 
 ## Why
