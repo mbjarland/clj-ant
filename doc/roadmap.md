@@ -110,15 +110,37 @@ authoring feel instant.
 **Size:** small, ~30 lines.
 
 
-### Better error surface  💭
+### Better error surface  ✅
 
-When a deeply nested element fails, today's error is a
-`BuildException` chain that's hard to read. Walk the chain, surface
-the path through the element tree (`copy > fileset > include`),
-include the originating Clojure-side form when known. Useful for
-both interactive use and for the `:on-event` event stream.
+`BuildException` raised by `executeTargets` is now wrapped into
+`ex-info` carrying `:clj-ant/elements`, `:clj-ant/targets`,
+`:ant/exception-class`, and `:ant/message` (the unwrapped root
+message). The original throwable is preserved as `:cause` for
+full stack-trace access. Tooling can pattern-match on failure
+mode without parsing strings.
 
-**Size:** small, ~50 lines of error formatting + context capture.
+
+### Async + cancel  ✅
+
+`(execute-async! …)` returns a Run handle that delegates to a
+`promise` underneath. `(cancel! run)` interrupts the build
+thread; IO tasks abort cleanly, CPU-bound ones may run through.
+`:cancelled? true` lands on the result map regardless to
+reflect caller intent.
+
+
+### Watch mode  ✅
+
+`(watch nodes :paths […] :poll-ms …)` re-runs the plan on every
+filesystem change under the named paths. Polling-based; pairs
+with `:session` for cheap re-runs.
+
+
+### `ICoercible` extension protocol  ✅
+
+`as-child` is now a protocol dispatch. Out-of-tree types extend
+`clj-ant.core/ICoercible` from their own ns and flow as children
+of any task without forking the lib.
 
 
 ## Lower-leverage

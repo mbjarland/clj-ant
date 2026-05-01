@@ -465,6 +465,82 @@ can test for caller intent independently of whether Ant honoured
 the interrupt.
 
 
+### OpenTelemetry / build tracing
+
+`:on-event` receives every state transition as a Clojure map.
+Mapping that to OpenTelemetry spans takes ~30 lines and zero
+extra clj-ant deps (you bring your own OTEL):
+
+```clojure
+(require '[clj-ant.core :as a])
+(import '[io.opentelemetry.api GlobalOpenTelemetry]
+        '[io.opentelemetry.context Context])
+
+(def tracer (.tracerBuilder (GlobalOpenTelemetry/get) "clj-ant")
+              .build)
+
+(defn ant-with-otel [nodes & {:as opts}]
+  (let [build-span (-> (.spanBuilder tracer "ant.build") .startSpan)
+        scope      (atom (.makeCurrent build-span))
+        ;; one open span per (target | task) we've seen
+        spans      (atom {})
+        on-event
+        (fn [{:keys [phase task target message error]}]
+          (case phase
+            :target-started
+            (swap! spans assoc [:target target]
+                   (-> (.spanBuilder tracer (str "ant.target." target))
+                       .startSpan))
+            :target-finished
+            (when-some [s (get @spans [:target target])]
+              (when error (.setStatus s ...
+                            (io.opentelemetry.api.trace.StatusCode/ERROR)
+                            error))
+              (.end s)
+              (swap! spans dissoc [:target target]))
+
+            :task-started
+            (swap! spans assoc [:task task]
+                   (-> (.spanBuilder tracer (str "ant.task." task))
+                       .startSpan))
+            :task-finished
+            (when-some [s (get @spans [:task task])]
+              (when error (.setStatus s
+                            (io.opentelemetry.api.trace.StatusCode/ERROR)
+                            error))
+              (.end s)
+              (swap! spans dissoc [:task task]))
+
+            :message
+            (when-some [s (or (some-> @spans first val))]
+              (.addEvent s (str message)))
+            nil))]
+    (try
+      (apply a/ant :on-event on-event nodes (mapcat identity opts))
+      (finally
+        (.end build-span)
+        (.close ^AutoCloseable @scope)))))
+```
+
+That's the whole thing. Drop in any other tracer the same way --
+the event map is the contract, no Ant-specific types crossing the
+boundary. Same shape works for Datadog, New Relic, any
+ServiceMonitor that consumes structured events, or just a
+file-based audit log.
+
+The events you have to play with:
+
+```
+{:phase :started}
+{:phase :target-started   :target "compile"}
+{:phase :task-started     :task   "javac"}
+{:phase :message          :message "..."  :level int}
+{:phase :task-finished    :task   "javac" :error nil-or-string}
+{:phase :target-finished  :target "compile" :error nil-or-string}
+{:phase :finished         :error nil-or-string}
+```
+
+
 ### Errors as data
 
 When Ant raises a `BuildException`, the error returned in the
