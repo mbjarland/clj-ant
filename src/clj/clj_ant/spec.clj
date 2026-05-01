@@ -15,7 +15,8 @@
 
     (schema-for :copy)        ; -> a [:map ...] schema
     (validate  :copy attrs)   ; -> nil if valid, else humanized errors"
-  (:require [malli.core :as m]
+  (:require [clojure.string :as str]
+            [malli.core :as m]
             [malli.error :as me]
             [malli.transform :as mt])
   (:import [org.apache.tools.ant Project IntrospectionHelper]
@@ -161,6 +162,56 @@
            (swap! schema-cache assoc k s)
            s)))))
 
+(defn- schema-keys [schema]
+  (->> (rest schema)
+       (keep (fn [entry]
+               (when (vector? entry)
+                 (first entry))))
+       set))
+
+(defn- edit-distance [^String a ^String b]
+  (let [la (count a)
+        lb (count b)]
+    (loop [i 0
+           prev (vec (range (inc lb)))]
+      (if (= i la)
+        (peek prev)
+        (let [ca (.charAt a i)
+              curr (loop [j 0
+                          row [(inc i)]]
+                     (if (= j lb)
+                       row
+                       (let [cost (if (= ca (.charAt b j)) 0 1)
+                             insert (inc (peek row))
+                             delete (inc (prev (inc j)))
+                             replace (+ (prev j) cost)]
+                         (recur (inc j)
+                                (conj row (min insert delete replace))))))]
+          (recur (inc i) curr))))))
+
+(defn- attr-suggestions [tag attrs opts]
+  (when-some [schema (schema-for tag opts)]
+    (let [allowed (schema-keys schema)
+          attrs*  (->> attrs
+                       (map (fn [[k _]] [(keyword (str/lower-case (name k))) k]))
+                       (into {}))]
+      (not-empty
+        (into {}
+              (keep (fn [[k original-k]]
+                      (when-not (contains? allowed k)
+                        (let [suggestions (->> allowed
+                                               (map (fn [candidate]
+                                                      [candidate (edit-distance
+                                                                   (name k)
+                                                                   (name candidate))]))
+                                               (filter #(<= (second %) 2))
+                                               (sort-by (juxt second (comp name first)))
+                                               (take 3)
+                                               (mapv first))]
+                          (when (seq suggestions)
+                            [original-k suggestions])))))
+              attrs*)))))
+
 ;; ---------------------------------------------------------------------------
 ;; Validation surface
 
@@ -201,8 +252,9 @@
 
 (defn validate-tree
   "Walk a element tree and collect all validation errors as a vector of
-  `{:tag :path :errors}` maps. Empty vector means everything checks
-  out.
+  `{:tag :path :errors}` maps. With `:closed? true`, issues may also
+  include `:suggestions` for likely misspelled attribute names. Empty
+  vector means everything checks out.
 
   Threads parent context down so context-ambiguous nested tags
   (`:attribute` under <macrodef> vs <manifest>, `:element` under
@@ -213,10 +265,17 @@
   ([element] (validate-tree element {}))
   ([element opts]
    (letfn [(walk [parent path n]
-             (let [here (when-some [e (validate (:tag n) (:attrs n)
-                                                (assoc opts :parent parent))]
-                          [{:tag (:tag n) :path (vec path) :errors e}])]
-               (concat
-                 here
-                 (mapcat #(walk (:tag n) (conj path (:tag n)) %) (:children n)))))]
+             (let [opts* (assoc opts :parent parent)
+                   here (when-some [e (validate (:tag n) (:attrs n) opts*)]
+                          (let [suggestions (when (:closed? opts*)
+                                              (attr-suggestions (:tag n)
+                                                                (:attrs n)
+                                                                opts*))]
+                            [(cond-> {:tag (:tag n)
+                                      :path (vec path)
+                                      :errors e}
+                               suggestions (assoc :suggestions suggestions))]))]
+                (concat
+                  here
+                  (mapcat #(walk (:tag n) (conj path (:tag n)) %) (:children n)))))]
      (vec (walk nil [] element)))))
