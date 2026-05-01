@@ -61,7 +61,7 @@
        (map (fn [^java.util.Map$Entry e] [(.getKey e) (.getValue e)]))
        (sort-by first)))
 
-(defn- ^Class load-class [class-name]
+(defn- load-class ^Class [class-name]
   (try (Class/forName class-name) (catch Throwable _ nil)))
 
 (defn- wrapper-meta [tag]
@@ -155,7 +155,7 @@
   <macrodef> vs <manifest>). Without a parent, the schema is the
   union over every recorded class."
   ([tag] (schema-for tag {}))
-  ([tag {:keys [closed? parent] :as opts}]
+  ([tag {:keys [closed? parent]}]
    (let [k [tag (boolean closed?) parent]]
      (or (get @schema-cache k)
          (when-some [s (build-schema tag closed? parent)]

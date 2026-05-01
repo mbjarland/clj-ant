@@ -400,11 +400,11 @@
                            s)))]
     (->Element tag (or attrs {}) (mapv xml->element child-maps) text)))
 
-(defn- ^File ->source-dir
+(defn- ->source-dir
   "If `src` is a file/path on disk, return its parent directory.
   Returns nil for streams, readers, or XML strings -- there's no
   source to anchor on."
-  [src]
+  ^File [src]
   (cond
     (instance? File src) (.getAbsoluteFile (.getParentFile (.getAbsoluteFile ^File src)))
     (and (string? src) (not (re-find #"^\s*<" src)))
@@ -1425,7 +1425,7 @@
           (.maybeConfigure ue)
           (.getRealThing ue)))))
 
-(defn- ^File resource->file [^Resource r]
+(defn- resource->file ^File [^Resource r]
   (if (instance? FileProvider r)
     (.getFile ^FileProvider r)
     (File. (.getName r))))
@@ -1539,11 +1539,6 @@
 ;; Runtime introspection. Useful for tooling, REPL exploration, and for
 ;; users to discover what attributes a task accepts without hopping out
 ;; to the manual.
-
-(defn- entries-of [^java.util.Map m]
-  (into (sorted-map)
-        (map (fn [^java.util.Map$Entry e] [(.getKey e) (.getValue e)]))
-        m))
 
 (defn- ^:no-doc wrapper-meta
   "Lookup generated metadata for a task/type wrapper, if the generated

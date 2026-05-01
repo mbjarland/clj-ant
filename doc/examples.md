@@ -53,7 +53,7 @@ for the usual `g`/`i`/`m`/`s`:
   (t/replaceregexp
     :match   "old\\.namespace" :replace "new.namespace"
     :flags   "g" :byline "true"
-    (t/fileset :dir "src" :includes "**/*.{clj,cljc,cljs}")))
+    (t/fileset :dir "src" :includes "**/*.clj,**/*.cljc,**/*.cljs")))
 ```
 
 The same task accepts `<substitution expression="…"/>` for backref
@@ -83,7 +83,7 @@ skips by content rather than mtime).
 ### Mass file rename via mapper
 
 "Move every `*.clj` to `*.cljc`" without a manual loop. The mapper +
-`<move>` combo does this atomically per file:
+`<move>` combo moves or renames each file for you:
 
 ```clojure
 (a/ant :level :warn
@@ -111,44 +111,47 @@ rest. `<unzip>` + `<patternset>`:
             :excludes "**/test/**")))
 ```
 
-If you only need to *read* an entry without writing it to disk, the
-inverse pattern is `(a/files (t/zipfileset :src "x.jar" :includes "**/*.properties"))`
-and then `slurp` over the resources — see the file-collection reference
-below.
+If you only need to *read* an entry without writing it to disk, use
+`a/resources` over a `zipfileset` and slurp the resource stream — see
+the file-collection reference below.
 
 
 ### Download + verify + extract
 
-A common bootstrap: fetch a tarball, check its SHA-256, unpack only
-what's needed. Three Ant tasks, one expression:
+A common bootstrap: fetch an archive and its checksum, verify it, then
+unpack only what's needed:
 
 ```clojure
 (a/ant :level :warn
   (t/get :src  "https://example.com/release-1.2.3.zip"
          :dest "/tmp/release.zip"
          :usetimestamp "true")
-  (t/checksum :file "/tmp/release.zip"
-              :algorithm "SHA-256"
-              :property  "actual"
-              :verifyproperty "ok")
-  (t/fail :unless "ok"
+  (t/get :src  "https://example.com/release-1.2.3.zip.sha256"
+         :dest "/tmp/release.zip.sha256"
+         :usetimestamp "true")
+  (t/condition :property "checksum.ok"
+    (t/checksum :file "/tmp/release.zip"
+                :algorithm "SHA-256"
+                :fileext ".sha256"))
+  (t/fail :unless "checksum.ok"
           :message "checksum mismatch on release.zip")
   (t/unzip :src "/tmp/release.zip" :dest "/opt/app"))
 ```
 
-The `:verifyproperty` form is the magic bit: `<checksum>` sets `ok`
-to true/false based on a sibling `release.zip.SHA-256` file, and
-`<fail unless="…">` short-circuits the build with a message.
+The nested `<checksum>` condition is the important bit: `<condition>`
+sets `checksum.ok` only when the downloaded sibling
+`release.zip.sha256` matches, and `<fail unless="…">` short-circuits
+the build with a message when it does not.
 
 
 ### Run a shell command for each file
 
-The find/-exec idiom. `<apply>` spawns the executable per matched
-file (or, with `:parallel "true"`, in parallel):
+The find/-exec idiom. `<apply>` spawns the executable once per matched
+file when `:parallel` is false:
 
 ```clojure
 (a/ant :level :info
-  (t/apply :executable "convert" :parallel "true"
+  (t/apply :executable "convert" :parallel "false"
            :dest "build/thumbs"
     (t/fileset :dir "src/img" :includes "**/*.png")
     (t/globmapper :from "*.png" :to "*.thumb.png")
@@ -327,8 +330,9 @@ The Clojure fn participates in Ant fully:
   `:msg` arrives as `"shipped 1.2.3"`.
 - The build logger fires `:task-started` and `:task-finished` for
   the Clojure task — your event stream sees it.
-- `<antcall>` can target it, `<macrodef>` can wrap it, `<parallel>`
-  can run it alongside other tasks.
+- Put it inside a target and `<antcall>` can invoke that target;
+  `<macrodef>` can wrap it, and `<parallel>` can run it alongside
+  other tasks.
 
 The fn receives one map: every attribute as a keyword key
 (values are post-expansion strings), plus `:project`, `:task-name`,
@@ -411,8 +415,8 @@ clj-ant pipeline. Polls the named paths, re-runs on change:
             :session    s
             :on-rebuild (fn [{:keys [error]}]
                           (if error
-                            (println "✗" (ex-message error))
-                            (println "✓ rebuilt")))))
+                            (println "[error]" (ex-message error))
+                            (println "[ok] rebuilt")))))
 ;; ...edit, save, watch the loop fire...
 (stop)
 ```
@@ -440,7 +444,7 @@ background thread and cancel on user input:
                       :compression "gzip")]
             :on-event (fn [{:keys [phase task]}]
                         (when (= :task-started phase)
-                          (println "▶" task))))]
+                          (println "[start]" task))))]
 
   ;; Block on a 30-second deadline, otherwise cancel:
   (let [r (deref run 30000 :timeout)]
@@ -501,7 +505,8 @@ extra clj-ant deps (you bring your own OTEL):
                        .startSpan))
             :target-finished
             (when-some [s (get @spans [:target target])]
-              (when error (.setStatus s ...
+              (when error
+                (.setStatus s
                             (io.opentelemetry.api.trace.StatusCode/ERROR)
                             error))
               (.end s)
@@ -513,7 +518,8 @@ extra clj-ant deps (you bring your own OTEL):
                        .startSpan))
             :task-finished
             (when-some [s (get @spans [:task task])]
-              (when error (.setStatus s
+              (when error
+                (.setStatus s
                             (io.opentelemetry.api.trace.StatusCode/ERROR)
                             error))
               (.end s)
@@ -564,7 +570,7 @@ plus the unwrapped Ant message:
                   clj-ant/targets
                   ant/exception-class
                   ant/message]} (ex-data err)]
-      (println "❌" message)
+      (println "[error]" message)
       (println "   in" (count elements) "top-level element(s)")
       (println "   targets:" targets)
       (println "   underlying:" exception-class)
@@ -590,7 +596,7 @@ across calls in the same script run:
 
 ;; live-stream events to the bb console as tasks execute
 (a/execute-stream
-  [(t/get   :src "https://…/v1.zip" :dest "/tmp/v.zip")
+  [(t/get   :src "https://example.com/v1.zip" :dest "/tmp/v.zip")
    (t/unzip :src "/tmp/v.zip"        :dest "/opt/v")]
   (fn [{:keys [phase task message]}]
     (case phase

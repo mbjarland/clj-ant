@@ -1,13 +1,26 @@
 # Changelog
 
-All notable changes to clj-ant are tracked here. The project has not cut
-a public versioned release yet; entries under `Unreleased` will become
-the first alpha release notes.
+All notable changes to clj-ant are tracked here.
 
 This file follows the [Keep a Changelog](https://keepachangelog.com/)
 format.
 
 ## Unreleased
+
+### Added
+
+- Added strict clj-kondo linting to the local build, CI, and release
+  workflows.
+
+### Changed
+
+- Tightened public documentation after the first alpha release.
+
+### Fixed
+
+- Corrected stale manual links and imprecise wrapper-count wording.
+
+## 1.0.0-alpha.1 - 2026-05-01
 
 ### Added
 

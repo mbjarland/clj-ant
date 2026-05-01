@@ -4,7 +4,7 @@ There's no friction between the two — they compose at the function-
 call level. Pick whichever is the better tool for each step:
 
 - **tools.build** wins for Clojure-native ops (`b/javac`, `b/jar`,
-  `b/copy-dir`, `b/write-pom`, `b/install`, `b/uber`, `b/process-files`).
+  `b/copy-dir`, `b/write-pom`, `b/install`, `b/uber`).
 - **clj-ant** wins for the long tail (signing, deployment, archive
   surgery, SSH, XSLT, replaceregexp, filterchain, parallel,
   apply+mapper).
@@ -37,20 +37,25 @@ clj-ant and run an element tree:
                   :class-dir class-dir})
   (b/jar       {:class-dir class-dir :jar-file jar-file})
 
-  ;; Hand off to clj-ant for the parts tools.build doesn't cover:
-  (a/ant
-    (t/scp     :file jar-file
-               :todir "deploy@web-1:/srv/app/"
-               :keyfile (str (System/getenv "HOME") "/.ssh/id_ed25519")
-               :trust "true")
-    (t/sshexec :host "web-1" :username "deploy"
-               :keyfile (str (System/getenv "HOME") "/.ssh/id_ed25519")
-               :trust "true"
-               :command "systemctl --user restart app")))
+  ;; Hand off to clj-ant for the parts tools.build doesn't cover.
+  ;; a/ant returns a result map; throw explicitly if Ant failed.
+  (let [{:keys [error] :as result}
+        (a/ant
+          (t/scp     :file jar-file
+                     :todir "deploy@web-1:/srv/app/"
+                     :keyfile (str (System/getenv "HOME") "/.ssh/id_ed25519")
+                     :trust "true")
+          (t/sshexec :host "web-1" :username "deploy"
+                     :keyfile (str (System/getenv "HOME") "/.ssh/id_ed25519")
+                     :trust "true"
+                     :command "systemctl --user restart app"))]
+    (when error (throw error))
+    result))
 ```
 
-Run with `clj -T:build ci`. The clj-ant call is just another step;
-exception handling, return values, all standard Clojure.
+Run with `clj -T:build ci`. The clj-ant call is just another function
+call; inspect the result map or throw `:error` to make failures fail the
+tools.build task.
 
 
 ## clj-ant calling tools.build
@@ -59,8 +64,9 @@ The reverse direction is `(a/task tag f)`: inline an arbitrary
 Clojure thunk as an Ant task. The thunk runs in target order with
 full event-stream participation, so it shows up as
 `:task-started`/`:task-finished` in `:on-event` like any other
-task — and `<antcall>`, `<parallel>`, target dependency resolution
-all work on it.
+task. Put it inside a target and `<antcall>` can invoke that target;
+`<parallel>` and target dependency resolution work as they do for any
+other Ant task.
 
 ```clojure
 (ns deploy
@@ -153,9 +159,9 @@ without leaving Clojure-native operations:
   (t/scp :file jar-file :todir "..." :keyfile "..." :trust "true"))
 
 (a/ant :targets ["deploy"] clean compile jar deploy)
-;; clean -> compile -> jar -> deploy, in that order, with the
-;; right ones skipped if a target is already up-to-date and you
-;; layer on <uptodate>/<modified> selectors.
+;; clean -> compile -> jar -> deploy, in dependency order. Add
+;; explicit <uptodate> properties plus target/task if/unless guards
+;; when you want up-to-date targets to be skipped.
 ```
 
 Note: `depends` is just Ant's classic depends-graph machinery —

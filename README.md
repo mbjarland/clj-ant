@@ -1,14 +1,13 @@
 # clj-ant
 
-Apache Ant's task ecosystem, fluent from Clojure. Tasks are
-functions; **resource collections** (`fileset`, `path`, `dirset`,
-`union`, `restrict`, …) are lazy `java.io.File` seqs you can
-`filter`/`map`/`transduce` over — and pass straight back as
-children of any task.
+Apache Ant's task ecosystem, fluent from Clojure. Tasks are functions;
+resource collections (`fileset`, `path`, `dirset`, `union`, `restrict`,
+...) are data until you run them, and can also be realized as lazy
+`java.io.File` / Ant `Resource` sequences via `a/files` and
+`a/resources`.
 
 [![CI](https://github.com/mbjarland/clj-ant/actions/workflows/ci.yml/badge.svg)](https://github.com/mbjarland/clj-ant/actions/workflows/ci.yml)
-[![Clojars Project](https://img.shields.io/clojars/v/io.github.mbjarland/clj-ant.svg)](https://clojars.org/io.github.mbjarland/clj-ant)
-[![cljdoc](https://cljdoc.org/badge/io.github.mbjarland/clj-ant)](https://cljdoc.org/d/io.github.mbjarland/clj-ant)
+[![Clojars Project](https://img.shields.io/clojars/v/io.github.mbjarland/clj-ant.svg?include_prereleases)](https://clojars.org/io.github.mbjarland/clj-ant)
 [![License](https://img.shields.io/badge/license-EPL%201.0-blue.svg)](LICENSE)
 
 > **Pre-1.0 alpha.** Architecture is stable; surface APIs may shift
@@ -70,21 +69,21 @@ Clojure has excellent build tooling for Clojure code (`tools.build`,
 tokens in a config file, audit zip entries, run a command per file
 — is exactly what Apache Ant has been good at for 20 years.
 
-clj-ant gives you Ant's ~470 tasks and types as Clojure functions
-that return data, with full Ant semantics underneath: property
-expansion, `refid`, `macrodef`, target dependency resolution, custom
-taskdefs. Compose them with the rest of your Clojure code freely.
+clj-ant wraps Ant's built-in tasks, data types, and nested elements as
+Clojure functions that return data, with full Ant semantics underneath:
+property expansion, `refid`, `macrodef`, target dependency resolution,
+custom taskdefs. Compose them with the rest of your Clojure code freely.
 
 
 ## Install
 
 ```clojure
 ;; deps.edn
-{:deps {io.github.mbjarland/clj-ant {:mvn/version "VERSION"}}}
+{:deps {io.github.mbjarland/clj-ant {:mvn/version "1.0.0-alpha.1"}}}
 ```
 
-Replace `VERSION` with the current Clojars version shown by the badge
-above.
+Replace the version with the latest one shown by the Clojars badge
+above when upgrading.
 
 Requires JDK 8+. Released jars include the compiled Java bridge
 class — downstream consumers do **not** need to run `javac`.
@@ -107,25 +106,25 @@ For babashka:
 | **[doc/babashka.md](doc/babashka.md)** | The bb pod story. |
 | **[doc/tools-build.md](doc/tools-build.md)** | Interop with `clojure.tools.build`. |
 | **[doc/roadmap.md](doc/roadmap.md)** | What's done, what's planned. |
-| **[doc/pre-release.md](doc/pre-release.md)** | Operational checklist for v1.0. |
+| **[doc/pre-release.md](doc/pre-release.md)** | Release checklist for alpha and 1.0. |
 
 For the underlying Ant tasks themselves — what each one does, what
 attributes they take, what nested elements they accept — the
 canonical reference is:
 
-📖 **[Apache Ant Tasks Overview](https://ant.apache.org/manual/tasksoverview.html)**
+**[Apache Ant Tasks Overview](https://ant.apache.org/manual/tasksoverview.html)**
 
-Every wrapper in `clj-ant.tasks` has a docstring with a direct link
-to its corresponding Ant manual page. Browse the full list there
-for tasks not yet covered in the cookbook.
+Generated wrappers include manual-derived docstrings, and wrappers with
+known Ant manual pages include direct links. Browse Ant's overview for
+tasks not yet covered in the cookbook.
 
 
 ## Highlights
 
 ### Data-first
 
-Every task returns a plain map. Nothing executes until the tree
-is handed to `a/ant`:
+Every generated wrapper returns an `Element` record, which behaves like
+a Clojure map. Nothing executes until the tree is handed to `a/ant`:
 
 ```clojure
 (t/copy :todir "out"
@@ -228,6 +227,8 @@ match in code rather than a stringly-typed mystery:
 ### Read existing `build.xml`
 
 ```clojure
+(require '[babashka.fs :as fs])
+
 (a/ant (a/from-xml "build.xml"))                ; default target
 (a/ant :targets ["jar"] (a/from-xml "build.xml"))   ; pick one
 
@@ -265,7 +266,8 @@ be run directly because they cannot be represented faithfully as XML.
 ```
 
 The Clojure fn participates fully: build-listener events, macrodef
-parameter expansion, `<antcall>` targeting, the lot.
+parameter expansion, and target execution. Put it inside a target and
+`<antcall>` can invoke that target like any other Ant target.
 
 ### Validation (malli) and rich REPL
 
@@ -310,6 +312,12 @@ Cursive / CIDER / clojure-lsp read `:arglists` for keyword
 completion, so typing `(t/copy :` brings up the attribute names
 inline.
 
+`clojure.repl/doc` is still the right quick human-facing REPL view for
+`t/*` vars. `a/describe` complements it by returning EDN for tools,
+UIs, bb pod callers, and validation: attribute names, Java types,
+manual prose, required markers, nested elements, backing classes, and
+manual URLs where available.
+
 ### SSH out of the box
 
 `<scp>` and `<sshexec>` ship with the Terrapin-fixed `com.github.mwiede`
@@ -340,6 +348,7 @@ See [doc/babashka.md](doc/babashka.md).
 git clone https://github.com/mbjarland/clj-ant.git
 cd clj-ant
 clj -T:build javac     # one-time, compiles the Java bridge
+clj -T:build lint      # static linting, warnings fail
 clj -M:test            # run the test suite
 ```
 
@@ -366,6 +375,8 @@ deps.edn
 
 ```sh
 clj -T:build javac          # compile src/java/** -> target/classes
+clj -T:build lint           # run clj-kondo, warnings fail
+clj -T:build check          # lint, test, and build the jar
 clj -T:build jar            # build the jar
 clj -T:build install        # install to local maven repo
 clj -T:build deploy         # deploy to clojars (needs CLOJARS_*)

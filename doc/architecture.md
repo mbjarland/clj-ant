@@ -17,12 +17,13 @@ else falls out of it.
 ## What this project is, and isn't
 
 clj-ant is a **Clojure interface to Apache Ant's task and type
-ecosystem**. It is *not* a build tool — there's no opinion about
+ecosystem**. It is *not* a build tool: there's no opinion about
 project layout, no tasks defined "by clj-ant," no replacement for
-`tools.build`. It exists to make Ant's ~470 tasks and types
-(`<copy>`, `<fileset>`, `<scp>`, `<sshexec>`, `<replaceregexp>`,
-`<jar>`, `<get>`, `<checksum>`, …) callable as fluent Clojure code,
-with results readable as Clojure data.
+`tools.build`. The generated namespace currently contains 467 wrappers:
+180 executable tasks, 72 data types, and 215 nested element helpers.
+They make Ant operations such as `<copy>`, `<fileset>`, `<scp>`,
+`<sshexec>`, `<replaceregexp>`, `<jar>`, `<get>`, and `<checksum>`
+callable as fluent Clojure code, with results readable as Clojure data.
 
 The audience is people who would otherwise:
 
@@ -90,7 +91,7 @@ replaced by ~150 lines of Clojure walking the data into
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │  Data layer           (clj-ant.core/element, /Element)      │
-│  Plain Clojure maps.  Mix in node trees, real Ant objects,  │
+│  Map-like Clojure data. Mix in nodes, real Ant objects,     │
 │  Files, lazy seqs -- as-child coerces them all.             │
 └─────────────────────────────────────────────────────────────┘
                               │
@@ -115,8 +116,9 @@ replaced by ~150 lines of Clojure walking the data into
 src/clj/clj_ant/
   core.clj      the runner: element/Element, as-child,
                 ->unknown-element, execute!, ant, sessions,
-                target/deftarget, deftask + task, from-xml,
-                realize, files, resources, plan, describe, datafy
+                target/deftarget, deftask + task, from-xml/to-xml,
+                realize, files, resources, plan, describe, lint,
+                explain, datafy
   tasks.clj    GENERATED -- one wrapper per Ant task, type, and
                 nested element. Don't edit; regenerate via clj -X:gen.
   spec.clj     runtime validation. Builds malli schemas lazily from
@@ -393,9 +395,9 @@ Clojure special forms (`:if`, `:let`, `:do`, …) — those get a
 `replace`, `sort`, `filter`) is handled by `:refer-clojure :exclude`
 on the generated namespace.
 
-This means the Ant manual is the source of truth for attribute
-names. Users can grep `https://ant.apache.org/manual/Tasks/copy.html`
-and see the same names that work in their Clojure code.
+This means the Ant manual is the source of truth for attribute names.
+Open `https://ant.apache.org/manual/Tasks/copy.html` and you will see
+the same names that work in Clojure code.
 
 ### Streaming events as Clojure maps, not Java BuildEvents
 
@@ -688,10 +690,12 @@ transform          rewrite a tree, post-order
 
 ;; XML round-trip
 from-xml           build.xml → Element tree
+to-xml             Element tree → compact XML string
 
 ;; validation (clj-ant.spec)
 schema-for         malli schema for a tag
 validate-tree      collect errors from a tree
+lint / explain     user-facing validation helpers
 ```
 
 
@@ -701,9 +705,10 @@ For task / type / nested-element semantics, the canonical source
 is **Apache Ant's manual**:
 
 - [Ant Tasks Overview](https://ant.apache.org/manual/tasksoverview.html)
-- [Ant Types Reference](https://ant.apache.org/manual/types.html)
+- [Ant Concepts and Type List](https://ant.apache.org/manual/conceptstypeslist.html)
 - [Ant Concepts and Type Reference](https://ant.apache.org/manual/index.html)
 
-Every wrapper in `clj-ant.tasks` carries a docstring with a direct
-link back to its task or type page; `(doc t/copy)` at the REPL
-gets you the right page in two characters.
+Generated wrappers in `clj-ant.tasks` carry manual-derived docstrings
+where the Ant manual exposes useful prose. Wrappers with known manual
+pages include direct links; `(doc t/copy)` gets you the `copy` task's
+manual page without leaving the REPL.

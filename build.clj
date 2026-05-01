@@ -4,6 +4,8 @@
   Common invocations:
 
       clj -T:build javac     ; compile the Java bridge once before dev
+      clj -T:build lint
+      clj -T:build check     ; lint, test, build jar
       clj -T:build clean
       clj -T:build jar
       clj -T:build install"
@@ -49,6 +51,12 @@
 (defn clean [_]
   (b/delete {:path "target"}))
 
+(defn lint
+  "Run static linting with clj-kondo. Warnings fail the build."
+  [_]
+  (b/process {:command-args ["clojure" "-M:lint"]})
+  (println "> lint passed"))
+
 (defn javac
   "Compile src/java/** into target/classes. Idempotent. Required once
   before tests/REPL, and re-run if you edit any of the Java sources."
@@ -78,6 +86,13 @@
   (b/jar {:class-dir class-dir
           :jar-file  jar-file})
   (println "> jar created at" jar-file))
+
+(defn check
+  "Run the full local verification pipeline: lint, tests, and jar build."
+  [_]
+  (lint nil)
+  (b/process {:command-args ["clojure" "-M:test"]})
+  (jar nil))
 
 (defn install [_]
   (jar nil)

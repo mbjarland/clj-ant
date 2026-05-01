@@ -26,14 +26,14 @@ expression with the pod loaded:
 (require '[clj-ant.pod   :as a]
          '[clj-ant.tasks :as t])
 
-(let [{:keys [version host user]} (edn/read-string (slurp ".env.edn"))
+(let [{:keys [version host user sha256]} (edn/read-string (slurp ".env.edn"))
       key   (str (fs/home) "/.ssh/id_ed25519")
       jar   (str "target/app-" version ".jar")
       print-step (fn [{:keys [phase task message]}]
                    (case phase
-                     :task-started  (println "▶" task)
+                     :task-started  (println "[start]" task)
                      :message       (when message (println " " message))
-                     :task-finished (println "✓" task)
+                     :task-finished (println "[done]" task)
                      nil))]
 
   (a/execute-stream
@@ -49,21 +49,21 @@ expression with the pod loaded:
            (t/replacestring :from "@VERSION@" :to version)
            (t/replacestring :from "@HOST@"    :to host))))
 
-     ;; Verify the artifact, push it, restart the remote service:
-     (t/checksum :file jar :algorithm "SHA-256"
-                 :property "sum" :verifyproperty "ok")
-     (t/fail :unless "ok" :message "checksum mismatch")
-     (t/scp     :file jar :todir (str user "@" host ":/srv/")
-                :keyfile key :trust "true")
-     (t/sshexec :host host :username user :keyfile key :trust "true"
-                :command "systemctl --user restart app")]
+      ;; Verify the artifact, push it, restart the remote service:
+      (t/condition :property "checksum.ok"
+        (t/checksum :file jar :algorithm "SHA-256" :property sha256))
+      (t/fail :unless "checksum.ok" :message "checksum mismatch")
+      (t/scp     :file jar :todir (str user "@" host ":/srv/")
+                 :keyfile key :trust "true")
+      (t/sshexec :host host :username user :keyfile key :trust "true"
+                 :command "systemctl --user restart app")]
     print-step))
 ```
 
 That's a real CI-shaped script: bb-side mtime filter on an Ant
 fileset, streaming token substitution at copy time, SHA-256
-verification with a `<fail>` short-circuit, SSH push, remote
-command — all with `▶`/`✓`/log lines streaming live to the
+verification against the expected value from `.env.edn`, SSH push,
+remote command — all with start/done/log lines streaming live to the
 console as Ant fires the events.
 
 `babashka.fs` and `babashka.process` cover the small filesystem
@@ -107,6 +107,11 @@ Operations exposed today:
 | `plan`           | an element tree                    | XML-ish string               |
 | `describe`       | task/type tag                      | reflected docs/schema data   |
 | `lint`           | element tree + opts                | validation issue vector      |
+| `explain`        | element tree + opts                | alias for `lint`             |
+| `open-session`   | opts                               | session id                   |
+| `execute-in`     | session id + elements + opts       | execute using that session   |
+| `close-session`  | session id                         | releases session state       |
+| `with-session`   | binding vector + body              | session macro                |
 
 In addition the pod ships the full `clj-ant.tasks` namespace: a
 thin function wrapper per Ant task, type, and nested element, that
