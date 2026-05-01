@@ -19,6 +19,7 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as str])
   (:import [java.util Properties]
+           [java.util.regex Pattern]
            [java.util.jar JarFile JarEntry]
            [java.io File]
            [org.apache.tools.ant Project IntrospectionHelper]))
@@ -101,6 +102,18 @@
    "mdash" "-"
    "ndash" "-"
    "hellip" "..."
+   "rarr" "->"
+   "rArr" "=>"
+   "ge" ">="
+   "times" "x"
+   "trade" "(TM)"
+   "aacute" "a"
+   "eacute" "e"
+   "egrave" "e"
+   "iacute" "i"
+   "oacute" "o"
+   "uacute" "u"
+   "oelig" "oe"
    "rsquo" "'"
    "lsquo" "'"
    "rdquo" "\""
@@ -109,10 +122,15 @@
 (defn- decode-entity [entity]
   (or (get html-entities entity)
       (when-let [[_ hex] (re-matches #"#x([0-9A-Fa-f]+)" entity)]
-        (str (char (Long/parseLong hex 16))))
+        (String/valueOf (Character/toChars (Long/parseLong hex 16))))
       (when-let [[_ dec] (re-matches #"#([0-9]+)" entity)]
-        (str (char (Long/parseLong dec))))
+        (String/valueOf (Character/toChars (Long/parseLong dec))))
       (str "&" entity ";")))
+
+(def ^:private manual-aliases
+  {"blgenclient" "Tasks/BorlandGenerateClient.html"
+   "javadoc2" "Tasks/javadoc.html"
+   "renameext" "Tasks/renameextensions.html"})
 
 (defn- html->text [html]
   (some-> html
@@ -125,11 +143,15 @@
           str/trim
           not-empty))
 
-(defn- manual-page [^File manual-dir tag]
-  (when (and manual-dir (.isDirectory manual-dir))
-    (let [candidates [(File. (File. manual-dir "Tasks") (str tag ".html"))
-                      (File. (File. manual-dir "Types") (str tag ".html"))]]
-      (some #(when (.exists ^File %) %) candidates))))
+(defn- href-entry [^File base href]
+  (let [[path section] (str/split (or href "") #"#" 2)]
+    (when (and (str/ends-with? path ".html")
+               (not (str/starts-with? path "http:"))
+               (not (str/starts-with? path "https:")))
+      (let [f (io/file base path)]
+        (when (.exists f)
+          (cond-> {:file f}
+            (not-empty section) (assoc :section section)))))))
 
 (defn- read-description-from-html [html]
   (or (some-> (re-find #"(?is)<h3[^>]*>\s*Description\s*</h3>(.*?)(?=<h3\b|<h2\b|</body>)" html)
@@ -165,6 +187,103 @@
                            str/trim
                            not-empty)]
     (keyword (.toLowerCase ^String name))))
+
+(defn- manual-name-key [s]
+  (some-> s
+          html->text
+          str/lower-case
+          (str/replace #"\s+" "")
+          not-empty))
+
+(defn- href-name-key [href]
+  (some-> href
+          (str/split #"#" 2)
+          first
+          (str/replace #"^.*/" "")
+          (str/replace #"\.html$" "")
+          manual-name-key))
+
+(defn- overview-index [^File manual-dir]
+  (let [overview (io/file manual-dir "tasksoverview.html")]
+    (if-not (.exists overview)
+      {}
+      (let [html (slurp overview)]
+        (reduce
+          (fn [acc row]
+            (if-let [[_ href label] (re-find #"(?is)<a\b[^>]*\bhref\s*=\s*[\"']([^\"']+)[\"'][^>]*>(.*?)</a>" row)]
+              (if-let [entry (href-entry manual-dir href)]
+                (let [desc (:text (second (row-cells row)))
+                      entry' (cond-> entry desc (assoc :overview-description desc))
+                      keys (->> (conj (str/split (or (html->text label) "") #"/")
+                                      (href-name-key href))
+                                (keep manual-name-key))]
+                  (reduce #(assoc %1 %2 entry') acc keys))
+                acc)
+              acc))
+          {}
+          (table-rows html))))))
+
+(defn- html-files [^File manual-dir]
+  (->> ["Tasks" "Types"]
+       (map #(io/file manual-dir %))
+       (filter #(.isDirectory ^File %))
+       (mapcat file-seq)
+       (filter #(and (.isFile ^File %)
+                     (str/ends-with? (.getName ^File %) ".html")))))
+
+(defn- section-index [^File manual-dir]
+  (into {}
+        (for [^File f (html-files manual-dir)
+              [_ id] (re-seq #"(?is)<h2\b[^>]*\bid\s*=\s*[\"']([^\"']+)[\"']" (slurp f))
+              :let [k (manual-name-key id)]
+              :when k]
+          [k {:file f :section id}])))
+
+(def ^:private manual-index
+  (memoize
+    (fn [^File manual-dir]
+      {:overview (overview-index manual-dir)
+       :sections (section-index manual-dir)})))
+
+(defn- direct-entry [^File manual-dir tag]
+  (let [candidates [(File. (File. manual-dir "Tasks") (str tag ".html"))
+                    (File. (File. manual-dir "Types") (str tag ".html"))]]
+    (some #(when (.exists ^File %) {:file %}) candidates)))
+
+(defn- manual-entry [^File manual-dir tag]
+  (when (and manual-dir (.isDirectory manual-dir))
+    (let [k (manual-name-key tag)
+          {:keys [overview sections]} (manual-index manual-dir)]
+      (or (direct-entry manual-dir tag)
+          (get sections k)
+          (get overview k)
+          (some->> (get manual-aliases k)
+                   (href-entry manual-dir))))))
+
+(defn- redirect-href [html]
+  (some-> (re-find #"(?is)<body[^>]*>\s*This document's new home is\s*<a\b[^>]*\bhref\s*=\s*[\"']([^\"']+)[\"']" html)
+          second))
+
+(defn- resolve-redirects [{:keys [file] :as entry}]
+  (loop [entry entry
+         seen #{}]
+    (let [^File f (:file entry)]
+      (if (or (nil? f) (seen (.getCanonicalPath f)))
+        entry
+        (let [html (slurp f)]
+          (if-let [href (redirect-href html)]
+            (if-let [target (href-entry (.getParentFile f) href)]
+              (recur (merge entry target) (conj seen (.getCanonicalPath f)))
+              entry)
+            entry))))))
+
+(defn- html-section [html section]
+  (if (not-empty section)
+    (re-find (re-pattern (str "(?is)<h2\\b[^>]*\\bid\\s*=\\s*[\\\"']"
+                              (Pattern/quote section)
+                              "[\\\"'][^>]*>.*?(?=<h2\\b|</body>)"))
+             html)
+    html))
 
 (defn- read-attrs-from-html [html]
   (when-some [table (first-attr-table html)]
@@ -202,11 +321,15 @@
 (defn- read-manual-info
   "Read task/type prose and attribute table docs from the bundled Ant manual."
   [^File manual-dir tag]
-  (when-some [^File f (manual-page manual-dir tag)]
-    (let [html (slurp f)
-          description (read-description-from-html html)
-          attrs (read-attrs-from-html html)]
-      (cond-> {:manual-file (.getPath f)}
+  (when-some [{:keys [^File file section overview-description]} (some-> (manual-entry manual-dir tag)
+                                                                         resolve-redirects)]
+    (let [html (slurp file)
+          relevant-html (or (html-section html section) html)
+          description (or (read-description-from-html relevant-html)
+                          overview-description)
+          attrs (read-attrs-from-html relevant-html)]
+      (cond-> {:manual-file (.getPath file)}
+        section (assoc :manual-section section)
         description (assoc :description description)
         attrs (assoc :attrs attrs)))))
 

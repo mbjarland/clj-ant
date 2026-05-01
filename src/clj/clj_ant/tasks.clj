@@ -351,7 +351,7 @@
       and result property settings are not active when spawning a process. since
       Ant 1.6
       Required: No; default is false
-    :timeout                   Long
+    :timeout                   Integer
       Stop the command if it doesn't finish within the specified time (given in
       milliseconds).
       Required: No
@@ -457,7 +457,7 @@
     :system                    boolean
       the system permission.
       Required: At least one of the four
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
       One of file , dir or both . If set to file , only the permissions of plain
       files are going to be changed. If set to dir , only the directories are
@@ -644,23 +644,41 @@
   (clojure.core/apply c/element :bindtargets args))
 
 (defn blgenclient
-  "Ant task blgenclient. (No description bundled.)
+  "The BorlandGenerateClient is a task dedicated to Borland Application Server
+  v 4.5. It offers to generate the client jar file corresponding to an EJB jar
+  file.
 
   Attributes:
     :classpath                 Path
     :classpathref              Reference
     :clientjar                 File
+      client jar file name. If missing the client jar file name is build using
+      the ejbjar file name: ejbjar = hellobean-ejb.jar =>
+      hellobean-ejbclient.jar
+      Required: no
     :debug                     boolean
+      If true , turn on the debug mode for each Borland tool ( java2iiop ,
+      iastool , ...)
+      Required: no; default false
     :ejbjar                    File
+      EJB jar file
+      Required: yes
     :mode                      String
+      choose the command launching mode. Two values: java or fork (default).
+      java is not supported for version = 5 . Possibility to specify a
+      classpath.
+      Required: no
     :version                   int
+      set the Borland Application Version. 4 means B.A.S (Borland Application
+      Server 4.x) 5 means B.E.S (Borland Application Server 5.x)
+      Required: No; defaults to 4
   Nested elements:
     :classpath                 (Path)
 
   https://ant.apache.org/manual/Tasks/blgenclient.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.BorlandGenerateClient"
-  {:arglists (quote ([& {:keys [classpath classpathref clientjar debug ejbjar mode version], :as attrs} & nested])), :clj-ant/tag "blgenclient", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.BorlandGenerateClient", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.BorlandGenerateClient"]}
+  {:arglists (quote ([& {:keys [classpath classpathref clientjar debug ejbjar mode version], :as attrs} & nested])), :clj-ant/tag "blgenclient", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.BorlandGenerateClient", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.BorlandGenerateClient"], :clj-ant/attrs {:clientjar {:description "client jar file name. If missing the client jar file name is build using the ejbjar file name: ejbjar = hellobean-ejb.jar => hellobean-ejbclient.jar", :required "no"}, :debug {:description "If true , turn on the debug mode for each Borland tool ( java2iiop , iastool , ...)", :required "no; default false"}, :ejbjar {:description "EJB jar file", :required "yes"}, :mode {:description "choose the command launching mode. Two values: java or fork (default). java is not supported for version = 5 . Possibility to specify a classpath.", :required "no"}, :version {:description "set the Borland Application Version. 4 means B.A.S (Borland Application Server 4.x) 5 means B.E.S (Borland Application Server 5.x)", :required "No; defaults to 4"}}}
   [& args]
   (clojure.core/apply c/element :blgenclient args))
 
@@ -686,33 +704,54 @@
   (clojure.core/apply c/element :buildnumber args))
 
 (defn bunzip2
-  "Ant task bunzip2. (No description bundled.)
+  "Expands a resource packed using GZip, BZip2 or XZ. If dest is a directory
+  the name of the destination file is the same as src (with the .gz , .bz2 or
+  .xz extension removed if present). If dest is omitted, the parent dir of src
+  is taken. The file is only expanded if the source resource is newer than the
+  destination file, or when the destination file does not exist. XZ
+  compression support has been added since Apache Ant 1.10.1 and depends on
+  external libraries not included in the Ant distribution. See Library
+  Dependencies for more information.
 
   Attributes:
     :dest                      File
+      the destination file or directory.
+      Required: No
     :src                       File
+      the file to expand.
+      Required: Yes, or a nested resource collection
     :srcresource               Resource
 
   https://ant.apache.org/manual/Tasks/bunzip2.html
 
   Defined by: org.apache.tools.ant.taskdefs.BUnzip2"
-  {:arglists (quote ([& {:keys [dest src srcresource], :as attrs} & nested])), :clj-ant/tag "bunzip2", :clj-ant/class "org.apache.tools.ant.taskdefs.BUnzip2", :clj-ant/classes ["org.apache.tools.ant.taskdefs.BUnzip2"]}
+  {:arglists (quote ([& {:keys [dest src srcresource], :as attrs} & nested])), :clj-ant/tag "bunzip2", :clj-ant/class "org.apache.tools.ant.taskdefs.BUnzip2", :clj-ant/classes ["org.apache.tools.ant.taskdefs.BUnzip2"], :clj-ant/attrs {:dest {:description "the destination file or directory.", :required "No"}, :src {:description "the file to expand.", :required "Yes, or a nested resource collection"}}}
   [& args]
   (clojure.core/apply c/element :bunzip2 args))
 
 (defn bzip2
-  "Ant task bzip2. (No description bundled.)
+  "Packs a resource using the GZip, BZip2 or XZ algorithm. The output file is
+  only generated if it doesn't exist or the source resource is newer. XZ
+  compression support has been added since Apache Ant 1.10.1 and depends on
+  external libraries not included in the Ant distribution. See Library
+  Dependencies for more information.
 
   Attributes:
     :destfile                  File
+      the destination file to create.
+      Required: Exactly one of the two
     :src                       File
+      the file to gzip/bzip/xz.
+      Required: Yes, or a nested resource collection
     :srcresource               Resource
     :zipfile                   File
+      deprecated old name of destfile .
+      Required: Exactly one of the two
 
   https://ant.apache.org/manual/Tasks/bzip2.html
 
   Defined by: org.apache.tools.ant.taskdefs.BZip2"
-  {:arglists (quote ([& {:keys [destfile src srcresource zipfile], :as attrs} & nested])), :clj-ant/tag "bzip2", :clj-ant/class "org.apache.tools.ant.taskdefs.BZip2", :clj-ant/classes ["org.apache.tools.ant.taskdefs.BZip2"]}
+  {:arglists (quote ([& {:keys [destfile src srcresource zipfile], :as attrs} & nested])), :clj-ant/tag "bzip2", :clj-ant/class "org.apache.tools.ant.taskdefs.BZip2", :clj-ant/classes ["org.apache.tools.ant.taskdefs.BZip2"], :clj-ant/attrs {:destfile {:description "the destination file to create.", :required "Exactly one of the two"}, :src {:description "the file to gzip/bzip/xz.", :required "Yes, or a nested resource collection"}, :zipfile {:description "deprecated old name of destfile .", :required "Exactly one of the two"}}}
   [& args]
   (clojure.core/apply c/element :bzip2 args))
 
@@ -798,307 +837,519 @@
   (clojure.core/apply c/element :cab args))
 
 (defn cccheckin
-  "Ant task cccheckin. (No description bundled.)
+  "Task to perform a cleartool checkin command to ClearCase.
 
   Attributes:
     :cleartooldir              String
     :comment                   String
+      Specify a comment
+      Required: No; only one of the two may be used
     :commentfile               String
+      Specify a file containing a comment
+      Required: No; only one of the two may be used
     :failonerr                 boolean
+      Throw an exception if the command fails
+      Required: No; default is true
     :identical                 boolean
+      Allows the file to be checked in even if it is identical to the original
+      Required: No
     :keepcopy                  boolean
+      Keeps a copy of the file with a .keep extension
+      Required: No
     :nowarn                    boolean
+      Suppress warning messages
+      Required: No
     :objselect                 String
     :preservetime              boolean
+      Preserve the modification time
+      Required: No
     :viewpath                  String
+      Path to the ClearCase view file or directory that the command will operate
+      on
+      Required: No
 
   https://ant.apache.org/manual/Tasks/cccheckin.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr identical keepcopy nowarn objselect preservetime viewpath], :as attrs} & nested])), :clj-ant/tag "cccheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin"]}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr identical keepcopy nowarn objselect preservetime viewpath], :as attrs} & nested])), :clj-ant/tag "cccheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin"], :clj-ant/attrs {:comment {:description "Specify a comment", :required "No; only one of the two may be used"}, :commentfile {:description "Specify a file containing a comment", :required "No; only one of the two may be used"}, :failonerr {:description "Throw an exception if the command fails", :required "No; default is true"}, :identical {:description "Allows the file to be checked in even if it is identical to the original", :required "No"}, :keepcopy {:description "Keeps a copy of the file with a .keep extension", :required "No"}, :nowarn {:description "Suppress warning messages", :required "No"}, :preservetime {:description "Preserve the modification time", :required "No"}, :viewpath {:description "Path to the ClearCase view file or directory that the command will operate on", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :cccheckin args))
 
 (defn cccheckout
-  "Ant task cccheckout. (No description bundled.)
+  "Task to perform a cleartool checkout command to ClearCase.
 
   Attributes:
     :branch                    String
+      Specify a branch to check out the file to
+      Required: No
     :cleartooldir              String
     :comment                   String
+      Specify a comment
+      Required: No; only one of the two may be used
     :commentfile               String
+      Specify a file containing a comment
+      Required: No; only one of the two may be used
     :failonerr                 boolean
+      Throw an exception if the command fails. Since Ant 1.6.1
+      Required: No; default is true
     :nodata                    boolean
+      Checks out the file but does not create an editable file containing its
+      data
+      Required: No
     :notco                     boolean
+      Fail if it's already checked out to the current view. Set to false to
+      ignore it. Since Ant 1.6.1
+      Required: No; default is true
     :nowarn                    boolean
+      Suppress warning messages
+      Required: No
     :objselect                 String
     :out                       String
+      Creates a writable file under a different filename
+      Required: No
     :reserved                  boolean
+      Specifies whether to check out the file as reserved or not
+      Required: Yes
     :version                   boolean
+      Allows checkout of a version other than /main/LATEST (or whatever is
+      selected by a config spec)
+      Required: No
     :viewpath                  String
+      Path to the ClearCase view file or directory that the command will operate
+      on
+      Required: No
 
   https://ant.apache.org/manual/Tasks/cccheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckout"
-  {:arglists (quote ([& {:keys [branch cleartooldir comment commentfile failonerr nodata notco nowarn objselect out reserved version viewpath], :as attrs} & nested])), :clj-ant/tag "cccheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckout"]}
+  {:arglists (quote ([& {:keys [branch cleartooldir comment commentfile failonerr nodata notco nowarn objselect out reserved version viewpath], :as attrs} & nested])), :clj-ant/tag "cccheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckout"], :clj-ant/attrs {:branch {:description "Specify a branch to check out the file to", :required "No"}, :comment {:description "Specify a comment", :required "No; only one of the two may be used"}, :commentfile {:description "Specify a file containing a comment", :required "No; only one of the two may be used"}, :failonerr {:description "Throw an exception if the command fails. Since Ant 1.6.1", :required "No; default is true"}, :nodata {:description "Checks out the file but does not create an editable file containing its data", :required "No"}, :notco {:description "Fail if it's already checked out to the current view. Set to false to ignore it. Since Ant 1.6.1", :required "No; default is true"}, :nowarn {:description "Suppress warning messages", :required "No"}, :out {:description "Creates a writable file under a different filename", :required "No"}, :reserved {:description "Specifies whether to check out the file as reserved or not", :required "Yes"}, :version {:description "Allows checkout of a version other than /main/LATEST (or whatever is selected by a config spec)", :required "No"}, :viewpath {:description "Path to the ClearCase view file or directory that the command will operate on", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :cccheckout args))
 
 (defn cclock
-  "Ant task cclock. (No description bundled.)
+  "Task to perform a cleartool lock command to ClearCase.
 
   Attributes:
     :cleartooldir              String
     :comment                   String
+      Specifies how to populate comments fields
+      Required: No
     :failonerr                 boolean
+      Throw an exception if the command fails. Since Ant 1.6.1
+      Required: No; default is true
     :nusers                    String
+      Specifies user(s) who can still modify the object
+      Required: No
     :objsel                    String
+      Specifies the object(s) to be locked. Since Ant 1.6.1
+      Required: No
     :objselect                 String
+      Obsolete . Use objsel instead.
+      Required: No
     :obsolete                  boolean
+      Specifies that the object should be marked obsolete
+      Required: No
     :pname                     String
+      Specifies the object pathname to be locked.
+      Required: No
     :replace                   boolean
+      Specifies replacing an existing lock
+      Required: No
     :viewpath                  String
 
   https://ant.apache.org/manual/Tasks/cclock.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCLock"
-  {:arglists (quote ([& {:keys [cleartooldir comment failonerr nusers objsel objselect obsolete pname replace viewpath], :as attrs} & nested])), :clj-ant/tag "cclock", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCLock", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCLock"]}
+  {:arglists (quote ([& {:keys [cleartooldir comment failonerr nusers objsel objselect obsolete pname replace viewpath], :as attrs} & nested])), :clj-ant/tag "cclock", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCLock", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCLock"], :clj-ant/attrs {:comment {:description "Specifies how to populate comments fields", :required "No"}, :failonerr {:description "Throw an exception if the command fails. Since Ant 1.6.1", :required "No; default is true"}, :nusers {:description "Specifies user(s) who can still modify the object", :required "No"}, :objsel {:description "Specifies the object(s) to be locked. Since Ant 1.6.1", :required "No"}, :objselect {:description "Obsolete . Use objsel instead.", :required "No"}, :obsolete {:description "Specifies that the object should be marked obsolete", :required "No"}, :pname {:description "Specifies the object pathname to be locked.", :required "No"}, :replace {:description "Specifies replacing an existing lock", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :cclock args))
 
 (defn ccmcheckin
-  "Ant task ccmcheckin. (No description bundled.)
+  "Check in a file to Continuus
 
   Attributes:
     :ccmaction                 String
     :ccmdir                    String
+      path to the ccm executable file, required if it is not on the PATH
+      Required: No
     :comment                   String
+      Specify a comment.
+      Required: No; default is Checkin plus the date
     :file                      File
+      Path to the file that the command will operate on
+      Required: Yes
     :task                      String
+      Specify the task number used to check in the file (may use default )
+      Required: No
   Nested elements:
     :fileset                   (FileSet)
 
   https://ant.apache.org/manual/Tasks/ccmcheckin.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckin"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckin", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckin"]}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckin", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckin"], :clj-ant/attrs {:ccmdir {:description "path to the ccm executable file, required if it is not on the PATH", :required "No"}, :comment {:description "Specify a comment.", :required "No; default is Checkin plus the date"}, :file {:description "Path to the file that the command will operate on", :required "Yes"}, :task {:description "Specify the task number used to check in the file (may use default )", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccmcheckin args))
 
 (defn ccmcheckintask
-  "Ant task ccmcheckintask. (No description bundled.)
+  "Run a Continuus command to checkin default task
 
   Attributes:
     :ccmaction                 String
     :ccmdir                    String
+      path to the ccm executable file, required if it is not on the PATH
+      Required: No
     :comment                   String
+      Specify a comment.
+      Required: No
     :file                      File
     :task                      String
+      Specify the task number used to check in the file (may use default )
+      Required: No
   Nested elements:
     :fileset                   (FileSet)
 
   https://ant.apache.org/manual/Tasks/ccmcheckintask.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckinDefault"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckintask", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckinDefault", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckinDefault"]}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckintask", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckinDefault", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckinDefault"], :clj-ant/attrs {:ccmdir {:description "path to the ccm executable file, required if it is not on the PATH", :required "No"}, :comment {:description "Specify a comment.", :required "No"}, :task {:description "Specify the task number used to check in the file (may use default )", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccmcheckintask args))
 
 (defn ccmcheckout
-  "Ant task ccmcheckout. (No description bundled.)
+  "Run a Continuus checkout command
 
   Attributes:
     :ccmaction                 String
     :ccmdir                    String
+      path to the ccm executable file, required if it is not on the PATH
+      Required: No
     :comment                   String
+      Specify a comment
+      Required: No
     :file                      File
+      Path to the file that the command will operate on
+      Required: Exactly one of the two
     :task                      String
+      Specify the task number used to checkin the file (may use default )
+      Required: No
   Nested elements:
     :fileset                   (FileSet)
 
   https://ant.apache.org/manual/Tasks/ccmcheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckout"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckout"]}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir comment file task], :as attrs} & nested])), :clj-ant/tag "ccmcheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCheckout"], :clj-ant/attrs {:ccmdir {:description "path to the ccm executable file, required if it is not on the PATH", :required "No"}, :comment {:description "Specify a comment", :required "No"}, :file {:description "Path to the file that the command will operate on", :required "Exactly one of the two"}, :task {:description "Specify the task number used to checkin the file (may use default )", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccmcheckout args))
 
 (defn ccmcreatetask
-  "Ant task ccmcreatetask. (No description bundled.)
+  "Create a Continuus task.
 
   Attributes:
     :ccmaction                 String
     :ccmdir                    String
+      path to the ccm executable file, required if it is not on the PATH
+      Required: No
     :comment                   String
+      Specify a comment
+      Required: No
     :platform                  String
+      Specify the target platform
+      Required: No
     :release                   String
+      Specify the CCM release
+      Required: No
     :resolver                  String
+      Specify the resolver
+      Required: No
     :subsystem                 String
+      Specify the subsystem
+      Required: No
     :task                      String
+      Specify the task number used to checkin the file (may use default )
+      Required: No
 
   https://ant.apache.org/manual/Tasks/ccmcreatetask.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMCreateTask"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir comment platform release resolver subsystem task], :as attrs} & nested])), :clj-ant/tag "ccmcreatetask", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCreateTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCreateTask"]}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir comment platform release resolver subsystem task], :as attrs} & nested])), :clj-ant/tag "ccmcreatetask", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMCreateTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMCreateTask"], :clj-ant/attrs {:ccmdir {:description "path to the ccm executable file, required if it is not on the PATH", :required "No"}, :comment {:description "Specify a comment", :required "No"}, :platform {:description "Specify the target platform", :required "No"}, :release {:description "Specify the CCM release", :required "No"}, :resolver {:description "Specify the resolver", :required "No"}, :subsystem {:description "Specify the subsystem", :required "No"}, :task {:description "Specify the task number used to checkin the file (may use default )", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccmcreatetask args))
 
 (defn ccmkattr
-  "Ant task ccmkattr. (No description bundled.)
+  "Task to perform a cleartool mkattr command to ClearCase.
 
   Attributes:
     :cleartooldir              String
     :comment                   String
+      Specify a comment
+      Required: No; only one of the two may be used
     :commentfile               String
+      Specify a file containing a comment
+      Required: No; only one of the two may be used
     :failonerr                 boolean
+      Throw an exception if the command fails.
+      Required: No; default is true
     :objselect                 String
     :recurse                   boolean
+      Process each subdirectory under viewpath
+      Required: No
     :replace                   boolean
+      Replace the value of the attribute if it already exists
+      Required: No
     :typename                  String
+      Name of the attribute type
+      Required: Yes
     :typevalue                 String
+      Value to attach to the attribute type
+      Required: Yes
     :version                   String
+      Identify a specific version to attach the attribute to
+      Required: No
     :viewpath                  String
+      Path to the ClearCase view file or directory that the command will operate
+      on
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/ccmkattr.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMkattr"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr objselect recurse replace typename typevalue version viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkattr", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkattr", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkattr"]}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr objselect recurse replace typename typevalue version viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkattr", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkattr", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkattr"], :clj-ant/attrs {:comment {:description "Specify a comment", :required "No; only one of the two may be used"}, :commentfile {:description "Specify a file containing a comment", :required "No; only one of the two may be used"}, :failonerr {:description "Throw an exception if the command fails.", :required "No; default is true"}, :recurse {:description "Process each subdirectory under viewpath", :required "No"}, :replace {:description "Replace the value of the attribute if it already exists", :required "No"}, :typename {:description "Name of the attribute type", :required "Yes"}, :typevalue {:description "Value to attach to the attribute type", :required "Yes"}, :version {:description "Identify a specific version to attach the attribute to", :required "No"}, :viewpath {:description "Path to the ClearCase view file or directory that the command will operate on", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :ccmkattr args))
 
 (defn ccmkbl
-  "Ant task ccmkbl. (No description bundled.)
+  "Task to perform a cleartool mkbl command to ClearCase.
 
   Attributes:
     :baselinerootname          String
+      Specify the name to be associated with the baseline.
+      Required: Yes
     :cleartooldir              String
     :comment                   String
+      Specify a comment
+      Required: No; only one of the two may be used
     :commentfile               String
+      Specify a file containing a comment
+      Required: No; only one of the two may be used
     :failonerr                 boolean
+      Throw an exception if the command fails. Since Ant 1.6.1
+      Required: No; default is true
     :full                      boolean
+      Creates a full baseline.
+      Required: No
     :identical                 boolean
+      Allows the baseline to be created even if it is identical to the previous
+      baseline.
+      Required: No
     :nlabel                    boolean
+      Allows the baseline to be created without a label.
+      Required: No
     :nowarn                    boolean
+      Suppress warning messages
+      Required: No
     :objselect                 String
     :viewpath                  String
 
   https://ant.apache.org/manual/Tasks/ccmkbl.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMkbl"
-  {:arglists (quote ([& {:keys [baselinerootname cleartooldir comment commentfile failonerr full identical nlabel nowarn objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkbl", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkbl", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkbl"]}
+  {:arglists (quote ([& {:keys [baselinerootname cleartooldir comment commentfile failonerr full identical nlabel nowarn objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkbl", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkbl", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkbl"], :clj-ant/attrs {:baselinerootname {:description "Specify the name to be associated with the baseline.", :required "Yes"}, :comment {:description "Specify a comment", :required "No; only one of the two may be used"}, :commentfile {:description "Specify a file containing a comment", :required "No; only one of the two may be used"}, :failonerr {:description "Throw an exception if the command fails. Since Ant 1.6.1", :required "No; default is true"}, :full {:description "Creates a full baseline.", :required "No"}, :identical {:description "Allows the baseline to be created even if it is identical to the previous baseline.", :required "No"}, :nlabel {:description "Allows the baseline to be created without a label.", :required "No"}, :nowarn {:description "Suppress warning messages", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccmkbl args))
 
 (defn ccmkdir
-  "Ant task ccmkdir. (No description bundled.)
+  "Task to perform a cleartool mkdir command to ClearCase.
 
   Attributes:
     :cleartooldir              String
     :comment                   String
+      Specify a comment
+      Required: No; only one of the two may be used
     :commentfile               String
+      Specify a file containing a comment
+      Required: No; only one of the two may be used
     :failonerr                 boolean
+      Throw an exception if the command fails.
+      Required: No; default is true
     :nocheckout                boolean
+      Do not checkout after element creation
+      Required: No
     :objselect                 String
     :viewpath                  String
+      Path to the ClearCase view directory that the command will operate on
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/ccmkdir.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMkdir"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr nocheckout objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkdir", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkdir", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkdir"]}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr nocheckout objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkdir", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkdir", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkdir"], :clj-ant/attrs {:comment {:description "Specify a comment", :required "No; only one of the two may be used"}, :commentfile {:description "Specify a file containing a comment", :required "No; only one of the two may be used"}, :failonerr {:description "Throw an exception if the command fails.", :required "No; default is true"}, :nocheckout {:description "Do not checkout after element creation", :required "No"}, :viewpath {:description "Path to the ClearCase view directory that the command will operate on", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :ccmkdir args))
 
 (defn ccmkelem
-  "Ant task ccmkelem. (No description bundled.)
+  "Task to perform a cleartool mkelem command to ClearCase.
 
   Attributes:
     :checkin                   boolean
+      Checkin element after creation
+      Required: No
     :cleartooldir              String
     :comment                   String
+      Specify a comment
+      Required: No; only one of the two may be used
     :commentfile               String
+      Specify a file containing a comment
+      Required: No; only one of the two may be used
     :eltype                    String
+      Element type to use during element creation
+      Required: No
     :failonerr                 boolean
+      Throw an exception if the command fails.
+      Required: No; default is true
     :master                    boolean
+      Assign mastership of the main branch to the current site
+      Required: No
     :nocheckout                boolean
+      Do not checkout after element creation
+      Required: No
     :nowarn                    boolean
+      Suppress warning messages
+      Required: No
     :objselect                 String
     :preservetime              boolean
+      Preserve the modification time (for checkin)
+      Required: No
     :viewpath                  String
+      Path to the ClearCase view file or directory that the command will operate
+      on
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/ccmkelem.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMkelem"
-  {:arglists (quote ([& {:keys [checkin cleartooldir comment commentfile eltype failonerr master nocheckout nowarn objselect preservetime viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkelem", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkelem", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkelem"]}
+  {:arglists (quote ([& {:keys [checkin cleartooldir comment commentfile eltype failonerr master nocheckout nowarn objselect preservetime viewpath], :as attrs} & nested])), :clj-ant/tag "ccmkelem", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMkelem", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMkelem"], :clj-ant/attrs {:checkin {:description "Checkin element after creation", :required "No"}, :comment {:description "Specify a comment", :required "No; only one of the two may be used"}, :commentfile {:description "Specify a file containing a comment", :required "No; only one of the two may be used"}, :eltype {:description "Element type to use during element creation", :required "No"}, :failonerr {:description "Throw an exception if the command fails.", :required "No; default is true"}, :master {:description "Assign mastership of the main branch to the current site", :required "No"}, :nocheckout {:description "Do not checkout after element creation", :required "No"}, :nowarn {:description "Suppress warning messages", :required "No"}, :preservetime {:description "Preserve the modification time (for checkin)", :required "No"}, :viewpath {:description "Path to the ClearCase view file or directory that the command will operate on", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :ccmkelem args))
 
 (defn ccmklabel
-  "Ant task ccmklabel. (No description bundled.)
+  "Task to perform a cleartool mklabel command to ClearCase.
 
   Attributes:
     :cleartooldir              String
     :comment                   String
+      Specify a comment
+      Required: No; only one of the two may be used
     :commentfile               String
+      Specify a file containing a comment
+      Required: No; only one of the two may be used
     :failonerr                 boolean
+      Throw an exception if the command fails. Since Ant 1.6.1
+      Required: No; default is true
     :objselect                 String
     :recurse                   boolean
+      Process each subdirectory under viewpath
+      Required: No
     :replace                   boolean
+      Replace a label of the same type on the same branch
+      Required: No
     :typename                  String
+      Name of the label type
+      Required: Yes
     :version                   String
+      Identify a specific version to attach the label to
+      Required: No
     :viewpath                  String
+      Path to the ClearCase view file or directory that the command will operate
+      on
+      Required: No
     :vob                       String
+      Name of the VOB
+      Required: No
 
   https://ant.apache.org/manual/Tasks/ccmklabel.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMklabel"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr objselect recurse replace typename version viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccmklabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMklabel", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMklabel"]}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr objselect recurse replace typename version viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccmklabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMklabel", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMklabel"], :clj-ant/attrs {:comment {:description "Specify a comment", :required "No; only one of the two may be used"}, :commentfile {:description "Specify a file containing a comment", :required "No; only one of the two may be used"}, :failonerr {:description "Throw an exception if the command fails. Since Ant 1.6.1", :required "No; default is true"}, :recurse {:description "Process each subdirectory under viewpath", :required "No"}, :replace {:description "Replace a label of the same type on the same branch", :required "No"}, :typename {:description "Name of the label type", :required "Yes"}, :version {:description "Identify a specific version to attach the label to", :required "No"}, :viewpath {:description "Path to the ClearCase view file or directory that the command will operate on", :required "No"}, :vob {:description "Name of the VOB", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccmklabel args))
 
 (defn ccmklbtype
-  "Ant task ccmklbtype. (No description bundled.)
+  "Task to perform a cleartool mklbtype command to ClearCase.
 
   Attributes:
     :cleartooldir              String
     :comment                   String
+      Specify a comment
+      Required: No; only one of the two may be used
     :commentfile               String
+      Specify a file containing a comment
+      Required: No; only one of the two may be used
     :failonerr                 boolean
+      Throw an exception if the command fails. Since Ant 1.6.1
+      Required: No; default is true
     :global                    boolean
+      Creates a label type that is global to the VOB or to VOBs that use this
+      VOB.
+      Required: No; only one of the two may be used, default ordinary = true
     :objselect                 String
     :ordinary                  boolean
+      Creates a label type that can be used only in the current VOB.
+      Required: No; only one of the two may be used, default ordinary = true
     :pbranch                   boolean
+      Allows the label type to be used once per branch in a given element's
+      version tree
+      Required: No
     :replace                   boolean
+      Replace an existing label definition of the same type
+      Required: No
     :shared                    boolean
+      Sets the way mastership is checked by ClearCase. See ClearCase
+      documentation for details
+      Required: No
     :typename                  String
+      Name of the label type to create
+      Required: Yes
     :viewpath                  String
     :vob                       String
+      Name of the VOB
+      Required: No
 
   https://ant.apache.org/manual/Tasks/ccmklbtype.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCMklbtype"
-  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr global objselect ordinary pbranch replace shared typename viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccmklbtype", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMklbtype", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMklbtype"]}
+  {:arglists (quote ([& {:keys [cleartooldir comment commentfile failonerr global objselect ordinary pbranch replace shared typename viewpath vob], :as attrs} & nested])), :clj-ant/tag "ccmklbtype", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCMklbtype", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCMklbtype"], :clj-ant/attrs {:comment {:description "Specify a comment", :required "No; only one of the two may be used"}, :commentfile {:description "Specify a file containing a comment", :required "No; only one of the two may be used"}, :failonerr {:description "Throw an exception if the command fails. Since Ant 1.6.1", :required "No; default is true"}, :global {:description "Creates a label type that is global to the VOB or to VOBs that use this VOB.", :required "No; only one of the two may be used, default ordinary = true"}, :ordinary {:description "Creates a label type that can be used only in the current VOB.", :required "No; only one of the two may be used, default ordinary = true"}, :pbranch {:description "Allows the label type to be used once per branch in a given element's version tree", :required "No"}, :replace {:description "Replace an existing label definition of the same type", :required "No"}, :shared {:description "Sets the way mastership is checked by ClearCase. See ClearCase documentation for details", :required "No"}, :typename {:description "Name of the label type to create", :required "Yes"}, :vob {:description "Name of the VOB", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccmklbtype args))
 
 (defn ccmreconfigure
-  "Ant task ccmreconfigure. (No description bundled.)
+  "Run a Continuus reconfigure/update command
 
   Attributes:
     :ccmaction                 String
     :ccmdir                    String
+      path to the ccm executable file, required if it is not on the PATH
+      Required: No
     :ccmproject                String
+      Specifies the ccm project on which the operation is applied.
+      Required: Yes
     :recurse                   boolean
+      recurse on subproject
+      Required: No; default is false
     :verbose                   boolean
+      do a verbose reconfigure operation
+      Required: No; default is false
 
   https://ant.apache.org/manual/Tasks/ccmreconfigure.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ccm.CCMReconfigure"
-  {:arglists (quote ([& {:keys [ccmaction ccmdir ccmproject recurse verbose], :as attrs} & nested])), :clj-ant/tag "ccmreconfigure", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMReconfigure", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMReconfigure"]}
+  {:arglists (quote ([& {:keys [ccmaction ccmdir ccmproject recurse verbose], :as attrs} & nested])), :clj-ant/tag "ccmreconfigure", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ccm.CCMReconfigure", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ccm.CCMReconfigure"], :clj-ant/attrs {:ccmdir {:description "path to the ccm executable file, required if it is not on the PATH", :required "No"}, :ccmproject {:description "Specifies the ccm project on which the operation is applied.", :required "Yes"}, :recurse {:description "recurse on subproject", :required "No; default is false"}, :verbose {:description "do a verbose reconfigure operation", :required "No; default is false"}}}
   [& args]
   (clojure.core/apply c/element :ccmreconfigure args))
 
 (defn ccrmtype
-  "Ant task ccrmtype. (No description bundled.)
+  "Task to perform a cleartool rmtype command to ClearCase.
 
   Attributes:
     :cleartooldir              String
@@ -1121,60 +1372,96 @@
   (clojure.core/apply c/element :ccrmtype args))
 
 (defn ccuncheckout
-  "Ant task ccuncheckout. (No description bundled.)
+  "Task to perform a cleartool uncheckout command to ClearCase.
 
   Attributes:
     :cleartooldir              String
     :failonerr                 boolean
+      Throw an exception if the command fails. Since Ant 1.6.1
+      Required: No; default is true
     :keepcopy                  boolean
+      Specifies whether to keep a copy of the file with a .keep extension or not
+      Required: No
     :objselect                 String
     :viewpath                  String
+      Path to the ClearCase view file or directory that the command will operate
+      on
+      Required: No
 
   https://ant.apache.org/manual/Tasks/ccuncheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCUnCheckout"
-  {:arglists (quote ([& {:keys [cleartooldir failonerr keepcopy objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccuncheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUnCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCUnCheckout"]}
+  {:arglists (quote ([& {:keys [cleartooldir failonerr keepcopy objselect viewpath], :as attrs} & nested])), :clj-ant/tag "ccuncheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUnCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCUnCheckout"], :clj-ant/attrs {:failonerr {:description "Throw an exception if the command fails. Since Ant 1.6.1", :required "No; default is true"}, :keepcopy {:description "Specifies whether to keep a copy of the file with a .keep extension or not", :required "No"}, :viewpath {:description "Path to the ClearCase view file or directory that the command will operate on", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccuncheckout args))
 
 (defn ccunlock
-  "Ant task ccunlock. (No description bundled.)
+  "Task to perform a cleartool unlock command to ClearCase.
 
   Attributes:
     :cleartooldir              String
     :comment                   String
+      Specifies how to populate comments fields
+      Required: No
     :failonerr                 boolean
+      Throw an exception if the command fails. Since Ant 1.6.1
+      Required: No; default is true
     :objsel                    String
+      Specifies the object(s) to be unlocked. Since Ant 1.6.1
+      Required: No
     :objselect                 String
+      Obsolete . Use objsel instead.
+      Required: No
     :pname                     String
+      Specifies the object pathname to be unlocked.
+      Required: No
     :viewpath                  String
 
   https://ant.apache.org/manual/Tasks/ccunlock.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCUnlock"
-  {:arglists (quote ([& {:keys [cleartooldir comment failonerr objsel objselect pname viewpath], :as attrs} & nested])), :clj-ant/tag "ccunlock", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUnlock", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCUnlock"]}
+  {:arglists (quote ([& {:keys [cleartooldir comment failonerr objsel objselect pname viewpath], :as attrs} & nested])), :clj-ant/tag "ccunlock", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUnlock", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCUnlock"], :clj-ant/attrs {:comment {:description "Specifies how to populate comments fields", :required "No"}, :failonerr {:description "Throw an exception if the command fails. Since Ant 1.6.1", :required "No; default is true"}, :objsel {:description "Specifies the object(s) to be unlocked. Since Ant 1.6.1", :required "No"}, :objselect {:description "Obsolete . Use objsel instead.", :required "No"}, :pname {:description "Specifies the object pathname to be unlocked.", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccunlock args))
 
 (defn ccupdate
-  "Ant task ccupdate. (No description bundled.)
+  "Task to perform an cleartool update command to ClearCase.
 
   Attributes:
     :cleartooldir              String
     :currenttime               boolean
+      Specifies that modification time should be written as the current time.
+      Mutually exclusive with preservetime .
+      Required: No
     :failonerr                 boolean
+      Throw an exception if the command fails. Since Ant 1.6.1
+      Required: No; default is true
     :graphical                 boolean
+      Displays a graphical dialog during the update
+      Required: No
     :log                       String
+      Specifies a log file for ClearCase to write to
+      Required: No
     :objselect                 String
     :overwrite                 boolean
+      Specifies whether to overwrite hijacked files or not
+      Required: No
     :preservetime              boolean
+      Specifies that modification time should preserved from the VOB time.
+      Mutually exclusive with currenttime .
+      Required: No
     :rename                    boolean
+      Specifies that hijacked files should be renamed with a .keep extension
+      Required: No
     :viewpath                  String
+      Path to the ClearCase snapshot view file or directory that the command
+      will operate on
+      Required: No
 
   https://ant.apache.org/manual/Tasks/ccupdate.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.clearcase.CCUpdate"
-  {:arglists (quote ([& {:keys [cleartooldir currenttime failonerr graphical log objselect overwrite preservetime rename viewpath], :as attrs} & nested])), :clj-ant/tag "ccupdate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUpdate", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCUpdate"]}
+  {:arglists (quote ([& {:keys [cleartooldir currenttime failonerr graphical log objselect overwrite preservetime rename viewpath], :as attrs} & nested])), :clj-ant/tag "ccupdate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.clearcase.CCUpdate", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.clearcase.CCUpdate"], :clj-ant/attrs {:currenttime {:description "Specifies that modification time should be written as the current time. Mutually exclusive with preservetime .", :required "No"}, :failonerr {:description "Throw an exception if the command fails. Since Ant 1.6.1", :required "No; default is true"}, :graphical {:description "Displays a graphical dialog during the update", :required "No"}, :log {:description "Specifies a log file for ClearCase to write to", :required "No"}, :overwrite {:description "Specifies whether to overwrite hijacked files or not", :required "No"}, :preservetime {:description "Specifies that modification time should preserved from the VOB time. Mutually exclusive with currenttime .", :required "No"}, :rename {:description "Specifies that hijacked files should be renamed with a .keep extension", :required "No"}, :viewpath {:description "Path to the ClearCase snapshot view file or directory that the command will operate on", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :ccupdate args))
 
@@ -1345,7 +1632,7 @@
     :searchpath                boolean
     :skipemptyfilesets         boolean
     :spawn                     boolean
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
       One of file , dir or both . If set to file , only the group of plain files
       are going to be changed. If set to dir , only the directories are
@@ -1464,7 +1751,7 @@
     :searchpath                boolean
     :skipemptyfilesets         boolean
     :spawn                     boolean
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
       One of file , dir or both . If set to file , only the permissions of plain
       files are going to be changed. If set to dir , only the directories are
@@ -1565,7 +1852,7 @@
     :searchpath                boolean
     :skipemptyfilesets         boolean
     :spawn                     boolean
-    :timeout                   Long
+    :timeout                   Integer
     :type                      FileDirBoth
       One of file , dir or both . If set to file , only the owner of plain files
       are going to be changed. If set to dir , only the directories are
@@ -2118,7 +2405,14 @@
   (clojure.core/apply c/element :cvs args))
 
 (defn cvschangelog
-  "Ant task cvschangelog. (No description bundled.)
+  "Generates an XML-formatted report file of the change logs recorded in a CVS
+  repository. Important : This task needs cvs on the path. If it isn't, you
+  will get an error (such as error=2 on Windows). If <cvs> doesn't work, try
+  to execute cvs.exe from the command line in the target directory in which
+  you are working. Also note that this task assumes that the cvs executable is
+  compatible with the Unix version, this is not completely true for certain
+  other CVS clients-like CVSNT for example-and some operation may fail when
+  using such an incompatible client.
 
   Attributes:
     :append                    boolean
@@ -2126,28 +2420,70 @@
     :compression               boolean
     :compressionlevel          int
     :cvsroot                   String
+      the CVSROOT variable.
+      Required: No
     :cvsrsh                    String
+      the CVS_RSH variable.
+      Required: No
     :date                      String
     :daysinpast                int
+      Sets the number of days into the past for which the change log information
+      should be retrieved.
+      Required: No
     :dest                      File
     :destfile                  File
+      The file in which to write the change log report.
+      Required: Yes
     :dir                       File
+      The directory from which to run the cvs log command.
+      Required: No; defaults to ${basedir}
     :end                       Date
+      The latest date to which change logs are to be included in the report.
+      Required: No
     :endtag                    String
+      The end of a tag range. If startTag is also specified, they must both be
+      on the same branch. If startTag is not specified, the start of the range
+      will be the top of the branch on which endTag lives. Since Ant 1.8.0
+      Required: No
     :error                     File
     :failonerror               boolean
+      Stop the build process if the command exits with a return code other than
+      0
+      Required: No; defaults to false
     :noexec                    boolean
     :output                    File
     :package                   String
+      the package/module to check out. Note : multiple attributes can be split
+      using spaces. Use a nested <module> element if you want to specify a
+      module with spaces in its name.
+      Required: No
     :passfile                  File
+      Password file to read passwords from.
+      Required: No; defaults to ~/.cvspass
     :port                      int
+      Port used by CVS to communicate with the server.
+      Required: No; defaults to 2401
     :quiet                     boolean
     :reallyquiet               boolean
     :remote                    boolean
+      If set to true, works against the repository (using cvs rlog ) without a
+      working copy. Since Ant 1.8.0
+      Required: No; default is false
     :start                     Date
+      The earliest date from which change logs are to be included in the report.
+      Required: No
     :starttag                  String
+      The start of a tag range. If endTag is also specified, they must both be
+      on the same branch. If endTag is not specified, the end of the range will
+      be the latest on the same branch on which startTag lives. Since Ant 1.8.0
+      Required: No
     :tag                       String
+      query the changelog for a specific branch.
+      Required: No
     :usersfile                 File
+      Property file that contains name-value pairs mapping user IDs and names
+      that should be used in the report in place of the user ID.
+      Required: No
   Nested elements:
     :commandline               (Commandline)
     :fileset                   (FileSet)
@@ -2157,7 +2493,7 @@
   https://ant.apache.org/manual/Tasks/cvschangelog.html
 
   Defined by: org.apache.tools.ant.taskdefs.cvslib.ChangeLogTask"
-  {:arglists (quote ([& {:keys [append command compression compressionlevel cvsroot cvsrsh date daysinpast dest destfile dir end endtag error failonerror noexec output package passfile port quiet reallyquiet remote start starttag tag usersfile], :as attrs} & nested])), :clj-ant/tag "cvschangelog", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.ChangeLogTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.cvslib.ChangeLogTask"]}
+  {:arglists (quote ([& {:keys [append command compression compressionlevel cvsroot cvsrsh date daysinpast dest destfile dir end endtag error failonerror noexec output package passfile port quiet reallyquiet remote start starttag tag usersfile], :as attrs} & nested])), :clj-ant/tag "cvschangelog", :clj-ant/class "org.apache.tools.ant.taskdefs.cvslib.ChangeLogTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.cvslib.ChangeLogTask"], :clj-ant/attrs {:cvsroot {:description "the CVSROOT variable.", :required "No"}, :cvsrsh {:description "the CVS_RSH variable.", :required "No"}, :daysinpast {:description "Sets the number of days into the past for which the change log information should be retrieved.", :required "No"}, :destfile {:description "The file in which to write the change log report.", :required "Yes"}, :dir {:description "The directory from which to run the cvs log command.", :required "No; defaults to ${basedir}"}, :end {:description "The latest date to which change logs are to be included in the report.", :required "No"}, :endtag {:description "The end of a tag range. If startTag is also specified, they must both be on the same branch. If startTag is not specified, the start of the range will be the top of the branch on which endTag lives. Since Ant 1.8.0", :required "No"}, :failonerror {:description "Stop the build process if the command exits with a return code other than 0", :required "No; defaults to false"}, :package {:description "the package/module to check out. Note : multiple attributes can be split using spaces. Use a nested <module> element if you want to specify a module with spaces in its name.", :required "No"}, :passfile {:description "Password file to read passwords from.", :required "No; defaults to ~/.cvspass"}, :port {:description "Port used by CVS to communicate with the server.", :required "No; defaults to 2401"}, :remote {:description "If set to true, works against the repository (using cvs rlog ) without a working copy. Since Ant 1.8.0", :required "No; default is false"}, :start {:description "The earliest date from which change logs are to be included in the report.", :required "No"}, :starttag {:description "The start of a tag range. If endTag is also specified, they must both be on the same branch. If endTag is not specified, the end of the range will be the latest on the same branch on which startTag lives. Since Ant 1.8.0", :required "No"}, :tag {:description "query the changelog for a specific branch.", :required "No"}, :usersfile {:description "Property file that contains name-value pairs mapping user IDs and names that should be used in the report in place of the user ID.", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :cvschangelog args))
 
@@ -2327,23 +2663,23 @@
   (clojure.core/apply c/element :defaultexcludes args))
 
 (defn delete
-  "Deletes a single file, a specified directory and all its files and
-  subdirectories, or a set of files specified by one or more resource
-  collection s. The literal implication of <fileset> is that directories are
-  not included; however the removal of empty directories can be triggered when
-  using nested filesets by setting the includeEmptyDirs attribute to true .
-  Note that this attribute is meaningless in the context of any of the various
-  resource collection types that do include directories, but that no attempt
-  will be made to delete non-empty directories in any case. Whether a
-  directory is empty or not is decided by looking into the filesystem-include
-  or exclude patterns don't apply here. If you use this task to delete
-  temporary files created by editors and it doesn't seem to work, read up on
-  the default exclusion set in Directory-based Tasks , and see the
-  defaultexcludes attribute below. For historical reasons <delete dir=\"x\"/> is
-  different from <delete><fileset dir=\"x\"/></delete> ; it will try to remove
-  everything inside x including x itself, not taking default excludes into
-  account, blindly following all symbolic links. If you need more control, use
-  a nested <fileset> .
+  "Deletes a single file, a symbolic link or Windows junction, a specified
+  directory and all its files and subdirectories, or a set of files specified
+  by one or more resource collection s. The literal implication of <fileset>
+  is that directories are not included; however the removal of empty
+  directories can be triggered when using nested filesets by setting the
+  includeEmptyDirs attribute to true . Note that this attribute is meaningless
+  in the context of any of the various resource collection types that do
+  include directories, but that no attempt will be made to delete non-empty
+  directories in any case. Whether a directory is empty or not is decided by
+  looking into the filesystem-include or exclude patterns don't apply here. If
+  you use this task to delete temporary files created by editors and it
+  doesn't seem to work, read up on the default exclusion set in
+  Directory-based Tasks , and see the defaultexcludes attribute below. For
+  historical reasons <delete dir=\"x\"/> is different from <delete><fileset
+  dir=\"x\"/></delete> ; it will try to remove everything inside x including x
+  itself, not taking default excludes into account, blindly following all
+  symbolic links. If you need more control, use a nested <fileset> .
 
   Attributes:
     :casesensitive             boolean
@@ -2362,8 +2698,8 @@
       the full-pathname equivalent unless you truly intend to recursively remove
       the entire contents of the current base directory (and the base directory
       itself, if different from the current working directory).
-      Required: At least one of the two, unless nested resource collections are
-      specified
+      Required: At least one of the three, unless nested resource collections
+      are specified
     :excludes                  String
       Deprecated . Use resource collections. Comma- or space-separated list of
       patterns of files that must be excluded from the deletion list. All files
@@ -2383,8 +2719,8 @@
       The file to delete, specified as either the simple filename (if the file
       exists in the current base directory), a relative-path filename, or a
       full-path filename.
-      Required: At least one of the two, unless nested resource collections are
-      specified
+      Required: At least one of the three, unless nested resource collections
+      are specified
     :followsymlinks            boolean
     :includeemptydirs          boolean
       Whether to delete empty directories when using filesets.
@@ -2399,6 +2735,11 @@
       file is taken to be an include pattern.
       Required: No
     :link                      File
+      The symbolic link or Windows junction to delete, specified as either the
+      simple filename (if the link exists in the current base directory), a
+      relative-path filename, or a full-path filename. since Ant 1.10.16 .
+      Required: At least one of the three, unless nested resource collections
+      are specified
     :performgconfaileddelete   boolean
       If Ant fails to delete a file or directory it will retry the operation
       once. If this flag is set to true it will perform a garbage collection
@@ -2417,7 +2758,8 @@
     :removenotfollowedsymlinks boolean
       Whether symbolic links (not the files/directories they link to) should be
       removed if they haven't been followed because followSymlinks was false or
-      the maximum number of symbolic links was too big. Since Ant 1.8.0
+      the maximum number of symbolic links was too big. Since Ant 1.8.0 Since
+      since Ant 1.10.16 this also applies to not followed windows junctions.
       Required: No; default false
     :verbose                   boolean
       Whether to show the name of each deleted file.
@@ -2451,7 +2793,7 @@
   https://ant.apache.org/manual/Tasks/delete.html
 
   Defined by: org.apache.tools.ant.taskdefs.Delete"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes deleteonexit dir excludes excludesfile failonerror file followsymlinks includeemptydirs includes includesfile link performgconfaileddelete quiet removenotfollowedsymlinks verbose], :as attrs} & nested])), :clj-ant/tag "delete", :clj-ant/class "org.apache.tools.ant.taskdefs.Delete", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Delete"], :clj-ant/attrs {:defaultexcludes {:description "Deprecated . Use resource collections. Whether to use default excludes.", :required "No; default true"}, :deleteonexit {:description "Indicates whether to use File#deleteOnExit() if there is a failure to delete a file. This causes the JVM to attempt to delete the file when the JVM process is terminating. Since Ant 1.6.2", :required "No; default false"}, :dir {:description "The directory to delete, including all its files and subdirectories. Note : dir is not used to specify a directory name for file ; file and dir are independent of each other. Warning : Do not set dir to . , ${basedir} , or the full-pathname equivalent unless you truly intend to recursively remove the entire contents of the current base directory (and the base directory itself, if different from the current working directory).", :required "At least one of the two, unless nested resource collections are specified"}, :excludes {:description "Deprecated . Use resource collections. Comma- or space-separated list of patterns of files that must be excluded from the deletion list. All files are relative to the directory specified in dir .", :required "No; defaults to default excludes or none if defaultexcludes is no"}, :excludesfile {:description "Deprecated . Use resource collections. Name of a file; each line of this file is taken to be an exclude pattern", :required "No"}, :failonerror {:description "Controls whether an error (such as a failure to delete a file) stops the build or is merely reported to the screen. Only relevant if quiet is false .", :required "No; default true"}, :file {:description "The file to delete, specified as either the simple filename (if the file exists in the current base directory), a relative-path filename, or a full-path filename.", :required "At least one of the two, unless nested resource collections are specified"}, :includeemptydirs {:description "Whether to delete empty directories when using filesets.", :required "No; default false"}, :includes {:description "Deprecated . Use resource collections. Comma- or space-separated list of patterns of files that must be deleted. All files are relative to the directory specified in dir .", :required "No"}, :includesfile {:description "Deprecated . Use resource collections. Name of a file; each line of this file is taken to be an include pattern.", :required "No"}, :performgconfaileddelete {:description "If Ant fails to delete a file or directory it will retry the operation once. If this flag is set to true it will perform a garbage collection before retrying the delete. Setting this flag to true is known to resolve some problems on Windows (where it defaults to true ) but also for directory trees residing on an NFS share. Since Ant 1.8.3", :required "No; default true on Windows and true on any other OS"}, :quiet {:description "If the specified file or directory does not exist, do not display a diagnostic message (unless Apache Ant has been invoked with the -verbose or -debug switches) or modify the exit status to reflect an error. When set to true , if a file or directory cannot be deleted, no error is reported. This setting emulates the -f option to the Unix rm command. Setting this to true implies setting failonerror to false .", :required "No; default false"}, :removenotfollowedsymlinks {:description "Whether symbolic links (not the files/directories they link to) should be removed if they haven't been followed because followSymlinks was false or the maximum number of symbolic links was too big. Since Ant 1.8.0", :required "No; default false"}, :verbose {:description "Whether to show the name of each deleted file.", :required "No; default false"}}}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes deleteonexit dir excludes excludesfile failonerror file followsymlinks includeemptydirs includes includesfile link performgconfaileddelete quiet removenotfollowedsymlinks verbose], :as attrs} & nested])), :clj-ant/tag "delete", :clj-ant/class "org.apache.tools.ant.taskdefs.Delete", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Delete"], :clj-ant/attrs {:defaultexcludes {:description "Deprecated . Use resource collections. Whether to use default excludes.", :required "No; default true"}, :deleteonexit {:description "Indicates whether to use File#deleteOnExit() if there is a failure to delete a file. This causes the JVM to attempt to delete the file when the JVM process is terminating. Since Ant 1.6.2", :required "No; default false"}, :dir {:description "The directory to delete, including all its files and subdirectories. Note : dir is not used to specify a directory name for file ; file and dir are independent of each other. Warning : Do not set dir to . , ${basedir} , or the full-pathname equivalent unless you truly intend to recursively remove the entire contents of the current base directory (and the base directory itself, if different from the current working directory).", :required "At least one of the three, unless nested resource collections are specified"}, :excludes {:description "Deprecated . Use resource collections. Comma- or space-separated list of patterns of files that must be excluded from the deletion list. All files are relative to the directory specified in dir .", :required "No; defaults to default excludes or none if defaultexcludes is no"}, :excludesfile {:description "Deprecated . Use resource collections. Name of a file; each line of this file is taken to be an exclude pattern", :required "No"}, :failonerror {:description "Controls whether an error (such as a failure to delete a file) stops the build or is merely reported to the screen. Only relevant if quiet is false .", :required "No; default true"}, :file {:description "The file to delete, specified as either the simple filename (if the file exists in the current base directory), a relative-path filename, or a full-path filename.", :required "At least one of the three, unless nested resource collections are specified"}, :includeemptydirs {:description "Whether to delete empty directories when using filesets.", :required "No; default false"}, :includes {:description "Deprecated . Use resource collections. Comma- or space-separated list of patterns of files that must be deleted. All files are relative to the directory specified in dir .", :required "No"}, :includesfile {:description "Deprecated . Use resource collections. Name of a file; each line of this file is taken to be an include pattern.", :required "No"}, :link {:description "The symbolic link or Windows junction to delete, specified as either the simple filename (if the link exists in the current base directory), a relative-path filename, or a full-path filename. since Ant 1.10.16 .", :required "At least one of the three, unless nested resource collections are specified"}, :performgconfaileddelete {:description "If Ant fails to delete a file or directory it will retry the operation once. If this flag is set to true it will perform a garbage collection before retrying the delete. Setting this flag to true is known to resolve some problems on Windows (where it defaults to true ) but also for directory trees residing on an NFS share. Since Ant 1.8.3", :required "No; default true on Windows and true on any other OS"}, :quiet {:description "If the specified file or directory does not exist, do not display a diagnostic message (unless Apache Ant has been invoked with the -verbose or -debug switches) or modify the exit status to reflect an error. When set to true , if a file or directory cannot be deleted, no error is reported. This setting emulates the -f option to the Unix rm command. Setting this to true implies setting failonerror to false .", :required "No; default false"}, :removenotfollowedsymlinks {:description "Whether symbolic links (not the files/directories they link to) should be removed if they haven't been followed because followSymlinks was false or the maximum number of symbolic links was too big. Since Ant 1.8.0 Since since Ant 1.10.16 this also applies to not followed windows junctions.", :required "No; default false"}, :verbose {:description "Whether to show the name of each deleted file.", :required "No; default false"}}}
   [& args]
   (clojure.core/apply c/element :delete args))
 
@@ -3004,28 +3346,114 @@
   (clojure.core/apply c/element :echoxml args))
 
 (defn ejbjar
-  "Ant task ejbjar. (No description bundled.)
+  "This task is designed to support building of EJB jar files (EJB 1.1 & 2.0).
+  Support is currently provided for 'vanilla' EJB jar files-i.e. those
+  containing only the user generated class files and the standard deployment
+  descriptor. Nested elements provide support for vendor specific deployment
+  tools. These currently include: Borland Application Server 4.5 iPlanet
+  Application Server 6.0 JBoss 2.1 and above WebLogic 5.1/6.0 session/entity
+  beans using the weblogic.ejbc tool IBM WebSphere 4.0 TOPLink for WebLogic
+  2.5.1-enabled entity beans JOnAS 2.4.x and 2.5 Open Source EJB server
+  IronFlare Orion Application Server 2.0 The task works as a directory
+  scanning task, and performs an action for each deployment descriptor found.
+  As such the includes and excludes should be set to ensure that all desired
+  EJB descriptors are found, but no application server descriptors are found.
+  For each descriptor found, ejbjar will parse the deployment descriptor to
+  determine the necessary class files which implement the bean. These files
+  are assembled along with the deployment descriptors into a well formed EJB
+  jar file. Any support files which need to be included in the generated jar
+  can be added with the <support> nested element. For each class included in
+  the jar, ejbjar will scan for any super classes or super interfaces. These
+  will be added to the generated jar. If no nested vendor-specific deployment
+  elements are present, the task will simply generate a generic EJB jar. Such
+  jars are typically used as the input to vendor-specific deployment tools.
+  For each nested deployment element, a vendor specific deployment tool is run
+  to generate a jar file ready for deployment in that vendor's EJB container.
+  The jar files are only built if they are out of date. Each deployment tool
+  element will examine its target jar file and determine if it is out of date
+  with respect to the class files and deployment descriptors that make up the
+  bean. If any of these files are newer than the jar file the jar will be
+  rebuilt otherwise a message is logged that the jar file is up to date. The
+  task uses the BCEL library to extract all dependent classes. This means
+  that, in addition to the classes that are mentioned in the deployment
+  descriptor, any classes that these depend on are also automatically included
+  in the jar file.
 
   Attributes:
     :basejarname               String
+      The base name that is used for the generated jar files. If this attribute
+      is specified, the generic jar file name will use this value as the prefix
+      (followed by the value specified in the genericjarsuffix attribute) and
+      the resultant EJB jar file (followed by any suffix specified in the nested
+      element).
+      Required: No
     :basenameterminator        String
+      String value used to substring out a string from the name of each
+      deployment descriptor found, which is then used to locate related
+      deployment descriptors (e.g. the WebLogic descriptors). For example, a
+      basename of . and a deployment descriptor called FooBean.ejb-jar.xml would
+      result in a basename of FooBean which would then be used to find
+      FooBean.weblogic-ejb-jar.xml and FooBean.weblogic-cmp-rdbms-jar.xml , as
+      well as to create the filenames of the jar files as FooBean-generic.jar
+      and FooBean-wl.jar . This attribute is not used if the basejarname
+      attribute is specified.
+      Required: No; defaults to -
     :casesensitive             boolean
     :classpath                 Path
+      This classpath is used when resolving classes which are to be added to the
+      jar. Typically nested deployment tool elements will also support a
+      classpath which will be combined with this classpath when resolving
+      classes
+      Required: No
     :cmpversion                CMPVersion
+      Either 1.0 or 2.0 . A CMP 2.0 implementation exists currently only for
+      JBoss.
+      Required: No; default is 1.0
     :defaultexcludes           boolean
     :dependency                String
+      This attribute controls which additional classes and interfaces are added
+      to the jar. Please refer to the description above
+      Required: No
     :descriptordir             File
+      The base directory under which to scan for EJB deployment descriptors. If
+      this attribute is not specified, then the deployment descriptors must be
+      located in the directory specified by the srcdir attribute.
+      Required: No
     :destdir                   File
+      The base directory into which generated jar files are deposited. Jar files
+      are deposited in directories corresponding to their location within the
+      descriptordir namespace. Note that this attribute is only used if the task
+      is generating generic jars (i.e. no vendor-specific deployment elements
+      have been specified).
+      Required: Yes, unless vendor-specific deployment elements have been
+      specified.
     :excludes                  String
     :excludesfile              File
     :flatdestdir               boolean
+      Set this attribute to true if you want all generated jars to be placed in
+      the root of the destdir , rather than according to the location of the
+      deployment descriptor within the descriptordir hierarchy.
+      Required: No
     :followsymlinks            boolean
     :genericjarsuffix          String
+      String value appended to the basename of the deployment descriptor to
+      create the filename of the generic EJB jar file.
+      Required: No; defaults to -generic.jar
     :includes                  String
     :includesfile              File
     :manifest                  File
+      the manifest file to use, if any.
+      Required: No
     :naming                    NamingScheme
+      Controls the naming convention used to name generated EJB jars. Please
+      refer to the description above .
+      Required: No
     :srcdir                    File
+      The base directory containing the .class files that make up the bean.
+      Included are the home- , remote- , pk- and implementation- classes and all
+      classes that these depend on. Note that this can be the same as the
+      descriptordir if all files are in the same directory tree.
+      Required: Yes
   Nested elements:
     :and                       (AndSelector)
     :borland                   (BorlandDeploymentTool)
@@ -3065,7 +3493,7 @@
   https://ant.apache.org/manual/Tasks/ejbjar.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.EjbJar"
-  {:arglists (quote ([& {:keys [basejarname basenameterminator casesensitive classpath cmpversion defaultexcludes dependency descriptordir destdir excludes excludesfile flatdestdir followsymlinks genericjarsuffix includes includesfile manifest naming srcdir], :as attrs} & nested])), :clj-ant/tag "ejbjar", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.EjbJar", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.EjbJar"]}
+  {:arglists (quote ([& {:keys [basejarname basenameterminator casesensitive classpath cmpversion defaultexcludes dependency descriptordir destdir excludes excludesfile flatdestdir followsymlinks genericjarsuffix includes includesfile manifest naming srcdir], :as attrs} & nested])), :clj-ant/tag "ejbjar", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.EjbJar", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.EjbJar"], :clj-ant/attrs {:basejarname {:description "The base name that is used for the generated jar files. If this attribute is specified, the generic jar file name will use this value as the prefix (followed by the value specified in the genericjarsuffix attribute) and the resultant EJB jar file (followed by any suffix specified in the nested element).", :required "No"}, :basenameterminator {:description "String value used to substring out a string from the name of each deployment descriptor found, which is then used to locate related deployment descriptors (e.g. the WebLogic descriptors). For example, a basename of . and a deployment descriptor called FooBean.ejb-jar.xml would result in a basename of FooBean which would then be used to find FooBean.weblogic-ejb-jar.xml and FooBean.weblogic-cmp-rdbms-jar.xml , as well as to create the filenames of the jar files as FooBean-generic.jar and FooBean-wl.jar . This attribute is not used if the basejarname attribute is specified.", :required "No; defaults to -"}, :classpath {:description "This classpath is used when resolving classes which are to be added to the jar. Typically nested deployment tool elements will also support a classpath which will be combined with this classpath when resolving classes", :required "No"}, :cmpversion {:description "Either 1.0 or 2.0 . A CMP 2.0 implementation exists currently only for JBoss.", :required "No; default is 1.0"}, :dependency {:description "This attribute controls which additional classes and interfaces are added to the jar. Please refer to the description above", :required "No"}, :descriptordir {:description "The base directory under which to scan for EJB deployment descriptors. If this attribute is not specified, then the deployment descriptors must be located in the directory specified by the srcdir attribute.", :required "No"}, :destdir {:description "The base directory into which generated jar files are deposited. Jar files are deposited in directories corresponding to their location within the descriptordir namespace. Note that this attribute is only used if the task is generating generic jars (i.e. no vendor-specific deployment elements have been specified).", :required "Yes, unless vendor-specific deployment elements have been specified."}, :flatdestdir {:description "Set this attribute to true if you want all generated jars to be placed in the root of the destdir , rather than according to the location of the deployment descriptor within the descriptordir hierarchy.", :required "No"}, :genericjarsuffix {:description "String value appended to the basename of the deployment descriptor to create the filename of the generic EJB jar file.", :required "No; defaults to -generic.jar"}, :manifest {:description "the manifest file to use, if any.", :required "No"}, :naming {:description "Controls the naming convention used to name generated EJB jars. Please refer to the description above .", :required "No"}, :srcdir {:description "The base directory containing the .class files that make up the bean. Included are the home- , remote- , pk- and implementation- classes and all classes that these depend on. Note that this can be the same as the descriptordir if all files are in the same directory tree.", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :ejbjar args))
 
@@ -3226,7 +3654,7 @@
       result property settings are not active when spawning a process. since Ant
       1.6
       Required: No; default is false
-    :timeout                   Long
+    :timeout                   Integer
       Stop the command if it doesn't finish within the specified time (given in
       milliseconds).
       Required: No
@@ -3253,44 +3681,181 @@
   (clojure.core/apply c/element :exec args))
 
 (defn execon
-  "Ant task execon. (No description bundled.)
+  "Executes a system command. When the os attribute is specified, then the
+  command is only executed when Apache Ant is run on one of the specified
+  operating systems. The files and/or directories of a number of Resource
+  Collection s -- including but not restricted to FileSet s, DirSet s ( since
+  Ant 1.6 ) or FileList s ( since Ant 1.6 ) -- are passed as arguments to the
+  system command. If you specify a nested mapper , the timestamp of each
+  source file is compared to the timestamp of a target file which is defined
+  by the nested mapper element and searched for in the given dest , if
+  specified. At least one fileset or filelist is required, and you must not
+  specify more than one mapper . Note that you cannot interact with the forked
+  program, the only way to send input to it is via the input and inputstring
+  attributes. Running Ant as a background process on Unix(-like) systems If
+  you run Ant as a background process (like ant & ) and use the <apply> task
+  with spawn set to false , you must provide explicit input to the forked
+  process or Ant will be suspended because it tries to read from the standard
+  input.
 
   Attributes:
     :addsourcefile             boolean
+      Whether source file names should be added to the command automatically.
+      Since Ant 1.6 .
+      Required: No; default is true
     :append                    boolean
+      whether output should be appended to or overwrite an existing file. If you
+      set parallel to false , you will probably want to set this one to true .
+      Required: No; default is false
     :command                   Commandline
     :dest                      File
+      the directory where the command is expected to place target files when it
+      is executed.
+      Required: No; ignored unless a nested mapper is specified; by default, the
+      target filenames returned by the mapper will be interpreted as absolute
+      paths
     :dir                       File
+      the directory in which the command should be executed.
+      Required: No; if vmlauncher is true , defaults to the current working
+      directory, otherwise the project's basedir
     :discarderror              boolean
+      Whether error output should completely be discarded. This setting is
+      incompatible with any setting that redirects error output to files or
+      properties as well as logError . Since Ant 1.10.10
+      Required: No; defaults to false
     :discardoutput             boolean
+      Whether output should completely be discarded. This setting is
+      incompatible with any setting that redirects output to files or
+      properties. If you set this to true error output will be discared as well
+      unless you redirect error output to files, properties or enable logError .
+      Since Ant 1.10.10
+      Required: No; defaults to false
     :error                     File
+      The file to which the standard error of the command should be redirected.
+      since Ant 1.6
+      Required: No
     :errorproperty             String
+      The name of a property in which the standard error of the command should
+      be stored. since Ant 1.6
+      Required: No
     :executable                String
+      the command to execute without any command line arguments.
+      Required: Yes
     :failifexecutionfails      boolean
+      Stop the build if we can't start the program.
+      Required: No; defaults to true
     :failonerror               boolean
+      Stop the build process if the command exits with a return code other than
+      0 .
+      Required: No; defaults to false
     :force                     boolean
+      Whether to bypass timestamp comparisons for target files. Since Ant 1.6.3
+      .
+      Required: No; default is false
     :forwardslash              boolean
+      whether the file names should be passed with forward slashes even if the
+      operating system requires other file separator. The option is ignored if
+      the system file separator is a forward slash.
+      Required: No; default is false
     :ignoremissing             boolean
+      Whether to ignore nonexistent files specified via filelists. Since Ant
+      1.6.2 .
+      Required: No; default is true
     :input                     File
+      A file from which the executed command's standard input is taken. This
+      attribute is mutually exclusive with the inputstring attribute. since Ant
+      1.6
+      Required: No
     :inputstring               String
+      A string which serves as the input stream for the executed command. This
+      attribute is mutually exclusive with the input attribute. since Ant 1.6
+      Required: No
     :logerror                  boolean
+      This attribute is used when you wish to see error output in Ant's log and
+      you are redirecting output to a file/property. The error output will not
+      be included in the output file/property. If you redirect error with the
+      error or errorProperty attributes, this will have no effect. since Ant 1.6
+      Required: No
     :maxparallel               int
+      Limit the amount of parallelism by passing at most this many sourcefiles
+      at once. Set it to negative integer for unlimited. Since Ant 1.6 .
+      Required: No, unlimited by default
     :newenvironment            boolean
+      Do not propagate old environment when new environment variables are
+      specified.
+      Required: No; default is false
     :os                        String
+      list of Operating Systems on which the command may be executed.
+      Required: No
     :osfamily                  String
+      OS family as used in the <os> condition. since Ant 1.7
+      Required: No
     :output                    File
+      the file to which the output of the command should be redirected. If the
+      error stream is not also redirected to a file or property, it will appear
+      in this output.
+      Required: No
     :outputproperty            String
+      the name of a property in which the output of the command should be
+      stored. Unless the error stream is redirected to a separate file or
+      stream, this property will include the error output.
+      Required: No
     :parallel                  boolean
+      Run the command only once, appending all files as arguments. If false ,
+      command will be executed once for every file.
+      Required: No; default is false
     :relative                  boolean
+      whether the filenames should be passed on the command line as relative
+      pathnames (relative to the base directory of the corresponding
+      fileset/list for source files or the dest attribute for target files).
+      Required: No; default is false
     :resolveexecutable         boolean
+      When this attribute is true , the name of the executable if resolved
+      firstly against the project basedir and if that does not exist, against
+      the execution directory if specified. On Unix systems, if you only want to
+      allow execution of commands in the user's path, set this to false . since
+      Ant 1.6
+      Required: No; default is false
     :resultproperty            String
+      the name of a property in which the return code of the command should be
+      stored. Only of interest if failonerror is false . If you set parallel to
+      false , only the result of the first execution will be stored.
+      Required: No
     :searchpath                boolean
     :skipemptyfilesets         boolean
+      Don't run the command, if no source files have been found or are newer
+      than their corresponding target files. Despite its name, this attribute
+      applies to filelists as well.
+      Required: No; default is false
     :spawn                     boolean
-    :timeout                   Long
+      whether or not you want the commands to be spawned. If you spawn a
+      command, its output will not be logged by Ant. The input, output, error,
+      and result property settings are not active when spawning a process. since
+      Ant 1.6
+      Required: No; default is false
+    :timeout                   Integer
+      Stop the command if it doesn't finish within the specified time (given in
+      milliseconds).
+      Required: No
     :type                      FileDirBoth
+      One of file , dir or both . If set to file , only the names of plain files
+      will be sent to the command. If set to dir , only the names of directories
+      are considered. Note : The type attribute does not apply to nested dirset
+      s- dirset s always implicitly assume type to be dir .
+      Required: No; default is file
     :verbose                   boolean
+      Whether to print a summary after execution or not. Since Ant 1.6 .
+      Required: No; default is false
     :vmlauncher                boolean
+      Run command using the JVM's execution facilities where available. If set
+      to false the underlying OS's shell, either directly or through the antRun
+      scripts, will be used. Under some operating systems, this gives access to
+      facilities not normally available through JVM including, under Windows,
+      being able to execute scripts, rather than their associated interpreter.
+      If you want to specify the name of the executable as a relative path to
+      the directory given by the dir attribute, it may become necessary to set
+      vmlauncher to false as well.
+      Required: No; default is true
   Nested elements:
     :arg                       (Argument)
     :dirset                    (DirSet)
@@ -3305,7 +3870,7 @@
   https://ant.apache.org/manual/Tasks/execon.html
 
   Defined by: org.apache.tools.ant.taskdefs.ExecuteOn"
-  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror force forwardslash ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "execon", :clj-ant/class "org.apache.tools.ant.taskdefs.ExecuteOn", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ExecuteOn"]}
+  {:arglists (quote ([& {:keys [addsourcefile append command dest dir discarderror discardoutput error errorproperty executable failifexecutionfails failonerror force forwardslash ignoremissing input inputstring logerror maxparallel newenvironment os osfamily output outputproperty parallel relative resolveexecutable resultproperty searchpath skipemptyfilesets spawn timeout type verbose vmlauncher], :as attrs} & nested])), :clj-ant/tag "execon", :clj-ant/class "org.apache.tools.ant.taskdefs.ExecuteOn", :clj-ant/classes ["org.apache.tools.ant.taskdefs.ExecuteOn"], :clj-ant/attrs {:addsourcefile {:description "Whether source file names should be added to the command automatically. Since Ant 1.6 .", :required "No; default is true"}, :append {:description "whether output should be appended to or overwrite an existing file. If you set parallel to false , you will probably want to set this one to true .", :required "No; default is false"}, :dest {:description "the directory where the command is expected to place target files when it is executed.", :required "No; ignored unless a nested mapper is specified; by default, the target filenames returned by the mapper will be interpreted as absolute paths"}, :dir {:description "the directory in which the command should be executed.", :required "No; if vmlauncher is true , defaults to the current working directory, otherwise the project's basedir"}, :discarderror {:description "Whether error output should completely be discarded. This setting is incompatible with any setting that redirects error output to files or properties as well as logError . Since Ant 1.10.10", :required "No; defaults to false"}, :discardoutput {:description "Whether output should completely be discarded. This setting is incompatible with any setting that redirects output to files or properties. If you set this to true error output will be discared as well unless you redirect error output to files, properties or enable logError . Since Ant 1.10.10", :required "No; defaults to false"}, :error {:description "The file to which the standard error of the command should be redirected. since Ant 1.6", :required "No"}, :errorproperty {:description "The name of a property in which the standard error of the command should be stored. since Ant 1.6", :required "No"}, :executable {:description "the command to execute without any command line arguments.", :required "Yes"}, :failifexecutionfails {:description "Stop the build if we can't start the program.", :required "No; defaults to true"}, :failonerror {:description "Stop the build process if the command exits with a return code other than 0 .", :required "No; defaults to false"}, :force {:description "Whether to bypass timestamp comparisons for target files. Since Ant 1.6.3 .", :required "No; default is false"}, :forwardslash {:description "whether the file names should be passed with forward slashes even if the operating system requires other file separator. The option is ignored if the system file separator is a forward slash.", :required "No; default is false"}, :ignoremissing {:description "Whether to ignore nonexistent files specified via filelists. Since Ant 1.6.2 .", :required "No; default is true"}, :input {:description "A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute. since Ant 1.6", :required "No"}, :inputstring {:description "A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute. since Ant 1.6", :required "No"}, :logerror {:description "This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. If you redirect error with the error or errorProperty attributes, this will have no effect. since Ant 1.6", :required "No"}, :maxparallel {:description "Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. Since Ant 1.6 .", :required "No, unlimited by default"}, :newenvironment {:description "Do not propagate old environment when new environment variables are specified.", :required "No; default is false"}, :os {:description "list of Operating Systems on which the command may be executed.", :required "No"}, :osfamily {:description "OS family as used in the <os> condition. since Ant 1.7", :required "No"}, :output {:description "the file to which the output of the command should be redirected. If the error stream is not also redirected to a file or property, it will appear in this output.", :required "No"}, :outputproperty {:description "the name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output.", :required "No"}, :parallel {:description "Run the command only once, appending all files as arguments. If false , command will be executed once for every file.", :required "No; default is false"}, :relative {:description "whether the filenames should be passed on the command line as relative pathnames (relative to the base directory of the corresponding fileset/list for source files or the dest attribute for target files).", :required "No; default is false"}, :resolveexecutable {:description "When this attribute is true , the name of the executable if resolved firstly against the project basedir and if that does not exist, against the execution directory if specified. On Unix systems, if you only want to allow execution of commands in the user's path, set this to false . since Ant 1.6", :required "No; default is false"}, :resultproperty {:description "the name of a property in which the return code of the command should be stored. Only of interest if failonerror is false . If you set parallel to false , only the result of the first execution will be stored.", :required "No"}, :skipemptyfilesets {:description "Don't run the command, if no source files have been found or are newer than their corresponding target files. Despite its name, this attribute applies to filelists as well.", :required "No; default is false"}, :spawn {:description "whether or not you want the commands to be spawned. If you spawn a command, its output will not be logged by Ant. The input, output, error, and result property settings are not active when spawning a process. since Ant 1.6", :required "No; default is false"}, :timeout {:description "Stop the command if it doesn't finish within the specified time (given in milliseconds).", :required "No"}, :type {:description "One of file , dir or both . If set to file , only the names of plain files will be sent to the command. If set to dir , only the names of directories are considered. Note : The type attribute does not apply to nested dirset s- dirset s always implicitly assume type to be dir .", :required "No; default is file"}, :verbose {:description "Whether to print a summary after execution or not. Since Ant 1.6 .", :required "No; default is false"}, :vmlauncher {:description "Run command using the JVM's execution facilities where available. If set to false the underlying OS's shell, either directly or through the antRun scripts, will be used. Under some operating systems, this gives access to facilities not normally available through JVM including, under Windows, being able to execute scripts, rather than their associated interpreter. If you want to specify the name of the executable as a relative path to the directory given by the dir attribute, it may become necessary to set vmlauncher to false as well.", :required "No; default is true"}}}
   [& args]
   (clojure.core/apply c/element :execon args))
 
@@ -3641,33 +4206,54 @@
   (clojure.core/apply c/element :get args))
 
 (defn gunzip
-  "Ant task gunzip. (No description bundled.)
+  "Expands a resource packed using GZip, BZip2 or XZ. If dest is a directory
+  the name of the destination file is the same as src (with the .gz , .bz2 or
+  .xz extension removed if present). If dest is omitted, the parent dir of src
+  is taken. The file is only expanded if the source resource is newer than the
+  destination file, or when the destination file does not exist. XZ
+  compression support has been added since Apache Ant 1.10.1 and depends on
+  external libraries not included in the Ant distribution. See Library
+  Dependencies for more information.
 
   Attributes:
     :dest                      File
+      the destination file or directory.
+      Required: No
     :src                       File
+      the file to expand.
+      Required: Yes, or a nested resource collection
     :srcresource               Resource
 
   https://ant.apache.org/manual/Tasks/gunzip.html
 
   Defined by: org.apache.tools.ant.taskdefs.GUnzip"
-  {:arglists (quote ([& {:keys [dest src srcresource], :as attrs} & nested])), :clj-ant/tag "gunzip", :clj-ant/class "org.apache.tools.ant.taskdefs.GUnzip", :clj-ant/classes ["org.apache.tools.ant.taskdefs.GUnzip"]}
+  {:arglists (quote ([& {:keys [dest src srcresource], :as attrs} & nested])), :clj-ant/tag "gunzip", :clj-ant/class "org.apache.tools.ant.taskdefs.GUnzip", :clj-ant/classes ["org.apache.tools.ant.taskdefs.GUnzip"], :clj-ant/attrs {:dest {:description "the destination file or directory.", :required "No"}, :src {:description "the file to expand.", :required "Yes, or a nested resource collection"}}}
   [& args]
   (clojure.core/apply c/element :gunzip args))
 
 (defn gzip
-  "Ant task gzip. (No description bundled.)
+  "Packs a resource using the GZip, BZip2 or XZ algorithm. The output file is
+  only generated if it doesn't exist or the source resource is newer. XZ
+  compression support has been added since Apache Ant 1.10.1 and depends on
+  external libraries not included in the Ant distribution. See Library
+  Dependencies for more information.
 
   Attributes:
     :destfile                  File
+      the destination file to create.
+      Required: Exactly one of the two
     :src                       File
+      the file to gzip/bzip/xz.
+      Required: Yes, or a nested resource collection
     :srcresource               Resource
     :zipfile                   File
+      deprecated old name of destfile .
+      Required: Exactly one of the two
 
   https://ant.apache.org/manual/Tasks/gzip.html
 
   Defined by: org.apache.tools.ant.taskdefs.GZip"
-  {:arglists (quote ([& {:keys [destfile src srcresource zipfile], :as attrs} & nested])), :clj-ant/tag "gzip", :clj-ant/class "org.apache.tools.ant.taskdefs.GZip", :clj-ant/classes ["org.apache.tools.ant.taskdefs.GZip"]}
+  {:arglists (quote ([& {:keys [destfile src srcresource zipfile], :as attrs} & nested])), :clj-ant/tag "gzip", :clj-ant/class "org.apache.tools.ant.taskdefs.GZip", :clj-ant/classes ["org.apache.tools.ant.taskdefs.GZip"], :clj-ant/attrs {:destfile {:description "the destination file to create.", :required "Exactly one of the two"}, :src {:description "the file to gzip/bzip/xz.", :required "Yes, or a nested resource collection"}, :zipfile {:description "deprecated old name of destfile .", :required "Exactly one of the two"}}}
   [& args]
   (clojure.core/apply c/element :gzip args))
 
@@ -3938,23 +4524,59 @@
   (clojure.core/apply c/element :input args))
 
 (defn iplanet-ejbc
-  "Ant task iplanet-ejbc. (No description bundled.)
+  "Task to compile EJB stubs and skeletons for the iPlanet Application Server
+  6.0. Given a standard EJB 1.1 XML descriptor as well as an iAS-specific EJB
+  descriptor, this task will generate the stubs and skeletons required to
+  deploy the EJB to iAS. Since the XML descriptors can include multiple EJBs,
+  this is a convenient way of specifying many EJBs in a single Ant task. For
+  each EJB specified, the task will locate the three classes that comprise the
+  EJB in the destination directory. If these class files cannot be located in
+  the destination directory, the task will fail. The task will also attempt to
+  locate the EJB stubs and skeletons in this directory. If found, the
+  timestamps on the stubs and skeletons will be checked to ensure they are up
+  to date. Only if these files cannot be found or if they are out of date will
+  the iAS ejbc utility be called to generate new stubs and skeletons.
 
   Attributes:
     :classpath                 Path
+      The classpath used when generating EJB stubs and skeletons. Nested
+      classpath elements may also be used.
+      Required: No; defaults to the classpath specified when Ant was started
     :debug                     boolean
+      Indicates whether or not the ejbc utility should log additional debugging
+      statements to the standard output. If yes , the additional debugging
+      statements will be generated.
+      Required: No; defaults to no
     :dest                      File
+      The is the base directory where the RMI stubs and skeletons are written.
+      In addition, the class files for each bean (home interface, remote
+      interface, and EJB implementation) must be found in this directory.
+      Required: Yes
     :ejbdescriptor             File
+      Standard EJB 1.1 XML descriptor (typically titled ejb-jar.xml ).
+      Required: Yes
     :iasdescriptor             File
+      iAS-specific EJB XML descriptor (typically titled ias-ejb-jar.xml ).
+      Required: Yes
     :iashome                   File
+      May be used to specify the \"home\" directory for this iAS installation.
+      This is used to find the ejbc utility if it isn't included in the user's
+      system path. If specified, it should refer to the
+      [install-location]/iplanet/ias6/ias directory.
+      Required: No; by default the ejbc utility must be on the user's system
+      path
     :keepgenerated             boolean
+      Indicates whether or not the Java source files which are generated by ejbc
+      will be saved or automatically deleted. If yes , the source files will be
+      retained.
+      Required: No; defaults to no
   Nested elements:
     :classpath                 (Path)
 
   https://ant.apache.org/manual/Tasks/iplanet-ejbc.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ejb.IPlanetEjbcTask"
-  {:arglists (quote ([& {:keys [classpath debug dest ejbdescriptor iasdescriptor iashome keepgenerated], :as attrs} & nested])), :clj-ant/tag "iplanet-ejbc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.IPlanetEjbcTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.IPlanetEjbcTask"]}
+  {:arglists (quote ([& {:keys [classpath debug dest ejbdescriptor iasdescriptor iashome keepgenerated], :as attrs} & nested])), :clj-ant/tag "iplanet-ejbc", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ejb.IPlanetEjbcTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ejb.IPlanetEjbcTask"], :clj-ant/attrs {:classpath {:description "The classpath used when generating EJB stubs and skeletons. Nested classpath elements may also be used.", :required "No; defaults to the classpath specified when Ant was started"}, :debug {:description "Indicates whether or not the ejbc utility should log additional debugging statements to the standard output. If yes , the additional debugging statements will be generated.", :required "No; defaults to no"}, :dest {:description "The is the base directory where the RMI stubs and skeletons are written. In addition, the class files for each bean (home interface, remote interface, and EJB implementation) must be found in this directory.", :required "Yes"}, :ejbdescriptor {:description "Standard EJB 1.1 XML descriptor (typically titled ejb-jar.xml ).", :required "Yes"}, :iasdescriptor {:description "iAS-specific EJB XML descriptor (typically titled ias-ejb-jar.xml ).", :required "Yes"}, :iashome {:description "May be used to specify the \"home\" directory for this iAS installation. This is used to find the ejbc utility if it isn't included in the user's system path. If specified, it should refer to the [install-location]/iplanet/ias6/ias directory.", :required "No; by default the ejbc utility must be on the user's system path"}, :keepgenerated {:description "Indicates whether or not the Java source files which are generated by ejbc will be saved or automatically deleted. If yes , the source files will be retained.", :required "No; defaults to no"}}}
   [& args]
   (clojure.core/apply c/element :iplanet-ejbc args))
 
@@ -5217,77 +5839,288 @@
   (clojure.core/apply c/element :javadoc args))
 
 (defn javadoc2
-  "Ant task javadoc2. (No description bundled.)
+  "Generates code documentation using the javadoc tool. The source directory
+  will be recursively scanned for Java source files to process but only those
+  matching the inclusion rules, and not matching the exclusions rules will be
+  passed to the javadoc tool. This allows wildcards to be used to choose
+  between package names, reducing verbosity and management costs over time.
+  This task, however, has no notion of \"changed\" files, unlike the javac task.
+  This means all packages will be processed each time this task is run. In
+  general, however, this task is used much less frequently. Note : since
+  javadoc calls System.exit() , javadoc cannot be run inside the same JVM as
+  Apache Ant without breaking functionality. For this reason, this task always
+  forks JVM. This overhead is not significant since javadoc is normally a
+  heavy application and will be called infrequently. Note : the packagelist
+  attribute allows you to specify the list of packages to document outside of
+  the Ant file. It's a much better practice to include everything inside the
+  build.xml file. This option was added in order to make it easier to migrate
+  from regular makefiles, where you would use this option of javadoc . The
+  packages listed in packagelist are not checked, so the task performs even if
+  some packages are missing or broken. Use this option if you wish to convert
+  from an existing makefile. Once things are running you should then switch to
+  the regular notation. Note : When generating the JavaDocs for classes which
+  contains annotations you maybe get a java.lang.ClassCastException:
+  com.sun.tools.javadoc.ClassDocImpl . This is due bug 6442982 . The cause is
+  that javadoc cannot find the implementations of used annotations. The
+  workaround is providing the jars with these implementations (like JAXBs
+  @XmlType , ...) to <javadoc> using classpath , classpathref attributes or
+  nested <classpath> element. Note : many problems with running javadoc stem
+  from command lines that have become too long-even though the error message
+  doesn't give the slightest hint this may be the problem. If you encounter
+  problems with the task, try to set the useexternalfile attribute to true
+  first. If you use multiple ways to specify where javadoc should be looking
+  for sources, your result will be the union of all specified documentations.
+  If you, e.g., specify a sourcepath attribute and also a nested packageset
+  both pointing at the same directory your excludepackagenames attribute won't
+  have any effect unless it agrees with the exclude patterns of the packageset
+  (and vice versa).
 
   Attributes:
     :access                    AccessType
+      Access mode: one of public , protected , package , or private
+      Required: No; default is protected
     :additionalparam           String
+      Lets you add additional parameters to the javadoc command line. Useful for
+      doclets. Parameters containing spaces need to be quoted using &quot;-see
+      also the nested arg element.
+      Required: No
     :author                    boolean
+      Include @author paragraphs
+      Required: No
     :bootclasspath             Path
+      Override location of class files loaded by the bootstrap class loader
+      Required: No
     :bootclasspathref          Reference
+      Override location of class files loaded by the bootstrap class loader by
+      reference to a bootclasspath defined elsewhere.
+      Required: No
     :bottom                    String
+      Include bottom text for each page (HTML code)
+      Required: No
     :breakiterator             boolean
+      Use the new break iterator algorithm. since Ant 1.6 . ( yes|no ).
+      Required: No; default is no
     :charset                   String
+      Charset for cross-platform viewing of generated documentation
+      Required: No
     :classpath                 Path
+      Specify where to find user class files
+      Required: No
     :classpathref              Reference
+      Specify where to find user class files by reference to a classpath defined
+      elsewhere.
+      Required: No
     :defaultexcludes           boolean
+      indicates whether default excludes should be used ( yes|no ).
+      Required: No; defaults to yes
     :destdir                   File
+      Destination directory for output files
+      Required: Yes, unless a doclet has been specified.
     :docencoding               String
+      Output file encoding name
+      Required: No
     :docfilessubdirs           boolean
+      Enables deep-copying of doc-files subdirectories. since Ant 1.8.0 .
+      Required: No; defaults to false
     :doclet                    String
+      Specifies the class file that starts the doclet used in generating the
+      documentation-see also the nested doclet element.
+      Required: No
     :docletpath                Path
+      Specifies the path to the doclet class file that is specified with the
+      -doclet option.
+      Required: No
     :docletpathref             Reference
+      Specifies the path to the doclet class file that is specified with the
+      -doclet option by reference to a path defined elsewhere.
+      Required: No
     :doctitle                  String
+      Include title for the package index (first) page (HTML code)
+      Required: No
     :encoding                  String
+      Source file encoding name
+      Required: No
     :excludedocfilessubdir     String
+      Colon-separated list of doc-files subdirectories to exclude if
+      docfilessubdirs is true. since Ant 1.8.0 .
+      Required: No
     :excludepackagenames       String
+      comma separated list of packages you don't want docs for-see also the
+      nested excludepackage element.
+      Required: No
     :executable                String
+      Specify a particular javadoc executable to use in place of the default
+      binary (found in the same JDK as Ant is running in). since Ant 1.6.3 .
+      Note: It is up to you to ensure that this command supports the attributes
+      you wish to use.
+      Required: No
     :extdirs                   Path
+      Override location of installed extensions
+      Required: No
     :failonerror               boolean
+      Stop the build process if the command exits with a return code other than
+      0 .
+      Required: No
     :failonwarning             boolean
+      Stop the build process if a warning is emitted-i.e. if javadoc 's output
+      contains the word warning . since Ant 1.9.4
+      Required: No
     :footer                    String
+      Include footer text for each page (HTML code)
+      Required: No
     :group                     String
+      Group specified packages together in overview page. The format is as
+      described below -see also the nested group element.
+      Required: No
     :header                    String
+      Include header text for each page (HTML code)
+      Required: No
     :helpfile                  File
+      Specifies the HTML help file to use
+      Required: No
     :includenosourcepackages   boolean
+      If set to true , packages that don't contain Java source but a
+      package.html will get documented as well. since Ant 1.6.3 .
+      Required: No; default is false
     :link                      String
+      Create links to javadoc output at the given URL-see also the nested link
+      element.
+      Required: No
     :linkoffline               String
+      Link to docs at url using package list at alt-url by specifying a value
+      url alt-url (space as separator). A shorthand for the nested link element
+      with offline = true .
+      Required: No
     :linksource                boolean
+      Generate hyperlinks to source files. since Ant 1.6 . ( yes|no ).
+      Required: No; default is no
     :locale                    String
+      Locale to be used, e.g. en_US or en_US_WIN
+      Required: No
     :maxmemory                 String
+      Max amount of memory to allocate to the javadoc JVM
+      Required: No
     :modulenames               String
+      Comma separated list of module names -- see also the nested module
+      element. since Ant 1.10.6
+      Required: At least one of the four or nested <sourcepath> , <fileset> ,
+      module or <packageset>
     :modulepath                Path
+      Specify where to find module files since Ant 1.10.6
+      Required: No
     :modulepathref             Reference
+      Specify where to find module files by reference to a PATH defined
+      elsewhere. since Ant 1.10.6
+      Required: No
     :modulesourcepath          Path
+      Specify where to find module source files since Ant 1.10.6
+      Required: No
     :modulesourcepathref       Reference
+      Specify where to find module source files by reference to a PATH defined
+      elsewhere. since Ant 1.10.6
+      Required: No
     :nodeprecated              boolean
+      Do not include @deprecated information
+      Required: No
     :nodeprecatedlist          boolean
+      Do not generate deprecated list
+      Required: No
     :nohelp                    boolean
+      Do not generate help link
+      Required: No
     :noindex                   boolean
+      Do not generate index
+      Required: No
     :nonavbar                  boolean
+      Do not generate navigation bar
+      Required: No
     :noqualifier               String
+      Enables the -noqualifier argument-must be all or a colon separated list of
+      packages. since Ant 1.6 .
+      Required: No
     :notree                    boolean
+      Do not generate class hierarchy
+      Required: No
     :old                       boolean
+      Generate output using JDK 1.1 emulating doclet. Note : This attribute has
+      no effect unless you're using an pre jdk 1.4 external javadoc
+      Required: No
     :overview                  File
+      Read overview documentation from HTML file
+      Required: No
     :package                   boolean
+      Show package/protected/public classes and members
+      Required: No
     :packagelist               String
+      The name of a file containing the packages to process
+      Required: No
     :packagenames              String
+      Comma separated list of package files (with terminating wildcard)-see also
+      the nested package element.
+      Required: No
     :postprocessgeneratedjavadocs boolean
+      Whether to post-process the generated javadocs in order to mitigate
+      CVE-2013-1571. Since Ant 1.9.2 There is a frame injection attack possible
+      in javadocs generated by Oracle JDKs prior to Java 7 update 25 ( details
+      ). When this flag is set to true , Ant will check whether the docs are
+      vulnerable and will try to fix them.
+      Required: No; defaults to true
     :private                   boolean
+      Show all classes and members
+      Required: No
     :protected                 boolean
+      Show protected/public classes and members (default)
+      Required: No
     :public                    boolean
+      Show only public classes and members
+      Required: No
     :serialwarn                boolean
+      Generate warning about @serial tag
+      Required: No
     :source                    String
+      Enable javadoc to handle Java language features. Set this to 1.4 to
+      document code that compiles using javac -source 1.4 , etc.
+      Required: No; default can be provided using the magic
+      ant.build.javac.source property.
     :sourcefiles               String
+      Comma separated list of source files-see also the nested source element.
+      Required: At least one of the four or nested <sourcepath> , <fileset> ,
+      module or <packageset>
     :sourcepath                Path
+      Specify where to find source files
+      Required: At least one of the four or nested <sourcepath> , <fileset> ,
+      module or <packageset>
     :sourcepathref             Reference
+      Specify where to find source files by reference to a sourcepath defined
+      elsewhere.
+      Required: At least one of the four or nested <sourcepath> , <fileset> ,
+      module or <packageset>
     :splitindex                boolean
+      Split index into one file per letter
+      Required: No
     :stylesheetfile            File
+      Specifies the CSS stylesheet to use
+      Required: No
     :use                       boolean
+      Create class and package usage pages
+      Required: No
     :useexternalfile           boolean
+      indicates whether the source file names specified in srcfiles or as nested
+      source elements should be written to a temporary file to make the command
+      line shorter. Also applies to the package names specified via the
+      packagenames attribute or nested package elements. Since Ant 1.7.0 , also
+      applies to all the other command line options. ( yes|no ). If enabled, the
+      file will be written to the temporary directory .
+      Required: No; default is no
     :verbose                   boolean
+      Output messages about what javadoc is doing
+      Required: No
     :version                   boolean
+      Include @version paragraphs
+      Required: No
     :windowtitle               String
+      Browser window title for the documentation (text)
+      Required: No
   Nested elements:
     :arg                       (Argument)
     :bootclasspath             (Path)
@@ -5315,7 +6148,7 @@
   https://ant.apache.org/manual/Tasks/javadoc2.html
 
   Defined by: org.apache.tools.ant.taskdefs.Javadoc"
-  {:arglists (quote ([& {:keys [access additionalparam author bootclasspath bootclasspathref bottom breakiterator charset classpath classpathref defaultexcludes destdir docencoding docfilessubdirs doclet docletpath docletpathref doctitle encoding excludedocfilessubdir excludepackagenames executable extdirs failonerror failonwarning footer group header helpfile includenosourcepackages link linkoffline linksource locale maxmemory modulenames modulepath modulepathref modulesourcepath modulesourcepathref nodeprecated nodeprecatedlist nohelp noindex nonavbar noqualifier notree old overview package packagelist packagenames postprocessgeneratedjavadocs private protected public serialwarn source sourcefiles sourcepath sourcepathref splitindex stylesheetfile use useexternalfile verbose version windowtitle], :as attrs} & nested])), :clj-ant/tag "javadoc2", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc"]}
+  {:arglists (quote ([& {:keys [access additionalparam author bootclasspath bootclasspathref bottom breakiterator charset classpath classpathref defaultexcludes destdir docencoding docfilessubdirs doclet docletpath docletpathref doctitle encoding excludedocfilessubdir excludepackagenames executable extdirs failonerror failonwarning footer group header helpfile includenosourcepackages link linkoffline linksource locale maxmemory modulenames modulepath modulepathref modulesourcepath modulesourcepathref nodeprecated nodeprecatedlist nohelp noindex nonavbar noqualifier notree old overview package packagelist packagenames postprocessgeneratedjavadocs private protected public serialwarn source sourcefiles sourcepath sourcepathref splitindex stylesheetfile use useexternalfile verbose version windowtitle], :as attrs} & nested])), :clj-ant/tag "javadoc2", :clj-ant/class "org.apache.tools.ant.taskdefs.Javadoc", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Javadoc"], :clj-ant/attrs {:access {:description "Access mode: one of public , protected , package , or private", :required "No; default is protected"}, :additionalparam {:description "Lets you add additional parameters to the javadoc command line. Useful for doclets. Parameters containing spaces need to be quoted using &quot;-see also the nested arg element.", :required "No"}, :author {:description "Include @author paragraphs", :required "No"}, :bootclasspath {:description "Override location of class files loaded by the bootstrap class loader", :required "No"}, :bootclasspathref {:description "Override location of class files loaded by the bootstrap class loader by reference to a bootclasspath defined elsewhere.", :required "No"}, :bottom {:description "Include bottom text for each page (HTML code)", :required "No"}, :breakiterator {:description "Use the new break iterator algorithm. since Ant 1.6 . ( yes|no ).", :required "No; default is no"}, :charset {:description "Charset for cross-platform viewing of generated documentation", :required "No"}, :classpath {:description "Specify where to find user class files", :required "No"}, :classpathref {:description "Specify where to find user class files by reference to a classpath defined elsewhere.", :required "No"}, :defaultexcludes {:description "indicates whether default excludes should be used ( yes|no ).", :required "No; defaults to yes"}, :destdir {:description "Destination directory for output files", :required "Yes, unless a doclet has been specified."}, :docencoding {:description "Output file encoding name", :required "No"}, :docfilessubdirs {:description "Enables deep-copying of doc-files subdirectories. since Ant 1.8.0 .", :required "No; defaults to false"}, :doclet {:description "Specifies the class file that starts the doclet used in generating the documentation-see also the nested doclet element.", :required "No"}, :docletpath {:description "Specifies the path to the doclet class file that is specified with the -doclet option.", :required "No"}, :docletpathref {:description "Specifies the path to the doclet class file that is specified with the -doclet option by reference to a path defined elsewhere.", :required "No"}, :doctitle {:description "Include title for the package index (first) page (HTML code)", :required "No"}, :encoding {:description "Source file encoding name", :required "No"}, :excludedocfilessubdir {:description "Colon-separated list of doc-files subdirectories to exclude if docfilessubdirs is true. since Ant 1.8.0 .", :required "No"}, :excludepackagenames {:description "comma separated list of packages you don't want docs for-see also the nested excludepackage element.", :required "No"}, :executable {:description "Specify a particular javadoc executable to use in place of the default binary (found in the same JDK as Ant is running in). since Ant 1.6.3 . Note: It is up to you to ensure that this command supports the attributes you wish to use.", :required "No"}, :extdirs {:description "Override location of installed extensions", :required "No"}, :failonerror {:description "Stop the build process if the command exits with a return code other than 0 .", :required "No"}, :failonwarning {:description "Stop the build process if a warning is emitted-i.e. if javadoc 's output contains the word warning . since Ant 1.9.4", :required "No"}, :footer {:description "Include footer text for each page (HTML code)", :required "No"}, :group {:description "Group specified packages together in overview page. The format is as described below -see also the nested group element.", :required "No"}, :header {:description "Include header text for each page (HTML code)", :required "No"}, :helpfile {:description "Specifies the HTML help file to use", :required "No"}, :includenosourcepackages {:description "If set to true , packages that don't contain Java source but a package.html will get documented as well. since Ant 1.6.3 .", :required "No; default is false"}, :link {:description "Create links to javadoc output at the given URL-see also the nested link element.", :required "No"}, :linkoffline {:description "Link to docs at url using package list at alt-url by specifying a value url alt-url (space as separator). A shorthand for the nested link element with offline = true .", :required "No"}, :linksource {:description "Generate hyperlinks to source files. since Ant 1.6 . ( yes|no ).", :required "No; default is no"}, :locale {:description "Locale to be used, e.g. en_US or en_US_WIN", :required "No"}, :maxmemory {:description "Max amount of memory to allocate to the javadoc JVM", :required "No"}, :modulenames {:description "Comma separated list of module names -- see also the nested module element. since Ant 1.10.6", :required "At least one of the four or nested <sourcepath> , <fileset> , module or <packageset>"}, :modulepath {:description "Specify where to find module files since Ant 1.10.6", :required "No"}, :modulepathref {:description "Specify where to find module files by reference to a PATH defined elsewhere. since Ant 1.10.6", :required "No"}, :modulesourcepath {:description "Specify where to find module source files since Ant 1.10.6", :required "No"}, :modulesourcepathref {:description "Specify where to find module source files by reference to a PATH defined elsewhere. since Ant 1.10.6", :required "No"}, :nodeprecated {:description "Do not include @deprecated information", :required "No"}, :nodeprecatedlist {:description "Do not generate deprecated list", :required "No"}, :nohelp {:description "Do not generate help link", :required "No"}, :noindex {:description "Do not generate index", :required "No"}, :nonavbar {:description "Do not generate navigation bar", :required "No"}, :noqualifier {:description "Enables the -noqualifier argument-must be all or a colon separated list of packages. since Ant 1.6 .", :required "No"}, :notree {:description "Do not generate class hierarchy", :required "No"}, :old {:description "Generate output using JDK 1.1 emulating doclet. Note : This attribute has no effect unless you're using an pre jdk 1.4 external javadoc", :required "No"}, :overview {:description "Read overview documentation from HTML file", :required "No"}, :package {:description "Show package/protected/public classes and members", :required "No"}, :packagelist {:description "The name of a file containing the packages to process", :required "No"}, :packagenames {:description "Comma separated list of package files (with terminating wildcard)-see also the nested package element.", :required "No"}, :postprocessgeneratedjavadocs {:description "Whether to post-process the generated javadocs in order to mitigate CVE-2013-1571. Since Ant 1.9.2 There is a frame injection attack possible in javadocs generated by Oracle JDKs prior to Java 7 update 25 ( details ). When this flag is set to true , Ant will check whether the docs are vulnerable and will try to fix them.", :required "No; defaults to true"}, :private {:description "Show all classes and members", :required "No"}, :protected {:description "Show protected/public classes and members (default)", :required "No"}, :public {:description "Show only public classes and members", :required "No"}, :serialwarn {:description "Generate warning about @serial tag", :required "No"}, :source {:description "Enable javadoc to handle Java language features. Set this to 1.4 to document code that compiles using javac -source 1.4 , etc.", :required "No; default can be provided using the magic ant.build.javac.source property."}, :sourcefiles {:description "Comma separated list of source files-see also the nested source element.", :required "At least one of the four or nested <sourcepath> , <fileset> , module or <packageset>"}, :sourcepath {:description "Specify where to find source files", :required "At least one of the four or nested <sourcepath> , <fileset> , module or <packageset>"}, :sourcepathref {:description "Specify where to find source files by reference to a sourcepath defined elsewhere.", :required "At least one of the four or nested <sourcepath> , <fileset> , module or <packageset>"}, :splitindex {:description "Split index into one file per letter", :required "No"}, :stylesheetfile {:description "Specifies the CSS stylesheet to use", :required "No"}, :use {:description "Create class and package usage pages", :required "No"}, :useexternalfile {:description "indicates whether the source file names specified in srcfiles or as nested source elements should be written to a temporary file to make the command line shorter. Also applies to the package names specified via the packagenames attribute or nested package elements. Since Ant 1.7.0 , also applies to all the other command line options. ( yes|no ). If enabled, the file will be written to the temporary directory .", :required "No; default is no"}, :verbose {:description "Output messages about what javadoc is doing", :required "No"}, :version {:description "Include @version paragraphs", :required "No"}, :windowtitle {:description "Browser window title for the documentation (text)", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :javadoc2 args))
 
@@ -5858,7 +6691,7 @@
     :trim                      boolean
       Whether to trim when operating on a string.
       Required: No; default is false , ignored unless string is set
-    :when                      When
+    :when                      Comparison
       Comparison type: equal , eq , greater , gt , less , lt , ge (greater or
       equal), ne (not equal), le (less or equal).
       Required: No; default is equal
@@ -6169,6 +7002,10 @@
       nested element. These options are mutually exclusive.
       Required: No
     :checkserveridentity       boolean
+      (boolean) Whether the server's identity shall be verified during TLS
+      handshake. Ignored unless ssl or enableStartTLS is true . Requires
+      JavaMail. Since Ant 1.10.16
+      Required: No; default is true
     :enablestarttls            boolean
       (boolean) Whether the STARTTLS command used to switch to an encrypted
       connection for authentication should be supported. Requires JavaMail.
@@ -6226,6 +7063,10 @@
       Reply-to email address.
       Required: No
     :requirestarttls           boolean
+      (boolean) Whether the STARTTLS command used to switch to an encrypted
+      connection for authentication should be required. Implicitly sets
+      enableStartTLS to true if enabled. Requires JavaMail. Since Ant 1.10.16
+      Required: No; default is false
     :ssl                       boolean
       true , on , or yes accepted here indicates whether you need TLS/SSL
       Required: No
@@ -6253,7 +7094,7 @@
   https://ant.apache.org/manual/Tasks/mail.html
 
   Defined by: org.apache.tools.ant.taskdefs.email.EmailTask"
-  {:arglists (quote ([& {:keys [bcclist cclist charset checkserveridentity enablestarttls encoding failonerror files from ignoreinvalidrecipients includefilenames mailhost mailport message messagefile messagefileinputencoding messagemimetype password replyto requirestarttls ssl subject tolist user], :as attrs} & nested])), :clj-ant/tag "mail", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.email.EmailTask"], :clj-ant/attrs {:bcclist {:description "Comma-separated list of recipients to blind carbon copy", :required "At least one of these, or the equivalent nested elements"}, :cclist {:description "Comma-separated list of recipients to carbon copy", :required "At least one of these, or the equivalent nested elements"}, :charset {:description "Character set of the email. You can also set the charset in the message nested element. These options are mutually exclusive.", :required "No"}, :enablestarttls {:description "(boolean) Whether the STARTTLS command used to switch to an encrypted connection for authentication should be supported. Requires JavaMail. Since Ant 1.8.0", :required "No"}, :encoding {:description "Specifies the encoding to use for the content of the email. Values are mime , uu , plain , or auto . uu or plain are not compatible with SMTP auth", :required "No; default is auto"}, :failonerror {:description "flag to indicate whether to halt the build on any error.", :required "No; default is true"}, :files {:description "Files to send as attachments to the email. Separate multiple file names using a comma or space. You can also use <fileset> elements to specify files.", :required "No"}, :from {:description "Email address of sender.", :required "Either a from attribute, or a <from> element."}, :ignoreinvalidrecipients {:description "(boolean) Whether the task should try to send the message to as many recipients as possible and should only fail if neither is reachable. Since Ant 1.8.0 .", :required "No; default is false"}, :includefilenames {:description "Include filename(s) before file contents.", :required "No; default is false , ignored unless plain encoding is used"}, :mailhost {:description "Host name of the SMTP server.", :required "No; default is localhost"}, :mailport {:description "TCP port of the SMTP server.", :required "No; default is 25"}, :message {:description "Message to send in the body of the email.", :required "One of these or a <message> element."}, :messagefile {:description "File to send as the body of the email. Property values in the file will be expanded.", :required "One of these or a <message> element."}, :messagefileinputencoding {:description "Specifies the encoding of the input file. Please see Supported Encodings for a list of possible values. Since Ant 1.9.4", :required "No; defaults to default JVM character encoding"}, :messagemimetype {:description "The content type of the message.", :required "No; default is text/plain"}, :password {:description "password for SMTP auth", :required "Yes, if SMTP auth is required on your SMTP server; the email message will be then sent using MIME and requires JavaMail"}, :replyto {:description "Reply-to email address.", :required "No"}, :ssl {:description "true , on , or yes accepted here indicates whether you need TLS/SSL", :required "No"}, :subject {:description "Email subject line.", :required "No"}, :tolist {:description "Comma-separated list of recipients.", :required "At least one of these, or the equivalent nested elements"}, :user {:description "user name for SMTP auth", :required "Yes, if SMTP auth is required on your SMTP server; the email message will be then sent using MIME and requires JavaMail"}}}
+  {:arglists (quote ([& {:keys [bcclist cclist charset checkserveridentity enablestarttls encoding failonerror files from ignoreinvalidrecipients includefilenames mailhost mailport message messagefile messagefileinputencoding messagemimetype password replyto requirestarttls ssl subject tolist user], :as attrs} & nested])), :clj-ant/tag "mail", :clj-ant/class "org.apache.tools.ant.taskdefs.email.EmailTask", :clj-ant/classes ["org.apache.tools.ant.taskdefs.email.EmailTask"], :clj-ant/attrs {:bcclist {:description "Comma-separated list of recipients to blind carbon copy", :required "At least one of these, or the equivalent nested elements"}, :cclist {:description "Comma-separated list of recipients to carbon copy", :required "At least one of these, or the equivalent nested elements"}, :charset {:description "Character set of the email. You can also set the charset in the message nested element. These options are mutually exclusive.", :required "No"}, :checkserveridentity {:description "(boolean) Whether the server's identity shall be verified during TLS handshake. Ignored unless ssl or enableStartTLS is true . Requires JavaMail. Since Ant 1.10.16", :required "No; default is true"}, :enablestarttls {:description "(boolean) Whether the STARTTLS command used to switch to an encrypted connection for authentication should be supported. Requires JavaMail. Since Ant 1.8.0", :required "No"}, :encoding {:description "Specifies the encoding to use for the content of the email. Values are mime , uu , plain , or auto . uu or plain are not compatible with SMTP auth", :required "No; default is auto"}, :failonerror {:description "flag to indicate whether to halt the build on any error.", :required "No; default is true"}, :files {:description "Files to send as attachments to the email. Separate multiple file names using a comma or space. You can also use <fileset> elements to specify files.", :required "No"}, :from {:description "Email address of sender.", :required "Either a from attribute, or a <from> element."}, :ignoreinvalidrecipients {:description "(boolean) Whether the task should try to send the message to as many recipients as possible and should only fail if neither is reachable. Since Ant 1.8.0 .", :required "No; default is false"}, :includefilenames {:description "Include filename(s) before file contents.", :required "No; default is false , ignored unless plain encoding is used"}, :mailhost {:description "Host name of the SMTP server.", :required "No; default is localhost"}, :mailport {:description "TCP port of the SMTP server.", :required "No; default is 25"}, :message {:description "Message to send in the body of the email.", :required "One of these or a <message> element."}, :messagefile {:description "File to send as the body of the email. Property values in the file will be expanded.", :required "One of these or a <message> element."}, :messagefileinputencoding {:description "Specifies the encoding of the input file. Please see Supported Encodings for a list of possible values. Since Ant 1.9.4", :required "No; defaults to default JVM character encoding"}, :messagemimetype {:description "The content type of the message.", :required "No; default is text/plain"}, :password {:description "password for SMTP auth", :required "Yes, if SMTP auth is required on your SMTP server; the email message will be then sent using MIME and requires JavaMail"}, :replyto {:description "Reply-to email address.", :required "No"}, :requirestarttls {:description "(boolean) Whether the STARTTLS command used to switch to an encrypted connection for authentication should be required. Implicitly sets enableStartTLS to true if enabled. Requires JavaMail. Since Ant 1.10.16", :required "No; default is false"}, :ssl {:description "true , on , or yes accepted here indicates whether you need TLS/SSL", :required "No"}, :subject {:description "Email subject line.", :required "No"}, :tolist {:description "Comma-separated list of recipients.", :required "At least one of these, or the equivalent nested elements"}, :user {:description "user name for SMTP auth", :required "Yes, if SMTP auth is required on your SMTP server; the email message will be then sent using MIME and requires JavaMail"}}}
   [& args]
   (clojure.core/apply c/element :mail args))
 
@@ -6474,19 +7315,44 @@
   (clojure.core/apply c/element :mkdir args))
 
 (defn mklink
-  "Ant task mklink. (No description bundled.)
+  "Creates hardlinks, junctions and symbolic links on the windows platform. The
+  task is just a wrapper around mklink and performs a few sanity checks but
+  will not catch all restrictions like hardlinks or junctions not crossing
+  volume boundaries. In order to create symbolic links you need the \"create
+  symbolic link\" permission - this can be achieved by enabling developer mode
+  on the machine running Ant, running Ant with elevated permissions (which
+  sounds like a bad idea) or enable the permission explicitly for your user.
 
   Attributes:
     :link                      File
+      The name of the link to be created, will be resolved relative to the
+      project's basedir.
+      Required: Yes
     :linktype                  LinkType
+      The type of link to create, may be file-symlink , dir-symlink , hardlink
+      or junction .
+      Required: Yes unless targetFile is given in which case it defaults to
+      file-symlink or dir-symlink depending on whether the target is a plain
+      file or a directory.
     :overwrite                 boolean
+      Overwrite existing files or not. If overwrite is set to true , then any
+      existing file, specified by the link attribute, will be overwritten
+      irrespective of whether or not the existing file is a link. otherwise any
+      existing file is considered an error and make the task fail.
+      Required: No; defaults to false
     :targetfile                File
+      The resource the link should point to, will be resolved relative to the
+      project's basedir.
+      Required: Exactly one of targetFile and targetText must be given.
     :targettext                String
+      The resource the link should point to. This will be passed to mklink
+      verbatim.
+      Required: Exactly one of targetFile and targetText must be given.
 
   https://ant.apache.org/manual/Tasks/mklink.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.windows.Mklink"
-  {:arglists (quote ([& {:keys [link linktype overwrite targetfile targettext], :as attrs} & nested])), :clj-ant/tag "mklink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.windows.Mklink", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.windows.Mklink"]}
+  {:arglists (quote ([& {:keys [link linktype overwrite targetfile targettext], :as attrs} & nested])), :clj-ant/tag "mklink", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.windows.Mklink", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.windows.Mklink"], :clj-ant/attrs {:link {:description "The name of the link to be created, will be resolved relative to the project's basedir.", :required "Yes"}, :linktype {:description "The type of link to create, may be file-symlink , dir-symlink , hardlink or junction .", :required "Yes unless targetFile is given in which case it defaults to file-symlink or dir-symlink depending on whether the target is a plain file or a directory."}, :overwrite {:description "Overwrite existing files or not. If overwrite is set to true , then any existing file, specified by the link attribute, will be overwritten irrespective of whether or not the existing file is a link. otherwise any existing file is considered an error and make the task fail.", :required "No; defaults to false"}, :targetfile {:description "The resource the link should point to, will be resolved relative to the project's basedir.", :required "Exactly one of targetFile and targetText must be given."}, :targettext {:description "The resource the link should point to. This will be passed to mklink verbatim.", :required "Exactly one of targetFile and targetText must be given."}}}
   [& args]
   (clojure.core/apply c/element :mklink args))
 
@@ -7065,47 +7931,122 @@
   (clojure.core/apply c/element :propertyhelper args))
 
 (defn pvcs
-  "Ant task pvcs. (No description bundled.)
+  "The pvcs task is set to point at a PVCS repository and optionally a project
+  within that repository, and can from that specification get the latest
+  version of the files contained by the repository.
 
   Attributes:
     :config                    File
+      path of a non default .cfg file. Can be given absolute or relative to
+      project's base directory.
+      Required: No
     :filenameformat            String
+      The format of your folder names in a format suitable for
+      java.text.MessageFormat . Repositories where the archive extension is not
+      -arc should set this.
+      Required: No; defaults to {0}-arc({1})
     :force                     String
+      If set to yes all files that exists and are writable are overwritten.
+      Default no causes the files that are writable to be ignored. This stops
+      the PVCS command get to stop asking questions!
+      Required: No; default is no
     :ignorereturncode          boolean
+      If set to true the return value from executing the PVCS commands are
+      ignored.
+      Required: No
     :label                     String
+      Only files marked with this label are extracted.
+      Required: No
     :linestart                 String
+      Used to parse the output of the pcli command. The parser already knows
+      about / and \\\\ , this property is useful in cases where the repository is
+      accessed on a Windows platform via a drive letter mapping.
+      Required: No; defaults to \"P:
     :promotiongroup            String
+      Only files within this promotion group are extracted. Using both the label
+      and the promotiongroup tag will cause the files in the promotion group and
+      with that label to be extracted.
+      Required: No
     :pvcsbin                   String
+      On some systems the PVCS executables pcli and get are not found in the
+      PATH . In such cases this attribute should be set to the bin directory of
+      the PVCS installation containing the executables mentioned before. If this
+      attribute isn't specified the tag expects the executables to be found
+      using the PATH environment variable.
+      Required: No
     :pvcsproject               String
+      The project within the PVCS repository to extract files from.
+      Required: No; defaults to root project, /
     :repository                String
+      The location of the repository (see your PVCS manuals).
+      Required: Yes
     :revision                  String
+      Retrieve the specified revision.
+      Required: No
     :updateonly                boolean
+      If set to true files are gotten only if newer than existing local files.
+      Required: No
     :userid                    String
+      Use the specified userid.
+      Required: No
     :workspace                 String
+      By specifying a workspace , the files are extracted to that location. A
+      PVCS workspace is a name for a location of the workfiles and isn't as such
+      the location itself. You define the location for a workspace using the
+      PVCS GUI clients.
+      Required: No; defaults to default workspace for the current user
   Nested elements:
     :pvcsproject               (PvcsProject)
 
   https://ant.apache.org/manual/Tasks/pvcs.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.pvcs.Pvcs"
-  {:arglists (quote ([& {:keys [config filenameformat force ignorereturncode label linestart promotiongroup pvcsbin pvcsproject repository revision updateonly userid workspace], :as attrs} & nested])), :clj-ant/tag "pvcs", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.pvcs.Pvcs", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.pvcs.Pvcs"]}
+  {:arglists (quote ([& {:keys [config filenameformat force ignorereturncode label linestart promotiongroup pvcsbin pvcsproject repository revision updateonly userid workspace], :as attrs} & nested])), :clj-ant/tag "pvcs", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.pvcs.Pvcs", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.pvcs.Pvcs"], :clj-ant/attrs {:config {:description "path of a non default .cfg file. Can be given absolute or relative to project's base directory.", :required "No"}, :filenameformat {:description "The format of your folder names in a format suitable for java.text.MessageFormat . Repositories where the archive extension is not -arc should set this.", :required "No; defaults to {0}-arc({1})"}, :force {:description "If set to yes all files that exists and are writable are overwritten. Default no causes the files that are writable to be ignored. This stops the PVCS command get to stop asking questions!", :required "No; default is no"}, :ignorereturncode {:description "If set to true the return value from executing the PVCS commands are ignored.", :required "No"}, :label {:description "Only files marked with this label are extracted.", :required "No"}, :linestart {:description "Used to parse the output of the pcli command. The parser already knows about / and \\\\ , this property is useful in cases where the repository is accessed on a Windows platform via a drive letter mapping.", :required "No; defaults to \"P:"}, :promotiongroup {:description "Only files within this promotion group are extracted. Using both the label and the promotiongroup tag will cause the files in the promotion group and with that label to be extracted.", :required "No"}, :pvcsbin {:description "On some systems the PVCS executables pcli and get are not found in the PATH . In such cases this attribute should be set to the bin directory of the PVCS installation containing the executables mentioned before. If this attribute isn't specified the tag expects the executables to be found using the PATH environment variable.", :required "No"}, :pvcsproject {:description "The project within the PVCS repository to extract files from.", :required "No; defaults to root project, /"}, :repository {:description "The location of the repository (see your PVCS manuals).", :required "Yes"}, :revision {:description "Retrieve the specified revision.", :required "No"}, :updateonly {:description "If set to true files are gotten only if newer than existing local files.", :required "No"}, :userid {:description "Use the specified userid.", :required "No"}, :workspace {:description "By specifying a workspace , the files are extracted to that location. A PVCS workspace is a name for a location of the workfiles and isn't as such the location itself. You define the location for a workspace using the PVCS GUI clients.", :required "No; defaults to default workspace for the current user"}}}
   [& args]
   (clojure.core/apply c/element :pvcs args))
 
 (defn record
-  "Ant task record. (No description bundled.)
+  "A recorder is a listener to the current build process that records the
+  output to a file. Several recorders can exist at the same time. Each
+  recorder is associated with a file. The filename is used as a unique
+  identifier for the recorders. The first call to the record task with an
+  unused filename will create a recorder (using the parameters provided) and
+  add it to the listeners of the build. All subsequent calls to the record
+  task using this filename will modify that recorder's state (recording or
+  not) or other properties (like logging level). Some technical issues: the
+  file's print stream is flushed for finished events ( buildFinished ,
+  targetFinished and taskFinished ), and is closed on a buildFinished event.
 
   Attributes:
     :action                    ActionChoices
+      This tells the logger what to do: should it start recording or stop? The
+      first time that the recorder task is called for this logfile, and if this
+      attribute is not provided, then the default for this attribute is start .
+      If this attribute is not provided on subsequent calls, then the state
+      remains as previous.
+      Required: No [values = start|stop , default = no state change]
     :append                    boolean
+      Should the recorder append to a file, or create a new one? This is only
+      applicable the first time this task is called for this file.
+      Required: No [values = start|stop , default = no state change]
     :emacsmode                 boolean
+      Removes [task] banners like Apache Ant's -emacs command line switch if set
+      to true .
+      Required: No; default is false
     :loglevel                  LogLevel
+      At what logging level should this recorder instance record to? This is not
+      a once only parameter (like append is)-you can increase or decrease the
+      logging level as the build process continues.
+      Required: No [values = error|warn|info|verbose|debug , default = no
+      change]
     :name                      String
+      The name of the file this logger is associated with.
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/record.html
 
   Defined by: org.apache.tools.ant.taskdefs.Recorder"
-  {:arglists (quote ([& {:keys [action append emacsmode loglevel name], :as attrs} & nested])), :clj-ant/tag "record", :clj-ant/class "org.apache.tools.ant.taskdefs.Recorder", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Recorder"]}
+  {:arglists (quote ([& {:keys [action append emacsmode loglevel name], :as attrs} & nested])), :clj-ant/tag "record", :clj-ant/class "org.apache.tools.ant.taskdefs.Recorder", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Recorder"], :clj-ant/attrs {:action {:description "This tells the logger what to do: should it start recording or stop? The first time that the recorder task is called for this logfile, and if this attribute is not provided, then the default for this attribute is start . If this attribute is not provided on subsequent calls, then the state remains as previous.", :required "No [values = start|stop , default = no state change]"}, :append {:description "Should the recorder append to a file, or create a new one? This is only applicable the first time this task is called for this file.", :required "No [values = start|stop , default = no state change]"}, :emacsmode {:description "Removes [task] banners like Apache Ant's -emacs command line switch if set to true .", :required "No; default is false"}, :loglevel {:description "At what logging level should this recorder instance record to? This is not a once only parameter (like append is)-you can increase or decrease the logging level as the build process continues.", :required "No [values = error|warn|info|verbose|debug , default = no change]"}, :name {:description "The name of the file this logger is associated with.", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :record args))
 
@@ -7131,20 +8072,45 @@
   (clojure.core/apply c/element :rename args))
 
 (defn renameext
-  "Ant task renameext. (No description bundled.)
+  "Renames files in the srcDir directory ending with the fromExtension string
+  so that they end with the toExtension string. Files are only replaced if
+  replace is true . See the section on directory based tasks , on how the
+  inclusion/exclusion of files works, and how to write patterns. This task
+  forms an implicit FileSet and supports most attributes of <fileset> ( dir
+  becomes srcDir ) as well as the nested <include> , <exclude> and
+  <patternset> elements.
 
   Attributes:
     :casesensitive             boolean
     :defaultexcludes           boolean
+      indicates whether default excludes should be used or not ( yes|no ).
+      Required: No; defaults to yes
     :excludes                  String
+      comma- or space-separated list of patterns of files that must be excluded.
+      Required: No; defaults to default excludes or none if defaultexcludes is
+      no
     :excludesfile              File
+      name of a file. Each line of this file is taken to be an exclude pattern
+      Required: No
     :followsymlinks            boolean
     :fromextension             String
+      The string that files must end in to be renamed
+      Required: Yes
     :includes                  String
+      comma- or space-separated list of patterns of files that must be included.
+      Required: No; defaults to all ( ** )
     :includesfile              File
+      name of a file. Each line of this file is taken to be an include pattern
+      Required: No
     :replace                   boolean
+      Whether the file being renamed to should be replaced if it already exists
+      Required: No
     :srcdir                    File
+      The starting directory for files to search in
+      Required: Yes
     :toextension               String
+      The string that renamed files will end with on completion
+      Required: Yes
   Nested elements:
     :and                       (AndSelector)
     :contains                  (ContainsSelector)
@@ -7173,7 +8139,7 @@
   https://ant.apache.org/manual/Tasks/renameext.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.RenameExtensions"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes excludes excludesfile followsymlinks fromextension includes includesfile replace srcdir toextension], :as attrs} & nested])), :clj-ant/tag "renameext", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.RenameExtensions", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.RenameExtensions"]}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes excludes excludesfile followsymlinks fromextension includes includesfile replace srcdir toextension], :as attrs} & nested])), :clj-ant/tag "renameext", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.RenameExtensions", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.RenameExtensions"], :clj-ant/attrs {:defaultexcludes {:description "indicates whether default excludes should be used or not ( yes|no ).", :required "No; defaults to yes"}, :excludes {:description "comma- or space-separated list of patterns of files that must be excluded.", :required "No; defaults to default excludes or none if defaultexcludes is no"}, :excludesfile {:description "name of a file. Each line of this file is taken to be an exclude pattern", :required "No"}, :fromextension {:description "The string that files must end in to be renamed", :required "Yes"}, :includes {:description "comma- or space-separated list of patterns of files that must be included.", :required "No; defaults to all ( ** )"}, :includesfile {:description "name of a file. Each line of this file is taken to be an include pattern", :required "No"}, :replace {:description "Whether the file being renamed to should be replaced if it already exists", :required "No"}, :srcdir {:description "The starting directory for files to search in", :required "Yes"}, :toextension {:description "The string that renamed files will end with on completion", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :renameext args))
 
@@ -7300,6 +8266,11 @@
       The encoding of the file. since Apache Ant 1.6
       Required: No; defaults to default JVM character encoding
     :failonerror               boolean
+      Stop the build process if certain file operations fail. For historical
+      reasons the task swallows and logs certain failure cases, enabling this
+      option makes sure the exception make the build fail instead. since Ant
+      1.10.15
+      Required: No; defaults to false
     :file                      File
       file for which the regular expression should be replaced.
       Required: Yes, unless nested <fileset> is used
@@ -7332,7 +8303,7 @@
   https://ant.apache.org/manual/Tasks/replaceregexp.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ReplaceRegExp"
-  {:arglists (quote ([& {:keys [byline encoding failonerror file flags match preservelastmodified replace], :as attrs} & nested])), :clj-ant/tag "replaceregexp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ReplaceRegExp", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ReplaceRegExp"], :clj-ant/attrs {:byline {:description "Process the file(s) one line at a time, executing the replacement on one line at a time ( true|false ). This is useful if you want to only replace the first occurrence of a regular expression on each line, which is not easy to do when processing the file as a whole.", :required "No; defaults to false"}, :encoding {:description "The encoding of the file. since Apache Ant 1.6", :required "No; defaults to default JVM character encoding"}, :file {:description "file for which the regular expression should be replaced.", :required "Yes, unless nested <fileset> is used"}, :flags {:description "The flags to use when matching the regular expression. For more information, consult the Perl 5 syntax g : Global replacement. Replace all occurrences found i : Case Insensitive. Do not consider case in the match m : Multiline. Treat the string as multiple lines of input, using ^ and $ as the start or end of any line, respectively, rather than start or end of string. s : Singleline. Treat the string as a single line of input, using . to match any character, including a newline, which normally, it would not match.", :required "No"}, :match {:description "The regular expression pattern to match in the file(s)", :required "Yes, unless nested <regexp> is used"}, :preservelastmodified {:description "Keep the file timestamp(s) even if the file(s) is(are) modified. since Ant 1.8.0 .", :required "No; defaults to false"}, :replace {:description "The substitution pattern to place in the file(s) in place of the regular expression.", :required "Yes, unless nested <substitution> is used"}}}
+  {:arglists (quote ([& {:keys [byline encoding failonerror file flags match preservelastmodified replace], :as attrs} & nested])), :clj-ant/tag "replaceregexp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ReplaceRegExp", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ReplaceRegExp"], :clj-ant/attrs {:byline {:description "Process the file(s) one line at a time, executing the replacement on one line at a time ( true|false ). This is useful if you want to only replace the first occurrence of a regular expression on each line, which is not easy to do when processing the file as a whole.", :required "No; defaults to false"}, :encoding {:description "The encoding of the file. since Apache Ant 1.6", :required "No; defaults to default JVM character encoding"}, :failonerror {:description "Stop the build process if certain file operations fail. For historical reasons the task swallows and logs certain failure cases, enabling this option makes sure the exception make the build fail instead. since Ant 1.10.15", :required "No; defaults to false"}, :file {:description "file for which the regular expression should be replaced.", :required "Yes, unless nested <fileset> is used"}, :flags {:description "The flags to use when matching the regular expression. For more information, consult the Perl 5 syntax g : Global replacement. Replace all occurrences found i : Case Insensitive. Do not consider case in the match m : Multiline. Treat the string as multiple lines of input, using ^ and $ as the start or end of any line, respectively, rather than start or end of string. s : Singleline. Treat the string as a single line of input, using . to match any character, including a newline, which normally, it would not match.", :required "No"}, :match {:description "The regular expression pattern to match in the file(s)", :required "Yes, unless nested <regexp> is used"}, :preservelastmodified {:description "Keep the file timestamp(s) even if the file(s) is(are) modified. since Ant 1.8.0 .", :required "No; defaults to false"}, :replace {:description "The substitution pattern to place in the file(s) in place of the regular expression.", :required "Yes, unless nested <substitution> is used"}}}
   [& args]
   (clojure.core/apply c/element :replaceregexp args))
 
@@ -8030,6 +9001,9 @@
 
   Attributes:
     :actonlinktargets          boolean
+      Whether to set the permissions of the targets of symbolic links or Windows
+      junctions instead of the links themselves. since Ant 1.10.16 .
+      Required: No; defaults to true
     :failonerror               boolean
       Whether to stop the build if setting permissions fails.
       Required: No; defaults to true
@@ -8053,7 +9027,7 @@
   https://ant.apache.org/manual/Tasks/setpermissions.html
 
   Defined by: org.apache.tools.ant.taskdefs.SetPermissions"
-  {:arglists (quote ([& {:keys [actonlinktargets failonerror mode nonposixmode permissions], :as attrs} & nested])), :clj-ant/tag "setpermissions", :clj-ant/class "org.apache.tools.ant.taskdefs.SetPermissions", :clj-ant/classes ["org.apache.tools.ant.taskdefs.SetPermissions"], :clj-ant/attrs {:failonerror {:description "Whether to stop the build if setting permissions fails.", :required "No; defaults to true"}, :mode {:description "The permissions to set as traditional Unix three-digit octal number.", :required "No"}, :nonposixmode {:description "What to do if changing the permissions of a file is not possible because the file-system doesn't support POSIX file permissions. Possible options are fail (fail the build), pass (just log an error), tryDosOrFail (at least try to set the read-only flag on DOS file systems, fail if that isn't possible either) and tryDosOrPass (at least try to set the read-only flag on DOS file systems, just log an error if that isn't possible either).", :required "No; defaults to fail"}, :permissions {:description "The permissions to set as comma separated list of names of PosixFilePermission values.", :required "No"}}}
+  {:arglists (quote ([& {:keys [actonlinktargets failonerror mode nonposixmode permissions], :as attrs} & nested])), :clj-ant/tag "setpermissions", :clj-ant/class "org.apache.tools.ant.taskdefs.SetPermissions", :clj-ant/classes ["org.apache.tools.ant.taskdefs.SetPermissions"], :clj-ant/attrs {:actonlinktargets {:description "Whether to set the permissions of the targets of symbolic links or Windows junctions instead of the links themselves. since Ant 1.10.16 .", :required "No; defaults to true"}, :failonerror {:description "Whether to stop the build if setting permissions fails.", :required "No; defaults to true"}, :mode {:description "The permissions to set as traditional Unix three-digit octal number.", :required "No"}, :nonposixmode {:description "What to do if changing the permissions of a file is not possible because the file-system doesn't support POSIX file permissions. Possible options are fail (fail the build), pass (just log an error), tryDosOrFail (at least try to set the read-only flag on DOS file systems, fail if that isn't possible either) and tryDosOrPass (at least try to set the read-only flag on DOS file systems, just log an error if that isn't possible either).", :required "No; defaults to fail"}, :permissions {:description "The permissions to set as comma separated list of names of PosixFilePermission values.", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :setpermissions args))
 
@@ -8249,106 +9223,208 @@
   (clojure.core/apply c/element :sleep args))
 
 (defn soscheckin
-  "Ant task soscheckin. (No description bundled.)
+  "Task to perform CheckIn commands with SOS
 
   Attributes:
     :comment                   String
+      A comment to be applied to all files being checked in
+      Required: No
     :file                      String
+      Filename to act upon
+      Required: No; by default, act upon the project
     :localpath                 Path
+      Override the working directory and get to the specified path
+      Required: No
     :nocache                   boolean
+      true|false -Only needed if SOSHOME is set as an environment variable
+      Required: No
     :nocompress                boolean
+      true|false -disable compression
+      Required: No
     :password                  String
+      SourceSafe password
+      Required: No
     :projectpath               String
+      SourceSafe project path-eg. $/SourceRoot/Project1
+      Required: Yes
     :recursive                 boolean
+      true|false -Only works with the CheckOutProject command
+      Required: No
     :soscmd                    String
+      Directory which contains soscmd(.exe)
+      Required: No; by default, the executable must be in the path
     :soshome                   String
+      The path to the SourceOffSite home directory
+      Required: No
     :sosserverpath             String
+      address and port of the SOS server-eg. 192.168.0.1:8888
+      Required: Yes
     :username                  String
+      SourceSafe username
+      Required: Yes
     :verbose                   boolean
+      true|false -Status messages are displayed
+      Required: No
     :vssserverpath             String
+      path to the srcsafe.ini -eg. \\\\server\\vss\\srcsafe.ini
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/soscheckin.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.sos.SOSCheckin"
-  {:arglists (quote ([& {:keys [comment file localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose vssserverpath], :as attrs} & nested])), :clj-ant/tag "soscheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSCheckin", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSCheckin"]}
+  {:arglists (quote ([& {:keys [comment file localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose vssserverpath], :as attrs} & nested])), :clj-ant/tag "soscheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSCheckin", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSCheckin"], :clj-ant/attrs {:comment {:description "A comment to be applied to all files being checked in", :required "No"}, :file {:description "Filename to act upon", :required "No; by default, act upon the project"}, :localpath {:description "Override the working directory and get to the specified path", :required "No"}, :nocache {:description "true|false -Only needed if SOSHOME is set as an environment variable", :required "No"}, :nocompress {:description "true|false -disable compression", :required "No"}, :password {:description "SourceSafe password", :required "No"}, :projectpath {:description "SourceSafe project path-eg. $/SourceRoot/Project1", :required "Yes"}, :recursive {:description "true|false -Only works with the CheckOutProject command", :required "No"}, :soscmd {:description "Directory which contains soscmd(.exe)", :required "No; by default, the executable must be in the path"}, :soshome {:description "The path to the SourceOffSite home directory", :required "No"}, :sosserverpath {:description "address and port of the SOS server-eg. 192.168.0.1:8888", :required "Yes"}, :username {:description "SourceSafe username", :required "Yes"}, :verbose {:description "true|false -Status messages are displayed", :required "No"}, :vssserverpath {:description "path to the srcsafe.ini -eg. \\\\server\\vss\\srcsafe.ini", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :soscheckin args))
 
 (defn soscheckout
-  "Ant task soscheckout. (No description bundled.)
+  "Task to perform CheckOut commands with SOS
 
   Attributes:
     :file                      String
+      Filename to act upon
+      Required: No; by default, act upon the project
     :localpath                 Path
+      Override the working directory and get to the specified path
+      Required: No
     :nocache                   boolean
+      true|false -Only needed if SOSHOME is set as an environment variable
+      Required: No
     :nocompress                boolean
+      true|false -disable compression
+      Required: No
     :password                  String
+      SourceSafe password
+      Required: No
     :projectpath               String
+      SourceSafe project path-eg. $/SourceRoot/Project1
+      Required: Yes
     :recursive                 boolean
+      true|false -Only works with the CheckOutProject command
+      Required: No
     :soscmd                    String
+      Directory which contains soscmd(.exe)
+      Required: No; by default, the executable must be in the path
     :soshome                   String
+      The path to the SourceOffSite home directory
+      Required: No
     :sosserverpath             String
+      address and port of the SOS server-eg. 192.168.0.1:8888
+      Required: Yes
     :username                  String
+      SourceSafe username
+      Required: Yes
     :verbose                   boolean
+      true|false -Status messages are displayed
+      Required: No
     :vssserverpath             String
+      path to the srcsafe.ini -eg. \\\\server\\vss\\srcsafe.ini
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/soscheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.sos.SOSCheckout"
-  {:arglists (quote ([& {:keys [file localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose vssserverpath], :as attrs} & nested])), :clj-ant/tag "soscheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSCheckout"]}
+  {:arglists (quote ([& {:keys [file localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose vssserverpath], :as attrs} & nested])), :clj-ant/tag "soscheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSCheckout", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSCheckout"], :clj-ant/attrs {:file {:description "Filename to act upon", :required "No; by default, act upon the project"}, :localpath {:description "Override the working directory and get to the specified path", :required "No"}, :nocache {:description "true|false -Only needed if SOSHOME is set as an environment variable", :required "No"}, :nocompress {:description "true|false -disable compression", :required "No"}, :password {:description "SourceSafe password", :required "No"}, :projectpath {:description "SourceSafe project path-eg. $/SourceRoot/Project1", :required "Yes"}, :recursive {:description "true|false -Only works with the CheckOutProject command", :required "No"}, :soscmd {:description "Directory which contains soscmd(.exe)", :required "No; by default, the executable must be in the path"}, :soshome {:description "The path to the SourceOffSite home directory", :required "No"}, :sosserverpath {:description "address and port of the SOS server-eg. 192.168.0.1:8888", :required "Yes"}, :username {:description "SourceSafe username", :required "Yes"}, :verbose {:description "true|false -Status messages are displayed", :required "No"}, :vssserverpath {:description "path to the srcsafe.ini -eg. \\\\server\\vss\\srcsafe.ini", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :soscheckout args))
 
 (defn sosget
-  "Ant task sosget. (No description bundled.)
+  "Task to perform Get commands with SOS
 
   Attributes:
     :file                      String
+      Filename to act upon
+      Required: No; by default, act upon the project
     :label                     String
+      a label version to get-Only works with the GetProject command
+      Required: No
     :localpath                 Path
+      Override the working directory and get to the specified path
+      Required: No
     :nocache                   boolean
+      true|false -Only needed if SOSHOME is set as an environment variable
+      Required: No
     :nocompress                boolean
+      true|false -disable compression
+      Required: No
     :password                  String
+      SourceSafe password
+      Required: No
     :projectpath               String
+      SourceSafe project path-eg. $/SourceRoot/Project1
+      Required: Yes
     :recursive                 boolean
+      true|false -Only works with the GetProject command
+      Required: No
     :soscmd                    String
+      Directory which contains soscmd(.exe)
+      Required: No; by default, the executable must be in the path
     :soshome                   String
+      The path to the SourceOffSite home directory
+      Required: No
     :sosserverpath             String
+      address & port of the SOS server-eg. 192.168.0.1:8888
+      Required: Yes
     :username                  String
+      SourceSafe username
+      Required: Yes
     :verbose                   boolean
+      true|false -Status messages are displayed
+      Required: No
     :version                   String
+      a version number to get-Only works with the GetFile command
+      Required: No
     :vssserverpath             String
+      path to the srcsafe.ini -eg. \\\\server\\vss\\srcsafe.ini
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/sosget.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.sos.SOSGet"
-  {:arglists (quote ([& {:keys [file label localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose version vssserverpath], :as attrs} & nested])), :clj-ant/tag "sosget", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSGet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSGet"]}
+  {:arglists (quote ([& {:keys [file label localpath nocache nocompress password projectpath recursive soscmd soshome sosserverpath username verbose version vssserverpath], :as attrs} & nested])), :clj-ant/tag "sosget", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSGet", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSGet"], :clj-ant/attrs {:file {:description "Filename to act upon", :required "No; by default, act upon the project"}, :label {:description "a label version to get-Only works with the GetProject command", :required "No"}, :localpath {:description "Override the working directory and get to the specified path", :required "No"}, :nocache {:description "true|false -Only needed if SOSHOME is set as an environment variable", :required "No"}, :nocompress {:description "true|false -disable compression", :required "No"}, :password {:description "SourceSafe password", :required "No"}, :projectpath {:description "SourceSafe project path-eg. $/SourceRoot/Project1", :required "Yes"}, :recursive {:description "true|false -Only works with the GetProject command", :required "No"}, :soscmd {:description "Directory which contains soscmd(.exe)", :required "No; by default, the executable must be in the path"}, :soshome {:description "The path to the SourceOffSite home directory", :required "No"}, :sosserverpath {:description "address & port of the SOS server-eg. 192.168.0.1:8888", :required "Yes"}, :username {:description "SourceSafe username", :required "Yes"}, :verbose {:description "true|false -Status messages are displayed", :required "No"}, :version {:description "a version number to get-Only works with the GetFile command", :required "No"}, :vssserverpath {:description "path to the srcsafe.ini -eg. \\\\server\\vss\\srcsafe.ini", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :sosget args))
 
 (defn soslabel
-  "Ant task soslabel. (No description bundled.)
+  "Task to perform Label commands with SOS
 
   Attributes:
     :comment                   String
+      A comment to be applied to all files being labeled
+      Required: No
     :label                     String
+      The label to apply to a project
+      Required: Yes
     :localpath                 Path
     :nocache                   boolean
     :nocompress                boolean
     :password                  String
+      SourceSafe password
+      Required: No
     :projectpath               String
+      SourceSafe project path-eg. $/SourceRoot/Project1
+      Required: Yes
     :soscmd                    String
+      Directory which contains soscmd(.exe)
+      Required: No; by default, the executable must be in the path
     :soshome                   String
     :sosserverpath             String
+      address and port of the SOS server-eg. 192.168.0.1:8888
+      Required: Yes
     :username                  String
+      SourceSafe username
+      Required: Yes
     :verbose                   boolean
+      true|false -Status messages are displayed
+      Required: No
     :version                   String
     :vssserverpath             String
+      path to the srcsafe.ini -eg. \\\\server\\vss\\srcsafe.ini
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/soslabel.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.sos.SOSLabel"
-  {:arglists (quote ([& {:keys [comment label localpath nocache nocompress password projectpath soscmd soshome sosserverpath username verbose version vssserverpath], :as attrs} & nested])), :clj-ant/tag "soslabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSLabel", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSLabel"]}
+  {:arglists (quote ([& {:keys [comment label localpath nocache nocompress password projectpath soscmd soshome sosserverpath username verbose version vssserverpath], :as attrs} & nested])), :clj-ant/tag "soslabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.sos.SOSLabel", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.sos.SOSLabel"], :clj-ant/attrs {:comment {:description "A comment to be applied to all files being labeled", :required "No"}, :label {:description "The label to apply to a project", :required "Yes"}, :password {:description "SourceSafe password", :required "No"}, :projectpath {:description "SourceSafe project path-eg. $/SourceRoot/Project1", :required "Yes"}, :soscmd {:description "Directory which contains soscmd(.exe)", :required "No; by default, the executable must be in the path"}, :sosserverpath {:description "address and port of the SOS server-eg. 192.168.0.1:8888", :required "Yes"}, :username {:description "SourceSafe username", :required "Yes"}, :verbose {:description "true|false -Status messages are displayed", :required "No"}, :vssserverpath {:description "path to the srcsafe.ini -eg. \\\\server\\vss\\srcsafe.ini", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :soslabel args))
 
@@ -8521,6 +9597,9 @@
       Whether output file should be appended to or overwritten.
       Required: No; defaults to false , meaning overwrite any existing file
     :bindsensitive             String
+      Contains string with key=values pairs are divided by sensitiveDelimiter .
+      since Ant 1.10.16
+      Required: Yes if hideSensitive set to true
     :command                   String
       The command to run on the remote host.
       Required: Exactly one of the two
@@ -8544,6 +9623,9 @@
       Whether to halt the build if the command does not complete successfully.
       Required: No; defaults to true
     :hidesensitive             boolean
+      Allows to hide sensitive data in logs without output supressing. It makes
+      easier debugging with sensitive data hiding. since Ant 1.10.16
+      Required: No; defaults to false
     :host                      String
       The hostname or IP address of the remote host to which you wish to
       connect.
@@ -8590,6 +9672,9 @@
       Required: Yes, unless you are using key based authentication or the
       password has been given in the file or todir attribute.
     :placeholderbrackets       String
+      Contains symbols to destinguish placeholder are needed to replace with
+      sensitive data. since Ant 1.10.16
+      Required: No, defaults to :
     :port                      int
       The port to connect to on the remote host.
       Required: No; defaults to 22
@@ -8598,6 +9683,8 @@
       stored. Only of interest if failonerror = false . since Ant 1.9.4
       Required: No
     :sensitivedelimiter        String
+      Sensitive data delimiter of key=values pairs. since Ant 1.10.16
+      Required: No, defaults to ;
     :serveralivecountmax       int
       The number of server alive messages which may be sent without receiving
       any messages back from the server. Only used if serverAliveIntervalSeconds
@@ -8651,7 +9738,7 @@
   https://ant.apache.org/manual/Tasks/sshexec.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"
-  {:arglists (quote ([& {:keys [append bindsensitive command commandresource errappend erroroutput errorproperty failonerror hidesensitive host input inputproperty inputstring keyfile knownhosts output outputproperty passphrase password placeholderbrackets port resultproperty sensitivedelimiter serveralivecountmax serveraliveintervalseconds sshconfig suppresssystemerr suppresssystemout timeout trust usepty username usesystemin verbose], :as attrs} & nested])), :clj-ant/tag "sshexec", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHExec", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"], :clj-ant/attrs {:append {:description "Whether output file should be appended to or overwritten.", :required "No; defaults to false , meaning overwrite any existing file"}, :command {:description "The command to run on the remote host.", :required "Exactly one of the two"}, :commandresource {:description "The resource (file) that contains the commands to run on the remote host. Since Ant 1.7.1", :required "Exactly one of the two"}, :errappend {:description "Whether errorOutput file should be appended to or overwritten. since Ant 1.9.4", :required "No; defaults to false , meaning overwrite any existing file"}, :erroroutput {:description "The file to which the standard error of the command should be redirected. since Ant 1.9.4", :required "No"}, :errorproperty {:description "The name of a property in which the standard error of the command should be stored. since Ant 1.9.4", :required "No"}, :failonerror {:description "Whether to halt the build if the command does not complete successfully.", :required "No; defaults to true"}, :host {:description "The hostname or IP address of the remote host to which you wish to connect.", :required "Yes"}, :input {:description "A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring and inputproperty attributes. When executing more than one command via commandResource , input will be read for each command. since Ant 1.8.0", :required "No"}, :inputproperty {:description "Name of a property content of which serves as the input stream for the executed command. This attribute is mutually exclusive with the input and inputstring attributes. When executing more than one command via commandResource , input will be read for each command. since Ant 1.8.0", :required "No"}, :inputstring {:description "A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input and inputproperty attributes. When executing more than one command via commandResource , input will be read for each command. since Ant 1.8.3", :required "No"}, :keyfile {:description "Location of the file holding the private key.", :required "Yes, if you are using key based authentication"}, :knownhosts {:description "This sets the known hosts file to use to validate the identity of the remote host. This must be a SSH2 format file. SSH1 format is not supported.", :required "No; defaults to ${user.home}/.ssh/known_hosts"}, :output {:description "Name of a file to which to write the output.", :required "No"}, :outputproperty {:description "The name of a property in which the output of the command should be stored. If you use the commandResource attribute, each command's output will be prefixed by the command itself.", :required "No"}, :passphrase {:description "Passphrase for your private key.", :required "No; defaults to an empty string"}, :password {:description "The password.", :required "Yes, unless you are using key based authentication or the password has been given in the file or todir attribute."}, :port {:description "The port to connect to on the remote host.", :required "No; defaults to 22"}, :resultproperty {:description "the name of a property in which the return code of the command should be stored. Only of interest if failonerror = false . since Ant 1.9.4", :required "No"}, :serveralivecountmax {:description "The number of server alive messages which may be sent without receiving any messages back from the server. Only used if serverAliveIntervalSeconds is not 0 . since Ant 1.9.7", :required "No; defaults to 3"}, :serveraliveintervalseconds {:description "Sets a timeout interval in seconds after which if no data has been received from the server, the task will send a message through the encrypted channel to request a response from the server. since Ant 1.9.7", :required "No, the default is 0 , indicating that these messages will not be sent to the server"}, :sshconfig {:description "Location of the file holding the OpenSSH style configuration (e.g. ${user.home}/.ssh/config ). The username and the key file are read from the configuration file, unless they are already specified in the task parameters. since Ant 1.10.8", :required "No"}, :suppresssystemerr {:description "Whether to suppress System.err . since Ant 1.9.4", :required "No; defaults to false"}, :suppresssystemout {:description "Whether to suppress system out. since Ant 1.9.0", :required "No; defaults to false"}, :timeout {:description "Stop the command if it doesn't finish within the specified time (given in milliseconds unlike telnet , which expects a timeout in seconds ).", :required "No; defaults to 0 which means never"}, :trust {:description "This trusts all unknown hosts if set to yes or true . Note : If you set this to false (the default), the host you connect to must be listed in your knownhosts file, this also implies that the file exists.", :required "No; defaults to no"}, :usepty {:description "Whether to allocate a pseudo-tty (like ssh -t ). since Ant 1.8.3", :required "No; defaults to false"}, :username {:description "The username on the remote host to which you are connecting.", :required "Yes"}, :usesystemin {:description "Whether to pass the current standard input to the remote process. since Ant 1.9.4", :required "No; defaults to false"}, :verbose {:description "Determines whether sshexec outputs verbosely to the user. Similar output is generated as the ssh command line tool with the -v option. since Ant 1.8.0", :required "No; defaults to false"}}}
+  {:arglists (quote ([& {:keys [append bindsensitive command commandresource errappend erroroutput errorproperty failonerror hidesensitive host input inputproperty inputstring keyfile knownhosts output outputproperty passphrase password placeholderbrackets port resultproperty sensitivedelimiter serveralivecountmax serveraliveintervalseconds sshconfig suppresssystemerr suppresssystemout timeout trust usepty username usesystemin verbose], :as attrs} & nested])), :clj-ant/tag "sshexec", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.ssh.SSHExec", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.ssh.SSHExec"], :clj-ant/attrs {:append {:description "Whether output file should be appended to or overwritten.", :required "No; defaults to false , meaning overwrite any existing file"}, :bindsensitive {:description "Contains string with key=values pairs are divided by sensitiveDelimiter . since Ant 1.10.16", :required "Yes if hideSensitive set to true"}, :command {:description "The command to run on the remote host.", :required "Exactly one of the two"}, :commandresource {:description "The resource (file) that contains the commands to run on the remote host. Since Ant 1.7.1", :required "Exactly one of the two"}, :errappend {:description "Whether errorOutput file should be appended to or overwritten. since Ant 1.9.4", :required "No; defaults to false , meaning overwrite any existing file"}, :erroroutput {:description "The file to which the standard error of the command should be redirected. since Ant 1.9.4", :required "No"}, :errorproperty {:description "The name of a property in which the standard error of the command should be stored. since Ant 1.9.4", :required "No"}, :failonerror {:description "Whether to halt the build if the command does not complete successfully.", :required "No; defaults to true"}, :hidesensitive {:description "Allows to hide sensitive data in logs without output supressing. It makes easier debugging with sensitive data hiding. since Ant 1.10.16", :required "No; defaults to false"}, :host {:description "The hostname or IP address of the remote host to which you wish to connect.", :required "Yes"}, :input {:description "A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring and inputproperty attributes. When executing more than one command via commandResource , input will be read for each command. since Ant 1.8.0", :required "No"}, :inputproperty {:description "Name of a property content of which serves as the input stream for the executed command. This attribute is mutually exclusive with the input and inputstring attributes. When executing more than one command via commandResource , input will be read for each command. since Ant 1.8.0", :required "No"}, :inputstring {:description "A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input and inputproperty attributes. When executing more than one command via commandResource , input will be read for each command. since Ant 1.8.3", :required "No"}, :keyfile {:description "Location of the file holding the private key.", :required "Yes, if you are using key based authentication"}, :knownhosts {:description "This sets the known hosts file to use to validate the identity of the remote host. This must be a SSH2 format file. SSH1 format is not supported.", :required "No; defaults to ${user.home}/.ssh/known_hosts"}, :output {:description "Name of a file to which to write the output.", :required "No"}, :outputproperty {:description "The name of a property in which the output of the command should be stored. If you use the commandResource attribute, each command's output will be prefixed by the command itself.", :required "No"}, :passphrase {:description "Passphrase for your private key.", :required "No; defaults to an empty string"}, :password {:description "The password.", :required "Yes, unless you are using key based authentication or the password has been given in the file or todir attribute."}, :placeholderbrackets {:description "Contains symbols to destinguish placeholder are needed to replace with sensitive data. since Ant 1.10.16", :required "No, defaults to :"}, :port {:description "The port to connect to on the remote host.", :required "No; defaults to 22"}, :resultproperty {:description "the name of a property in which the return code of the command should be stored. Only of interest if failonerror = false . since Ant 1.9.4", :required "No"}, :sensitivedelimiter {:description "Sensitive data delimiter of key=values pairs. since Ant 1.10.16", :required "No, defaults to ;"}, :serveralivecountmax {:description "The number of server alive messages which may be sent without receiving any messages back from the server. Only used if serverAliveIntervalSeconds is not 0 . since Ant 1.9.7", :required "No; defaults to 3"}, :serveraliveintervalseconds {:description "Sets a timeout interval in seconds after which if no data has been received from the server, the task will send a message through the encrypted channel to request a response from the server. since Ant 1.9.7", :required "No, the default is 0 , indicating that these messages will not be sent to the server"}, :sshconfig {:description "Location of the file holding the OpenSSH style configuration (e.g. ${user.home}/.ssh/config ). The username and the key file are read from the configuration file, unless they are already specified in the task parameters. since Ant 1.10.8", :required "No"}, :suppresssystemerr {:description "Whether to suppress System.err . since Ant 1.9.4", :required "No; defaults to false"}, :suppresssystemout {:description "Whether to suppress system out. since Ant 1.9.0", :required "No; defaults to false"}, :timeout {:description "Stop the command if it doesn't finish within the specified time (given in milliseconds unlike telnet , which expects a timeout in seconds ).", :required "No; defaults to 0 which means never"}, :trust {:description "This trusts all unknown hosts if set to yes or true . Note : If you set this to false (the default), the host you connect to must be listed in your knownhosts file, this also implies that the file exists.", :required "No; defaults to no"}, :usepty {:description "Whether to allocate a pseudo-tty (like ssh -t ). since Ant 1.8.3", :required "No; defaults to false"}, :username {:description "The username on the remote host to which you are connecting.", :required "Yes"}, :usesystemin {:description "Whether to pass the current standard input to the remote process. since Ant 1.9.4", :required "No; defaults to false"}, :verbose {:description "Determines whether sshexec outputs verbosely to the user. Similar output is generated as the ssh command line tool with the -v option. since Ant 1.8.0", :required "No; defaults to false"}}}
   [& args]
   (clojure.core/apply c/element :sshexec args))
 
@@ -8836,6 +9923,12 @@
       source files or the stylesheet.
       Required: No; default is false
     :granularity               long
+      The number of milliseconds leeway to give before deciding a file is out of
+      date with respect of the source file or stylesheet. This is needed because
+      not every file system supports tracking the last modified time to the
+      millisecond level. This can also be useful if source and target files live
+      on separate machines with clocks being out of sync. since Ant 1.10.16 .
+      Required: No; default is 1 second, or 2 seconds on DOS systems
     :in                        File
       specifies a single XML document to be styled. Should be used with the out
       attribute.
@@ -8921,7 +10014,7 @@
   https://ant.apache.org/manual/Tasks/style.html
 
   Defined by: org.apache.tools.ant.taskdefs.XSLTProcess"
-  {:arglists (quote ([& {:keys [basedir casesensitive classpath classpathref defaultexcludes destdir excludes excludesfile extension failonerror failonnoresources failontransformationerror filedirparameter filenameparameter followsymlinks force granularity in includes includesfile out processor reloadstylesheet scanincludeddirectories style suppresswarnings useimplicitfileset xslresource], :as attrs} & nested])), :clj-ant/tag "style", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess"], :clj-ant/attrs {:basedir {:description "where to find the source XML file.", :required "No; defaults to the project's basedir"}, :classpath {:description "the classpath to use when looking up the XSLT processor.", :required "No"}, :classpathref {:description "the classpath to use, given as reference to a path defined elsewhere.", :required "No"}, :defaultexcludes {:description "indicates whether default excludes should be used or not ( yes|no ).", :required "No; defaults to yes"}, :destdir {:description "directory in which to store the results.", :required "Yes, unless in and out have been specified."}, :excludes {:description "comma- or space-separated list of patterns of files that must be excluded.", :required "No; defaults to default excludes or none if defaultexcludes is no"}, :excludesfile {:description "name of a file. Each line of this file is taken to be an exclude pattern", :required "No"}, :extension {:description "desired file extension to be used for the targets.", :required "No; default is .html , ignored if a nested <mapper> or both in and out have been specified"}, :failonerror {:description "Whether the build should fail if any error occurs. Note that transformation errors can still be suppressed by setting failOnTransformationError to false even if this attribute is true . Since Ant 1.8.0 .", :required "No; default is true"}, :failonnoresources {:description "Whether the build should fail if the nested resource collection is empty. Note that this attribute has no effect of failOnError is false . Since Ant 1.8.0 .", :required "No; default is true"}, :failontransformationerror {:description "Whether the build should fail if an error occurs while transforming the document. Note that this attribute has no effect if failOnError is false . Since Ant 1.8.0 .", :required "No; default is true"}, :filedirparameter {:description "Specifies a XSL parameter for accessing the directory of the current processed file. For files in the current directory, a value of . will be passed to the transformation. If not set, the directory is not passed to the transformation. Since Ant 1.7 .", :required "No"}, :filenameparameter {:description "Specifies an XSL parameter for accessing the name of the current processed file. If not set, the file name is not passed to the transformation. Since Ant 1.7 .", :required "No"}, :force {:description "Recreate target files, even if they are newer than their corresponding source files or the stylesheet.", :required "No; default is false"}, :in {:description "specifies a single XML document to be styled. Should be used with the out attribute.", :required "No"}, :includes {:description "comma- or space-separated list of patterns of files that must be included.", :required "No; defaults to all ( ** )"}, :includesfile {:description "name of a file. Each line of this file is taken to be an include pattern", :required "No"}, :out {:description "specifies the output name for the styled result from the in attribute.", :required "No"}, :processor {:description "name of the XSLT processor to use. Permissible value is: trax for a TraX compliant processor (ie JAXP interface implementation such as Xalan 2 or Saxon) Support for Xalan 1 has been removed since Ant 1.7 .", :required "No; defaults to trax"}, :reloadstylesheet {:description "Control whether the stylesheet transformer is created anew for every transform operation. If you set this to true , performance may suffer, but you may work around a bug in certain Xalan versions. Since Ant 1.5.2 .", :required "No; default is false"}, :scanincludeddirectories {:description "If any directories are matched by the includes / excludes patterns, try to transform all files in these directories. No; default is true"}, :style {:description "name of the stylesheet to use-given either relative to the project's basedir or as an absolute path. Alternatively, a nested element which Ant can interpret as a resource can be used to indicate where to find the stylesheet. Deprecated variation : If the stylesheet cannot be found, and if you have specified the attribute basedir for the task, Ant will assume that the style attribute is relative to the basedir of the task.", :required "No, if the location of the stylesheet is specified using a nested <style> element"}, :suppresswarnings {:description "Whether processor warnings shall be suppressed. This option requires support by the processor, it is supported by the TrAX processor bundled with Ant. Since Ant 1.8.0 .", :required "No; default is false"}, :useimplicitfileset {:description "Whether the implicit fileset formed by this task shall be used. If you set this to false you must use nested resource collections-or the in attribute, in which case this attribute has no impact anyway. Since Ant 1.7 .", :required "No; default is true"}}}
+  {:arglists (quote ([& {:keys [basedir casesensitive classpath classpathref defaultexcludes destdir excludes excludesfile extension failonerror failonnoresources failontransformationerror filedirparameter filenameparameter followsymlinks force granularity in includes includesfile out processor reloadstylesheet scanincludeddirectories style suppresswarnings useimplicitfileset xslresource], :as attrs} & nested])), :clj-ant/tag "style", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess"], :clj-ant/attrs {:basedir {:description "where to find the source XML file.", :required "No; defaults to the project's basedir"}, :classpath {:description "the classpath to use when looking up the XSLT processor.", :required "No"}, :classpathref {:description "the classpath to use, given as reference to a path defined elsewhere.", :required "No"}, :defaultexcludes {:description "indicates whether default excludes should be used or not ( yes|no ).", :required "No; defaults to yes"}, :destdir {:description "directory in which to store the results.", :required "Yes, unless in and out have been specified."}, :excludes {:description "comma- or space-separated list of patterns of files that must be excluded.", :required "No; defaults to default excludes or none if defaultexcludes is no"}, :excludesfile {:description "name of a file. Each line of this file is taken to be an exclude pattern", :required "No"}, :extension {:description "desired file extension to be used for the targets.", :required "No; default is .html , ignored if a nested <mapper> or both in and out have been specified"}, :failonerror {:description "Whether the build should fail if any error occurs. Note that transformation errors can still be suppressed by setting failOnTransformationError to false even if this attribute is true . Since Ant 1.8.0 .", :required "No; default is true"}, :failonnoresources {:description "Whether the build should fail if the nested resource collection is empty. Note that this attribute has no effect of failOnError is false . Since Ant 1.8.0 .", :required "No; default is true"}, :failontransformationerror {:description "Whether the build should fail if an error occurs while transforming the document. Note that this attribute has no effect if failOnError is false . Since Ant 1.8.0 .", :required "No; default is true"}, :filedirparameter {:description "Specifies a XSL parameter for accessing the directory of the current processed file. For files in the current directory, a value of . will be passed to the transformation. If not set, the directory is not passed to the transformation. Since Ant 1.7 .", :required "No"}, :filenameparameter {:description "Specifies an XSL parameter for accessing the name of the current processed file. If not set, the file name is not passed to the transformation. Since Ant 1.7 .", :required "No"}, :force {:description "Recreate target files, even if they are newer than their corresponding source files or the stylesheet.", :required "No; default is false"}, :granularity {:description "The number of milliseconds leeway to give before deciding a file is out of date with respect of the source file or stylesheet. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.10.16 .", :required "No; default is 1 second, or 2 seconds on DOS systems"}, :in {:description "specifies a single XML document to be styled. Should be used with the out attribute.", :required "No"}, :includes {:description "comma- or space-separated list of patterns of files that must be included.", :required "No; defaults to all ( ** )"}, :includesfile {:description "name of a file. Each line of this file is taken to be an include pattern", :required "No"}, :out {:description "specifies the output name for the styled result from the in attribute.", :required "No"}, :processor {:description "name of the XSLT processor to use. Permissible value is: trax for a TraX compliant processor (ie JAXP interface implementation such as Xalan 2 or Saxon) Support for Xalan 1 has been removed since Ant 1.7 .", :required "No; defaults to trax"}, :reloadstylesheet {:description "Control whether the stylesheet transformer is created anew for every transform operation. If you set this to true , performance may suffer, but you may work around a bug in certain Xalan versions. Since Ant 1.5.2 .", :required "No; default is false"}, :scanincludeddirectories {:description "If any directories are matched by the includes / excludes patterns, try to transform all files in these directories. No; default is true"}, :style {:description "name of the stylesheet to use-given either relative to the project's basedir or as an absolute path. Alternatively, a nested element which Ant can interpret as a resource can be used to indicate where to find the stylesheet. Deprecated variation : If the stylesheet cannot be found, and if you have specified the attribute basedir for the task, Ant will assume that the style attribute is relative to the basedir of the task.", :required "No, if the location of the stylesheet is specified using a nested <style> element"}, :suppresswarnings {:description "Whether processor warnings shall be suppressed. This option requires support by the processor, it is supported by the TrAX processor bundled with Ant. Since Ant 1.8.0 .", :required "No; default is false"}, :useimplicitfileset {:description "Whether the implicit fileset formed by this task shall be used. If you set this to false you must use nested resource collections-or the in attribute, in which case this attribute has no impact anyway. Since Ant 1.7 .", :required "No; default is true"}}}
   [& args]
   (clojure.core/apply c/element :style args))
 
@@ -9442,7 +10535,7 @@
 (defn tstamp
   "Sets the DSTAMP , TSTAMP , and TODAY properties in the current project. By
   default, the DSTAMP property is in the format yyyyMMdd , TSTAMP is in the
-  format hhmm , and TODAY is in the format MMMM dd yyyy . Use the nested
+  format HHmm , and TODAY is in the format MMMM d yyyy . Use the nested
   <format> element to specify a different format. These properties can be used
   in the build file, for instance, to create timestamped filenames, or used to
   replace placeholder tags inside documents to indicate, for example, the
@@ -9574,17 +10667,68 @@
   (clojure.core/apply c/element :typedef args))
 
 (defn unjar
-  "Ant task unjar. (No description bundled.)
+  "Unzips a zip-, war-, or jar file. PatternSet s are used to select files to
+  extract from the archive. If no patternset is used, all files are extracted.
+  resource collections may be used to select archived files to perform
+  unarchival upon. Only file system based resource collections are supported
+  by Unjar / Unwar / Unzip , this includes fileset , filelist , path , and
+  files . Untar supports arbitrary resource collections. Prior to Apache Ant
+  1.7 only fileset has been supported as a nested element. You can define
+  filename transformations by using a nested mapper element. The default
+  mapper is the identity mapper . File permissions will not be restored on
+  extracted files. The untar task recognizes the long pathname entries used by
+  GNU tar. Please note that different ZIP tools handle timestamps differently
+  when it comes to applying timezone offset calculations of files. Some ZIP
+  libraries will store the timestamps as they've been read from the filesystem
+  while others will modify the timestamps both when reading and writing the
+  files to make all timestamps use the same timezone. A ZIP archive created by
+  one library may extract files with \"wrong timestamps\" when extracted by
+  another library. Ant's ZIP classes use the same algorithm as the InfoZIP
+  tools and zlib (timestamps get adjusted), Windows' \"compressed folders\"
+  function and WinZIP don't change the timestamps. This means that using the
+  unzip task on files created by Windows' compressed folders function may
+  create files with timestamps that are \"wrong\", the same is true if you use
+  Windows' functions to extract an Ant generated ZIP archive.
 
   Attributes:
     :allowfilestoescapedest    boolean
+      Whether to allow the extracted file or directory to be outside of the dest
+      directory. since Ant 1.10.4
+      Required: No, defaults to false unless stripAbsolutePathSpec is false and
+      the entry's name starts with a leading path spec.
     :dest                      File
+      directory where to store the expanded files.
+      Required: Yes
     :encoding                  String
+      The character encoding that has been used for filenames inside the zip
+      file. For a list of possible values see the Supported Encodings . Use the
+      magic value native-encoding for default JVM character encoding. See also
+      the discussion in the zip task page
+      Required: No; defaults to UTF8 for unzip and default JVM character
+      encoding for untar task
     :failonemptyarchive        boolean
+      whether trying to extract an empty archive is an error. since Ant 1.8.0
+      Required: No; defaults to false
     :overwrite                 boolean
+      Overwrite files, even if they are newer than the corresponding entries in
+      the archive ( true|false ).
+      Required: No; default is true
     :scanforunicodeextrafields boolean
+      Note : This attribute is not available for the untar task. If the archive
+      contains Unicode extra fields then use them to set the file names,
+      ignoring the specified encoding. See also the discussion in the zip task
+      page
+      Required: No; defaults to true
     :src                       File
+      archive file to expand.
+      Required: Yes, unless filesets are used
     :stripabsolutepathspec     boolean
+      whether Ant should remove leading / or \\ characters from the extracted
+      file name before extracting it. Note that this changes the entry name
+      before applying include / exclude patterns and before using the nested
+      mappers (if any). since Ant 1.8.0
+      Required: No; defaults to true since Ant 1.10.4 (used to default to false
+      prior to that)
   Nested elements:
     :fileset                   (FileSet)
     :mapper                    (Mapper)
@@ -9593,7 +10737,7 @@
   https://ant.apache.org/manual/Tasks/unjar.html
 
   Defined by: org.apache.tools.ant.taskdefs.Expand"
-  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unjar", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Expand"]}
+  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unjar", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Expand"], :clj-ant/attrs {:allowfilestoescapedest {:description "Whether to allow the extracted file or directory to be outside of the dest directory. since Ant 1.10.4", :required "No, defaults to false unless stripAbsolutePathSpec is false and the entry's name starts with a leading path spec."}, :dest {:description "directory where to store the expanded files.", :required "Yes"}, :encoding {:description "The character encoding that has been used for filenames inside the zip file. For a list of possible values see the Supported Encodings . Use the magic value native-encoding for default JVM character encoding. See also the discussion in the zip task page", :required "No; defaults to UTF8 for unzip and default JVM character encoding for untar task"}, :failonemptyarchive {:description "whether trying to extract an empty archive is an error. since Ant 1.8.0", :required "No; defaults to false"}, :overwrite {:description "Overwrite files, even if they are newer than the corresponding entries in the archive ( true|false ).", :required "No; default is true"}, :scanforunicodeextrafields {:description "Note : This attribute is not available for the untar task. If the archive contains Unicode extra fields then use them to set the file names, ignoring the specified encoding. See also the discussion in the zip task page", :required "No; defaults to true"}, :src {:description "archive file to expand.", :required "Yes, unless filesets are used"}, :stripabsolutepathspec {:description "whether Ant should remove leading / or \\ characters from the extracted file name before extracting it. Note that this changes the entry name before applying include / exclude patterns and before using the nested mappers (if any). since Ant 1.8.0", :required "No; defaults to true since Ant 1.10.4 (used to default to false prior to that)"}}}
   [& args]
   (clojure.core/apply c/element :unjar args))
 
@@ -9623,17 +10767,68 @@
   (clojure.core/apply c/element :untar args))
 
 (defn unwar
-  "Ant task unwar. (No description bundled.)
+  "Unzips a zip-, war-, or jar file. PatternSet s are used to select files to
+  extract from the archive. If no patternset is used, all files are extracted.
+  resource collections may be used to select archived files to perform
+  unarchival upon. Only file system based resource collections are supported
+  by Unjar / Unwar / Unzip , this includes fileset , filelist , path , and
+  files . Untar supports arbitrary resource collections. Prior to Apache Ant
+  1.7 only fileset has been supported as a nested element. You can define
+  filename transformations by using a nested mapper element. The default
+  mapper is the identity mapper . File permissions will not be restored on
+  extracted files. The untar task recognizes the long pathname entries used by
+  GNU tar. Please note that different ZIP tools handle timestamps differently
+  when it comes to applying timezone offset calculations of files. Some ZIP
+  libraries will store the timestamps as they've been read from the filesystem
+  while others will modify the timestamps both when reading and writing the
+  files to make all timestamps use the same timezone. A ZIP archive created by
+  one library may extract files with \"wrong timestamps\" when extracted by
+  another library. Ant's ZIP classes use the same algorithm as the InfoZIP
+  tools and zlib (timestamps get adjusted), Windows' \"compressed folders\"
+  function and WinZIP don't change the timestamps. This means that using the
+  unzip task on files created by Windows' compressed folders function may
+  create files with timestamps that are \"wrong\", the same is true if you use
+  Windows' functions to extract an Ant generated ZIP archive.
 
   Attributes:
     :allowfilestoescapedest    boolean
+      Whether to allow the extracted file or directory to be outside of the dest
+      directory. since Ant 1.10.4
+      Required: No, defaults to false unless stripAbsolutePathSpec is false and
+      the entry's name starts with a leading path spec.
     :dest                      File
+      directory where to store the expanded files.
+      Required: Yes
     :encoding                  String
+      The character encoding that has been used for filenames inside the zip
+      file. For a list of possible values see the Supported Encodings . Use the
+      magic value native-encoding for default JVM character encoding. See also
+      the discussion in the zip task page
+      Required: No; defaults to UTF8 for unzip and default JVM character
+      encoding for untar task
     :failonemptyarchive        boolean
+      whether trying to extract an empty archive is an error. since Ant 1.8.0
+      Required: No; defaults to false
     :overwrite                 boolean
+      Overwrite files, even if they are newer than the corresponding entries in
+      the archive ( true|false ).
+      Required: No; default is true
     :scanforunicodeextrafields boolean
+      Note : This attribute is not available for the untar task. If the archive
+      contains Unicode extra fields then use them to set the file names,
+      ignoring the specified encoding. See also the discussion in the zip task
+      page
+      Required: No; defaults to true
     :src                       File
+      archive file to expand.
+      Required: Yes, unless filesets are used
     :stripabsolutepathspec     boolean
+      whether Ant should remove leading / or \\ characters from the extracted
+      file name before extracting it. Note that this changes the entry name
+      before applying include / exclude patterns and before using the nested
+      mappers (if any). since Ant 1.8.0
+      Required: No; defaults to true since Ant 1.10.4 (used to default to false
+      prior to that)
   Nested elements:
     :fileset                   (FileSet)
     :mapper                    (Mapper)
@@ -9642,7 +10837,7 @@
   https://ant.apache.org/manual/Tasks/unwar.html
 
   Defined by: org.apache.tools.ant.taskdefs.Expand"
-  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unwar", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Expand"]}
+  {:arglists (quote ([& {:keys [allowfilestoescapedest dest encoding failonemptyarchive overwrite scanforunicodeextrafields src stripabsolutepathspec], :as attrs} & nested])), :clj-ant/tag "unwar", :clj-ant/class "org.apache.tools.ant.taskdefs.Expand", :clj-ant/classes ["org.apache.tools.ant.taskdefs.Expand"], :clj-ant/attrs {:allowfilestoescapedest {:description "Whether to allow the extracted file or directory to be outside of the dest directory. since Ant 1.10.4", :required "No, defaults to false unless stripAbsolutePathSpec is false and the entry's name starts with a leading path spec."}, :dest {:description "directory where to store the expanded files.", :required "Yes"}, :encoding {:description "The character encoding that has been used for filenames inside the zip file. For a list of possible values see the Supported Encodings . Use the magic value native-encoding for default JVM character encoding. See also the discussion in the zip task page", :required "No; defaults to UTF8 for unzip and default JVM character encoding for untar task"}, :failonemptyarchive {:description "whether trying to extract an empty archive is an error. since Ant 1.8.0", :required "No; defaults to false"}, :overwrite {:description "Overwrite files, even if they are newer than the corresponding entries in the archive ( true|false ).", :required "No; default is true"}, :scanforunicodeextrafields {:description "Note : This attribute is not available for the untar task. If the archive contains Unicode extra fields then use them to set the file names, ignoring the specified encoding. See also the discussion in the zip task page", :required "No; defaults to true"}, :src {:description "archive file to expand.", :required "Yes, unless filesets are used"}, :stripabsolutepathspec {:description "whether Ant should remove leading / or \\ characters from the extracted file name before extracting it. Note that this changes the entry name before applying include / exclude patterns and before using the nested mappers (if any). since Ant 1.8.0", :required "No; defaults to true since Ant 1.10.4 (used to default to false prior to that)"}}}
   [& args]
   (clojure.core/apply c/element :unwar args))
 
@@ -9834,185 +11029,399 @@
   (clojure.core/apply c/element :verifyjar args))
 
 (defn vssadd
-  "Ant task vssadd. (No description bundled.)
+  "Task to perform ADD commands to Microsoft Visual SourceSafe.
 
   Attributes:
     :autoresponse              String
+      Y , N or empty. Specify how to reply to questions from VSS.
+      Required: No
     :comment                   String
+      Comment to use for the files that where checked in.
+      Required: No
     :failonerror               boolean
+      Stop the build process if ss.exe exits with a return code 100 .
+      Required: No; defaults to true
     :localpath                 Path
+      Specify the local file(s) to add to VSS
+      Required: Yes
     :login                     String
+      username[,password] -The username and password needed to get access to
+      VSS. Note that you may need to specify both (if you have a
+      password)-Ant/VSS will hang if you leave the password out and VSS does not
+      accept login without a password.
+      Required: No
     :recursive                 boolean
+      true|false
+      Required: No
     :serverpath                String
+      directory where srcsafe.ini resides.
+      Required: No
     :ssdir                     String
+      directory where ss.exe resides.
+      Required: No; by default expected to be in PATH
     :vsspath                   String
     :writable                  boolean
+      true|false
+      Required: No
 
   https://ant.apache.org/manual/Tasks/vssadd.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSADD"
-  {:arglists (quote ([& {:keys [autoresponse comment failonerror localpath login recursive serverpath ssdir vsspath writable], :as attrs} & nested])), :clj-ant/tag "vssadd", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSADD", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSADD"]}
+  {:arglists (quote ([& {:keys [autoresponse comment failonerror localpath login recursive serverpath ssdir vsspath writable], :as attrs} & nested])), :clj-ant/tag "vssadd", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSADD", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSADD"], :clj-ant/attrs {:autoresponse {:description "Y , N or empty. Specify how to reply to questions from VSS.", :required "No"}, :comment {:description "Comment to use for the files that where checked in.", :required "No"}, :failonerror {:description "Stop the build process if ss.exe exits with a return code 100 .", :required "No; defaults to true"}, :localpath {:description "Specify the local file(s) to add to VSS", :required "Yes"}, :login {:description "username[,password] -The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.", :required "No"}, :recursive {:description "true|false", :required "No"}, :serverpath {:description "directory where srcsafe.ini resides.", :required "No"}, :ssdir {:description "directory where ss.exe resides.", :required "No; by default expected to be in PATH"}, :writable {:description "true|false", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :vssadd args))
 
 (defn vsscheckin
-  "Ant task vsscheckin. (No description bundled.)
+  "Task to perform CHECKIN commands to Microsoft Visual SourceSafe.
 
   Attributes:
     :autoresponse              String
+      Y , N or empty. Specify how to reply to questions from VSS.
+      Required: No
     :comment                   String
+      Comment to use for the files that where checked in.
+      Required: No
     :failonerror               boolean
+      Stop the build process if ss.exe exits with a return code 100 .
+      Required: No; defaults to true
     :localpath                 Path
+      Override the working directory and get to the specified path
+      Required: No
     :login                     String
+      username[,password] -The username and password needed to get access to
+      VSS. Note that you may need to specify both (if you have a
+      password)-Ant/VSS will hang if you leave the password out and VSS does not
+      accept login without a password.
+      Required: No
     :recursive                 boolean
+      true|false
+      Required: No
     :serverpath                String
+      directory where srcsafe.ini resides.
+      Required: No
     :ssdir                     String
+      directory where ss.exe resides.
+      Required: No; by default expected to be in PATH
     :vsspath                   String
+      SourceSafe path which specifies the project/file(s) you wish to perform
+      the action on.
+      Required: Yes
     :writable                  boolean
+      true|false
+      Required: No
 
   https://ant.apache.org/manual/Tasks/vsscheckin.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKIN"
-  {:arglists (quote ([& {:keys [autoresponse comment failonerror localpath login recursive serverpath ssdir vsspath writable], :as attrs} & nested])), :clj-ant/tag "vsscheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKIN", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKIN"]}
+  {:arglists (quote ([& {:keys [autoresponse comment failonerror localpath login recursive serverpath ssdir vsspath writable], :as attrs} & nested])), :clj-ant/tag "vsscheckin", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKIN", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKIN"], :clj-ant/attrs {:autoresponse {:description "Y , N or empty. Specify how to reply to questions from VSS.", :required "No"}, :comment {:description "Comment to use for the files that where checked in.", :required "No"}, :failonerror {:description "Stop the build process if ss.exe exits with a return code 100 .", :required "No; defaults to true"}, :localpath {:description "Override the working directory and get to the specified path", :required "No"}, :login {:description "username[,password] -The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.", :required "No"}, :recursive {:description "true|false", :required "No"}, :serverpath {:description "directory where srcsafe.ini resides.", :required "No"}, :ssdir {:description "directory where ss.exe resides.", :required "No; by default expected to be in PATH"}, :vsspath {:description "SourceSafe path which specifies the project/file(s) you wish to perform the action on.", :required "Yes"}, :writable {:description "true|false", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :vsscheckin args))
 
 (defn vsscheckout
-  "Ant task vsscheckout. (No description bundled.)
+  "Task to perform CHECKOUT commands to Microsoft Visual SourceSafe. If you
+  specify two or more attributes from version , date and label only one will
+  be used in the order version , date , label .
 
   Attributes:
     :autoresponse              String
     :date                      String
+      a date stamp to get at
+      Required: No; only one of these may be used
     :failonerror               boolean
+      Stop the build process if ss.exe exits with a return code 100 .
+      Required: No; defaults to true
     :filetimestamp             CurrentModUpdated
+      Set the behavior for timestamps of local files. Valid options are current
+      , modified , or updated .
+      Required: No; defaults to current
     :getlocalcopy              boolean
+      Set the behavior to retrieve local copies of the files.
+      Required: No; defaults to true
     :label                     String
+      a label to get for
+      Required: No; only one of these may be used
     :localpath                 Path
+      Override the working directory and get to the specified path
+      Required: No
     :login                     String
+      username[,password] -The username and password needed to get access to
+      VSS. Note that you may need to specify both (if you have a
+      password)-Ant/VSS will hang if you leave the password out and VSS does not
+      accept login without a password.
+      Required: No
     :recursive                 boolean
+      true|false
+      Required: No
     :serverpath                String
+      directory where srcsafe.ini resides.
+      Required: No
     :ssdir                     String
+      directory where ss.exe resides.
+      Required: No; by default expected to be in PATH
     :version                   String
+      a version number to get
+      Required: No; only one of these may be used
     :vsspath                   String
+      SourceSafe path which specifies the project/file(s) you wish to perform
+      the action on.
+      Required: Yes
     :writablefiles             WritableFiles
+      Behavior when local files are writable. Valid options are: replace , skip
+      and fail ; skip implies failonerror = false
+      Required: No; defaults to fail
 
   https://ant.apache.org/manual/Tasks/vsscheckout.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKOUT"
-  {:arglists (quote ([& {:keys [autoresponse date failonerror filetimestamp getlocalcopy label localpath login recursive serverpath ssdir version vsspath writablefiles], :as attrs} & nested])), :clj-ant/tag "vsscheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKOUT", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKOUT"]}
+  {:arglists (quote ([& {:keys [autoresponse date failonerror filetimestamp getlocalcopy label localpath login recursive serverpath ssdir version vsspath writablefiles], :as attrs} & nested])), :clj-ant/tag "vsscheckout", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKOUT", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCHECKOUT"], :clj-ant/attrs {:date {:description "a date stamp to get at", :required "No; only one of these may be used"}, :failonerror {:description "Stop the build process if ss.exe exits with a return code 100 .", :required "No; defaults to true"}, :filetimestamp {:description "Set the behavior for timestamps of local files. Valid options are current , modified , or updated .", :required "No; defaults to current"}, :getlocalcopy {:description "Set the behavior to retrieve local copies of the files.", :required "No; defaults to true"}, :label {:description "a label to get for", :required "No; only one of these may be used"}, :localpath {:description "Override the working directory and get to the specified path", :required "No"}, :login {:description "username[,password] -The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.", :required "No"}, :recursive {:description "true|false", :required "No"}, :serverpath {:description "directory where srcsafe.ini resides.", :required "No"}, :ssdir {:description "directory where ss.exe resides.", :required "No; by default expected to be in PATH"}, :version {:description "a version number to get", :required "No; only one of these may be used"}, :vsspath {:description "SourceSafe path which specifies the project/file(s) you wish to perform the action on.", :required "Yes"}, :writablefiles {:description "Behavior when local files are writable. Valid options are: replace , skip and fail ; skip implies failonerror = false", :required "No; defaults to fail"}}}
   [& args]
   (clojure.core/apply c/element :vsscheckout args))
 
 (defn vsscp
-  "Ant task vsscp. (No description bundled.)
+  "Task to perform CP (Change Project) commands to Microsoft Visual SourceSafe.
+  This task is typically used before a VssAdd in order to set the target
+  project
 
   Attributes:
     :autoresponse              String
     :failonerror               boolean
+      Stop the build process if ss.exe exits with a return code 100 .
+      Required: No; defaults to true
     :login                     String
+      username[,password] -The username and password needed to get access to
+      VSS. Note that you may need to specify both (if you have a
+      password)-Ant/VSS will hang if you leave the password out and VSS does not
+      accept login without a password.
+      Required: No
     :serverpath                String
+      directory where srcsafe.ini resides.
+      Required: No
     :ssdir                     String
+      directory where ss.exe resides.
+      Required: No; by default expected to be in PATH
     :vsspath                   String
+      SourceSafe path which specifies the project you wish to make the current
+      project.
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/vsscp.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSCP"
-  {:arglists (quote ([& {:keys [autoresponse failonerror login serverpath ssdir vsspath], :as attrs} & nested])), :clj-ant/tag "vsscp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCP", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCP"]}
+  {:arglists (quote ([& {:keys [autoresponse failonerror login serverpath ssdir vsspath], :as attrs} & nested])), :clj-ant/tag "vsscp", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCP", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCP"], :clj-ant/attrs {:failonerror {:description "Stop the build process if ss.exe exits with a return code 100 .", :required "No; defaults to true"}, :login {:description "username[,password] -The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.", :required "No"}, :serverpath {:description "directory where srcsafe.ini resides.", :required "No"}, :ssdir {:description "directory where ss.exe resides.", :required "No; by default expected to be in PATH"}, :vsspath {:description "SourceSafe path which specifies the project you wish to make the current project.", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :vsscp args))
 
 (defn vsscreate
-  "Ant task vsscreate. (No description bundled.)
+  "Task to perform CREATE commands to Microsoft Visual Source Safe. Creates a
+  new project in VSS.
 
   Attributes:
     :autoresponse              String
+      What to respond with (sets the -I option). By default, -I- is used; values
+      of Y or N will be appended to this.
+      Required: No
     :comment                   String
+      The comment to use for this label. Empty or - for no comment.
+      Required: No
     :failonerror               boolean
+      fail if there is an error creating the project.
+      Required: No; defaults to true
     :login                     String
+      username,password
+      Required: No
     :quiet                     boolean
+      suppress output
+      Required: No; defaults to off
     :serverpath                String
     :ssdir                     String
+      directory where ss.exe resides.
+      Required: No; by default expected to be in PATH
     :vsspath                   String
+      SourceSafe path of project to be created
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/vsscreate.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSCREATE"
-  {:arglists (quote ([& {:keys [autoresponse comment failonerror login quiet serverpath ssdir vsspath], :as attrs} & nested])), :clj-ant/tag "vsscreate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCREATE", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCREATE"]}
+  {:arglists (quote ([& {:keys [autoresponse comment failonerror login quiet serverpath ssdir vsspath], :as attrs} & nested])), :clj-ant/tag "vsscreate", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSCREATE", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSCREATE"], :clj-ant/attrs {:autoresponse {:description "What to respond with (sets the -I option). By default, -I- is used; values of Y or N will be appended to this.", :required "No"}, :comment {:description "The comment to use for this label. Empty or - for no comment.", :required "No"}, :failonerror {:description "fail if there is an error creating the project.", :required "No; defaults to true"}, :login {:description "username,password", :required "No"}, :quiet {:description "suppress output", :required "No; defaults to off"}, :ssdir {:description "directory where ss.exe resides.", :required "No; by default expected to be in PATH"}, :vsspath {:description "SourceSafe path of project to be created", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :vsscreate args))
 
 (defn vssget
-  "Ant task vssget. (No description bundled.)
+  "Task to perform GET commands to Microsoft Visual SourceSafe. If you specify
+  two or more attributes from version, date and label only one will be used in
+  the order version, date, label.
 
   Attributes:
     :autoresponse              String
+      What to respond with (sets the -I option). By default, -I- is used; values
+      of Y or N will be appended to this.
+      Required: No
     :date                      String
+      a date stamp to get at
+      Required: No; only one of these may be used
     :failonerror               boolean
+      Stop the build process if ss.exe exits with a return code 100
+      Required: No; defaults to true
     :filetimestamp             CurrentModUpdated
+      Set the behavior for timestamps of local files. Valid options are current
+      , modified , or updated .
+      Required: No; defaults to current
     :label                     String
+      a label to get for
+      Required: No; only one of these may be used
     :localpath                 Path
+      Override the working directory and get to the specified path
+      Required: No
     :login                     String
+      username[,password] -The username and password needed to get access to
+      VSS. Note that you may need to specify both (if you have a
+      password)-Ant/VSS will hang if you leave the password out and VSS does not
+      accept login without a password.
+      Required: No
     :quiet                     boolean
+      suppress output
+      Required: No; defaults to off
     :recursive                 boolean
+      true|false . Note however that in the SourceSafe UI there is a setting
+      accessed via Tools/Options/GeneralTab called Act on projects recursively .
+      If this setting is checked, then the recursive attribute is effectively
+      ignored, and get will always be done recursively
+      Required: No; default false
     :serverpath                String
+      directory where srcsafe.ini resides.
+      Required: No
     :ssdir                     String
+      directory where ss.exe resides.
+      Required: No; by default expected to be in PATH
     :version                   String
+      a version number to get
+      Required: No; only one of these may be used
     :vsspath                   String
+      SourceSafe path which specifies the project/file(s) you wish to perform
+      the action on.
+      Required: Yes
     :writable                  boolean
+      true|false
+      Required: No; default false
     :writablefiles             WritableFiles
+      Behavior when local files are writable. Valid options are: replace , skip
+      and fail ; skip implies failonerror = false
+      Required: No; defaults to fail
 
   https://ant.apache.org/manual/Tasks/vssget.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSGET"
-  {:arglists (quote ([& {:keys [autoresponse date failonerror filetimestamp label localpath login quiet recursive serverpath ssdir version vsspath writable writablefiles], :as attrs} & nested])), :clj-ant/tag "vssget", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSGET", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSGET"]}
+  {:arglists (quote ([& {:keys [autoresponse date failonerror filetimestamp label localpath login quiet recursive serverpath ssdir version vsspath writable writablefiles], :as attrs} & nested])), :clj-ant/tag "vssget", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSGET", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSGET"], :clj-ant/attrs {:autoresponse {:description "What to respond with (sets the -I option). By default, -I- is used; values of Y or N will be appended to this.", :required "No"}, :date {:description "a date stamp to get at", :required "No; only one of these may be used"}, :failonerror {:description "Stop the build process if ss.exe exits with a return code 100", :required "No; defaults to true"}, :filetimestamp {:description "Set the behavior for timestamps of local files. Valid options are current , modified , or updated .", :required "No; defaults to current"}, :label {:description "a label to get for", :required "No; only one of these may be used"}, :localpath {:description "Override the working directory and get to the specified path", :required "No"}, :login {:description "username[,password] -The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.", :required "No"}, :quiet {:description "suppress output", :required "No; defaults to off"}, :recursive {:description "true|false . Note however that in the SourceSafe UI there is a setting accessed via Tools/Options/GeneralTab called Act on projects recursively . If this setting is checked, then the recursive attribute is effectively ignored, and get will always be done recursively", :required "No; default false"}, :serverpath {:description "directory where srcsafe.ini resides.", :required "No"}, :ssdir {:description "directory where ss.exe resides.", :required "No; by default expected to be in PATH"}, :version {:description "a version number to get", :required "No; only one of these may be used"}, :vsspath {:description "SourceSafe path which specifies the project/file(s) you wish to perform the action on.", :required "Yes"}, :writable {:description "true|false", :required "No; default false"}, :writablefiles {:description "Behavior when local files are writable. Valid options are: replace , skip and fail ; skip implies failonerror = false", :required "No; defaults to fail"}}}
   [& args]
   (clojure.core/apply c/element :vssget args))
 
 (defn vsshistory
-  "Ant task vsshistory. (No description bundled.)
+  "Task to perform HISTORY commands to Microsoft Visual SourceSafe.
 
   Attributes:
     :dateformat                String
+      Format of dates in fromDate and toDate . Used when calculating dates with
+      the numdays attribute. This string uses the formatting rules of
+      SimpleDateFormat.
+      Required: No; defaults to DateFormat.SHORT
     :failonerror               boolean
+      Stop the build process if ss.exe exits with a return code 100
+      Required: No; defaults to true
     :fromdate                  String
+      Start date for comparison
+      Required: See below
     :fromlabel                 String
+      Start label for comparison
+      Required: No
     :login                     String
+      username[,password] -The username and password needed to get access to
+      VSS. Note that you may need to specify both (if you have a
+      password)-Ant/VSS will hang if you leave the password out and VSS does not
+      accept login without a password.
+      Required: No
     :numdays                   int
+      The number of days for comparison.
+      Required: See below
     :output                    File
+      File to write the diff.
+      Required: No
     :recursive                 boolean
+      true|false
+      Required: No
     :serverpath                String
+      directory where srcsafe.ini resides.
+      Required: No
     :ssdir                     String
+      directory where ss.exe resides.
+      Required: No; by default expected to be in PATH
     :style                     BriefCodediffNofile
+      brief , codediff , default or nofile .
+      Required: No; defaults to default
     :todate                    String
+      End date for comparison
+      Required: See below
     :tolabel                   String
+      Start label for comparison
+      Required: No
     :user                      String
+      Name the user whose changes we would like to see
+      Required: No
     :vsspath                   String
+      SourceSafe path which specifies the project/file(s) you wish to perform
+      the action on.
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/vsshistory.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSHISTORY"
-  {:arglists (quote ([& {:keys [dateformat failonerror fromdate fromlabel login numdays output recursive serverpath ssdir style todate tolabel user vsspath], :as attrs} & nested])), :clj-ant/tag "vsshistory", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSHISTORY", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSHISTORY"]}
+  {:arglists (quote ([& {:keys [dateformat failonerror fromdate fromlabel login numdays output recursive serverpath ssdir style todate tolabel user vsspath], :as attrs} & nested])), :clj-ant/tag "vsshistory", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSHISTORY", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSHISTORY"], :clj-ant/attrs {:dateformat {:description "Format of dates in fromDate and toDate . Used when calculating dates with the numdays attribute. This string uses the formatting rules of SimpleDateFormat.", :required "No; defaults to DateFormat.SHORT"}, :failonerror {:description "Stop the build process if ss.exe exits with a return code 100", :required "No; defaults to true"}, :fromdate {:description "Start date for comparison", :required "See below"}, :fromlabel {:description "Start label for comparison", :required "No"}, :login {:description "username[,password] -The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.", :required "No"}, :numdays {:description "The number of days for comparison.", :required "See below"}, :output {:description "File to write the diff.", :required "No"}, :recursive {:description "true|false", :required "No"}, :serverpath {:description "directory where srcsafe.ini resides.", :required "No"}, :ssdir {:description "directory where ss.exe resides.", :required "No; by default expected to be in PATH"}, :style {:description "brief , codediff , default or nofile .", :required "No; defaults to default"}, :todate {:description "End date for comparison", :required "See below"}, :tolabel {:description "Start label for comparison", :required "No"}, :user {:description "Name the user whose changes we would like to see", :required "No"}, :vsspath {:description "SourceSafe path which specifies the project/file(s) you wish to perform the action on.", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :vsshistory args))
 
 (defn vsslabel
-  "Ant task vsslabel. (No description bundled.)
+  "Task to perform LABEL commands to Microsoft Visual SourceSafe. Assigns a
+  label to the specified version or current version of a file or project.
 
   Attributes:
     :autoresponse              String
+      What to respond with (sets the -I option). By default, -I- is used; values
+      of Y or N will be appended to this.
+      Required: No
     :comment                   String
+      The comment to use for this label. Empty or - for no comment.
+      Required: No
     :failonerror               boolean
+      Stop the build process if ss.exe exits with a return code 100 .
+      Required: No; defaults to true
     :label                     String
+      A label to apply to the hierarchy
+      Required: Yes
     :login                     String
+      username[,password] -The username and password needed to get access to
+      VSS. Note that you may need to specify both (if you have a
+      password)-Ant/VSS will hang if you leave the password out and VSS does not
+      accept login without a password.
+      Required: No
     :serverpath                String
+      directory where srcsafe.ini resides.
+      Required: No
     :ssdir                     String
+      directory where ss.exe resides.
+      Required: No; by default expected to be in PATH
     :version                   String
+      An existing file or project version to label. By default the current
+      version is labeled.
+      Required: No
     :vsspath                   String
+      SourceSafe path which specifies the project/file(s) you wish to perform
+      the action on.
+      Required: Yes
 
   https://ant.apache.org/manual/Tasks/vsslabel.html
 
   Defined by: org.apache.tools.ant.taskdefs.optional.vss.MSVSSLABEL"
-  {:arglists (quote ([& {:keys [autoresponse comment failonerror label login serverpath ssdir version vsspath], :as attrs} & nested])), :clj-ant/tag "vsslabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSLABEL", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSLABEL"]}
+  {:arglists (quote ([& {:keys [autoresponse comment failonerror label login serverpath ssdir version vsspath], :as attrs} & nested])), :clj-ant/tag "vsslabel", :clj-ant/class "org.apache.tools.ant.taskdefs.optional.vss.MSVSSLABEL", :clj-ant/classes ["org.apache.tools.ant.taskdefs.optional.vss.MSVSSLABEL"], :clj-ant/attrs {:autoresponse {:description "What to respond with (sets the -I option). By default, -I- is used; values of Y or N will be appended to this.", :required "No"}, :comment {:description "The comment to use for this label. Empty or - for no comment.", :required "No"}, :failonerror {:description "Stop the build process if ss.exe exits with a return code 100 .", :required "No; defaults to true"}, :label {:description "A label to apply to the hierarchy", :required "Yes"}, :login {:description "username[,password] -The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.", :required "No"}, :serverpath {:description "directory where srcsafe.ini resides.", :required "No"}, :ssdir {:description "directory where ss.exe resides.", :required "No; by default expected to be in PATH"}, :version {:description "An existing file or project version to label. By default the current version is labeled.", :required "No"}, :vsspath {:description "SourceSafe path which specifies the project/file(s) you wish to perform the action on.", :required "Yes"}}}
   [& args]
   (clojure.core/apply c/element :vsslabel args))
 
@@ -10486,36 +11895,158 @@
   (clojure.core/apply c/element :xmlvalidate args))
 
 (defn xslt
-  "Ant task xslt. (No description bundled.)
+  "Process a set of documents via XSLT. This is useful for building views of
+  XML based documentation, or for generating code. It is possible to refine
+  the set of files that are being processed. This can be done with the
+  includes , includesfile , excludes , excludesfile and defaultexcludes
+  attributes. With the includes or includesfile attribute you specify the
+  files you want to have included by using patterns. The exclude or
+  excludesfile attribute is used to specify the files you want to have
+  excluded. This is also done with patterns. And finally with the
+  defaultexcludes attribute, you can specify whether you want to use default
+  exclusions or not. See the section on directory based tasks , on how the
+  inclusion/exclusion of files works, and how to write patterns. This task
+  forms an implicit FileSet and supports all attributes of <fileset> ( dir
+  becomes basedir ) as well as the nested <include> , <exclude> and
+  <patternset> elements. Note : Unlike other similar tasks, this task treats
+  directories that have been matched by the include/exclude patterns of the
+  implicit fileset in a special way. It will apply the stylesheets to all
+  files contain in them as well. Since the default includes pattern is ** this
+  means it will apply the stylesheet to all files. If you specify an excludes
+  pattern, it may still work on the files matched by those patterns because
+  the parent directory has been matched. If this behavior is not what you
+  want, set the scanincludedirectories attribute to false . Since Ant 1.7 ,
+  this task supports nested resource collections in addition to (or instead
+  of, depending on the useImplicitFileset attribute) the implicit fileset
+  formed by this task. This task supports the use of a nested <param> element
+  which is used to pass values to an <xsl:param> declaration. This task
+  supports the use of a nested xmlcatalog element which is used to perform
+  Entity and URI resolution. Note on XSLT extension functions : when using the
+  default TrAX implementation of the Java class library and a SecurityManager
+  is active-e.g. when running from within an IDE-XSLT extension functions
+  cannot be used as \"secure processing\" is active in Java 7 and above. Ant
+  contains a special \"hack\" that allows XSLT extensions to be used in Java 7
+  and 8, but this hack fails for Java 9. If you want to use extensions like
+  the redirect extension that are provided by the Java class library itself,
+  you can allow them by enabling the feature
+  http://www.oracle.com/xml/jaxp/properties/enableExtensionFunctions in Java 9
+  and above. If you need to use an extension function not provided by Java
+  itself you can set the attribute jdk.xml.transform.extensionClassLoader to a
+  classloader (reference to an Ant path-like structure).
 
   Attributes:
     :basedir                   File
+      where to find the source XML file.
+      Required: No; defaults to the project's basedir
     :casesensitive             boolean
     :classpath                 Path
+      the classpath to use when looking up the XSLT processor.
+      Required: No
     :classpathref              Reference
+      the classpath to use, given as reference to a path defined elsewhere.
+      Required: No
     :defaultexcludes           boolean
+      indicates whether default excludes should be used or not ( yes|no ).
+      Required: No; defaults to yes
     :destdir                   File
+      directory in which to store the results.
+      Required: Yes, unless in and out have been specified.
     :excludes                  String
+      comma- or space-separated list of patterns of files that must be excluded.
+      Required: No; defaults to default excludes or none if defaultexcludes is
+      no
     :excludesfile              File
+      name of a file. Each line of this file is taken to be an exclude pattern
+      Required: No
     :extension                 String
+      desired file extension to be used for the targets.
+      Required: No; default is .html , ignored if a nested <mapper> or both in
+      and out have been specified
     :failonerror               boolean
+      Whether the build should fail if any error occurs. Note that
+      transformation errors can still be suppressed by setting
+      failOnTransformationError to false even if this attribute is true . Since
+      Ant 1.8.0 .
+      Required: No; default is true
     :failonnoresources         boolean
+      Whether the build should fail if the nested resource collection is empty.
+      Note that this attribute has no effect of failOnError is false . Since Ant
+      1.8.0 .
+      Required: No; default is true
     :failontransformationerror boolean
+      Whether the build should fail if an error occurs while transforming the
+      document. Note that this attribute has no effect if failOnError is false .
+      Since Ant 1.8.0 .
+      Required: No; default is true
     :filedirparameter          String
+      Specifies a XSL parameter for accessing the directory of the current
+      processed file. For files in the current directory, a value of . will be
+      passed to the transformation. If not set, the directory is not passed to
+      the transformation. Since Ant 1.7 .
+      Required: No
     :filenameparameter         String
+      Specifies an XSL parameter for accessing the name of the current processed
+      file. If not set, the file name is not passed to the transformation. Since
+      Ant 1.7 .
+      Required: No
     :followsymlinks            boolean
     :force                     boolean
+      Recreate target files, even if they are newer than their corresponding
+      source files or the stylesheet.
+      Required: No; default is false
     :granularity               long
+      The number of milliseconds leeway to give before deciding a file is out of
+      date with respect of the source file or stylesheet. This is needed because
+      not every file system supports tracking the last modified time to the
+      millisecond level. This can also be useful if source and target files live
+      on separate machines with clocks being out of sync. since Ant 1.10.16 .
+      Required: No; default is 1 second, or 2 seconds on DOS systems
     :in                        File
+      specifies a single XML document to be styled. Should be used with the out
+      attribute.
+      Required: No
     :includes                  String
+      comma- or space-separated list of patterns of files that must be included.
+      Required: No; defaults to all ( ** )
     :includesfile              File
+      name of a file. Each line of this file is taken to be an include pattern
+      Required: No
     :out                       File
+      specifies the output name for the styled result from the in attribute.
+      Required: No
     :processor                 String
+      name of the XSLT processor to use. Permissible value is: trax for a TraX
+      compliant processor (ie JAXP interface implementation such as Xalan 2 or
+      Saxon) Support for Xalan 1 has been removed since Ant 1.7 .
+      Required: No; defaults to trax
     :reloadstylesheet          boolean
+      Control whether the stylesheet transformer is created anew for every
+      transform operation. If you set this to true , performance may suffer, but
+      you may work around a bug in certain Xalan versions. Since Ant 1.5.2 .
+      Required: No; default is false
     :scanincludeddirectories   boolean
+      If any directories are matched by the includes / excludes patterns, try to
+      transform all files in these directories. No; default is true
     :style                     String
+      name of the stylesheet to use-given either relative to the project's
+      basedir or as an absolute path. Alternatively, a nested element which Ant
+      can interpret as a resource can be used to indicate where to find the
+      stylesheet. Deprecated variation : If the stylesheet cannot be found, and
+      if you have specified the attribute basedir for the task, Ant will assume
+      that the style attribute is relative to the basedir of the task.
+      Required: No, if the location of the stylesheet is specified using a
+      nested <style> element
     :suppresswarnings          boolean
+      Whether processor warnings shall be suppressed. This option requires
+      support by the processor, it is supported by the TrAX processor bundled
+      with Ant. Since Ant 1.8.0 .
+      Required: No; default is false
     :useimplicitfileset        boolean
+      Whether the implicit fileset formed by this task shall be used. If you set
+      this to false you must use nested resource collections-or the in
+      attribute, in which case this attribute has no impact anyway. Since Ant
+      1.7 .
+      Required: No; default is true
     :xslresource               Resource
   Nested elements:
     :and                       (AndSelector)
@@ -10555,7 +12086,7 @@
   https://ant.apache.org/manual/Tasks/xslt.html
 
   Defined by: org.apache.tools.ant.taskdefs.XSLTProcess"
-  {:arglists (quote ([& {:keys [basedir casesensitive classpath classpathref defaultexcludes destdir excludes excludesfile extension failonerror failonnoresources failontransformationerror filedirparameter filenameparameter followsymlinks force granularity in includes includesfile out processor reloadstylesheet scanincludeddirectories style suppresswarnings useimplicitfileset xslresource], :as attrs} & nested])), :clj-ant/tag "xslt", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess"]}
+  {:arglists (quote ([& {:keys [basedir casesensitive classpath classpathref defaultexcludes destdir excludes excludesfile extension failonerror failonnoresources failontransformationerror filedirparameter filenameparameter followsymlinks force granularity in includes includesfile out processor reloadstylesheet scanincludeddirectories style suppresswarnings useimplicitfileset xslresource], :as attrs} & nested])), :clj-ant/tag "xslt", :clj-ant/class "org.apache.tools.ant.taskdefs.XSLTProcess", :clj-ant/classes ["org.apache.tools.ant.taskdefs.XSLTProcess"], :clj-ant/attrs {:basedir {:description "where to find the source XML file.", :required "No; defaults to the project's basedir"}, :classpath {:description "the classpath to use when looking up the XSLT processor.", :required "No"}, :classpathref {:description "the classpath to use, given as reference to a path defined elsewhere.", :required "No"}, :defaultexcludes {:description "indicates whether default excludes should be used or not ( yes|no ).", :required "No; defaults to yes"}, :destdir {:description "directory in which to store the results.", :required "Yes, unless in and out have been specified."}, :excludes {:description "comma- or space-separated list of patterns of files that must be excluded.", :required "No; defaults to default excludes or none if defaultexcludes is no"}, :excludesfile {:description "name of a file. Each line of this file is taken to be an exclude pattern", :required "No"}, :extension {:description "desired file extension to be used for the targets.", :required "No; default is .html , ignored if a nested <mapper> or both in and out have been specified"}, :failonerror {:description "Whether the build should fail if any error occurs. Note that transformation errors can still be suppressed by setting failOnTransformationError to false even if this attribute is true . Since Ant 1.8.0 .", :required "No; default is true"}, :failonnoresources {:description "Whether the build should fail if the nested resource collection is empty. Note that this attribute has no effect of failOnError is false . Since Ant 1.8.0 .", :required "No; default is true"}, :failontransformationerror {:description "Whether the build should fail if an error occurs while transforming the document. Note that this attribute has no effect if failOnError is false . Since Ant 1.8.0 .", :required "No; default is true"}, :filedirparameter {:description "Specifies a XSL parameter for accessing the directory of the current processed file. For files in the current directory, a value of . will be passed to the transformation. If not set, the directory is not passed to the transformation. Since Ant 1.7 .", :required "No"}, :filenameparameter {:description "Specifies an XSL parameter for accessing the name of the current processed file. If not set, the file name is not passed to the transformation. Since Ant 1.7 .", :required "No"}, :force {:description "Recreate target files, even if they are newer than their corresponding source files or the stylesheet.", :required "No; default is false"}, :granularity {:description "The number of milliseconds leeway to give before deciding a file is out of date with respect of the source file or stylesheet. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.10.16 .", :required "No; default is 1 second, or 2 seconds on DOS systems"}, :in {:description "specifies a single XML document to be styled. Should be used with the out attribute.", :required "No"}, :includes {:description "comma- or space-separated list of patterns of files that must be included.", :required "No; defaults to all ( ** )"}, :includesfile {:description "name of a file. Each line of this file is taken to be an include pattern", :required "No"}, :out {:description "specifies the output name for the styled result from the in attribute.", :required "No"}, :processor {:description "name of the XSLT processor to use. Permissible value is: trax for a TraX compliant processor (ie JAXP interface implementation such as Xalan 2 or Saxon) Support for Xalan 1 has been removed since Ant 1.7 .", :required "No; defaults to trax"}, :reloadstylesheet {:description "Control whether the stylesheet transformer is created anew for every transform operation. If you set this to true , performance may suffer, but you may work around a bug in certain Xalan versions. Since Ant 1.5.2 .", :required "No; default is false"}, :scanincludeddirectories {:description "If any directories are matched by the includes / excludes patterns, try to transform all files in these directories. No; default is true"}, :style {:description "name of the stylesheet to use-given either relative to the project's basedir or as an absolute path. Alternatively, a nested element which Ant can interpret as a resource can be used to indicate where to find the stylesheet. Deprecated variation : If the stylesheet cannot be found, and if you have specified the attribute basedir for the task, Ant will assume that the style attribute is relative to the basedir of the task.", :required "No, if the location of the stylesheet is specified using a nested <style> element"}, :suppresswarnings {:description "Whether processor warnings shall be suppressed. This option requires support by the processor, it is supported by the TrAX processor bundled with Ant. Since Ant 1.8.0 .", :required "No; default is false"}, :useimplicitfileset {:description "Whether the implicit fileset formed by this task shall be used. If you set this to false you must use nested resource collections-or the in attribute, in which case this attribute has no impact anyway. Since Ant 1.7 .", :required "No; default is true"}}}
   [& args]
   (clojure.core/apply c/element :xslt args))
 
@@ -11059,7 +12590,8 @@
       Required: No
     :file                      File
     :followsymlinks            boolean
-      Shall symbolic links be followed? See fileset's documentation .
+      Shall symbolic links and Windows junctions be followed? See fileset's
+      documentation . Windows junctions are detected since Ant 1.10.16.
       Required: No; defaults to true
     :includes                  String
       Comma- or space-separated list of patterns of directories that must be
@@ -11111,7 +12643,7 @@
   https://ant.apache.org/manual/Types/dirset.html
 
   Defined by: org.apache.tools.ant.types.DirSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "dirset", :clj-ant/class "org.apache.tools.ant.types.DirSet", :clj-ant/classes ["org.apache.tools.ant.types.DirSet"], :clj-ant/attrs {:casesensitive {:description "Specifies whether case-sensitivity should be applied ( true , yes , on or false , no , off ).", :required "No; defaults to true"}, :dir {:description "The root of the directory tree of this DirSet.", :required "Yes"}, :erroronmissingdir {:description "Specify what happens if the base directory does not exist. If true a build error will happen, if false , the dirset will be ignored/empty. Since Apache Ant 1.7.1", :required "No; defaults to true (for backward compatibility reasons)"}, :excludes {:description "Comma- or space-separated list of patterns of directories that must be excluded.", :required "No; defaults to none"}, :excludesfile {:description "Name of a file; each line of this file is taken to be an exclude pattern.", :required "No"}, :followsymlinks {:description "Shall symbolic links be followed? See fileset's documentation .", :required "No; defaults to true"}, :includes {:description "Comma- or space-separated list of patterns of directories that must be included.", :required "No; defaults to all directories"}, :includesfile {:description "Name of a file; each line of this file is taken to be an include pattern. Note: if the file is empty and there are no other patterns defined for the fileset, all directories will be included.", :required "No"}, :refid {:description "Makes this dirset a reference to a dirset defined elsewhere. If specified no other attributes or nested elements are allowed.", :required "No"}}}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "dirset", :clj-ant/class "org.apache.tools.ant.types.DirSet", :clj-ant/classes ["org.apache.tools.ant.types.DirSet"], :clj-ant/attrs {:casesensitive {:description "Specifies whether case-sensitivity should be applied ( true , yes , on or false , no , off ).", :required "No; defaults to true"}, :dir {:description "The root of the directory tree of this DirSet.", :required "Yes"}, :erroronmissingdir {:description "Specify what happens if the base directory does not exist. If true a build error will happen, if false , the dirset will be ignored/empty. Since Apache Ant 1.7.1", :required "No; defaults to true (for backward compatibility reasons)"}, :excludes {:description "Comma- or space-separated list of patterns of directories that must be excluded.", :required "No; defaults to none"}, :excludesfile {:description "Name of a file; each line of this file is taken to be an exclude pattern.", :required "No"}, :followsymlinks {:description "Shall symbolic links and Windows junctions be followed? See fileset's documentation . Windows junctions are detected since Ant 1.10.16.", :required "No; defaults to true"}, :includes {:description "Comma- or space-separated list of patterns of directories that must be included.", :required "No; defaults to all directories"}, :includesfile {:description "Name of a file; each line of this file is taken to be an include pattern. Note: if the file is empty and there are no other patterns defined for the fileset, all directories will be included.", :required "No"}, :refid {:description "Makes this dirset a reference to a dirset defined elsewhere. If specified no other attributes or nested elements are allowed.", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :dirset args))
 
@@ -11326,7 +12858,8 @@
       shortcut for specifying a single-file fileset
       Required: Exactly one of dir or file must be specified
     :followsymlinks            boolean
-      Shall symbolic links be followed? See the note below .
+      Shall symbolic links and Windows junctions be followed? See the note below
+      . Windows junctions are detected since Ant 1.10.16.
       Required: No; defaults to true
     :includes                  String
       comma- or space-separated list of patterns of files that must be included.
@@ -11377,7 +12910,7 @@
   https://ant.apache.org/manual/Types/fileset.html
 
   Defined by: org.apache.tools.ant.types.FileSet"
-  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "fileset", :clj-ant/class "org.apache.tools.ant.types.FileSet", :clj-ant/classes ["org.apache.tools.ant.types.FileSet"], :clj-ant/attrs {:casesensitive {:description "Must the include and exclude patterns be treated in a case sensitive way?", :required "No; defaults to true"}, :defaultexcludes {:description "indicates whether default excludes should be used or not ( yes|no ).", :required "No; defaults to yes"}, :dir {:description "the root of the directory tree of this FileSet.", :required "Exactly one of dir or file must be specified"}, :erroronmissingdir {:description "Specify what happens if the base directory does not exist. If true a build error will happen, if false , the fileset will be ignored/empty. Since Apache Ant 1.7.1", :required "No; defaults to true (for backward compatibility reasons)"}, :excludes {:description "comma- or space-separated list of patterns of files that must be excluded.", :required "No; defaults to default excludes or none if defaultexcludes is no"}, :excludesfile {:description "name of a file; each line of this file is taken to be an exclude pattern.", :required "No"}, :file {:description "shortcut for specifying a single-file fileset", :required "Exactly one of dir or file must be specified"}, :followsymlinks {:description "Shall symbolic links be followed? See the note below .", :required "No; defaults to true"}, :includes {:description "comma- or space-separated list of patterns of files that must be included.", :required "No; defaults to all files"}, :includesfile {:description "name of a file; each line of this file is taken to be an include pattern. Note : if the file is empty and there are no other patterns defined for the fileset, all files will be included.", :required "No"}, :refid {:description "Makes this fileset a reference to a fileset defined elsewhere. If specified no other attributes or nested elements are allowed.", :required "No"}}}
+  {:arglists (quote ([& {:keys [casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid], :as attrs} & nested])), :clj-ant/tag "fileset", :clj-ant/class "org.apache.tools.ant.types.FileSet", :clj-ant/classes ["org.apache.tools.ant.types.FileSet"], :clj-ant/attrs {:casesensitive {:description "Must the include and exclude patterns be treated in a case sensitive way?", :required "No; defaults to true"}, :defaultexcludes {:description "indicates whether default excludes should be used or not ( yes|no ).", :required "No; defaults to yes"}, :dir {:description "the root of the directory tree of this FileSet.", :required "Exactly one of dir or file must be specified"}, :erroronmissingdir {:description "Specify what happens if the base directory does not exist. If true a build error will happen, if false , the fileset will be ignored/empty. Since Apache Ant 1.7.1", :required "No; defaults to true (for backward compatibility reasons)"}, :excludes {:description "comma- or space-separated list of patterns of files that must be excluded.", :required "No; defaults to default excludes or none if defaultexcludes is no"}, :excludesfile {:description "name of a file; each line of this file is taken to be an exclude pattern.", :required "No"}, :file {:description "shortcut for specifying a single-file fileset", :required "Exactly one of dir or file must be specified"}, :followsymlinks {:description "Shall symbolic links and Windows junctions be followed? See the note below . Windows junctions are detected since Ant 1.10.16.", :required "No; defaults to true"}, :includes {:description "comma- or space-separated list of patterns of files that must be included.", :required "No; defaults to all files"}, :includesfile {:description "name of a file; each line of this file is taken to be an include pattern. Note : if the file is empty and there are no other patterns defined for the fileset, all files will be included.", :required "No"}, :refid {:description "Makes this fileset a reference to a fileset defined elsewhere. If specified no other attributes or nested elements are allowed.", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :fileset args))
 
@@ -11983,7 +13516,8 @@
       Required: No
     :file                      File
     :followsymlinks            boolean
-      Shall symbolic links be followed? See fileset's documentation .
+      Shall symbolic links and Windows junctions be followed? See fileset's
+      documentation . Windows junctions are detected since Ant 1.10.16.
       Required: No; defaults to true
     :includes                  String
       A comma- or space-separated list of patterns of directories that must be
@@ -12036,7 +13570,7 @@
   https://ant.apache.org/manual/Types/multirootfileset.html
 
   Defined by: org.apache.tools.ant.types.resources.MultiRootFileSet"
-  {:arglists (quote ([& {:keys [basedirs cache casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid type], :as attrs} & nested])), :clj-ant/tag "multirootfileset", :clj-ant/class "org.apache.tools.ant.types.resources.MultiRootFileSet", :clj-ant/classes ["org.apache.tools.ant.types.resources.MultiRootFileSet"], :clj-ant/attrs {:basedirs {:description "Comma separated list of directories that build the roots of the MultiRootFileSet.", :required "No"}, :cache {:description "Whether to cache results; disabling may seriously impact performance", :required "No; default is true"}, :casesensitive {:description "Specifies whether case-sensitivity should be applied ( true , yes , on or false , no , off ).", :required "No; defaults to true"}, :erroronmissingdir {:description "Specify what happens if one of the base directories does not exist. If true a build error will happen, if false , the subtree will be ignored/empty.", :required "No; defaults to true"}, :excludes {:description "A comma- or space-separated list of patterns of directories that must be excluded.", :required "No; defaults to none"}, :excludesfile {:description "Name of a file; each line of this file is taken to be an exclude pattern.", :required "No"}, :followsymlinks {:description "Shall symbolic links be followed? See fileset's documentation .", :required "No; defaults to true"}, :includes {:description "A comma- or space-separated list of patterns of directories that must be included.", :required "No; defaults to all directories"}, :includesfile {:description "Name of a file; each line of this file is taken to be an include pattern.", :required "No"}, :type {:description "The type of file system entities which will be included in this set. Acceptable values are: file -regular files dir -directories both -regular files and directories", :required "No; defaults to file"}}}
+  {:arglists (quote ([& {:keys [basedirs cache casesensitive defaultexcludes dir erroronmissingdir excludes excludesfile file followsymlinks includes includesfile maxlevelsofsymlinks refid type], :as attrs} & nested])), :clj-ant/tag "multirootfileset", :clj-ant/class "org.apache.tools.ant.types.resources.MultiRootFileSet", :clj-ant/classes ["org.apache.tools.ant.types.resources.MultiRootFileSet"], :clj-ant/attrs {:basedirs {:description "Comma separated list of directories that build the roots of the MultiRootFileSet.", :required "No"}, :cache {:description "Whether to cache results; disabling may seriously impact performance", :required "No; default is true"}, :casesensitive {:description "Specifies whether case-sensitivity should be applied ( true , yes , on or false , no , off ).", :required "No; defaults to true"}, :erroronmissingdir {:description "Specify what happens if one of the base directories does not exist. If true a build error will happen, if false , the subtree will be ignored/empty.", :required "No; defaults to true"}, :excludes {:description "A comma- or space-separated list of patterns of directories that must be excluded.", :required "No; defaults to none"}, :excludesfile {:description "Name of a file; each line of this file is taken to be an exclude pattern.", :required "No"}, :followsymlinks {:description "Shall symbolic links and Windows junctions be followed? See fileset's documentation . Windows junctions are detected since Ant 1.10.16.", :required "No; defaults to true"}, :includes {:description "A comma- or space-separated list of patterns of directories that must be included.", :required "No; defaults to all directories"}, :includesfile {:description "Name of a file; each line of this file is taken to be an include pattern.", :required "No"}, :type {:description "The type of file system entities which will be included in this set. Acceptable values are: file -regular files dir -directories both -regular files and directories", :required "No; defaults to file"}}}
   [& args]
   (clojure.core/apply c/element :multirootfileset args))
 
@@ -12295,20 +13829,38 @@
   (clojure.core/apply c/element :regexpmapper args))
 
 (defn resource
-  "Ant type resource. (No description bundled.)
+  "A file-like entity can be abstracted to the concept of a resource . In
+  addition to providing access to file-like attributes, a resource
+  implementation should, when possible, provide the means to read content from
+  and/or write content to the underlying entity. Although the resource concept
+  was introduced in Apache Ant 1.5.2, resources are available for explicit use
+  since Ant 1.7 .
 
   Attributes:
     :directory                 boolean
+      Whether this resource is directory-like
+      Required: No; default false
     :exists                    boolean
+      Whether this resource exists
+      Required: No; default true
     :lastmodified              long
+      The last modification time of this resource
+      Required: No
     :name                      String
+      The name of this resource
+      Required: No
     :refid                     Reference
+      Makes this resource a reference to a resource defined elsewhere. If
+      specified no other attributes or nested elements are allowed.
+      Required: No
     :size                      long
+      The size of this resource
+      Required: No
 
   https://ant.apache.org/manual/Types/resource.html
 
   Defined by: org.apache.tools.ant.types.Resource"
-  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "resource", :clj-ant/class "org.apache.tools.ant.types.Resource", :clj-ant/classes ["org.apache.tools.ant.types.Resource"]}
+  {:arglists (quote ([& {:keys [directory exists lastmodified name refid size], :as attrs} & nested])), :clj-ant/tag "resource", :clj-ant/class "org.apache.tools.ant.types.Resource", :clj-ant/classes ["org.apache.tools.ant.types.Resource"], :clj-ant/attrs {:directory {:description "Whether this resource is directory-like", :required "No; default false"}, :exists {:description "Whether this resource exists", :required "No; default true"}, :lastmodified {:description "The last modification time of this resource", :required "No"}, :name {:description "The name of this resource", :required "No"}, :refid {:description "Makes this resource a reference to a resource defined elsewhere. If specified no other attributes or nested elements are allowed.", :required "No"}, :size {:description "The size of this resource", :required "No"}}}
   [& args]
   (clojure.core/apply c/element :resource args))
 

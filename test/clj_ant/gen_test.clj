@@ -26,3 +26,34 @@
                    (get-in info [:attrs :dir :description])))
       (is (re-find #"Exactly one of dir or file"
                    (get-in info [:attrs :file :required]))))))
+
+(deftest manual-info-follows-redirect-pages
+  (testing "short redirect pages resolve to their replacement manual page"
+    (let [info (manual-info "gzip")]
+      (is (re-find #"Packs a resource" (:description info)))
+      (is (re-find #"file to gzip"
+                   (get-in info [:attrs :src :description]))))))
+
+(deftest manual-info-uses-overview-aliases
+  (testing "task overview aliases resolve tags without matching HTML files"
+    (let [info (manual-info "execon")]
+      (is (re-find #"Executes a system command" (:description info)))
+      (is (re-find #"command to execute"
+                   (get-in info [:attrs :executable :description]))))))
+
+(deftest manual-info-extracts-grouped-task-sections
+  (testing "multi-task manual pages expose the section for the requested tag"
+    (let [info (manual-info "cccheckout")]
+      (is (re-find #"cleartool checkout" (:description info)))
+      (is (= "Specifies whether to check out the file as reserved or not"
+             (get-in info [:attrs :reserved :description])))
+      (is (= "Yes" (get-in info [:attrs :reserved :required]))))))
+
+(deftest manual-info-uses-known-manual-aliases
+  (testing "legacy task names can point at differently named manual pages"
+    (let [info (manual-info "blgenclient")]
+      (is (re-find #"Borland Application Server" (:description info)))
+      (is (re-find #"ejbclient.jar"
+                   (get-in info [:attrs :clientjar :description])))
+      (is (not (re-find #"&rArr;"
+                        (get-in info [:attrs :clientjar :description])))))))
