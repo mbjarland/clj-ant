@@ -230,7 +230,18 @@ match in code rather than a stringly-typed mystery:
                        #(and (= :scp (:tag %))
                              (= "true" (-> % :attrs :trust))))]
   {:file (str f) :scp-target (-> hit :attrs :file)})
+
+;; rewrite and re-emit compact XML
+(-> (a/from-xml "build.xml")
+    (a/transform #(cond-> %
+                    (= :copy (:tag %))
+                    (assoc-in [:attrs :preservelastmodified] "true")))
+    a/to-xml)
 ```
+
+`to-xml` re-emits data-only element trees. Trees containing real Java
+Ant objects, such as direct `FileSet`s or lazy file seq children, should
+be run directly because they cannot be represented faithfully as XML.
 
 ### Clojure functions as first-class Ant tasks
 

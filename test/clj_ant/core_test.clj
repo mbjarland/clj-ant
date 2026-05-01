@@ -260,6 +260,46 @@
       (is (= ["x.txt"] (mapv #(.getName %)
                              (.listFiles (File. base "out"))))))))
 
+(deftest to-xml-rendering
+  (testing "renders element records and map-shaped trees"
+    (is (= "<echo message=\"hi\"/>"
+           (a/to-xml (a/element :echo :message "hi"))))
+    (is (= "<echo message=\"hi\"/>"
+           (a/to-xml {:tag :echo
+                      :attrs {:message "hi"}
+                      :children []
+                      :text nil}))))
+
+  (testing "escapes attributes and text"
+    (is (= "<echo message=\"hi &amp; &lt;there&gt; &quot;q&quot;\">x &amp; y &lt; z &gt; 1</echo>"
+           (a/to-xml (a/element :echo
+                         :message "hi & <there> \"q\""
+                         "x & y < z > 1")))))
+
+  (testing "renders nested trees with Ant-style list attributes"
+    (is (= "<project default=\"go\" name=\"x\"><target depends=\"clean,compile\" name=\"go\"><echo message=\"done\"/></target></project>"
+           (a/to-xml
+             (a/element :project :name "x" :default "go"
+               (a/element :target :name :go :depends [:clean :compile]
+                 (a/element :echo :message "done")))))))
+
+  (testing "round-trips normal parsed trees"
+    (let [xml "<project name=\"x\"><target name=\"go\"><echo>hello &amp; goodbye</echo></target></project>"
+          tree (a/from-xml xml)]
+      (is (= tree (a/from-xml (a/to-xml tree))))))
+
+  (testing "omits internal clj-ant attrs"
+    (is (= "<project name=\"x\"/>"
+           (a/to-xml (assoc-in (a/element :project :name "x")
+                               [:attrs :clj-ant/source-dir]
+                               (io/file "."))))))
+
+  (testing "rejects JVM-backed children"
+    (is (thrown-with-msg?
+          clojure.lang.ExceptionInfo
+          #"Cannot render JVM-backed child as XML"
+          (a/to-xml (a/element :copy (File. "x")))))))
+
 (deftest session-state-stays-bounded
   (testing "synthetic refids don't accumulate across reused-session calls"
     (a/with-session [s {:level :error}]
