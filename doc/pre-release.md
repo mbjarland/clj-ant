@@ -23,7 +23,7 @@ Legend:
   `build.clj`.
 
 - ✅ **Tag the alpha releases.**
-  `v1.0.0-alpha.1` through `v1.0.0-alpha.4` are published. Final 1.0
+  `v1.0.0-alpha.1` through `v1.0.0-alpha.5` are published. Final 1.0
   waits for external usage and feedback on the public API.
 
 ### Build / publish
@@ -36,7 +36,7 @@ Legend:
   GitHub secrets are configured with a rotated Clojars deploy token.
 
 - ✅ **Confirm Clojars deployment.**
-  `io.github.mbjarland/clj-ant` `1.0.0-alpha.4` is available on
+  `io.github.mbjarland/clj-ant` `1.0.0-alpha.5` is available on
   Clojars.
 
 ### Continuous integration
@@ -46,6 +46,7 @@ Legend:
    - clj -T:build javac
    - clj -T:build lint
    - clj -M:test
+   - bb bin/bb-pod-smoke.clj
    - clj -T:build jar
    ```
   The workflow tests JDK 8, 11, 17, and 21.
@@ -79,10 +80,16 @@ Legend:
   must run `clj -T:build javac` once when working from source; the
   contributor quickstart documents that step prominently.
 
-- ❓ **Babashka pod manifest for the registry.**
-  https://github.com/babashka/pod-registry — optional. Lets bb
-  users do `(pods/load-pod 'mbjarland/clj-ant)` instead of
-  spelling out `["clojure" "-M:pod"]`. Worth doing once stable.
+- ✅ **Babashka pod artifacts.**
+  `clj -T:build pod-artifacts` creates standalone JVM pod zips for
+  Unix and Windows launchers, and the release workflow attaches them to
+  GitHub releases.
+
+- 🚧 **Babashka pod manifest for the registry.**
+  https://github.com/babashka/pod-registry — needs a PR after alpha.5
+  release assets exist. Lets bb users do
+  `(pods/load-pod 'io.github.mbjarland/clj-ant "...")` instead of
+  spelling out `["clojure" "-M:pod"]`.
 
 
 ## Nice to have — post-launch

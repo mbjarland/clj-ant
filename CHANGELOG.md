@@ -7,6 +7,15 @@ format.
 
 ## Unreleased
 
+## 1.0.0-alpha.5 - 2026-05-01
+
+### Added
+
+- Add a `pod-artifacts` build task that creates a standalone JVM pod jar
+  and registry-compatible Unix/Windows launcher zip artifacts.
+- Attach pod-registry zip artifacts to GitHub releases and smoke-test the
+  generated JVM launcher before release upload.
+
 ## 1.0.0-alpha.4 - 2026-05-01
 
 ### Added

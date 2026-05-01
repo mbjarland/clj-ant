@@ -80,7 +80,7 @@ custom taskdefs. Compose them with the rest of your Clojure code freely.
 
 ```clojure
 ;; deps.edn
-{:deps {io.github.mbjarland/clj-ant {:mvn/version "1.0.0-alpha.4"}}}
+{:deps {io.github.mbjarland/clj-ant {:mvn/version "1.0.0-alpha.5"}}}
 ```
 
 Replace the version with the latest one shown by the Clojars badge

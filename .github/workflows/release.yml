@@ -1,12 +1,16 @@
 name: release
 
-# Triggered by pushing a v*.*.* tag. Builds the jar and deploys to
-# Clojars. CLOJARS_USERNAME and CLOJARS_PASSWORD secrets must be
-# configured as a deploy token scoped to the verified group.
+# Triggered by pushing a v*.*.* tag. Builds the jar, deploys to Clojars,
+# and attaches babashka pod-registry zip artifacts to the GitHub release.
+# CLOJARS_USERNAME and CLOJARS_PASSWORD secrets must be configured as a
+# deploy token scoped to the verified group.
 
 on:
   push:
     tags: ['v*.*.*']
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
@@ -32,3 +36,16 @@ jobs:
           CLOJARS_USERNAME: ${{ secrets.CLOJARS_USERNAME }}
           CLOJARS_PASSWORD: ${{ secrets.CLOJARS_PASSWORD }}
         run: clojure -T:build deploy
+      - name: Build pod registry artifacts
+        run: clojure -T:build pod-artifacts
+      - name: Smoke generated pod launcher
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          CLJ_ANT_POD_CMD="[\"$PWD/target/pod-registry/work/pod-clj-ant-${VERSION}-jvm-unix/pod-clj-ant\"]" bb bin/bb-pod-smoke.clj
+      - name: Upload GitHub release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            target/pod-registry/pod-clj-ant-*-jvm-unix.zip
+            target/pod-registry/pod-clj-ant-*-jvm-windows.zip
+          fail_on_unmatched_files: true
