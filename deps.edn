@@ -34,7 +34,7 @@
                    :main-opts  ["-m" "nrepl.cmdline"]}
 
            ;; Tests:  clj -M:test
-           :test  {:extra-paths ["test"]
+           :test  {:extra-paths ["test" "src/gen"]
                    :extra-deps  {lambdaisland/kaocha
                                  {:mvn/version "1.91.1392"}}
                    :main-opts   ["-m" "kaocha.runner"]}

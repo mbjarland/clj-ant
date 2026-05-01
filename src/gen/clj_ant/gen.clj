@@ -91,32 +91,124 @@
 ;; ---------------------------------------------------------------------------
 ;; Manual HTML extraction
 
-(defn- read-description
-  "Pull the prose under `<h3>Description</h3>` from a task's manual page,
-  if present locally. Strips inline tags, collapses whitespace. Returns
-  nil if not available."
-  [^File manual-dir tag]
+(def ^:private html-entities
+  {"nbsp" " "
+   "amp" "&"
+   "lt" "<"
+   "gt" ">"
+   "quot" "\""
+   "apos" "'"
+   "mdash" "-"
+   "ndash" "-"
+   "hellip" "..."
+   "rsquo" "'"
+   "lsquo" "'"
+   "rdquo" "\""
+   "ldquo" "\""})
+
+(defn- decode-entity [entity]
+  (or (get html-entities entity)
+      (when-let [[_ hex] (re-matches #"#x([0-9A-Fa-f]+)" entity)]
+        (str (char (Long/parseLong hex 16))))
+      (when-let [[_ dec] (re-matches #"#([0-9]+)" entity)]
+        (str (char (Long/parseLong dec))))
+      (str "&" entity ";")))
+
+(defn- html->text [html]
+  (some-> html
+          (str/replace #"(?is)<!--.*?-->" " ")
+          (str/replace #"(?is)<(br|/p|/div|/li|/tr|/h[1-6])\b[^>]*>" " ")
+          (str/replace #"(?is)<[^>]+>" " ")
+          (str/replace #"&(#x[0-9A-Fa-f]+|#[0-9]+|[A-Za-z]+);"
+                       #(decode-entity (second %)))
+          (str/replace #"\s+" " ")
+          str/trim
+          not-empty))
+
+(defn- manual-page [^File manual-dir tag]
   (when (and manual-dir (.isDirectory manual-dir))
     (let [candidates [(File. (File. manual-dir "Tasks") (str tag ".html"))
                       (File. (File. manual-dir "Types") (str tag ".html"))]]
-      (when-some [^File f (some #(when (.exists ^File %) %) candidates)]
-        (let [html (slurp f)
-              ;; Grab text between <h3>Description</h3> and the next <h3>.
-              m    (re-find #"(?s)<h3[^>]*>\s*Description\s*</h3>(.*?)<h3" html)
-              raw  (when m (second m))]
-          (when raw
-            (-> raw
-                ;; remove tags
-                (str/replace #"(?s)<[^>]+>" " ")
-                ;; entities
-                (str/replace #"&nbsp;" " ")
-                (str/replace #"&amp;" "&")
-                (str/replace #"&lt;" "<")
-                (str/replace #"&gt;" ">")
-                (str/replace #"&quot;" "\"")
-                ;; whitespace
-                (str/replace #"\s+" " ")
-                str/trim)))))))
+      (some #(when (.exists ^File %) %) candidates))))
+
+(defn- read-description-from-html [html]
+  (or (some-> (re-find #"(?is)<h3[^>]*>\s*Description\s*</h3>(.*?)(?=<h3\b|<h2\b|</body>)" html)
+              second
+              html->text)
+      ;; Type pages often start with prose directly after <h2> and then
+      ;; jump straight into the attribute table without a Description heading.
+      (some-> (re-find #"(?is)<h2[^>]*>.*?</h2>(.*?)(?=<table\b[^>]*class=[\"'][^\"']*\battr\b|<h3\b|<h2\b|</body>)" html)
+              second
+              html->text)))
+
+(defn- first-attr-table [html]
+  (some-> (re-find #"(?is)<table\b[^>]*class=[\"'][^\"']*\battr\b[^\"']*[\"'][^>]*>(.*?)</table>" html)
+          second))
+
+(defn- table-rows [table-html]
+  (map second (re-seq #"(?is)<tr\b[^>]*>(.*?)</tr>" table-html)))
+
+(defn- row-cells [row-html]
+  (mapv (fn [[_ attrs body]]
+          {:attrs attrs
+           :text  (html->text body)})
+        (re-seq #"(?is)<td\b([^>]*)>(.*?)</td>" row-html)))
+
+(defn- rowspan [attrs]
+  (if-let [[_ n] (re-find #"(?i)rowspan\s*=\s*[\"']?([0-9]+)" (or attrs ""))]
+    (Long/parseLong n)
+    1))
+
+(defn- attr-name-key [s]
+  (when-some [name (some-> s
+                           (str/replace #"\s+" " ")
+                           str/trim
+                           not-empty)]
+    (keyword (.toLowerCase ^String name))))
+
+(defn- read-attrs-from-html [html]
+  (when-some [table (first-attr-table html)]
+    (loop [rows (table-rows table)
+           carried-required nil
+           acc (sorted-map)]
+      (if-some [row (first rows)]
+        (let [cells (row-cells row)
+              attr-cell (first cells)
+              desc-cell (second cells)
+              required-cell (nth cells 2 nil)
+              attr-key (attr-name-key (:text attr-cell))
+              required (or (:text required-cell) (:text carried-required))
+              carried-required'
+              (cond
+                required-cell
+                (let [remaining (dec (rowspan (:attrs required-cell)))]
+                  (when (pos? remaining)
+                    {:text (:text required-cell) :remaining remaining}))
+
+                (and carried-required (pos? (:remaining carried-required)))
+                (let [remaining (dec (:remaining carried-required))]
+                  (when (pos? remaining)
+                    (assoc carried-required :remaining remaining)))
+
+                :else nil)
+              acc' (if (and attr-key (:text desc-cell))
+                     (assoc acc attr-key
+                            (cond-> {:description (:text desc-cell)}
+                              required (assoc :required required)))
+                     acc)]
+          (recur (rest rows) carried-required' acc'))
+        (not-empty acc)))))
+
+(defn- read-manual-info
+  "Read task/type prose and attribute table docs from the bundled Ant manual."
+  [^File manual-dir tag]
+  (when-some [^File f (manual-page manual-dir tag)]
+    (let [html (slurp f)
+          description (read-description-from-html html)
+          attrs (read-attrs-from-html html)]
+      (cond-> {:manual-file (.getPath f)}
+        description (assoc :description description)
+        attrs (assoc :attrs attrs)))))
 
 ;; ---------------------------------------------------------------------------
 ;; Rendering
@@ -130,6 +222,17 @@
             (recur (rest words) w (conj out line))
             (recur (rest words) cand out)))
         (str/join (str \newline pad) (filter seq (conj out line)))))))
+
+(defn- indent-wrap [s width indent]
+  (let [pad (apply str (repeat indent \space))]
+    (str pad (wrap s width indent))))
+
+(defn- string-literal [s]
+  (str "\""
+       (-> s
+           (str/replace "\\" "\\\\")
+           (str/replace "\"" "\\\""))
+       "\""))
 
 (defn- safe-symbol
   "Pick a clojure-friendly symbol for an Ant tag.
@@ -155,10 +258,16 @@
   [k]
   (keyword (.toLowerCase ^String (name k))))
 
-(defn- attribute-doc-line [[k ^Class c]]
-  (format "    %-26s %s"
-          (str (attr-keyword k))
-          (friendly-type c)))
+(defn- attribute-doc-line [manual-attrs [k ^Class c]]
+  (let [kw (attr-keyword k)
+        {:keys [description required]} (get manual-attrs kw)]
+    (str/join \newline
+              (remove nil?
+                      [(format "    %-26s %s" (str kw) (friendly-type c))
+                       (when description
+                         (indent-wrap description 74 6))
+                       (when required
+                         (indent-wrap (str "Required: " required) 74 6))]))))
 
 (defn- nested-doc-line [[k ^Class c]]
   (format "    %-26s (%s)"
@@ -166,12 +275,20 @@
           (.getSimpleName c)))
 
 (defn- task-fn-source
-  [{:keys [tag class? sym kind description info other-classes by-parent]}]
+  [{:keys [tag class? sym kind manual info other-classes by-parent]}]
   (let [{:keys [attrs nested supports-text?]} info
+        manual-attrs (:attrs manual)
+        recorded-manual-attrs (into (sorted-map)
+                                    (keep (fn [[k _]]
+                                            (let [kw (attr-keyword k)]
+                                              (when-some [doc (get manual-attrs kw)]
+                                                [kw doc]))))
+                                    attrs)
         attr-keys (mapv (comp symbol name attr-keyword first) attrs)
         attr-block  (when (seq attrs)
-                      (str "  Attributes:" \newline
-                           (str/join \newline (map attribute-doc-line attrs))))
+                       (str "  Attributes:" \newline
+                            (str/join \newline (map #(attribute-doc-line manual-attrs %)
+                                                     attrs))))
         nested-block (when (seq nested)
                        (str "  Nested elements:" \newline
                             (str/join \newline (map nested-doc-line nested))))
@@ -194,7 +311,7 @@
                            \newline
                            "  The runner picks the right class at execute time;\n"
                            "  attribute docs above are for the first one."))
-        desc        (or description
+        desc        (or (:description manual)
                         (str "Ant " (clojure.core/name kind) " "
                              tag ". (No description bundled.)"))
         docstring   (->> [(wrap desc 76 2)
@@ -216,14 +333,16 @@
                       (list 'quote (list ['& 'nested])))]
     (with-out-str
       (println (str "(defn " sym))
-      (println (str "  \"" (str/replace docstring "\"" "\\\"") "\""))
+      (println (str "  " (string-literal docstring)))
       (println (str "  {:arglists " (pr-str arglists)
-                    ", :clj-ant/tag " (pr-str tag)
-                    ", :clj-ant/class \"" class? "\""
-                    ", :clj-ant/classes "
-                    (pr-str (vec (cons class? (or other-classes []))))
-                    (when by-parent
-                      (str ", :clj-ant/by-parent " (pr-str by-parent)))
+                     ", :clj-ant/tag " (pr-str tag)
+                     ", :clj-ant/class \"" class? "\""
+                     ", :clj-ant/classes "
+                     (pr-str (vec (cons class? (or other-classes []))))
+                     (when (seq recorded-manual-attrs)
+                       (str ", :clj-ant/attrs " (pr-str recorded-manual-attrs)))
+                     (when by-parent
+                       (str ", :clj-ant/by-parent " (pr-str by-parent)))
                     "}"))
       (println "  [& args]")
       (println (str "  (clojure.core/apply c/element "
@@ -315,7 +434,7 @@
                       :class?        klass-name
                       :sym           (safe-symbol tag)
                       :kind          kind
-                      :description   (read-description manual tag)
+                      :manual        (read-manual-info manual tag)
                       :info          info
                       :other-classes (when-some [cs (get tag->classes tag)]
                                        (seq (remove #(= % klass-name) cs)))
