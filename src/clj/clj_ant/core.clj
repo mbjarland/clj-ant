@@ -1578,6 +1578,8 @@
            not-empty))
     (catch Throwable _ nil)))
 
+(def ^:private describe-cache (atom {}))
+
 (defn describe
   "Return a data description of a task or type by tag. Useful for
   building UIs, validators, or just satisfying curiosity at the REPL.
@@ -1607,46 +1609,51 @@
     :attrs    -> union across all classes
     :nested   -> union across all classes"
   [tag]
-  (let [project (Project.) _ (.init project)
-        n       (name tag)
-        wm      (wrapper-meta tag)
-        manual-attrs (:clj-ant/attrs wm)
-        top-kind (cond
-                    (.containsKey (.getTaskDefinitions project) n)     :task
-                    (.containsKey (.getDataTypeDefinitions project) n) :type)
-        top-klass (case top-kind
-                    :task (.get (.getTaskDefinitions project) n)
-                    :type (.get (.getDataTypeDefinitions project) n)
-                    nil)
-        klasses (or (when top-klass [top-klass])
-                    (nested-recorded-classes tag))
-        kind    (or top-kind (when (seq klasses) :nested))]
-    (when (seq klasses)
-      (let [helpers   (mapv #(IntrospectionHelper/getHelper project %) klasses)
-            ;; Merge attrs and nested across all classes. For ambiguous
-            ;; tags this lists every key any of the classes accepts;
-            ;; the runtime-effective set still depends on parent.
-            merged    (fn [getter]
-                        (->> helpers
-                             (mapcat #(seq (getter %)))
-                             (map (fn [^java.util.Map$Entry e]
-                                    [(.getKey e) (.getValue e)]))
-                             ;; first-occurrence wins on conflicts
-                             (reduce (fn [acc [k v]]
-                                       (if (contains? acc k) acc (assoc acc k v)))
-                                     (sorted-map))))]
-        (cond-> {:tag     (keyword n)
-                 :class   (.getName ^Class (first klasses))
-                 :classes (mapv #(.getName ^Class %) klasses)
-                 :kind    kind
-                 :attrs   (into (sorted-map)
-                                (map (fn [entry]
-                                       [(key entry) (attr-record manual-attrs entry)]))
-                                (merged #(.getAttributeMap %)))
-                 :nested  (merged #(.getNestedElementMap %))
-                 :text?   (boolean (some #(.supportsCharacters %) helpers))}
-          (:clj-ant/description wm) (assoc :description (:clj-ant/description wm))
-          (:clj-ant/manual-url wm)  (assoc :manual-url (:clj-ant/manual-url wm)))))))
+  (let [cache-key (keyword (name tag))]
+    (or (get @describe-cache cache-key)
+        (when-some [d
+                    (let [project (Project.) _ (.init project)
+                          n       (name tag)
+                          wm      (wrapper-meta tag)
+                          manual-attrs (:clj-ant/attrs wm)
+                          top-kind (cond
+                                     (.containsKey (.getTaskDefinitions project) n)     :task
+                                     (.containsKey (.getDataTypeDefinitions project) n) :type)
+                          top-klass (case top-kind
+                                      :task (.get (.getTaskDefinitions project) n)
+                                      :type (.get (.getDataTypeDefinitions project) n)
+                                      nil)
+                          klasses (or (when top-klass [top-klass])
+                                      (nested-recorded-classes tag))
+                          kind    (or top-kind (when (seq klasses) :nested))]
+                      (when (seq klasses)
+                        (let [helpers (mapv #(IntrospectionHelper/getHelper project %) klasses)
+                              ;; Merge attrs and nested across all classes. For ambiguous
+                              ;; tags this lists every key any of the classes accepts;
+                              ;; the runtime-effective set still depends on parent.
+                              merged  (fn [getter]
+                                        (->> helpers
+                                             (mapcat #(seq (getter %)))
+                                             (map (fn [^java.util.Map$Entry e]
+                                                    [(.getKey e) (.getValue e)]))
+                                             ;; first-occurrence wins on conflicts
+                                             (reduce (fn [acc [k v]]
+                                                       (if (contains? acc k) acc (assoc acc k v)))
+                                                     (sorted-map))))]
+                          (cond-> {:tag     (keyword n)
+                                   :class   (.getName ^Class (first klasses))
+                                   :classes (mapv #(.getName ^Class %) klasses)
+                                   :kind    kind
+                                   :attrs   (into (sorted-map)
+                                                  (map (fn [entry]
+                                                         [(key entry) (attr-record manual-attrs entry)]))
+                                                  (merged #(.getAttributeMap %)))
+                                   :nested  (merged #(.getNestedElementMap %))
+                                   :text?   (boolean (some #(.supportsCharacters %) helpers))}
+                            (:clj-ant/description wm) (assoc :description (:clj-ant/description wm))
+                            (:clj-ant/manual-url wm)  (assoc :manual-url (:clj-ant/manual-url wm))))))]
+          (swap! describe-cache assoc cache-key d)
+          d))))
 
 (defn plan
   "Pretty-print a element tree to *out*. Useful for sanity-checking a
