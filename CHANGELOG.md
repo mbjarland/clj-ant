@@ -7,10 +7,34 @@ format.
 
 ## Unreleased
 
+## 1.0.0-alpha.4 - 2026-05-01
+
+### Added
+
+- Add explicit cljdoc article ordering so README, guides, architecture,
+  release notes, and changelog render in a predictable order.
+- Add a babashka pod smoke script, wired into CI and release checks, that
+  loads the pod with `babashka.pods/load-pod` and exercises generated task
+  stubs plus `describe`, `lint`, `files`, and `execute-stream`.
+
+### Changed
+
+- Render generated wrapper attribute docs as Markdown tables for more
+  readable cljdoc API pages.
+- Use an HTTPS SCM connection in generated POM metadata while keeping the
+  maintainer developer connection on SSH.
+- Refresh README and release-checklist state for the published alpha.3 and
+  live cljdoc documentation.
+
 ### Fixed
 
 - Allow Java bridge compilation on JDK 8 while still emitting Java 8
   bytecode from newer JDKs.
+
+### Removed
+
+- Remove obsolete checked-in `safe-target` artifacts and ignore the local
+  `safe-target` build directory.
 
 ## 1.0.0-alpha.3 - 2026-05-01
 

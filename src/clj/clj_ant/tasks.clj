@@ -39,20 +39,15 @@ defined outside of targets in the new project-but not those defined inside of ta
 
 **Attributes**
 
-- `:antfile` `String` - the buildfile to use. This file is expected to be a filename relative to the dir attribute given.
-  Required: No; defaults to build.xml
-- `:dir` `File` - the directory to use as a basedir for the new Ant project (unless useNativeBasedir is set to true). This will override the basedir setting of the called project. Also serves as the directory to resolve the antfile and output attribute's values (if any).
-  Required: No; defaults to the current project's basedir, unless inheritall has been set to false, in which case it doesn't have a default value
-- `:inheritall` `boolean` - If true, pass all properties to the new Ant project.
-  Required: No; defaults to true
-- `:inheritrefs` `boolean` - If true, pass all references to the new Ant project.
-  Required: No; defaults to false
-- `:output` `String` - Filename to write the Ant output to. This is relative to the value of the dir attribute if it has been set or to the basedir of the current project otherwise.
-  Required: No
-- `:target` `String` - the target of the new Ant project that should be executed.
-  Required: No; defaults to the new project's default target
-- `:usenativebasedir` `boolean` - If set to true, the child build will use the same basedir as it would have used when run from the command line (i.e. the basedir one would expect when looking at the child build's buildfile). Since Ant 1.8.0
-  Required: No; defaults to false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:antfile` | `String` | the buildfile to use. This file is expected to be a filename relative to the dir attribute given. | No; defaults to build.xml |
+| `:dir` | `File` | the directory to use as a basedir for the new Ant project (unless useNativeBasedir is set to true). This will override the basedir setting of the called project. Also serves as the directory to resolve the antfile and output attribute's values (if any). | No; defaults to the current project's basedir, unless inheritall has been set to false, in which case it doesn't have a default value |
+| `:inheritall` | `boolean` | If true, pass all properties to the new Ant project. | No; defaults to true |
+| `:inheritrefs` | `boolean` | If true, pass all references to the new Ant project. | No; defaults to false |
+| `:output` | `String` | Filename to write the Ant output to. This is relative to the value of the dir attribute if it has been set or to the basedir of the current project otherwise. | No |
+| `:target` | `String` | the target of the new Ant project that should be executed. | No; defaults to the new project's default target |
+| `:usenativebasedir` | `boolean` | If set to true, the child build will use the same basedir as it would have used when run from the command line (i.e. the basedir one would expect when looking at the child build's buildfile). Since Ant 1.8.0 | No; defaults to false |
 
 **Nested elements**
 
@@ -102,12 +97,11 @@ started the build, the behavior of this task is undefined.
 
 **Attributes**
 
-- `:inheritall` `boolean` - If true, pass all properties to the new Apache Ant project.
-  Required: No; defaults to true
-- `:inheritrefs` `boolean` - If true, pass all references to the new Ant project.
-  Required: No; defaults to false
-- `:target` `String` - The target to execute.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:inheritall` | `boolean` | If true, pass all properties to the new Apache Ant project. | No; defaults to true |
+| `:inheritrefs` | `boolean` | If true, pass all references to the new Ant project. | No; defaults to false |
+| `:target` | `String` | The target to execute. | Yes |
 
 **Nested elements**
 
@@ -144,8 +138,9 @@ example below.
 
 **Attributes**
 
-- `:output` `File` - file to write the DTD to.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:output` | `File` | file to write the DTD to. | Yes |
 
 **Reference**
 
@@ -167,12 +162,11 @@ No property The name of the property to set. Yes Ignored
 
 **Attributes**
 
-- `:atleast` `String` - The version that this Ant is of at least. The format is major.minor.point.
-  Required: No
-- `:exactly` `String` - The version that this Ant is of exactly. The format is major.minor.point.
-  Required: No
-- `:property` `String` - The name of the property to set.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:atleast` | `String` | The version that this Ant is of at least. The format is major.minor.point. | No |
+| `:exactly` | `String` | The version that this Ant is of exactly. The format is major.minor.point. | No |
+| `:property` | `String` | The name of the property to set. | Yes |
 
 **Reference**
 
@@ -202,74 +196,43 @@ will be suspended because it tries to read from the standard input.
 
 **Attributes**
 
-- `:addsourcefile` `boolean` - Whether source file names should be added to the command automatically. Since Ant 1.6.
-  Required: No; default is true
-- `:append` `boolean` - whether output should be appended to or overwrite an existing file. If you set parallel to false, you will probably want to set this one to true.
-  Required: No; default is false
-- `:command` `Commandline`
-- `:dest` `File` - the directory where the command is expected to place target files when it is executed.
-  Required: No; ignored unless a nested mapper is specified; by default, the target filenames returned by the mapper will be interpreted as absolute paths
-- `:dir` `File` - the directory in which the command should be executed.
-  Required: No; if vmlauncher is true, defaults to the current working directory, otherwise the project's basedir
-- `:discarderror` `boolean` - Whether error output should completely be discarded. This setting is incompatible with any setting that redirects error output to files or properties as well as logError. Since Ant 1.10.10
-  Required: No; defaults to false
-- `:discardoutput` `boolean` - Whether output should completely be discarded. This setting is incompatible with any setting that redirects output to files or properties. If you set this to true error output will be discared as well unless you redirect error output to files, properties or enable logError. Since Ant 1.10.10
-  Required: No; defaults to false
-- `:error` `File` - The file to which the standard error of the command should be redirected. since Ant 1.6
-  Required: No
-- `:errorproperty` `String` - The name of a property in which the standard error of the command should be stored. since Ant 1.6
-  Required: No
-- `:executable` `String` - the command to execute without any command line arguments.
-  Required: Yes
-- `:failifexecutionfails` `boolean` - Stop the build if we can't start the program.
-  Required: No; defaults to true
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code other than 0.
-  Required: No; defaults to false
-- `:force` `boolean` - Whether to bypass timestamp comparisons for target files. Since Ant 1.6.3.
-  Required: No; default is false
-- `:forwardslash` `boolean` - whether the file names should be passed with forward slashes even if the operating system requires other file separator. The option is ignored if the system file separator is a forward slash.
-  Required: No; default is false
-- `:ignoremissing` `boolean` - Whether to ignore nonexistent files specified via filelists. Since Ant 1.6.2.
-  Required: No; default is true
-- `:input` `File` - A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute. since Ant 1.6
-  Required: No
-- `:inputstring` `String` - A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute. since Ant 1.6
-  Required: No
-- `:logerror` `boolean` - This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. If you redirect error with the error or errorProperty attributes, this will have no effect. since Ant 1.6
-  Required: No
-- `:maxparallel` `int` - Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. Since Ant 1.6.
-  Required: No, unlimited by default
-- `:newenvironment` `boolean` - Do not propagate old environment when new environment variables are specified.
-  Required: No; default is false
-- `:os` `String` - list of Operating Systems on which the command may be executed.
-  Required: No
-- `:osfamily` `String` - OS family as used in the <os> condition. since Ant 1.7
-  Required: No
-- `:output` `File` - the file to which the output of the command should be redirected. If the error stream is not also redirected to a file or property, it will appear in this output.
-  Required: No
-- `:outputproperty` `String` - the name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output.
-  Required: No
-- `:parallel` `boolean` - Run the command only once, appending all files as arguments. If false, command will be executed once for every file.
-  Required: No; default is false
-- `:relative` `boolean` - whether the filenames should be passed on the command line as relative pathnames (relative to the base directory of the corresponding fileset/list for source files or the dest attribute for target files).
-  Required: No; default is false
-- `:resolveexecutable` `boolean` - When this attribute is true, the name of the executable if resolved firstly against the project basedir and if that does not exist, against the execution directory if specified. On Unix systems, if you only want to allow execution of commands in the user's path, set this to false. since Ant 1.6
-  Required: No; default is false
-- `:resultproperty` `String` - the name of a property in which the return code of the command should be stored. Only of interest if failonerror is false. If you set parallel to false, only the result of the first execution will be stored.
-  Required: No
-- `:searchpath` `boolean`
-- `:skipemptyfilesets` `boolean` - Don't run the command, if no source files have been found or are newer than their corresponding target files. Despite its name, this attribute applies to filelists as well.
-  Required: No; default is false
-- `:spawn` `boolean` - whether or not you want the commands to be spawned. If you spawn a command, its output will not be logged by Ant. The input, output, error, and result property settings are not active when spawning a process. since Ant 1.6
-  Required: No; default is false
-- `:timeout` `Long` - Stop the command if it doesn't finish within the specified time (given in milliseconds).
-  Required: No
-- `:type` `FileDirBoth` - One of file, dir or both. If set to file, only the names of plain files will be sent to the command. If set to dir, only the names of directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir.
-  Required: No; default is file
-- `:verbose` `boolean` - Whether to print a summary after execution or not. Since Ant 1.6.
-  Required: No; default is false
-- `:vmlauncher` `boolean` - Run command using the JVM's execution facilities where available. If set to false the underlying OS's shell, either directly or through the antRun scripts, will be used. Under some operating systems, this gives access to facilities not normally available through JVM including, under Windows, being able to execute scripts, rather than their associated interpreter. If you want to specify the name of the executable as a relative path to the directory given by the dir attribute, it may become necessary to set vmlauncher to false as well.
-  Required: No; default is true
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:addsourcefile` | `boolean` | Whether source file names should be added to the command automatically. Since Ant 1.6. | No; default is true |
+| `:append` | `boolean` | whether output should be appended to or overwrite an existing file. If you set parallel to false, you will probably want to set this one to true. | No; default is false |
+| `:command` | `Commandline` |  |  |
+| `:dest` | `File` | the directory where the command is expected to place target files when it is executed. | No; ignored unless a nested mapper is specified; by default, the target filenames returned by the mapper will be interpreted as absolute paths |
+| `:dir` | `File` | the directory in which the command should be executed. | No; if vmlauncher is true, defaults to the current working directory, otherwise the project's basedir |
+| `:discarderror` | `boolean` | Whether error output should completely be discarded. This setting is incompatible with any setting that redirects error output to files or properties as well as logError. Since Ant 1.10.10 | No; defaults to false |
+| `:discardoutput` | `boolean` | Whether output should completely be discarded. This setting is incompatible with any setting that redirects output to files or properties. If you set this to true error output will be discared as well unless you redirect error output to files, properties or enable logError. Since Ant 1.10.10 | No; defaults to false |
+| `:error` | `File` | The file to which the standard error of the command should be redirected. since Ant 1.6 | No |
+| `:errorproperty` | `String` | The name of a property in which the standard error of the command should be stored. since Ant 1.6 | No |
+| `:executable` | `String` | the command to execute without any command line arguments. | Yes |
+| `:failifexecutionfails` | `boolean` | Stop the build if we can't start the program. | No; defaults to true |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code other than 0. | No; defaults to false |
+| `:force` | `boolean` | Whether to bypass timestamp comparisons for target files. Since Ant 1.6.3. | No; default is false |
+| `:forwardslash` | `boolean` | whether the file names should be passed with forward slashes even if the operating system requires other file separator. The option is ignored if the system file separator is a forward slash. | No; default is false |
+| `:ignoremissing` | `boolean` | Whether to ignore nonexistent files specified via filelists. Since Ant 1.6.2. | No; default is true |
+| `:input` | `File` | A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute. since Ant 1.6 | No |
+| `:inputstring` | `String` | A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute. since Ant 1.6 | No |
+| `:logerror` | `boolean` | This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. If you redirect error with the error or errorProperty attributes, this will have no effect. since Ant 1.6 | No |
+| `:maxparallel` | `int` | Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. Since Ant 1.6. | No, unlimited by default |
+| `:newenvironment` | `boolean` | Do not propagate old environment when new environment variables are specified. | No; default is false |
+| `:os` | `String` | list of Operating Systems on which the command may be executed. | No |
+| `:osfamily` | `String` | OS family as used in the <os> condition. since Ant 1.7 | No |
+| `:output` | `File` | the file to which the output of the command should be redirected. If the error stream is not also redirected to a file or property, it will appear in this output. | No |
+| `:outputproperty` | `String` | the name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output. | No |
+| `:parallel` | `boolean` | Run the command only once, appending all files as arguments. If false, command will be executed once for every file. | No; default is false |
+| `:relative` | `boolean` | whether the filenames should be passed on the command line as relative pathnames (relative to the base directory of the corresponding fileset/list for source files or the dest attribute for target files). | No; default is false |
+| `:resolveexecutable` | `boolean` | When this attribute is true, the name of the executable if resolved firstly against the project basedir and if that does not exist, against the execution directory if specified. On Unix systems, if you only want to allow execution of commands in the user's path, set this to false. since Ant 1.6 | No; default is false |
+| `:resultproperty` | `String` | the name of a property in which the return code of the command should be stored. Only of interest if failonerror is false. If you set parallel to false, only the result of the first execution will be stored. | No |
+| `:searchpath` | `boolean` |  |  |
+| `:skipemptyfilesets` | `boolean` | Don't run the command, if no source files have been found or are newer than their corresponding target files. Despite its name, this attribute applies to filelists as well. | No; default is false |
+| `:spawn` | `boolean` | whether or not you want the commands to be spawned. If you spawn a command, its output will not be logged by Ant. The input, output, error, and result property settings are not active when spawning a process. since Ant 1.6 | No; default is false |
+| `:timeout` | `Integer` | Stop the command if it doesn't finish within the specified time (given in milliseconds). | No |
+| `:type` | `FileDirBoth` | One of file, dir or both. If set to file, only the names of plain files will be sent to the command. If set to dir, only the names of directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir. | No; default is file |
+| `:verbose` | `boolean` | Whether to print a summary after execution or not. Since Ant 1.6. | No; default is false |
+| `:vmlauncher` | `boolean` | Run command using the JVM's execution facilities where available. If set to false the underlying OS's shell, either directly or through the antRun scripts, will be used. Under some operating systems, this gives access to facilities not normally available through JVM including, under Windows, being able to execute scripts, rather than their associated interpreter. If you want to specify the name of the executable as a relative path to the directory given by the dir attribute, it may become necessary to set vmlauncher to false as well. | No; default is true |
 
 **Nested elements**
 
@@ -307,55 +270,48 @@ current OS. See the setpermissions task for a platform independent alternative.
 
 **Attributes**
 
-- `:addsourcefile` `boolean`
-- `:append` `boolean`
-- `:archive` `boolean` - the archive permission.
-  Required: At least one of the four
-- `:command` `Commandline`
-- `:dest` `File`
-- `:dir` `File`
-- `:discarderror` `boolean`
-- `:discardoutput` `boolean`
-- `:error` `File`
-- `:errorproperty` `String`
-- `:executable` `String`
-- `:failifexecutionfails` `boolean`
-- `:failonerror` `boolean`
-- `:file` `File` - the file or directory of which the permissions must be changed.
-  Required: Yes, or nested <fileset/list> elements
-- `:force` `boolean`
-- `:forwardslash` `boolean`
-- `:hidden` `boolean` - the hidden permission.
-  Required: At least one of the four
-- `:ignoremissing` `boolean`
-- `:input` `File`
-- `:inputstring` `String`
-- `:logerror` `boolean`
-- `:maxparallel` `int` - Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. Since Ant 1.6.
-  Required: No, defaults to unlimited
-- `:newenvironment` `boolean`
-- `:os` `String`
-- `:osfamily` `String` - OS family as used in the <os> condition.
-  Required: No; defaults to windows
-- `:output` `File`
-- `:outputproperty` `String`
-- `:parallel` `boolean`
-- `:readonly` `boolean` - the readonly permission.
-  Required: At least one of the four
-- `:relative` `boolean`
-- `:resolveexecutable` `boolean`
-- `:resultproperty` `String`
-- `:searchpath` `boolean`
-- `:skipemptyfilesets` `boolean`
-- `:spawn` `boolean`
-- `:system` `boolean` - the system permission.
-  Required: At least one of the four
-- `:timeout` `Long`
-- `:type` `FileDirBoth` - One of file, dir or both. If set to file, only the permissions of plain files are going to be changed. If set to dir, only the directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir.
-  Required: No; default is file
-- `:verbose` `boolean` - Whether to print a summary after execution or not.
-  Required: No; defaults to false
-- `:vmlauncher` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:addsourcefile` | `boolean` |  |  |
+| `:append` | `boolean` |  |  |
+| `:archive` | `boolean` | the archive permission. | At least one of the four |
+| `:command` | `Commandline` |  |  |
+| `:dest` | `File` |  |  |
+| `:dir` | `File` |  |  |
+| `:discarderror` | `boolean` |  |  |
+| `:discardoutput` | `boolean` |  |  |
+| `:error` | `File` |  |  |
+| `:errorproperty` | `String` |  |  |
+| `:executable` | `String` |  |  |
+| `:failifexecutionfails` | `boolean` |  |  |
+| `:failonerror` | `boolean` |  |  |
+| `:file` | `File` | the file or directory of which the permissions must be changed. | Yes, or nested <fileset/list> elements |
+| `:force` | `boolean` |  |  |
+| `:forwardslash` | `boolean` |  |  |
+| `:hidden` | `boolean` | the hidden permission. | At least one of the four |
+| `:ignoremissing` | `boolean` |  |  |
+| `:input` | `File` |  |  |
+| `:inputstring` | `String` |  |  |
+| `:logerror` | `boolean` |  |  |
+| `:maxparallel` | `int` | Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. Since Ant 1.6. | No, defaults to unlimited |
+| `:newenvironment` | `boolean` |  |  |
+| `:os` | `String` |  |  |
+| `:osfamily` | `String` | OS family as used in the <os> condition. | No; defaults to windows |
+| `:output` | `File` |  |  |
+| `:outputproperty` | `String` |  |  |
+| `:parallel` | `boolean` |  |  |
+| `:readonly` | `boolean` | the readonly permission. | At least one of the four |
+| `:relative` | `boolean` |  |  |
+| `:resolveexecutable` | `boolean` |  |  |
+| `:resultproperty` | `String` |  |  |
+| `:searchpath` | `boolean` |  |  |
+| `:skipemptyfilesets` | `boolean` |  |  |
+| `:spawn` | `boolean` |  |  |
+| `:system` | `boolean` | the system permission. | At least one of the four |
+| `:timeout` | `Integer` |  |  |
+| `:type` | `FileDirBoth` | One of file, dir or both. If set to file, only the permissions of plain files are going to be changed. If set to dir, only the directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir. | No; default is file |
+| `:verbose` | `boolean` | Whether to print a summary after execution or not. | No; defaults to false |
+| `:vmlauncher` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -385,7 +341,9 @@ https://ant.apache.org/manual/Tasks/attrib.html
 
 **Attributes**
 
-- `:uri` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:uri` | `String` |  |  |
 
 **Reference**
 
@@ -407,7 +365,9 @@ element.
 
 **Attributes**
 
-- `:proxy` `Object`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:proxy` | `Object` |  |  |
 
 **Reference**
 
@@ -431,28 +391,19 @@ properties that are useful to avoid target execution depending on system paramet
 
 **Attributes**
 
-- `:classname` `String` - The class to look for in the classpath.
-  Required: Exactly one of the three
-- `:classpath` `Path` - The classpath to use when looking up classname or resource.
-  Required: No
-- `:classpathref` `Reference` - The classpath to use, given as a reference to a path defined elsewhere.
-  Required: No
-- `:file` `File` - The file to look for.
-  Required: Exactly one of the three
-- `:filepath` `Path` - The path to use when looking up file.
-  Required: No
-- `:ignoresystemclasses` `boolean` - Ignore Ant's runtime classes, using only the specified classpath. Only affects the classname attribute.
-  Required: No; defaults to false
-- `:property` `String` - The name of the property to set.
-  Required: Yes
-- `:resource` `String` - The resource to look for in the JVM.
-  Required: Exactly one of the three
-- `:searchparents` `boolean` - This contains the behaviour of the file type. If true, the task will, when searching for a file, search not only the directories specified but will also search the parent directories of those specified. If false, only the directories specified will be searched. Since Ant 1.7
-  Required: No; defaults to false
-- `:type` `FileDir` - The type of file to look for, either a directory (type=dir) or a file (type=file). If not set, the property will be set if the name specified in the file attribute exists as either a file or a directory.
-  Required: No
-- `:value` `Object` - The value to set the property to.
-  Required: No; defaults to true
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` | The class to look for in the classpath. | Exactly one of the three |
+| `:classpath` | `Path` | The classpath to use when looking up classname or resource. | No |
+| `:classpathref` | `Reference` | The classpath to use, given as a reference to a path defined elsewhere. | No |
+| `:file` | `File` | The file to look for. | Exactly one of the three |
+| `:filepath` | `Path` | The path to use when looking up file. | No |
+| `:ignoresystemclasses` | `boolean` | Ignore Ant's runtime classes, using only the specified classpath. Only affects the classname attribute. | No; defaults to false |
+| `:property` | `String` | The name of the property to set. | Yes |
+| `:resource` | `String` | The resource to look for in the JVM. | Exactly one of the three |
+| `:searchparents` | `boolean` | This contains the behaviour of the file type. If true, the task will, when searching for a file, search not only the directories specified but will also search the parent directories of those specified. If false, only the directories specified will be searched. Since Ant 1.7 | No; defaults to false |
+| `:type` | `FileDir` | The type of file to look for, either a directory (type=dir) or a file (type=file). If not set, the property will be set if the name specified in the file attribute exists as either a file or a directory. | No |
+| `:value` | `Object` | The value to set the property to. | No; defaults to true |
 
 **Nested elements**
 
@@ -479,12 +430,11 @@ basename will be the simple file name, without any directory elements.
 
 **Attributes**
 
-- `:file` `File` - The path to take the basename of.
-  Required: Yes
-- `:property` `String` - The name of the property to set.
-  Required: Yes
-- `:suffix` `String` - The suffix to remove from the resulting basename (specified either with or without the .).
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` | The path to take the basename of. | Yes |
+| `:property` | `String` | The name of the property to set. | Yes |
+| `:suffix` | `String` | The suffix to remove from the resulting basename (specified either with or without the .). | No |
 
 **Reference**
 
@@ -516,12 +466,11 @@ predictable as soon as every build file is loaded.
 
 **Attributes**
 
-- `:extensionpoint` `String` - the name of the extension point to bind the targets to.
-  Required: Yes
-- `:onmissingextensionpoint` `String` - What to do if this target tries to extend a missing extension-point: fail, warn, ignore.
-  Required: No; defaults to fail
-- `:targets` `String` - a comma separated list of target names to bind.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:extensionpoint` | `String` | the name of the extension point to bind the targets to. | Yes |
+| `:onmissingextensionpoint` | `String` | What to do if this target tries to extend a missing extension-point: fail, warn, ignore. | No; defaults to fail |
+| `:targets` | `String` | a comma separated list of target names to bind. | Yes |
 
 **Reference**
 
@@ -540,18 +489,15 @@ offers to generate the client jar file corresponding to an EJB jar file.
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:clientjar` `File` - client jar file name. If missing the client jar file name is build using the ejbjar file name: ejbjar=hellobean-ejb.jar => hellobean-ejbclient.jar
-  Required: no
-- `:debug` `boolean` - If true, turn on the debug mode for each Borland tool (java2iiop, iastool, ...)
-  Required: no; default false
-- `:ejbjar` `File` - EJB jar file
-  Required: yes
-- `:mode` `String` - choose the command launching mode. Two values: java or fork (default). java is not supported for version=5. Possibility to specify a classpath.
-  Required: no
-- `:version` `int` - set the Borland Application Version. 4 means B.A.S (Borland Application Server 4.x) 5 means B.E.S (Borland Application Server 5.x)
-  Required: No; defaults to 4
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:clientjar` | `File` | client jar file name. If missing the client jar file name is build using the ejbjar file name: ejbjar=hellobean-ejb.jar => hellobean-ejbclient.jar | no |
+| `:debug` | `boolean` | If true, turn on the debug mode for each Borland tool (java2iiop, iastool, ...) | no; default false |
+| `:ejbjar` | `File` | EJB jar file | yes |
+| `:mode` | `String` | choose the command launching mode. Two values: java or fork (default). java is not supported for version=5. Possibility to specify a classpath. | no |
+| `:version` | `int` | set the Borland Application Version. 4 means B.A.S (Borland Application Server 4.x) 5 means B.E.S (Borland Application Server 5.x) | No; defaults to 4 |
 
 **Nested elements**
 
@@ -578,8 +524,9 @@ the number format.)
 
 **Attributes**
 
-- `:file` `File` - The file to read and write the build number from/to.
-  Required: No; defaults to build.number
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` | The file to read and write the build number from/to. | No; defaults to build.number |
 
 **Reference**
 
@@ -603,11 +550,11 @@ Dependencies for more information.
 
 **Attributes**
 
-- `:dest` `File` - the destination file or directory.
-  Required: No
-- `:src` `File` - the file to expand.
-  Required: Yes, or a nested resource collection
-- `:srcresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dest` | `File` | the destination file or directory. | No |
+| `:src` | `File` | the file to expand. | Yes, or a nested resource collection |
+| `:srcresource` | `Resource` |  |  |
 
 **Reference**
 
@@ -628,13 +575,12 @@ the Ant distribution. See Library Dependencies for more information.
 
 **Attributes**
 
-- `:destfile` `File` - the destination file to create.
-  Required: Exactly one of the two
-- `:src` `File` - the file to gzip/bzip/xz.
-  Required: Yes, or a nested resource collection
-- `:srcresource` `Resource`
-- `:zipfile` `File` - deprecated old name of destfile.
-  Required: Exactly one of the two
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:destfile` | `File` | the destination file to create. | Exactly one of the two |
+| `:src` | `File` | the file to gzip/bzip/xz. | Yes, or a nested resource collection |
+| `:srcresource` | `Resource` |  |  |
+| `:zipfile` | `File` | deprecated old name of destfile. | Exactly one of the two |
 
 **Reference**
 
@@ -661,28 +607,20 @@ directory.
 
 **Attributes**
 
-- `:basedir` `File` - the directory to start archiving files from.
-  Required: No
-- `:cabfile` `File` - the name of the cab file to create.
-  Required: Yes
-- `:casesensitive` `boolean`
-- `:compress` `boolean` - set to no to store files without compressing.
-  Required: No; defaults to yes
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:followsymlinks` `boolean`
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:options` `String` - set additional command-line options for the cabarc tool. Should not normally be necessary.
-  Required: No
-- `:verbose` `boolean` - set to yes if you want to see the output from the cabarc tool.
-  Required: No; defaults to no
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` | the directory to start archiving files from. | No |
+| `:cabfile` | `File` | the name of the cab file to create. | Yes |
+| `:casesensitive` | `boolean` |  |  |
+| `:compress` | `boolean` | set to no to store files without compressing. | No; defaults to yes |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern | No |
+| `:options` | `String` | set additional command-line options for the cabarc tool. Should not normally be necessary. | No |
+| `:verbose` | `boolean` | set to yes if you want to see the output from the cabarc tool. | No; defaults to no |
 
 **Nested elements**
 
@@ -727,24 +665,18 @@ https://ant.apache.org/manual/Tasks/cab.html
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:comment` `String` - Specify a comment
-  Required: No; only one of the two may be used
-- `:commentfile` `String` - Specify a file containing a comment
-  Required: No; only one of the two may be used
-- `:failonerr` `boolean` - Throw an exception if the command fails
-  Required: No; default is true
-- `:identical` `boolean` - Allows the file to be checked in even if it is identical to the original
-  Required: No
-- `:keepcopy` `boolean` - Keeps a copy of the file with a .keep extension
-  Required: No
-- `:nowarn` `boolean` - Suppress warning messages
-  Required: No
-- `:objselect` `String`
-- `:preservetime` `boolean` - Preserve the modification time
-  Required: No
-- `:viewpath` `String` - Path to the ClearCase view file or directory that the command will operate on
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specify a comment | No; only one of the two may be used |
+| `:commentfile` | `String` | Specify a file containing a comment | No; only one of the two may be used |
+| `:failonerr` | `boolean` | Throw an exception if the command fails | No; default is true |
+| `:identical` | `boolean` | Allows the file to be checked in even if it is identical to the original | No |
+| `:keepcopy` | `boolean` | Keeps a copy of the file with a .keep extension | No |
+| `:nowarn` | `boolean` | Suppress warning messages | No |
+| `:objselect` | `String` |  |  |
+| `:preservetime` | `boolean` | Preserve the modification time | No |
+| `:viewpath` | `String` | Path to the ClearCase view file or directory that the command will operate on | No |
 
 **Reference**
 
@@ -762,30 +694,21 @@ https://ant.apache.org/manual/Tasks/clearcase.html#cccheckin
 
 **Attributes**
 
-- `:branch` `String` - Specify a branch to check out the file to
-  Required: No
-- `:cleartooldir` `String`
-- `:comment` `String` - Specify a comment
-  Required: No; only one of the two may be used
-- `:commentfile` `String` - Specify a file containing a comment
-  Required: No; only one of the two may be used
-- `:failonerr` `boolean` - Throw an exception if the command fails. Since Ant 1.6.1
-  Required: No; default is true
-- `:nodata` `boolean` - Checks out the file but does not create an editable file containing its data
-  Required: No
-- `:notco` `boolean` - Fail if it's already checked out to the current view. Set to false to ignore it. Since Ant 1.6.1
-  Required: No; default is true
-- `:nowarn` `boolean` - Suppress warning messages
-  Required: No
-- `:objselect` `String`
-- `:out` `String` - Creates a writable file under a different filename
-  Required: No
-- `:reserved` `boolean` - Specifies whether to check out the file as reserved or not
-  Required: Yes
-- `:version` `boolean` - Allows checkout of a version other than /main/LATEST (or whatever is selected by a config spec)
-  Required: No
-- `:viewpath` `String` - Path to the ClearCase view file or directory that the command will operate on
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:branch` | `String` | Specify a branch to check out the file to | No |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specify a comment | No; only one of the two may be used |
+| `:commentfile` | `String` | Specify a file containing a comment | No; only one of the two may be used |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. Since Ant 1.6.1 | No; default is true |
+| `:nodata` | `boolean` | Checks out the file but does not create an editable file containing its data | No |
+| `:notco` | `boolean` | Fail if it's already checked out to the current view. Set to false to ignore it. Since Ant 1.6.1 | No; default is true |
+| `:nowarn` | `boolean` | Suppress warning messages | No |
+| `:objselect` | `String` |  |  |
+| `:out` | `String` | Creates a writable file under a different filename | No |
+| `:reserved` | `boolean` | Specifies whether to check out the file as reserved or not | Yes |
+| `:version` | `boolean` | Allows checkout of a version other than /main/LATEST (or whatever is selected by a config spec) | No |
+| `:viewpath` | `String` | Path to the ClearCase view file or directory that the command will operate on | No |
 
 **Reference**
 
@@ -803,24 +726,18 @@ https://ant.apache.org/manual/Tasks/clearcase.html#cccheckout
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:comment` `String` - Specifies how to populate comments fields
-  Required: No
-- `:failonerr` `boolean` - Throw an exception if the command fails. Since Ant 1.6.1
-  Required: No; default is true
-- `:nusers` `String` - Specifies user(s) who can still modify the object
-  Required: No
-- `:objsel` `String` - Specifies the object(s) to be locked. Since Ant 1.6.1
-  Required: No
-- `:objselect` `String` - Obsolete. Use objsel instead.
-  Required: No
-- `:obsolete` `boolean` - Specifies that the object should be marked obsolete
-  Required: No
-- `:pname` `String` - Specifies the object pathname to be locked.
-  Required: No
-- `:replace` `boolean` - Specifies replacing an existing lock
-  Required: No
-- `:viewpath` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specifies how to populate comments fields | No |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. Since Ant 1.6.1 | No; default is true |
+| `:nusers` | `String` | Specifies user(s) who can still modify the object | No |
+| `:objsel` | `String` | Specifies the object(s) to be locked. Since Ant 1.6.1 | No |
+| `:objselect` | `String` | Obsolete. Use objsel instead. | No |
+| `:obsolete` | `boolean` | Specifies that the object should be marked obsolete | No |
+| `:pname` | `String` | Specifies the object pathname to be locked. | No |
+| `:replace` | `boolean` | Specifies replacing an existing lock | No |
+| `:viewpath` | `String` |  |  |
 
 **Reference**
 
@@ -838,15 +755,13 @@ https://ant.apache.org/manual/Tasks/clearcase.html#cclock
 
 **Attributes**
 
-- `:ccmaction` `String`
-- `:ccmdir` `String` - path to the ccm executable file, required if it is not on the PATH
-  Required: No
-- `:comment` `String` - Specify a comment.
-  Required: No; default is Checkin plus the date
-- `:file` `File` - Path to the file that the command will operate on
-  Required: Yes
-- `:task` `String` - Specify the task number used to check in the file (may use default)
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:ccmaction` | `String` |  |  |
+| `:ccmdir` | `String` | path to the ccm executable file, required if it is not on the PATH | No |
+| `:comment` | `String` | Specify a comment. | No; default is Checkin plus the date |
+| `:file` | `File` | Path to the file that the command will operate on | Yes |
+| `:task` | `String` | Specify the task number used to check in the file (may use default) | No |
 
 **Nested elements**
 
@@ -868,14 +783,13 @@ https://ant.apache.org/manual/Tasks/ccm.html#ccmcheckin
 
 **Attributes**
 
-- `:ccmaction` `String`
-- `:ccmdir` `String` - path to the ccm executable file, required if it is not on the PATH
-  Required: No
-- `:comment` `String` - Specify a comment.
-  Required: No
-- `:file` `File`
-- `:task` `String` - Specify the task number used to check in the file (may use default)
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:ccmaction` | `String` |  |  |
+| `:ccmdir` | `String` | path to the ccm executable file, required if it is not on the PATH | No |
+| `:comment` | `String` | Specify a comment. | No |
+| `:file` | `File` |  |  |
+| `:task` | `String` | Specify the task number used to check in the file (may use default) | No |
 
 **Nested elements**
 
@@ -897,15 +811,13 @@ https://ant.apache.org/manual/Tasks/ccm.html#ccmcheckintask
 
 **Attributes**
 
-- `:ccmaction` `String`
-- `:ccmdir` `String` - path to the ccm executable file, required if it is not on the PATH
-  Required: No
-- `:comment` `String` - Specify a comment
-  Required: No
-- `:file` `File` - Path to the file that the command will operate on
-  Required: Exactly one of the two
-- `:task` `String` - Specify the task number used to checkin the file (may use default)
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:ccmaction` | `String` |  |  |
+| `:ccmdir` | `String` | path to the ccm executable file, required if it is not on the PATH | No |
+| `:comment` | `String` | Specify a comment | No |
+| `:file` | `File` | Path to the file that the command will operate on | Exactly one of the two |
+| `:task` | `String` | Specify the task number used to checkin the file (may use default) | No |
 
 **Nested elements**
 
@@ -927,21 +839,16 @@ https://ant.apache.org/manual/Tasks/ccm.html#ccmcheckout
 
 **Attributes**
 
-- `:ccmaction` `String`
-- `:ccmdir` `String` - path to the ccm executable file, required if it is not on the PATH
-  Required: No
-- `:comment` `String` - Specify a comment
-  Required: No
-- `:platform` `String` - Specify the target platform
-  Required: No
-- `:release` `String` - Specify the CCM release
-  Required: No
-- `:resolver` `String` - Specify the resolver
-  Required: No
-- `:subsystem` `String` - Specify the subsystem
-  Required: No
-- `:task` `String` - Specify the task number used to checkin the file (may use default)
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:ccmaction` | `String` |  |  |
+| `:ccmdir` | `String` | path to the ccm executable file, required if it is not on the PATH | No |
+| `:comment` | `String` | Specify a comment | No |
+| `:platform` | `String` | Specify the target platform | No |
+| `:release` | `String` | Specify the CCM release | No |
+| `:resolver` | `String` | Specify the resolver | No |
+| `:subsystem` | `String` | Specify the subsystem | No |
+| `:task` | `String` | Specify the task number used to checkin the file (may use default) | No |
 
 **Reference**
 
@@ -959,26 +866,19 @@ https://ant.apache.org/manual/Tasks/ccm.html#ccmcreatetask
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:comment` `String` - Specify a comment
-  Required: No; only one of the two may be used
-- `:commentfile` `String` - Specify a file containing a comment
-  Required: No; only one of the two may be used
-- `:failonerr` `boolean` - Throw an exception if the command fails.
-  Required: No; default is true
-- `:objselect` `String`
-- `:recurse` `boolean` - Process each subdirectory under viewpath
-  Required: No
-- `:replace` `boolean` - Replace the value of the attribute if it already exists
-  Required: No
-- `:typename` `String` - Name of the attribute type
-  Required: Yes
-- `:typevalue` `String` - Value to attach to the attribute type
-  Required: Yes
-- `:version` `String` - Identify a specific version to attach the attribute to
-  Required: No
-- `:viewpath` `String` - Path to the ClearCase view file or directory that the command will operate on
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specify a comment | No; only one of the two may be used |
+| `:commentfile` | `String` | Specify a file containing a comment | No; only one of the two may be used |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. | No; default is true |
+| `:objselect` | `String` |  |  |
+| `:recurse` | `boolean` | Process each subdirectory under viewpath | No |
+| `:replace` | `boolean` | Replace the value of the attribute if it already exists | No |
+| `:typename` | `String` | Name of the attribute type | Yes |
+| `:typevalue` | `String` | Value to attach to the attribute type | Yes |
+| `:version` | `String` | Identify a specific version to attach the attribute to | No |
+| `:viewpath` | `String` | Path to the ClearCase view file or directory that the command will operate on | Yes |
 
 **Reference**
 
@@ -996,25 +896,19 @@ https://ant.apache.org/manual/Tasks/clearcase.html#ccmkattr
 
 **Attributes**
 
-- `:baselinerootname` `String` - Specify the name to be associated with the baseline.
-  Required: Yes
-- `:cleartooldir` `String`
-- `:comment` `String` - Specify a comment
-  Required: No; only one of the two may be used
-- `:commentfile` `String` - Specify a file containing a comment
-  Required: No; only one of the two may be used
-- `:failonerr` `boolean` - Throw an exception if the command fails. Since Ant 1.6.1
-  Required: No; default is true
-- `:full` `boolean` - Creates a full baseline.
-  Required: No
-- `:identical` `boolean` - Allows the baseline to be created even if it is identical to the previous baseline.
-  Required: No
-- `:nlabel` `boolean` - Allows the baseline to be created without a label.
-  Required: No
-- `:nowarn` `boolean` - Suppress warning messages
-  Required: No
-- `:objselect` `String`
-- `:viewpath` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:baselinerootname` | `String` | Specify the name to be associated with the baseline. | Yes |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specify a comment | No; only one of the two may be used |
+| `:commentfile` | `String` | Specify a file containing a comment | No; only one of the two may be used |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. Since Ant 1.6.1 | No; default is true |
+| `:full` | `boolean` | Creates a full baseline. | No |
+| `:identical` | `boolean` | Allows the baseline to be created even if it is identical to the previous baseline. | No |
+| `:nlabel` | `boolean` | Allows the baseline to be created without a label. | No |
+| `:nowarn` | `boolean` | Suppress warning messages | No |
+| `:objselect` | `String` |  |  |
+| `:viewpath` | `String` |  |  |
 
 **Reference**
 
@@ -1032,18 +926,15 @@ https://ant.apache.org/manual/Tasks/clearcase.html#ccmkbl
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:comment` `String` - Specify a comment
-  Required: No; only one of the two may be used
-- `:commentfile` `String` - Specify a file containing a comment
-  Required: No; only one of the two may be used
-- `:failonerr` `boolean` - Throw an exception if the command fails.
-  Required: No; default is true
-- `:nocheckout` `boolean` - Do not checkout after element creation
-  Required: No
-- `:objselect` `String`
-- `:viewpath` `String` - Path to the ClearCase view directory that the command will operate on
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specify a comment | No; only one of the two may be used |
+| `:commentfile` | `String` | Specify a file containing a comment | No; only one of the two may be used |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. | No; default is true |
+| `:nocheckout` | `boolean` | Do not checkout after element creation | No |
+| `:objselect` | `String` |  |  |
+| `:viewpath` | `String` | Path to the ClearCase view directory that the command will operate on | Yes |
 
 **Reference**
 
@@ -1061,28 +952,20 @@ https://ant.apache.org/manual/Tasks/clearcase.html#ccmkdir
 
 **Attributes**
 
-- `:checkin` `boolean` - Checkin element after creation
-  Required: No
-- `:cleartooldir` `String`
-- `:comment` `String` - Specify a comment
-  Required: No; only one of the two may be used
-- `:commentfile` `String` - Specify a file containing a comment
-  Required: No; only one of the two may be used
-- `:eltype` `String` - Element type to use during element creation
-  Required: No
-- `:failonerr` `boolean` - Throw an exception if the command fails.
-  Required: No; default is true
-- `:master` `boolean` - Assign mastership of the main branch to the current site
-  Required: No
-- `:nocheckout` `boolean` - Do not checkout after element creation
-  Required: No
-- `:nowarn` `boolean` - Suppress warning messages
-  Required: No
-- `:objselect` `String`
-- `:preservetime` `boolean` - Preserve the modification time (for checkin)
-  Required: No
-- `:viewpath` `String` - Path to the ClearCase view file or directory that the command will operate on
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:checkin` | `boolean` | Checkin element after creation | No |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specify a comment | No; only one of the two may be used |
+| `:commentfile` | `String` | Specify a file containing a comment | No; only one of the two may be used |
+| `:eltype` | `String` | Element type to use during element creation | No |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. | No; default is true |
+| `:master` | `boolean` | Assign mastership of the main branch to the current site | No |
+| `:nocheckout` | `boolean` | Do not checkout after element creation | No |
+| `:nowarn` | `boolean` | Suppress warning messages | No |
+| `:objselect` | `String` |  |  |
+| `:preservetime` | `boolean` | Preserve the modification time (for checkin) | No |
+| `:viewpath` | `String` | Path to the ClearCase view file or directory that the command will operate on | Yes |
 
 **Reference**
 
@@ -1100,26 +983,19 @@ https://ant.apache.org/manual/Tasks/clearcase.html#ccmkelem
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:comment` `String` - Specify a comment
-  Required: No; only one of the two may be used
-- `:commentfile` `String` - Specify a file containing a comment
-  Required: No; only one of the two may be used
-- `:failonerr` `boolean` - Throw an exception if the command fails. Since Ant 1.6.1
-  Required: No; default is true
-- `:objselect` `String`
-- `:recurse` `boolean` - Process each subdirectory under viewpath
-  Required: No
-- `:replace` `boolean` - Replace a label of the same type on the same branch
-  Required: No
-- `:typename` `String` - Name of the label type
-  Required: Yes
-- `:version` `String` - Identify a specific version to attach the label to
-  Required: No
-- `:viewpath` `String` - Path to the ClearCase view file or directory that the command will operate on
-  Required: No
-- `:vob` `String` - Name of the VOB
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specify a comment | No; only one of the two may be used |
+| `:commentfile` | `String` | Specify a file containing a comment | No; only one of the two may be used |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. Since Ant 1.6.1 | No; default is true |
+| `:objselect` | `String` |  |  |
+| `:recurse` | `boolean` | Process each subdirectory under viewpath | No |
+| `:replace` | `boolean` | Replace a label of the same type on the same branch | No |
+| `:typename` | `String` | Name of the label type | Yes |
+| `:version` | `String` | Identify a specific version to attach the label to | No |
+| `:viewpath` | `String` | Path to the ClearCase view file or directory that the command will operate on | No |
+| `:vob` | `String` | Name of the VOB | No |
 
 **Reference**
 
@@ -1137,29 +1013,21 @@ https://ant.apache.org/manual/Tasks/clearcase.html#ccmklabel
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:comment` `String` - Specify a comment
-  Required: No; only one of the two may be used
-- `:commentfile` `String` - Specify a file containing a comment
-  Required: No; only one of the two may be used
-- `:failonerr` `boolean` - Throw an exception if the command fails. Since Ant 1.6.1
-  Required: No; default is true
-- `:global` `boolean` - Creates a label type that is global to the VOB or to VOBs that use this VOB.
-  Required: No; only one of the two may be used, default ordinary=true
-- `:objselect` `String`
-- `:ordinary` `boolean` - Creates a label type that can be used only in the current VOB.
-  Required: No; only one of the two may be used, default ordinary=true
-- `:pbranch` `boolean` - Allows the label type to be used once per branch in a given element's version tree
-  Required: No
-- `:replace` `boolean` - Replace an existing label definition of the same type
-  Required: No
-- `:shared` `boolean` - Sets the way mastership is checked by ClearCase. See ClearCase documentation for details
-  Required: No
-- `:typename` `String` - Name of the label type to create
-  Required: Yes
-- `:viewpath` `String`
-- `:vob` `String` - Name of the VOB
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specify a comment | No; only one of the two may be used |
+| `:commentfile` | `String` | Specify a file containing a comment | No; only one of the two may be used |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. Since Ant 1.6.1 | No; default is true |
+| `:global` | `boolean` | Creates a label type that is global to the VOB or to VOBs that use this VOB. | No; only one of the two may be used, default ordinary=true |
+| `:objselect` | `String` |  |  |
+| `:ordinary` | `boolean` | Creates a label type that can be used only in the current VOB. | No; only one of the two may be used, default ordinary=true |
+| `:pbranch` | `boolean` | Allows the label type to be used once per branch in a given element's version tree | No |
+| `:replace` | `boolean` | Replace an existing label definition of the same type | No |
+| `:shared` | `boolean` | Sets the way mastership is checked by ClearCase. See ClearCase documentation for details | No |
+| `:typename` | `String` | Name of the label type to create | Yes |
+| `:viewpath` | `String` |  |  |
+| `:vob` | `String` | Name of the VOB | No |
 
 **Reference**
 
@@ -1177,15 +1045,13 @@ https://ant.apache.org/manual/Tasks/clearcase.html#ccmklbtype
 
 **Attributes**
 
-- `:ccmaction` `String`
-- `:ccmdir` `String` - path to the ccm executable file, required if it is not on the PATH
-  Required: No
-- `:ccmproject` `String` - Specifies the ccm project on which the operation is applied.
-  Required: Yes
-- `:recurse` `boolean` - recurse on subproject
-  Required: No; default is false
-- `:verbose` `boolean` - do a verbose reconfigure operation
-  Required: No; default is false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:ccmaction` | `String` |  |  |
+| `:ccmdir` | `String` | path to the ccm executable file, required if it is not on the PATH | No |
+| `:ccmproject` | `String` | Specifies the ccm project on which the operation is applied. | Yes |
+| `:recurse` | `boolean` | recurse on subproject | No; default is false |
+| `:verbose` | `boolean` | do a verbose reconfigure operation | No; default is false |
 
 **Reference**
 
@@ -1203,17 +1069,19 @@ https://ant.apache.org/manual/Tasks/ccm.html#ccmreconfigure
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:comment` `String`
-- `:commentfile` `String`
-- `:failonerr` `boolean`
-- `:ignore` `boolean`
-- `:objselect` `String`
-- `:rmall` `boolean`
-- `:typekind` `String`
-- `:typename` `String`
-- `:viewpath` `String`
-- `:vob` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` |  |  |
+| `:commentfile` | `String` |  |  |
+| `:failonerr` | `boolean` |  |  |
+| `:ignore` | `boolean` |  |  |
+| `:objselect` | `String` |  |  |
+| `:rmall` | `boolean` |  |  |
+| `:typekind` | `String` |  |  |
+| `:typename` | `String` |  |  |
+| `:viewpath` | `String` |  |  |
+| `:vob` | `String` |  |  |
 
 **Reference**
 
@@ -1231,14 +1099,13 @@ https://ant.apache.org/manual/Tasks/clearcase.html#ccrmtype
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:failonerr` `boolean` - Throw an exception if the command fails. Since Ant 1.6.1
-  Required: No; default is true
-- `:keepcopy` `boolean` - Specifies whether to keep a copy of the file with a .keep extension or not
-  Required: No
-- `:objselect` `String`
-- `:viewpath` `String` - Path to the ClearCase view file or directory that the command will operate on
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. Since Ant 1.6.1 | No; default is true |
+| `:keepcopy` | `boolean` | Specifies whether to keep a copy of the file with a .keep extension or not | No |
+| `:objselect` | `String` |  |  |
+| `:viewpath` | `String` | Path to the ClearCase view file or directory that the command will operate on | No |
 
 **Reference**
 
@@ -1256,18 +1123,15 @@ https://ant.apache.org/manual/Tasks/clearcase.html#ccuncheckout
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:comment` `String` - Specifies how to populate comments fields
-  Required: No
-- `:failonerr` `boolean` - Throw an exception if the command fails. Since Ant 1.6.1
-  Required: No; default is true
-- `:objsel` `String` - Specifies the object(s) to be unlocked. Since Ant 1.6.1
-  Required: No
-- `:objselect` `String` - Obsolete. Use objsel instead.
-  Required: No
-- `:pname` `String` - Specifies the object pathname to be unlocked.
-  Required: No
-- `:viewpath` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:comment` | `String` | Specifies how to populate comments fields | No |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. Since Ant 1.6.1 | No; default is true |
+| `:objsel` | `String` | Specifies the object(s) to be unlocked. Since Ant 1.6.1 | No |
+| `:objselect` | `String` | Obsolete. Use objsel instead. | No |
+| `:pname` | `String` | Specifies the object pathname to be unlocked. | No |
+| `:viewpath` | `String` |  |  |
 
 **Reference**
 
@@ -1285,24 +1149,18 @@ https://ant.apache.org/manual/Tasks/clearcase.html#ccunlock
 
 **Attributes**
 
-- `:cleartooldir` `String`
-- `:currenttime` `boolean` - Specifies that modification time should be written as the current time. Mutually exclusive with preservetime.
-  Required: No
-- `:failonerr` `boolean` - Throw an exception if the command fails. Since Ant 1.6.1
-  Required: No; default is true
-- `:graphical` `boolean` - Displays a graphical dialog during the update
-  Required: No
-- `:log` `String` - Specifies a log file for ClearCase to write to
-  Required: No
-- `:objselect` `String`
-- `:overwrite` `boolean` - Specifies whether to overwrite hijacked files or not
-  Required: No
-- `:preservetime` `boolean` - Specifies that modification time should preserved from the VOB time. Mutually exclusive with currenttime.
-  Required: No
-- `:rename` `boolean` - Specifies that hijacked files should be renamed with a .keep extension
-  Required: No
-- `:viewpath` `String` - Path to the ClearCase snapshot view file or directory that the command will operate on
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleartooldir` | `String` |  |  |
+| `:currenttime` | `boolean` | Specifies that modification time should be written as the current time. Mutually exclusive with preservetime. | No |
+| `:failonerr` | `boolean` | Throw an exception if the command fails. Since Ant 1.6.1 | No; default is true |
+| `:graphical` | `boolean` | Displays a graphical dialog during the update | No |
+| `:log` | `String` | Specifies a log file for ClearCase to write to | No |
+| `:objselect` | `String` |  |  |
+| `:overwrite` | `boolean` | Specifies whether to overwrite hijacked files or not | No |
+| `:preservetime` | `boolean` | Specifies that modification time should preserved from the VOB time. Mutually exclusive with currenttime. | No |
+| `:rename` | `boolean` | Specifies that hijacked files should be renamed with a .keep extension | No |
+| `:viewpath` | `String` | Path to the ClearCase snapshot view file or directory that the command will operate on | No |
 
 **Reference**
 
@@ -1332,32 +1190,27 @@ Documentation
 
 **Attributes**
 
-- `:algorithm` `String` - Specifies the algorithm to be used to compute the checksum. Please check the documentation for available algorithm names, like SHA-1 or SHA-512.
-  Required: No; defaults to MD5
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File` - The file to generate checksum for.
-  Required: Yes, unless at least one nested (filesystem-only) resource collection is specified.
-- `:fileext` `String` - The generated checksum file's name will be the original filename with the fileext added to it.
-  Required: No; defaults to a. and the algorithm name being used
-- `:followsymlinks` `boolean`
-- `:forceoverwrite` `boolean`
-- `:format` `FormatElement`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:pattern` `String` - Specifies the pattern to use as a pattern suitable for MessageFormat where {0} is replaced with the checksum and {1} with the file name. Since Ant 1.7.0 Since Ant 1.8.2 {2} is replaced by the path of the file relative to the checksum file being written, {3} with the path of the file relative to the project's basedir and {4} with the absolute path of the file.
-  Required: No; default is {0}
-- `:property` `String` - This attribute can mean two different things, it depends on the presence of the verifyproperty attribute. If you don't set the verifyproperty attribute, property specifies the name of the property to be set with the generated checksum value. If you set the verifyproperty attribute, property specifies the checksum you expect to be generated (the checksum itself, not a name of a property containing the checksum). This cannot be specified when fileext is being used or when the number of files for which checksums are to be generated is greater than 1.
-  Required: No
-- `:provider` `String` - Specifies the provider of the algorithm.
-  Required: No
-- `:readbuffersize` `int`
-- `:todir` `File` - The root directory where checksums should be written.
-  Required: No; by default, checksum files will be written to the same directory as the original files. since Apache Ant 1.6
-- `:totalproperty` `String`
-- `:verifyproperty` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:algorithm` | `String` | Specifies the algorithm to be used to compute the checksum. Please check the documentation for available algorithm names, like SHA-1 or SHA-512. | No; defaults to MD5 |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` | The file to generate checksum for. | Yes, unless at least one nested (filesystem-only) resource collection is specified. |
+| `:fileext` | `String` | The generated checksum file's name will be the original filename with the fileext added to it. | No; defaults to a. and the algorithm name being used |
+| `:followsymlinks` | `boolean` |  |  |
+| `:forceoverwrite` | `boolean` |  |  |
+| `:format` | `FormatElement` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:pattern` | `String` | Specifies the pattern to use as a pattern suitable for MessageFormat where {0} is replaced with the checksum and {1} with the file name. Since Ant 1.7.0 Since Ant 1.8.2 {2} is replaced by the path of the file relative to the checksum file being written, {3} with the path of the file relative to the project's basedir and {4} with the absolute path of the file. | No; default is {0} |
+| `:property` | `String` | This attribute can mean two different things, it depends on the presence of the verifyproperty attribute. If you don't set the verifyproperty attribute, property specifies the name of the property to be set with the generated checksum value. If you set the verifyproperty attribute, property specifies the checksum you expect to be generated (the checksum itself, not a name of a property containing the checksum). This cannot be specified when fileext is being used or when the number of files for which checksums are to be generated is greater than 1. | No |
+| `:provider` | `String` | Specifies the provider of the algorithm. | No |
+| `:readbuffersize` | `int` |  |  |
+| `:todir` | `File` | The root directory where checksums should be written. | No; by default, checksum files will be written to the same directory as the original files. since Apache Ant 1.6 |
+| `:totalproperty` | `String` |  |  |
+| `:verifyproperty` | `String` |  |  |
 
 **Nested elements**
 
@@ -1417,51 +1270,45 @@ set its value to your current OS.
 
 **Attributes**
 
-- `:addsourcefile` `boolean`
-- `:append` `boolean`
-- `:command` `Commandline`
-- `:dest` `File`
-- `:dir` `File`
-- `:discarderror` `boolean`
-- `:discardoutput` `boolean`
-- `:error` `File`
-- `:errorproperty` `String`
-- `:executable` `String`
-- `:failifexecutionfails` `boolean`
-- `:failonerror` `boolean`
-- `:file` `File` - the file or directory of which the group must be changed.
-  Required: Yes, unless nested <fileset|filelist|dirset> elements are specified
-- `:force` `boolean`
-- `:forwardslash` `boolean`
-- `:group` `String` - the new group.
-  Required: Yes
-- `:ignoremissing` `boolean`
-- `:input` `File`
-- `:inputstring` `String`
-- `:logerror` `boolean`
-- `:maxparallel` `int` - Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited.
-  Required: No; defaults to unlimited
-- `:newenvironment` `boolean`
-- `:os` `String` - list of Operating Systems on which the command may be executed.
-  Required: No
-- `:osfamily` `String` - OS family as used in the <os> condition.
-  Required: No; defaults to unix
-- `:output` `File`
-- `:outputproperty` `String`
-- `:parallel` `boolean` - process all specified files using a single chgrp command.
-  Required: No; defaults to true
-- `:relative` `boolean`
-- `:resolveexecutable` `boolean`
-- `:resultproperty` `String`
-- `:searchpath` `boolean`
-- `:skipemptyfilesets` `boolean`
-- `:spawn` `boolean`
-- `:timeout` `Long`
-- `:type` `FileDirBoth` - One of file, dir or both. If set to file, only the group of plain files are going to be changed. If set to dir, only the directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir.
-  Required: No; default is file
-- `:verbose` `boolean` - Whether to print a summary after execution or not.
-  Required: No; defaults to false
-- `:vmlauncher` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:addsourcefile` | `boolean` |  |  |
+| `:append` | `boolean` |  |  |
+| `:command` | `Commandline` |  |  |
+| `:dest` | `File` |  |  |
+| `:dir` | `File` |  |  |
+| `:discarderror` | `boolean` |  |  |
+| `:discardoutput` | `boolean` |  |  |
+| `:error` | `File` |  |  |
+| `:errorproperty` | `String` |  |  |
+| `:executable` | `String` |  |  |
+| `:failifexecutionfails` | `boolean` |  |  |
+| `:failonerror` | `boolean` |  |  |
+| `:file` | `File` | the file or directory of which the group must be changed. | Yes, unless nested <fileset\\|filelist\\|dirset> elements are specified |
+| `:force` | `boolean` |  |  |
+| `:forwardslash` | `boolean` |  |  |
+| `:group` | `String` | the new group. | Yes |
+| `:ignoremissing` | `boolean` |  |  |
+| `:input` | `File` |  |  |
+| `:inputstring` | `String` |  |  |
+| `:logerror` | `boolean` |  |  |
+| `:maxparallel` | `int` | Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. | No; defaults to unlimited |
+| `:newenvironment` | `boolean` |  |  |
+| `:os` | `String` | list of Operating Systems on which the command may be executed. | No |
+| `:osfamily` | `String` | OS family as used in the <os> condition. | No; defaults to unix |
+| `:output` | `File` |  |  |
+| `:outputproperty` | `String` |  |  |
+| `:parallel` | `boolean` | process all specified files using a single chgrp command. | No; defaults to true |
+| `:relative` | `boolean` |  |  |
+| `:resolveexecutable` | `boolean` |  |  |
+| `:resultproperty` | `String` |  |  |
+| `:searchpath` | `boolean` |  |  |
+| `:skipemptyfilesets` | `boolean` |  |  |
+| `:spawn` | `boolean` |  |  |
+| `:timeout` | `Integer` |  |  |
+| `:type` | `FileDirBoth` | One of file, dir or both. If set to file, only the group of plain files are going to be changed. If set to dir, only the directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir. | No; default is file |
+| `:verbose` | `boolean` | Whether to print a summary after execution or not. | No; defaults to false |
+| `:vmlauncher` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -1510,58 +1357,48 @@ the setpermissions task for a platform independent alternative.
 
 **Attributes**
 
-- `:addsourcefile` `boolean`
-- `:append` `boolean`
-- `:command` `Commandline`
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:dest` `File`
-- `:dir` `File` - the directory which holds the files whose permissions must be changed. Note: for backwards compatibility reasons <chmod dir=\"some-dir\"/> will only change the permissions on some-dir but not recurse into it, unless you also specify any patterns.
-  Required: Exactly one of the two, unless nested <fileset|filelist|dirset> elements are specified
-- `:discarderror` `boolean`
-- `:discardoutput` `boolean`
-- `:error` `File`
-- `:errorproperty` `String`
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:executable` `String`
-- `:failifexecutionfails` `boolean`
-- `:failonerror` `boolean`
-- `:file` `File` - the file or single directory of which the permissions must be changed.
-  Required: Exactly one of the two, unless nested <fileset|filelist|dirset> elements are specified
-- `:force` `boolean`
-- `:forwardslash` `boolean`
-- `:ignoremissing` `boolean`
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:input` `File`
-- `:inputstring` `String`
-- `:logerror` `boolean`
-- `:maxparallel` `int` - Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. Since Ant 1.6.
-  Required: No; defaults to unlimited
-- `:newenvironment` `boolean`
-- `:os` `String` - list of Operating Systems on which the command may be executed.
-  Required: No
-- `:osfamily` `String` - OS family as used in the <os> condition.
-  Required: No; defaults to unix
-- `:output` `File`
-- `:outputproperty` `String`
-- `:parallel` `boolean` - process all specified files using a single chmod command.
-  Required: No; defaults to true
-- `:perm` `String` - the new permissions.
-  Required: Yes
-- `:relative` `boolean`
-- `:resolveexecutable` `boolean`
-- `:resultproperty` `String`
-- `:searchpath` `boolean`
-- `:skipemptyfilesets` `boolean`
-- `:spawn` `boolean`
-- `:timeout` `Long`
-- `:type` `FileDirBoth` - One of file, dir or both. If set to file, only the permissions of plain files are going to be changed. If set to dir, only the directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir.
-  Required: No; default is file
-- `:verbose` `boolean` - Whether to print a summary after execution or not. Since Ant 1.6.
-  Required: No; defaults to false
-- `:vmlauncher` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:addsourcefile` | `boolean` |  |  |
+| `:append` | `boolean` |  |  |
+| `:command` | `Commandline` |  |  |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:dest` | `File` |  |  |
+| `:dir` | `File` | the directory which holds the files whose permissions must be changed. Note: for backwards compatibility reasons <chmod dir=\"some-dir\"/> will only change the permissions on some-dir but not recurse into it, unless you also specify any patterns. | Exactly one of the two, unless nested <fileset\\|filelist\\|dirset> elements are specified |
+| `:discarderror` | `boolean` |  |  |
+| `:discardoutput` | `boolean` |  |  |
+| `:error` | `File` |  |  |
+| `:errorproperty` | `String` |  |  |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:executable` | `String` |  |  |
+| `:failifexecutionfails` | `boolean` |  |  |
+| `:failonerror` | `boolean` |  |  |
+| `:file` | `File` | the file or single directory of which the permissions must be changed. | Exactly one of the two, unless nested <fileset\\|filelist\\|dirset> elements are specified |
+| `:force` | `boolean` |  |  |
+| `:forwardslash` | `boolean` |  |  |
+| `:ignoremissing` | `boolean` |  |  |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:input` | `File` |  |  |
+| `:inputstring` | `String` |  |  |
+| `:logerror` | `boolean` |  |  |
+| `:maxparallel` | `int` | Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. Since Ant 1.6. | No; defaults to unlimited |
+| `:newenvironment` | `boolean` |  |  |
+| `:os` | `String` | list of Operating Systems on which the command may be executed. | No |
+| `:osfamily` | `String` | OS family as used in the <os> condition. | No; defaults to unix |
+| `:output` | `File` |  |  |
+| `:outputproperty` | `String` |  |  |
+| `:parallel` | `boolean` | process all specified files using a single chmod command. | No; defaults to true |
+| `:perm` | `String` | the new permissions. | Yes |
+| `:relative` | `boolean` |  |  |
+| `:resolveexecutable` | `boolean` |  |  |
+| `:resultproperty` | `String` |  |  |
+| `:searchpath` | `boolean` |  |  |
+| `:skipemptyfilesets` | `boolean` |  |  |
+| `:spawn` | `boolean` |  |  |
+| `:timeout` | `Integer` |  |  |
+| `:type` | `FileDirBoth` | One of file, dir or both. If set to file, only the permissions of plain files are going to be changed. If set to dir, only the directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir. | No; default is file |
+| `:verbose` | `boolean` | Whether to print a summary after execution or not. Since Ant 1.6. | No; defaults to false |
+| `:vmlauncher` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -1609,51 +1446,45 @@ set its value to your current OS.
 
 **Attributes**
 
-- `:addsourcefile` `boolean`
-- `:append` `boolean`
-- `:command` `Commandline`
-- `:dest` `File`
-- `:dir` `File`
-- `:discarderror` `boolean`
-- `:discardoutput` `boolean`
-- `:error` `File`
-- `:errorproperty` `String`
-- `:executable` `String`
-- `:failifexecutionfails` `boolean`
-- `:failonerror` `boolean`
-- `:file` `File` - the file or directory of which the owner must be changed.
-  Required: Yes, unless nested <fileset|filelist|dirset> elements are specified
-- `:force` `boolean`
-- `:forwardslash` `boolean`
-- `:ignoremissing` `boolean`
-- `:input` `File`
-- `:inputstring` `String`
-- `:logerror` `boolean`
-- `:maxparallel` `int` - Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited.
-  Required: No; defaults to unlimited
-- `:newenvironment` `boolean`
-- `:os` `String` - list of Operating Systems on which the command may be executed.
-  Required: No
-- `:osfamily` `String` - OS family as used in the <os> condition.
-  Required: No; defaults to unix
-- `:output` `File`
-- `:outputproperty` `String`
-- `:owner` `String` - the new owner.
-  Required: Yes
-- `:parallel` `boolean` - process all specified files using a single chown command.
-  Required: No; defaults to true
-- `:relative` `boolean`
-- `:resolveexecutable` `boolean`
-- `:resultproperty` `String`
-- `:searchpath` `boolean`
-- `:skipemptyfilesets` `boolean`
-- `:spawn` `boolean`
-- `:timeout` `Long`
-- `:type` `FileDirBoth` - One of file, dir or both. If set to file, only the owner of plain files are going to be changed. If set to dir, only the directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir.
-  Required: No; default is file
-- `:verbose` `boolean` - Whether to print a summary after execution or not.
-  Required: No; defaults to false
-- `:vmlauncher` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:addsourcefile` | `boolean` |  |  |
+| `:append` | `boolean` |  |  |
+| `:command` | `Commandline` |  |  |
+| `:dest` | `File` |  |  |
+| `:dir` | `File` |  |  |
+| `:discarderror` | `boolean` |  |  |
+| `:discardoutput` | `boolean` |  |  |
+| `:error` | `File` |  |  |
+| `:errorproperty` | `String` |  |  |
+| `:executable` | `String` |  |  |
+| `:failifexecutionfails` | `boolean` |  |  |
+| `:failonerror` | `boolean` |  |  |
+| `:file` | `File` | the file or directory of which the owner must be changed. | Yes, unless nested <fileset\\|filelist\\|dirset> elements are specified |
+| `:force` | `boolean` |  |  |
+| `:forwardslash` | `boolean` |  |  |
+| `:ignoremissing` | `boolean` |  |  |
+| `:input` | `File` |  |  |
+| `:inputstring` | `String` |  |  |
+| `:logerror` | `boolean` |  |  |
+| `:maxparallel` | `int` | Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. | No; defaults to unlimited |
+| `:newenvironment` | `boolean` |  |  |
+| `:os` | `String` | list of Operating Systems on which the command may be executed. | No |
+| `:osfamily` | `String` | OS family as used in the <os> condition. | No; defaults to unix |
+| `:output` | `File` |  |  |
+| `:outputproperty` | `String` |  |  |
+| `:owner` | `String` | the new owner. | Yes |
+| `:parallel` | `boolean` | process all specified files using a single chown command. | No; defaults to true |
+| `:relative` | `boolean` |  |  |
+| `:resolveexecutable` | `boolean` |  |  |
+| `:resultproperty` | `String` |  |  |
+| `:searchpath` | `boolean` |  |  |
+| `:skipemptyfilesets` | `boolean` |  |  |
+| `:spawn` | `boolean` |  |  |
+| `:timeout` | `Integer` |  |  |
+| `:type` | `FileDirBoth` | One of file, dir or both. If set to file, only the owner of plain files are going to be changed. If set to dir, only the directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir. | No; default is file |
+| `:verbose` | `boolean` | Whether to print a summary after execution or not. | No; defaults to false |
+| `:vmlauncher` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -1683,13 +1514,15 @@ https://ant.apache.org/manual/Tasks/chown.html
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:name` `String`
-- `:parentfirst` `boolean`
-- `:parentname` `String`
-- `:reset` `boolean`
-- `:reverse` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:name` | `String` |  |  |
+| `:parentfirst` | `boolean` |  |  |
+| `:parentname` | `String` |  |  |
+| `:reset` | `boolean` |  |  |
+| `:reverse` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -1711,7 +1544,9 @@ https://ant.apache.org/manual/Tasks/classloader.html
 
 **Attributes**
 
-- `:vmlauncher` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:vmlauncher` | `boolean` |  |  |
 
 **Reference**
 
@@ -1733,20 +1568,22 @@ Apache Ant definitions to be made for tags like and or or.
 
 **Attributes**
 
-- `:adapter` `String`
-- `:adaptto` `String`
-- `:antlib` `String`
-- `:classname` `String`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:file` `File`
-- `:format` `Format`
-- `:loaderref` `Reference`
-- `:name` `String`
-- `:onerror` `OnError`
-- `:resource` `String`
-- `:reverseloader` `boolean`
-- `:uri` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:adapter` | `String` |  |  |
+| `:adaptto` | `String` |  |  |
+| `:antlib` | `String` |  |  |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:file` | `File` |  |  |
+| `:format` | `Format` |  |  |
+| `:loaderref` | `Reference` |  |  |
+| `:name` | `String` |  |  |
+| `:onerror` | `OnError` |  |  |
+| `:resource` | `String` |  |  |
+| `:reverseloader` | `boolean` |  |  |
+| `:uri` | `String` |  |  |
 
 **Nested elements**
 
@@ -1773,33 +1610,22 @@ a single resource to concat.
 
 **Attributes**
 
-- `:append` `boolean` - Specifies whether or not the file specified by destfile should be appended.
-  Required: No; defaults to no
-- `:binary` `boolean` - Since Ant 1.6.2 If this attribute is set to true, the task concatenates the files in a byte by byte fashion. If this attribute is false, concat will not normally work for binary files due to character encoding issues. If this option is set to true, the destfile attribute must be set, and the task cannot used nested text. Also the attributes encoding, outputencoding, filelastline cannot be used.
-  Required: No; default is false
-- `:dest` `Resource`
-- `:destfile` `File` - The destination file for the concatenated stream. If not specified the console will be used instead.
-  Required: No
-- `:encoding` `String` - Specifies the encoding for the input files. Please see Supported Encodings for a list of possible values.
-  Required: No; defaults to default JVM character encoding
-- `:eol` `CrLf` - Specifies what the end of line character are for use by the fixlastline attribute. Since Ant 1.6 Valid values for this property are: cr: a single CR lf: a single LF crlf: the pair CRLF mac: a single CR unix: a single LF dos: the pair CRLF
-  Required: No; default is platform dependent: lf for Unix, crlf for DOS family (including Windows), cr for Mac OS 9 or earlier
-- `:filterbeforeconcat` `boolean` - If this attribute is set to true, the task applies the filterchain to each input after applying fixlastline. If this attribute is false, concat will apply the filterchain only once to the already concatenated inputs. Filtering of header and footer is not affected by this setting. Since Ant 1.10.10
-  Required: No; default is false
-- `:fixlastline` `boolean` - Specifies whether or not to check if each file concatenated is terminated by a new line. If this attribute is yes a new line will be appended to the stream if the file did not end in a new line. Since Ant 1.6. This attribute does not apply to embedded text.
-  Required: No; defaults to no
-- `:force` `boolean` - Specifies whether or not the file specified by destfile should be written to even if it is newer than all source files. Deprecated, use the overwrite attribute instead.
-  Required: No; defaults to yes
-- `:forcereadonly` `boolean` - Overwrite read-only destination files. Since Ant 1.8.2
-  Required: No; defaults to false
-- `:ignoreempty` `boolean` - Since Ant 1.8.0 Specifies whether or not the file specified by destfile should be created if the source resource list is empty.
-  Required: No; defaults to true
-- `:outputencoding` `String` - The encoding to use when writing the output file. Since Ant 1.6.
-  Required: No; defaults to encoding if set or default JVM character encoding otherwise
-- `:overwrite` `boolean` - Specifies whether or not the file specified by destfile should be written to even if it is newer than all source files. Since Ant 1.8.2.
-  Required: No; defaults to yes
-- `:resourcename` `String` - Since Ant 1.8.3 Specifies the name reported if this task is exposed as a resource.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` | Specifies whether or not the file specified by destfile should be appended. | No; defaults to no |
+| `:binary` | `boolean` | Since Ant 1.6.2 If this attribute is set to true, the task concatenates the files in a byte by byte fashion. If this attribute is false, concat will not normally work for binary files due to character encoding issues. If this option is set to true, the destfile attribute must be set, and the task cannot used nested text. Also the attributes encoding, outputencoding, filelastline cannot be used. | No; default is false |
+| `:dest` | `Resource` |  |  |
+| `:destfile` | `File` | The destination file for the concatenated stream. If not specified the console will be used instead. | No |
+| `:encoding` | `String` | Specifies the encoding for the input files. Please see Supported Encodings for a list of possible values. | No; defaults to default JVM character encoding |
+| `:eol` | `CrLf` | Specifies what the end of line character are for use by the fixlastline attribute. Since Ant 1.6 Valid values for this property are: cr: a single CR lf: a single LF crlf: the pair CRLF mac: a single CR unix: a single LF dos: the pair CRLF | No; default is platform dependent: lf for Unix, crlf for DOS family (including Windows), cr for Mac OS 9 or earlier |
+| `:filterbeforeconcat` | `boolean` | If this attribute is set to true, the task applies the filterchain to each input after applying fixlastline. If this attribute is false, concat will apply the filterchain only once to the already concatenated inputs. Filtering of header and footer is not affected by this setting. Since Ant 1.10.10 | No; default is false |
+| `:fixlastline` | `boolean` | Specifies whether or not to check if each file concatenated is terminated by a new line. If this attribute is yes a new line will be appended to the stream if the file did not end in a new line. Since Ant 1.6. This attribute does not apply to embedded text. | No; defaults to no |
+| `:force` | `boolean` | Specifies whether or not the file specified by destfile should be written to even if it is newer than all source files. Deprecated, use the overwrite attribute instead. | No; defaults to yes |
+| `:forcereadonly` | `boolean` | Overwrite read-only destination files. Since Ant 1.8.2 | No; defaults to false |
+| `:ignoreempty` | `boolean` | Since Ant 1.8.0 Specifies whether or not the file specified by destfile should be created if the source resource list is empty. | No; defaults to true |
+| `:outputencoding` | `String` | The encoding to use when writing the output file. Since Ant 1.6. | No; defaults to encoding if set or default JVM character encoding otherwise |
+| `:overwrite` | `boolean` | Specifies whether or not the file specified by destfile should be written to even if it is newer than all source files. Since Ant 1.8.2. | No; defaults to yes |
+| `:resourcename` | `String` | Since Ant 1.8.3 Specifies the name reported if this task is exposed as a resource. | No |
 
 **Nested elements**
 
@@ -1834,12 +1660,11 @@ you must specify exactly one condition.
 
 **Attributes**
 
-- `:else` `Object` - The value to set the property to if the condition evaluates to false. Since Apache Ant 1.6.3
-  Required: No; by default the property will remain unset
-- `:property` `String` - The name of the property to set.
-  Required: Yes
-- `:value` `Object` - The value to set the property to.
-  Required: No; defaults to true
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:else` | `Object` | The value to set the property to if the condition evaluates to false. Since Apache Ant 1.6.3 | No; by default the property will remain unset |
+| `:property` | `String` | The name of the property to set. | Yes |
+| `:value` | `Object` | The value to set the property to. | No; defaults to true |
 
 **Nested elements**
 
@@ -1888,38 +1713,24 @@ filtersets. See encoding note.
 
 **Attributes**
 
-- `:enablemultiplemappings` `boolean` - If true the task will process to all the mappings for a given source path. If false the task will only process the first file or directory. This attribute is only relevant if there is a mapper subelement. since Ant 1.6.
-  Required: No; defaults to false
-- `:encoding` `String` - The encoding to assume when filter-copying the files. since Ant 1.5.
-  Required: No; defaults to default JVM character encoding
-- `:failonerror` `boolean` - If false, log a warning message, but do not stop the build, when the file to copy does not exist or one of the nested filesets points to a directory that doesn't exist or an error occurs while copying.
-  Required: No; defaults to true
-- `:file` `File` - The file to copy.
-  Required: Yes, unless a nested resource collection element is used
-- `:filtering` `boolean` - Indicates whether token filtering using the global build-file filters should take place during the copy. Note: Nested <filterset> elements will always be used, even if this attribute is not specified, or its value is false, no, or off.
-  Required: No; defaults to false
-- `:flatten` `boolean` - Ignore the directory structure of the source files, and copy all files into the directory specified by the todir attribute. Note that you can achieve the same effect by using a flatten mapper.
-  Required: No; defaults to false
-- `:force` `boolean` - Overwrite read-only destination files. since Ant 1.8.2
-  Required: No; defaults to false
-- `:granularity` `long` - The number of milliseconds leeway to give before deciding a file is out of date. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.6.2.
-  Required: No; default is 1 second, or 2 seconds on DOS systems
-- `:includeemptydirs` `boolean` - Copy any empty directories included in the FileSet(s).
-  Required: No; defaults to true
-- `:outputencoding` `String` - The encoding to use when writing the files. since Ant 1.6.
-  Required: No; defaults to encoding if set or default JVM character encoding otherwise
-- `:overwrite` `boolean` - Overwrite existing files even if the destination files are newer.
-  Required: No; defaults to false
-- `:preservelastmodified` `boolean` - Give the copied files the same last modified time as the original source files.
-  Required: No; defaults to false
-- `:quiet` `boolean` - If true and failonerror is false, then do not log a warning message when the file to copy does not exist or one of the nested filesets points to a directory that doesn't exist or an error occurs while copying. since Ant 1.8.3.
-  Required: No; defaults to false
-- `:todir` `File` - The directory to copy to.
-  Required: With the file attribute, either tofile or todir can be used. With nested resource collection elements, if the number of included resources is greater than 1, or if only the dir attribute is specified in the <fileset>, or if the file attribute is also specified, then only todir is allowed.
-- `:tofile` `File` - The file to copy to. Prior to Apache Ant 1.8.2, the tofile attribute only supported file resources to copy from.
-  Required: With the file attribute, either tofile or todir can be used. With nested resource collection elements, if the number of included resources is greater than 1, or if only the dir attribute is specified in the <fileset>, or if the file attribute is also specified, then only todir is allowed.
-- `:verbose` `boolean` - Log the files that are being copied.
-  Required: No; defaults to false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:enablemultiplemappings` | `boolean` | If true the task will process to all the mappings for a given source path. If false the task will only process the first file or directory. This attribute is only relevant if there is a mapper subelement. since Ant 1.6. | No; defaults to false |
+| `:encoding` | `String` | The encoding to assume when filter-copying the files. since Ant 1.5. | No; defaults to default JVM character encoding |
+| `:failonerror` | `boolean` | If false, log a warning message, but do not stop the build, when the file to copy does not exist or one of the nested filesets points to a directory that doesn't exist or an error occurs while copying. | No; defaults to true |
+| `:file` | `File` | The file to copy. | Yes, unless a nested resource collection element is used |
+| `:filtering` | `boolean` | Indicates whether token filtering using the global build-file filters should take place during the copy. Note: Nested <filterset> elements will always be used, even if this attribute is not specified, or its value is false, no, or off. | No; defaults to false |
+| `:flatten` | `boolean` | Ignore the directory structure of the source files, and copy all files into the directory specified by the todir attribute. Note that you can achieve the same effect by using a flatten mapper. | No; defaults to false |
+| `:force` | `boolean` | Overwrite read-only destination files. since Ant 1.8.2 | No; defaults to false |
+| `:granularity` | `long` | The number of milliseconds leeway to give before deciding a file is out of date. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.6.2. | No; default is 1 second, or 2 seconds on DOS systems |
+| `:includeemptydirs` | `boolean` | Copy any empty directories included in the FileSet(s). | No; defaults to true |
+| `:outputencoding` | `String` | The encoding to use when writing the files. since Ant 1.6. | No; defaults to encoding if set or default JVM character encoding otherwise |
+| `:overwrite` | `boolean` | Overwrite existing files even if the destination files are newer. | No; defaults to false |
+| `:preservelastmodified` | `boolean` | Give the copied files the same last modified time as the original source files. | No; defaults to false |
+| `:quiet` | `boolean` | If true and failonerror is false, then do not log a warning message when the file to copy does not exist or one of the nested filesets points to a directory that doesn't exist or an error occurs while copying. since Ant 1.8.3. | No; defaults to false |
+| `:todir` | `File` | The directory to copy to. | With the file attribute, either tofile or todir can be used. With nested resource collection elements, if the number of included resources is greater than 1, or if only the dir attribute is specified in the <fileset>, or if the file attribute is also specified, then only todir is allowed. |
+| `:tofile` | `File` | The file to copy to. Prior to Apache Ant 1.8.2, the tofile attribute only supported file resources to copy from. | With the file attribute, either tofile or todir can be used. With nested resource collection elements, if the number of included resources is greater than 1, or if only the dir attribute is specified in the <fileset>, or if the file attribute is also specified, then only todir is allowed. |
+| `:verbose` | `boolean` | Log the files that are being copied. | No; defaults to false |
 
 **Nested elements**
 
@@ -1953,28 +1764,20 @@ becomes src) as well as the nested <include>, <exclude> and <patternset> element
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:dest` `File` - the directory to copy to.
-  Required: Yes
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:filtering` `boolean` - indicates whether token filtering should take place during the copy
-  Required: No; default is false
-- `:flatten` `boolean` - ignore directory structure of source directory, copy all files into a single directory, specified by the dest attribute.
-  Required: No; default is false
-- `:followsymlinks` `boolean`
-- `:forceoverwrite` `boolean` - overwrite existing files even if the destination files are newer.
-  Required: No; default is false
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:src` `File` - the directory to copy.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:dest` | `File` | the directory to copy to. | Yes |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:filtering` | `boolean` | indicates whether token filtering should take place during the copy | No; default is false |
+| `:flatten` | `boolean` | ignore directory structure of source directory, copy all files into a single directory, specified by the dest attribute. | No; default is false |
+| `:followsymlinks` | `boolean` |  |  |
+| `:forceoverwrite` | `boolean` | overwrite existing files even if the destination files are newer. | No; default is false |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern | No |
+| `:src` | `File` | the directory to copy. | Yes |
 
 **Nested elements**
 
@@ -2019,14 +1822,12 @@ file is newer than the destination file, or when the destination file does not e
 
 **Attributes**
 
-- `:dest` `File` - the filename of the file where to copy to.
-  Required: Yes
-- `:filtering` `String` - indicates whether token filtering should take place during the copy
-  Required: No; default is false
-- `:forceoverwrite` `boolean` - overwrite existing files even if the destination files are newer.
-  Required: No; default is false
-- `:src` `File` - the filename of the file to copy.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dest` | `File` | the filename of the file where to copy to. | Yes |
+| `:filtering` | `String` | indicates whether token filtering should take place during the copy | No; default is false |
+| `:forceoverwrite` | `boolean` | overwrite existing files even if the destination files are newer. | No; default is false |
+| `:src` | `File` | the filename of the file to copy. | Yes |
 
 **Reference**
 
@@ -2044,11 +1845,13 @@ https://ant.apache.org/manual/Tasks/copyfile.html
 
 **Attributes**
 
-- `:destdir` `File`
-- `:granularity` `long`
-- `:path` `Path`
-- `:pathref` `Reference`
-- `:preservelastmodified` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:destdir` | `File` |  |  |
+| `:granularity` | `long` |  |  |
+| `:path` | `Path` |  |  |
+| `:pathref` | `Reference` |  |  |
+| `:preservelastmodified` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -2079,42 +1882,26 @@ report 21657 for recommended workarounds.
 
 **Attributes**
 
-- `:append` `boolean` - whether to append output/error when redirecting to a file.
-  Required: No; defaults to false
-- `:command` `String` - the CVS command to execute.
-  Required: No; default is checkout
-- `:compression` `boolean` - true (equivalent to compressionlevel=3) or false
-  Required: No; defaults to false
-- `:compressionlevel` `int` - A number between 1 and 9 (corresponding to possible values for CVS -z# argument). Any other value is treated as compression=false
-  Required: No; defaults to no compression
-- `:cvsroot` `String` - the CVSROOT variable.
-  Required: No
-- `:cvsrsh` `String` - the CVS_RSH variable.
-  Required: No
-- `:date` `String` - Use the most recent revision no later than the given date
-  Required: No
-- `:dest` `File` - the directory where the checked out files should be placed. Note that this is different from CVS's -d command line switch as Apache Ant will never shorten pathnames to avoid empty directories.
-  Required: No; default is project's basedir
-- `:error` `File` - the file to direct standard error from the command.
-  Required: No; default is error to the log as MSG_WARN
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code other than 0.
-  Required: No; defaults to false
-- `:noexec` `boolean` - report only, don't change any files.
-  Required: No; defaults to false
-- `:output` `File` - the file to direct standard output from the command.
-  Required: No; default is output to the log as MSG_INFO
-- `:package` `String` - the package/module to check out. Note: multiple attributes can be split using spaces. Use a nested <module> element if you want to specify a module with spaces in its name.
-  Required: No
-- `:passfile` `File` - Password file to read passwords from.
-  Required: No; default is ~/.cvspass
-- `:port` `int` - Port used by CVS to communicate with the server.
-  Required: No; default is 2401
-- `:quiet` `boolean` - suppress informational messages. This is the same as -q on the command line.
-  Required: No; defaults to false
-- `:reallyquiet` `boolean` - suppress all messages. This is the same as -Q on the command line. since Ant 1.6.
-  Required: No; defaults to false
-- `:tag` `String` - the tag of the package/module to check out.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` | whether to append output/error when redirecting to a file. | No; defaults to false |
+| `:command` | `String` | the CVS command to execute. | No; default is checkout |
+| `:compression` | `boolean` | true (equivalent to compressionlevel=3) or false | No; defaults to false |
+| `:compressionlevel` | `int` | A number between 1 and 9 (corresponding to possible values for CVS -z# argument). Any other value is treated as compression=false | No; defaults to no compression |
+| `:cvsroot` | `String` | the CVSROOT variable. | No |
+| `:cvsrsh` | `String` | the CVS_RSH variable. | No |
+| `:date` | `String` | Use the most recent revision no later than the given date | No |
+| `:dest` | `File` | the directory where the checked out files should be placed. Note that this is different from CVS's -d command line switch as Apache Ant will never shorten pathnames to avoid empty directories. | No; default is project's basedir |
+| `:error` | `File` | the file to direct standard error from the command. | No; default is error to the log as MSG_WARN |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code other than 0. | No; defaults to false |
+| `:noexec` | `boolean` | report only, don't change any files. | No; defaults to false |
+| `:output` | `File` | the file to direct standard output from the command. | No; default is output to the log as MSG_INFO |
+| `:package` | `String` | the package/module to check out. Note: multiple attributes can be split using spaces. Use a nested <module> element if you want to specify a module with spaces in its name. | No |
+| `:passfile` | `File` | Password file to read passwords from. | No; default is ~/.cvspass |
+| `:port` | `int` | Port used by CVS to communicate with the server. | No; default is 2401 |
+| `:quiet` | `boolean` | suppress informational messages. This is the same as -q on the command line. | No; defaults to false |
+| `:reallyquiet` | `boolean` | suppress all messages. This is the same as -Q on the command line. since Ant 1.6. | No; defaults to false |
+| `:tag` | `String` | the tag of the package/module to check out. | No |
 
 **Nested elements**
 
@@ -2143,49 +1930,35 @@ such an incompatible client.
 
 **Attributes**
 
-- `:append` `boolean`
-- `:command` `String`
-- `:compression` `boolean`
-- `:compressionlevel` `int`
-- `:cvsroot` `String` - the CVSROOT variable.
-  Required: No
-- `:cvsrsh` `String` - the CVS_RSH variable.
-  Required: No
-- `:date` `String`
-- `:daysinpast` `int` - Sets the number of days into the past for which the change log information should be retrieved.
-  Required: No
-- `:dest` `File`
-- `:destfile` `File` - The file in which to write the change log report.
-  Required: Yes
-- `:dir` `File` - The directory from which to run the cvs log command.
-  Required: No; defaults to ${basedir}
-- `:end` `Date` - The latest date to which change logs are to be included in the report.
-  Required: No
-- `:endtag` `String` - The end of a tag range. If startTag is also specified, they must both be on the same branch. If startTag is not specified, the start of the range will be the top of the branch on which endTag lives. Since Ant 1.8.0
-  Required: No
-- `:error` `File`
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code other than 0
-  Required: No; defaults to false
-- `:noexec` `boolean`
-- `:output` `File`
-- `:package` `String` - the package/module to check out. Note: multiple attributes can be split using spaces. Use a nested <module> element if you want to specify a module with spaces in its name.
-  Required: No
-- `:passfile` `File` - Password file to read passwords from.
-  Required: No; defaults to ~/.cvspass
-- `:port` `int` - Port used by CVS to communicate with the server.
-  Required: No; defaults to 2401
-- `:quiet` `boolean`
-- `:reallyquiet` `boolean`
-- `:remote` `boolean` - If set to true, works against the repository (using cvs rlog) without a working copy. Since Ant 1.8.0
-  Required: No; default is false
-- `:start` `Date` - The earliest date from which change logs are to be included in the report.
-  Required: No
-- `:starttag` `String` - The start of a tag range. If endTag is also specified, they must both be on the same branch. If endTag is not specified, the end of the range will be the latest on the same branch on which startTag lives. Since Ant 1.8.0
-  Required: No
-- `:tag` `String` - query the changelog for a specific branch.
-  Required: No
-- `:usersfile` `File` - Property file that contains name-value pairs mapping user IDs and names that should be used in the report in place of the user ID.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` |  |  |
+| `:command` | `String` |  |  |
+| `:compression` | `boolean` |  |  |
+| `:compressionlevel` | `int` |  |  |
+| `:cvsroot` | `String` | the CVSROOT variable. | No |
+| `:cvsrsh` | `String` | the CVS_RSH variable. | No |
+| `:date` | `String` |  |  |
+| `:daysinpast` | `int` | Sets the number of days into the past for which the change log information should be retrieved. | No |
+| `:dest` | `File` |  |  |
+| `:destfile` | `File` | The file in which to write the change log report. | Yes |
+| `:dir` | `File` | The directory from which to run the cvs log command. | No; defaults to ${basedir} |
+| `:end` | `Date` | The latest date to which change logs are to be included in the report. | No |
+| `:endtag` | `String` | The end of a tag range. If startTag is also specified, they must both be on the same branch. If startTag is not specified, the start of the range will be the top of the branch on which endTag lives. Since Ant 1.8.0 | No |
+| `:error` | `File` |  |  |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code other than 0 | No; defaults to false |
+| `:noexec` | `boolean` |  |  |
+| `:output` | `File` |  |  |
+| `:package` | `String` | the package/module to check out. Note: multiple attributes can be split using spaces. Use a nested <module> element if you want to specify a module with spaces in its name. | No |
+| `:passfile` | `File` | Password file to read passwords from. | No; defaults to ~/.cvspass |
+| `:port` | `int` | Port used by CVS to communicate with the server. | No; defaults to 2401 |
+| `:quiet` | `boolean` |  |  |
+| `:reallyquiet` | `boolean` |  |  |
+| `:remote` | `boolean` | If set to true, works against the repository (using cvs rlog) without a working copy. Since Ant 1.8.0 | No; default is false |
+| `:start` | `Date` | The earliest date from which change logs are to be included in the report. | No |
+| `:starttag` | `String` | The start of a tag range. If endTag is also specified, they must both be on the same branch. If endTag is not specified, the end of the range will be the latest on the same branch on which startTag lives. Since Ant 1.8.0 | No |
+| `:tag` | `String` | query the changelog for a specific branch. | No |
+| `:usersfile` | `File` | Property file that contains name-value pairs mapping user IDs and names that should be used in the report in place of the user ID. | No |
 
 **Nested elements**
 
@@ -2214,12 +1987,11 @@ workarounds.
 
 **Attributes**
 
-- `:cvsroot` `String` - the CVS repository to add an entry for.
-  Required: Yes
-- `:passfile` `File` - Password file to add the entry to.
-  Required: No; default is ~/.cvspass
-- `:password` `String` - Password to be added to the password file.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cvsroot` | `String` | the CVS repository to add an entry for. | Yes |
+| `:passfile` | `File` | Password file to add the entry to. | No; default is ~/.cvspass |
+| `:password` | `String` | Password to be added to the password file. | Yes |
 
 **Reference**
 
@@ -2244,35 +2016,32 @@ of the CVS command in a file inside of the temporary directory.
 
 **Attributes**
 
-- `:append` `boolean`
-- `:command` `String`
-- `:compression` `boolean`
-- `:compressionlevel` `int`
-- `:cvsroot` `String`
-- `:cvsrsh` `String`
-- `:date` `String`
-- `:dest` `File`
-- `:destfile` `File` - The file in which to write the diff report.
-  Required: Yes
-- `:enddate` `String` - The latest date from which diffs are to be included in the report. Accepts all formats accepted by the cvs command for -D date_spec arguments.
-  Required: Exactly one of the two
-- `:endtag` `String` - The latest tag from which diffs are to be included in the report.
-  Required: Exactly one of the two
-- `:error` `File`
-- `:failonerror` `boolean`
-- `:ignoreremoved` `boolean`
-- `:noexec` `boolean`
-- `:output` `File`
-- `:package` `String`
-- `:passfile` `File`
-- `:port` `int`
-- `:quiet` `boolean`
-- `:reallyquiet` `boolean`
-- `:startdate` `String` - The earliest date from which diffs are to be included in the report. Accepts all formats accepted by the cvs command for -D date_spec arguments.
-  Required: Exactly one of the two
-- `:starttag` `String` - The earliest tag from which diffs are to be included in the report.
-  Required: Exactly one of the two
-- `:tag` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` |  |  |
+| `:command` | `String` |  |  |
+| `:compression` | `boolean` |  |  |
+| `:compressionlevel` | `int` |  |  |
+| `:cvsroot` | `String` |  |  |
+| `:cvsrsh` | `String` |  |  |
+| `:date` | `String` |  |  |
+| `:dest` | `File` |  |  |
+| `:destfile` | `File` | The file in which to write the diff report. | Yes |
+| `:enddate` | `String` | The latest date from which diffs are to be included in the report. Accepts all formats accepted by the cvs command for -D date_spec arguments. | Exactly one of the two |
+| `:endtag` | `String` | The latest tag from which diffs are to be included in the report. | Exactly one of the two |
+| `:error` | `File` |  |  |
+| `:failonerror` | `boolean` |  |  |
+| `:ignoreremoved` | `boolean` |  |  |
+| `:noexec` | `boolean` |  |  |
+| `:output` | `File` |  |  |
+| `:package` | `String` |  |  |
+| `:passfile` | `File` |  |  |
+| `:port` | `int` |  |  |
+| `:quiet` | `boolean` |  |  |
+| `:reallyquiet` | `boolean` |  |  |
+| `:startdate` | `String` | The earliest date from which diffs are to be included in the report. Accepts all formats accepted by the cvs command for -D date_spec arguments. | Exactly one of the two |
+| `:starttag` | `String` | The earliest tag from which diffs are to be included in the report. | Exactly one of the two |
+| `:tag` | `String` |  |  |
 
 **Nested elements**
 
@@ -2295,35 +2064,28 @@ https://ant.apache.org/manual/Tasks/cvstagdiff.html
 
 **Attributes**
 
-- `:append` `boolean`
-- `:clientversionproperty` `String` - Name of a property where the CVS client version should be stored
-  Required: No
-- `:command` `String`
-- `:compression` `boolean`
-- `:compressionlevel` `int`
-- `:cvsroot` `String` - the CVSROOT variable.
-  Required: No
-- `:cvsrsh` `String` - the CVS_RSH variable.
-  Required: No
-- `:date` `String`
-- `:dest` `File` - directory containing the checked out version of the project
-  Required: No; default is project's basedir
-- `:error` `File`
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code other than 0.
-  Required: No; defaults to false
-- `:noexec` `boolean`
-- `:output` `File`
-- `:package` `String` - the package/module to check out.
-  Required: No
-- `:passfile` `File` - Password file to read passwords from.
-  Required: No; default is ~/.cvspass
-- `:port` `int` - Port used by CVS to communicate with the server.
-  Required: No; default is 2401
-- `:quiet` `boolean`
-- `:reallyquiet` `boolean`
-- `:serverversionproperty` `String` - Name of a property where the CVS server version should be stored
-  Required: No
-- `:tag` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` |  |  |
+| `:clientversionproperty` | `String` | Name of a property where the CVS client version should be stored | No |
+| `:command` | `String` |  |  |
+| `:compression` | `boolean` |  |  |
+| `:compressionlevel` | `int` |  |  |
+| `:cvsroot` | `String` | the CVSROOT variable. | No |
+| `:cvsrsh` | `String` | the CVS_RSH variable. | No |
+| `:date` | `String` |  |  |
+| `:dest` | `File` | directory containing the checked out version of the project | No; default is project's basedir |
+| `:error` | `File` |  |  |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code other than 0. | No; defaults to false |
+| `:noexec` | `boolean` |  |  |
+| `:output` | `File` |  |  |
+| `:package` | `String` | the package/module to check out. | No |
+| `:passfile` | `File` | Password file to read passwords from. | No; default is ~/.cvspass |
+| `:port` | `int` | Port used by CVS to communicate with the server. | No; default is 2401 |
+| `:quiet` | `boolean` |  |  |
+| `:reallyquiet` | `boolean` |  |  |
+| `:serverversionproperty` | `String` | Name of a property where the CVS server version should be stored | No |
+| `:tag` | `String` |  |  |
 
 **Nested elements**
 
@@ -2347,14 +2109,12 @@ the current default excludes if desired.
 
 **Attributes**
 
-- `:add` `String` - the pattern to add to the default excludes
-  Required: if no other attribute is specified
-- `:default` `boolean` - go back to hard wired default excludes
-  Required: true required if no other attribute is specified
-- `:echo` `boolean` - whether or not to print out the default excludes
-  Required: true required if no other attribute specified; defaults to false
-- `:remove` `String` - remove the specified pattern from the default excludes
-  Required: if no other attribute is specified
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:add` | `String` | the pattern to add to the default excludes | if no other attribute is specified |
+| `:default` | `boolean` | go back to hard wired default excludes | true required if no other attribute is specified |
+| `:echo` | `boolean` | whether or not to print out the default excludes | true required if no other attribute specified; defaults to false |
+| `:remove` | `String` | remove the specified pattern from the default excludes | if no other attribute is specified |
 
 **Reference**
 
@@ -2386,38 +2146,25 @@ more control, use a nested <fileset>.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean` - Deprecated. Use resource collections. Whether to use default excludes.
-  Required: No; default true
-- `:deleteonexit` `boolean` - Indicates whether to use File#deleteOnExit() if there is a failure to delete a file. This causes the JVM to attempt to delete the file when the JVM process is terminating. Since Ant 1.6.2
-  Required: No; default false
-- `:dir` `File` - The directory to delete, including all its files and subdirectories. Note: dir is not used to specify a directory name for file; file and dir are independent of each other. Warning: Do not set dir to ., ${basedir}, or the full-pathname equivalent unless you truly intend to recursively remove the entire contents of the current base directory (and the base directory itself, if different from the current working directory).
-  Required: At least one of the three, unless nested resource collections are specified
-- `:excludes` `String` - Deprecated. Use resource collections. Comma- or space-separated list of patterns of files that must be excluded from the deletion list. All files are relative to the directory specified in dir.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - Deprecated. Use resource collections. Name of a file; each line of this file is taken to be an exclude pattern
-  Required: No
-- `:failonerror` `boolean` - Controls whether an error (such as a failure to delete a file) stops the build or is merely reported to the screen. Only relevant if quiet is false.
-  Required: No; default true
-- `:file` `File` - The file to delete, specified as either the simple filename (if the file exists in the current base directory), a relative-path filename, or a full-path filename.
-  Required: At least one of the three, unless nested resource collections are specified
-- `:followsymlinks` `boolean`
-- `:includeemptydirs` `boolean` - Whether to delete empty directories when using filesets.
-  Required: No; default false
-- `:includes` `String` - Deprecated. Use resource collections. Comma- or space-separated list of patterns of files that must be deleted. All files are relative to the directory specified in dir.
-  Required: No
-- `:includesfile` `File` - Deprecated. Use resource collections. Name of a file; each line of this file is taken to be an include pattern.
-  Required: No
-- `:link` `File` - The symbolic link or Windows junction to delete, specified as either the simple filename (if the link exists in the current base directory), a relative-path filename, or a full-path filename. since Ant 1.10.16.
-  Required: At least one of the three, unless nested resource collections are specified
-- `:performgconfaileddelete` `boolean` - If Ant fails to delete a file or directory it will retry the operation once. If this flag is set to true it will perform a garbage collection before retrying the delete. Setting this flag to true is known to resolve some problems on Windows (where it defaults to true) but also for directory trees residing on an NFS share. Since Ant 1.8.3
-  Required: No; default true on Windows and true on any other OS
-- `:quiet` `boolean` - If the specified file or directory does not exist, do not display a diagnostic message (unless Apache Ant has been invoked with the -verbose or -debug switches) or modify the exit status to reflect an error. When set to true, if a file or directory cannot be deleted, no error is reported. This setting emulates the -f option to the Unix rm command. Setting this to true implies setting failonerror to false.
-  Required: No; default false
-- `:removenotfollowedsymlinks` `boolean` - Whether symbolic links (not the files/directories they link to) should be removed if they haven't been followed because followSymlinks was false or the maximum number of symbolic links was too big. Since Ant 1.8.0 Since since Ant 1.10.16 this also applies to not followed windows junctions.
-  Required: No; default false
-- `:verbose` `boolean` - Whether to show the name of each deleted file.
-  Required: No; default false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` | Deprecated. Use resource collections. Whether to use default excludes. | No; default true |
+| `:deleteonexit` | `boolean` | Indicates whether to use File#deleteOnExit() if there is a failure to delete a file. This causes the JVM to attempt to delete the file when the JVM process is terminating. Since Ant 1.6.2 | No; default false |
+| `:dir` | `File` | The directory to delete, including all its files and subdirectories. Note: dir is not used to specify a directory name for file; file and dir are independent of each other. Warning: Do not set dir to ., ${basedir}, or the full-pathname equivalent unless you truly intend to recursively remove the entire contents of the current base directory (and the base directory itself, if different from the current working directory). | At least one of the three, unless nested resource collections are specified |
+| `:excludes` | `String` | Deprecated. Use resource collections. Comma- or space-separated list of patterns of files that must be excluded from the deletion list. All files are relative to the directory specified in dir. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | Deprecated. Use resource collections. Name of a file; each line of this file is taken to be an exclude pattern | No |
+| `:failonerror` | `boolean` | Controls whether an error (such as a failure to delete a file) stops the build or is merely reported to the screen. Only relevant if quiet is false. | No; default true |
+| `:file` | `File` | The file to delete, specified as either the simple filename (if the file exists in the current base directory), a relative-path filename, or a full-path filename. | At least one of the three, unless nested resource collections are specified |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includeemptydirs` | `boolean` | Whether to delete empty directories when using filesets. | No; default false |
+| `:includes` | `String` | Deprecated. Use resource collections. Comma- or space-separated list of patterns of files that must be deleted. All files are relative to the directory specified in dir. | No |
+| `:includesfile` | `File` | Deprecated. Use resource collections. Name of a file; each line of this file is taken to be an include pattern. | No |
+| `:link` | `File` | The symbolic link or Windows junction to delete, specified as either the simple filename (if the link exists in the current base directory), a relative-path filename, or a full-path filename. since Ant 1.10.16. | At least one of the three, unless nested resource collections are specified |
+| `:performgconfaileddelete` | `boolean` | If Ant fails to delete a file or directory it will retry the operation once. If this flag is set to true it will perform a garbage collection before retrying the delete. Setting this flag to true is known to resolve some problems on Windows (where it defaults to true) but also for directory trees residing on an NFS share. Since Ant 1.8.3 | No; default true on Windows and true on any other OS |
+| `:quiet` | `boolean` | If the specified file or directory does not exist, do not display a diagnostic message (unless Apache Ant has been invoked with the -verbose or -debug switches) or modify the exit status to reflect an error. When set to true, if a file or directory cannot be deleted, no error is reported. This setting emulates the -f option to the Unix rm command. Setting this to true implies setting failonerror to false. | No; default false |
+| `:removenotfollowedsymlinks` | `boolean` | Whether symbolic links (not the files/directories they link to) should be removed if they haven't been followed because followSymlinks was false or the maximum number of symbolic links was too big. Since Ant 1.8.0 Since since Ant 1.10.16 this also applies to not followed windows junctions. | No; default false |
+| `:verbose` | `boolean` | Whether to show the name of each deleted file. | No; default false |
 
 **Nested elements**
 
@@ -2462,8 +2209,9 @@ https://ant.apache.org/manual/Tasks/delete.html
 
 **Attributes**
 
-- `:dir` `File` - the directory to delete.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dir` | `File` | the directory to delete. | Yes |
 
 **Reference**
 
@@ -2514,28 +2262,23 @@ it may be different from the classpath necessary to actually compile your code.
 
 **Attributes**
 
-- `:cache` `File` - This is a directory in which depend can store and retrieve dependency information.
-  Required: No; defaults to no cache
-- `:casesensitive` `boolean`
-- `:classpath` `Path` - The classpath containing jars and classes for which <depend> should also check dependencies
-  Required: No
-- `:classpathref` `Reference`
-- `:closure` `boolean` - This attribute controls whether depend only removes classes which directly depend on out of date classes. If this is set to true, depend will traverse the class dependency graph deleting all affected classes.
-  Required: No; defaults to false
-- `:defaultexcludes` `boolean`
-- `:destdir` `Path` - This is the root directory of the class files which will be analysed.
-  Required: No; defaults to srcdir
-- `:dump` `boolean` - If true the dependency information will be written to the debug level log
-  Required: No; default is false
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:srcdir` `Path` - This is the directory where the source exists. depend will examine this to determine which classes are out of date. If you use multiple source directories you can pass this attribute a path of source directories.
-  Required: Yes
-- `:warnonrmistubs` `boolean` - Flag to disable warnings about files that look like rmic generated stub/skeleton classes and have no .java source. Useful when doing RMI development.
-  Required: No; default true
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `File` | This is a directory in which depend can store and retrieve dependency information. | No; defaults to no cache |
+| `:casesensitive` | `boolean` |  |  |
+| `:classpath` | `Path` | The classpath containing jars and classes for which <depend> should also check dependencies | No |
+| `:classpathref` | `Reference` |  |  |
+| `:closure` | `boolean` | This attribute controls whether depend only removes classes which directly depend on out of date classes. If this is set to true, depend will traverse the class dependency graph deleting all affected classes. | No; defaults to false |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:destdir` | `Path` | This is the root directory of the class files which will be analysed. | No; defaults to srcdir |
+| `:dump` | `boolean` | If true the dependency information will be written to the debug level log | No; default is false |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:srcdir` | `Path` | This is the directory where the source exists. depend will examine this to determine which classes are out of date. If you use multiple source directories you can pass this attribute a path of source directories. | Yes |
+| `:warnonrmistubs` | `boolean` | Flag to disable warnings about files that look like rmic generated stub/skeleton classes and have no .java source. Useful when doing RMI development. | No; default true |
 
 **Nested elements**
 
@@ -2592,15 +2335,16 @@ DTD or XSD file as well as other stylesheets imported by the main stylesheet.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:verbose` `boolean` - Makes the task list all deleted targets files and the reason why they get deleted.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:verbose` | `boolean` | Makes the task list all deleted targets files and the reason why they get deleted. | No |
 
 **Nested elements**
 
@@ -2671,10 +2415,10 @@ determines the full directory path of the specified file.
 
 **Attributes**
 
-- `:file` `File` - The path to take the dirname of.
-  Required: Yes
-- `:property` `String` - The name of the property to set.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` | The path to take the dirname of. | Yes |
+| `:property` | `String` | The name of the property to set. | Yes |
 
 **Reference**
 
@@ -2700,75 +2444,47 @@ must set the duplicate attribute to a value other than its default, add.
 
 **Attributes**
 
-- `:appxml` `File` - The deployment descriptor to use (META-INF/application.xml).
-  Required: Yes, unless update is set to true
-- `:basedir` `File` - the directory from which to jar the files.
-  Required: No
-- `:casesensitive` `boolean`
-- `:comment` `String`
-- `:compress` `boolean` - Not only store data but also compress them. Unless you set the keepcompression attribute to false, this will apply to the entire archive, not only the files you've added while updating.
-  Required: No; defaults to true
-- `:createunicodeextrafields` `UnicodeExtraField` - Whether to create Unicode extra fields to store the file names a second time inside the entry's metadata. Possible values are never, always and not-encodeable which will only add Unicode extra fields if the file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page
-  Required: No; default is never
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:destfile` `File` - the EAR file to create.
-  Required: Yes
-- `:duplicate` `Duplicate` - behavior when a duplicate file is found. Valid values are add, preserve, and fail.
-  Required: No; default is add
-- `:earfile` `File`
-- `:encoding` `String` - The character encoding to use for filenames inside the archive. It is not recommended to change this value as the created archive will most likely be unreadable for Java otherwise. See also the discussion in the zip task page
-  Required: No; defaults to UTF8
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern.
-  Required: No
-- `:fallbacktoutf8` `boolean` - Whether to use UTF-8 and the language encoding flag instead of the specified encoding if a file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page
-  Required: No; default is false
-- `:file` `File`
-- `:filesetmanifest` `FilesetManifestConfig` - behavior when a manifest file is found in a zipfileset or zipgroupfileset file. Valid values are skip, merge, and mergewithoutmain. merge will merge all of the manifests together, and merge this into any other specified manifests. mergewithoutmain merges everything but the Main section of the manifests.
-  Required: No; defaults to skip
-- `:filesonly` `boolean` - Store only file entries.
-  Required: No; defaults to false
-- `:flattenattributes` `boolean` - Whether to merge attributes occurring more than once in a section (this can only happen for the Class-Path attribute) into a single attribute. Since Ant 1.8.0.
-  Required: No; default is false
-- `:followsymlinks` `boolean`
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern.
-  Required: No
-- `:index` `boolean` - whether to create an index list to speed up classloading. Unless you specify additional jars with nested indexjars elements, only the contents of this jar will be included in the index.
-  Required: No; defaults to false
-- `:indexmetainf` `boolean` - whether to include META-INF and its children in the index. Doesn't have any effect if index is false. Oracle's jar implementation used to skip the META-INF directory and Ant followed that example. The behavior has been changed with Java 5. In order to avoid problems with Ant generated jars on Java 1.4 or earlier, Ant will not include META-INF unless explicitly asked to. Since Ant 1.8.0.
-  Required: No; defaults to false
-- `:jarfile` `File`
-- `:keepcompression` `boolean` - For entries coming from existing archives (like nested zipfilesets or while updating the archive), keep the compression as it has been originally instead of using the compress attribute. Since Apache Ant 1.6
-  Required: No; defaults to false
-- `:level` `int` - Non-default level at which file compression should be performed. Valid values range from 0 (no compression/fastest) to 9 (maximum compression/slowest). Since Ant 1.7
-  Required: No
-- `:manifest` `File` - the manifest file to use.
-  Required: No
-- `:manifestencoding` `String` - The encoding used to read the JAR manifest, when a manifest file is specified.
-  Required: No; defaults to default JVM character encoding
-- `:mergeclasspathattributes` `boolean` - Whether to merge the Class-Path attributes found in different manifests (if merging manifests). If false, only the attribute of the last merged manifest will be preserved. Since Ant 1.8.0. unless you also set flattenAttributes to true this may result in manifests containing multiple Class-Path attributes which violates the manifest specification.
-  Required: No; default is false
-- `:modificationtime` `String` - Set all stored file modification times to the given time. This can either be a number interpreted as milliseconds since 1970-01-01T00:00:00Z or a string that can be parsed as a ISO 8601 timestamp with optional timezone. Since Ant 1.10.2.
-  Required: No
-- `:preserve0permissions` `boolean` - when updating an archive or adding entries from a different archive Ant will assume that a Unix permissions value of 0 (nobody is allowed to do anything to the file/directory) means that the permissions haven't been stored at all rather than real permissions and will instead apply its own default values. Set this attribute to true if you really want to preserve the original permission field. Since Ant 1.8.0
-  Required: No; default is false
-- `:roundup` `boolean` - Whether the file modification times will be rounded up to the next even number of seconds. Zip archives store file modification times with a granularity of 2 seconds, so the times will either be rounded up or down. If you round down, the archive will always seem out-of-date when you rerun the task, so the default is to round up. Rounding up may lead to a different type of problems like JSPs inside a web archive that seem to be slightly more recent than precompiled pages, rendering precompilation useless. Since Ant 1.6.2
-  Required: No; defaults to true
-- `:strict` `StrictMode`
-- `:update` `boolean` - indicates whether to update or overwrite the destination file if it already exists.
-  Required: No; default is false
-- `:uselanguageencodingflag` `boolean` - Whether to set the language encoding flag if the encoding is UTF-8. This setting doesn't have any effect if the encoding is not UTF-8. Since Ant 1.8.0. See also the discussion in the zip task page
-  Required: No; default is true
-- `:whenempty` `WhenEmpty`
-- `:whenmanifestonly` `WhenEmpty` - behavior when no files match. Valid values are fail, skip, and create.
-  Required: No; defaults to create
-- `:zip64mode` `Zip64ModeAttribute` - When to use Zip64 extensions for entries. The possible values are never, always and as-needed. Since Ant 1.9.1. See also the discussion in the zip task page
-  Required: No; default is never
-- `:zipfile` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:appxml` | `File` | The deployment descriptor to use (META-INF/application.xml). | Yes, unless update is set to true |
+| `:basedir` | `File` | the directory from which to jar the files. | No |
+| `:casesensitive` | `boolean` |  |  |
+| `:comment` | `String` |  |  |
+| `:compress` | `boolean` | Not only store data but also compress them. Unless you set the keepcompression attribute to false, this will apply to the entire archive, not only the files you've added while updating. | No; defaults to true |
+| `:createunicodeextrafields` | `UnicodeExtraField` | Whether to create Unicode extra fields to store the file names a second time inside the entry's metadata. Possible values are never, always and not-encodeable which will only add Unicode extra fields if the file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page | No; default is never |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:destfile` | `File` | the EAR file to create. | Yes |
+| `:duplicate` | `Duplicate` | behavior when a duplicate file is found. Valid values are add, preserve, and fail. | No; default is add |
+| `:earfile` | `File` |  |  |
+| `:encoding` | `String` | The character encoding to use for filenames inside the archive. It is not recommended to change this value as the created archive will most likely be unreadable for Java otherwise. See also the discussion in the zip task page | No; defaults to UTF8 |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern. | No |
+| `:fallbacktoutf8` | `boolean` | Whether to use UTF-8 and the language encoding flag instead of the specified encoding if a file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page | No; default is false |
+| `:file` | `File` |  |  |
+| `:filesetmanifest` | `FilesetManifestConfig` | behavior when a manifest file is found in a zipfileset or zipgroupfileset file. Valid values are skip, merge, and mergewithoutmain. merge will merge all of the manifests together, and merge this into any other specified manifests. mergewithoutmain merges everything but the Main section of the manifests. | No; defaults to skip |
+| `:filesonly` | `boolean` | Store only file entries. | No; defaults to false |
+| `:flattenattributes` | `boolean` | Whether to merge attributes occurring more than once in a section (this can only happen for the Class-Path attribute) into a single attribute. Since Ant 1.8.0. | No; default is false |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern. | No |
+| `:index` | `boolean` | whether to create an index list to speed up classloading. Unless you specify additional jars with nested indexjars elements, only the contents of this jar will be included in the index. | No; defaults to false |
+| `:indexmetainf` | `boolean` | whether to include META-INF and its children in the index. Doesn't have any effect if index is false. Oracle's jar implementation used to skip the META-INF directory and Ant followed that example. The behavior has been changed with Java 5. In order to avoid problems with Ant generated jars on Java 1.4 or earlier, Ant will not include META-INF unless explicitly asked to. Since Ant 1.8.0. | No; defaults to false |
+| `:jarfile` | `File` |  |  |
+| `:keepcompression` | `boolean` | For entries coming from existing archives (like nested zipfilesets or while updating the archive), keep the compression as it has been originally instead of using the compress attribute. Since Apache Ant 1.6 | No; defaults to false |
+| `:level` | `int` | Non-default level at which file compression should be performed. Valid values range from 0 (no compression/fastest) to 9 (maximum compression/slowest). Since Ant 1.7 | No |
+| `:manifest` | `File` | the manifest file to use. | No |
+| `:manifestencoding` | `String` | The encoding used to read the JAR manifest, when a manifest file is specified. | No; defaults to default JVM character encoding |
+| `:mergeclasspathattributes` | `boolean` | Whether to merge the Class-Path attributes found in different manifests (if merging manifests). If false, only the attribute of the last merged manifest will be preserved. Since Ant 1.8.0. unless you also set flattenAttributes to true this may result in manifests containing multiple Class-Path attributes which violates the manifest specification. | No; default is false |
+| `:modificationtime` | `String` | Set all stored file modification times to the given time. This can either be a number interpreted as milliseconds since 1970-01-01T00:00:00Z or a string that can be parsed as a ISO 8601 timestamp with optional timezone. Since Ant 1.10.2. | No |
+| `:preserve0permissions` | `boolean` | when updating an archive or adding entries from a different archive Ant will assume that a Unix permissions value of 0 (nobody is allowed to do anything to the file/directory) means that the permissions haven't been stored at all rather than real permissions and will instead apply its own default values. Set this attribute to true if you really want to preserve the original permission field. Since Ant 1.8.0 | No; default is false |
+| `:roundup` | `boolean` | Whether the file modification times will be rounded up to the next even number of seconds. Zip archives store file modification times with a granularity of 2 seconds, so the times will either be rounded up or down. If you round down, the archive will always seem out-of-date when you rerun the task, so the default is to round up. Rounding up may lead to a different type of problems like JSPs inside a web archive that seem to be slightly more recent than precompiled pages, rendering precompilation useless. Since Ant 1.6.2 | No; defaults to true |
+| `:strict` | `StrictMode` |  |  |
+| `:update` | `boolean` | indicates whether to update or overwrite the destination file if it already exists. | No; default is false |
+| `:uselanguageencodingflag` | `boolean` | Whether to set the language encoding flag if the encoding is UTF-8. This setting doesn't have any effect if the encoding is not UTF-8. Since Ant 1.8.0. See also the discussion in the zip task page | No; default is true |
+| `:whenempty` | `WhenEmpty` |  |  |
+| `:whenmanifestonly` | `WhenEmpty` | behavior when no files match. Valid values are fail, skip, and create. | No; defaults to create |
+| `:zip64mode` | `Zip64ModeAttribute` | When to use Zip64 extensions for entries. The possible values are never, always and as-needed. Since Ant 1.9.1. See also the discussion in the zip task page | No; default is never |
+| `:zipfile` | `File` |  |  |
 
 **Nested elements**
 
@@ -2824,20 +2540,15 @@ rather than overwrite the file is available, and the level option is ignored
 
 **Attributes**
 
-- `:append` `boolean` - Append to an existing file (or open a new file / overwrite an existing file)?
-  Required: No; ignored unless output indicates a filesystem destination, default is false
-- `:encoding` `String` - encoding to use. since Ant 1.7
-  Required: No; defaults to default JVM character encoding
-- `:file` `File` - the file to write the message to.
-  Required: No; only one of these may be used
-- `:force` `boolean` - Overwrite read-only destination files. since Ant 1.8.2
-  Required: No; defaults to false
-- `:level` `EchoLevel` - Control the level at which this message is reported. One of error, warning, info, verbose, debug (decreasing order)
-  Required: No; default is warning
-- `:message` `String` - the message to echo.
-  Required: No; defaults to a blank line unless text is included in a character section within this element
-- `:output` `Resource` - the Resource to write the message to (see note). Since Apache Ant 1.8
-  Required: No; only one of these may be used
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` | Append to an existing file (or open a new file / overwrite an existing file)? | No; ignored unless output indicates a filesystem destination, default is false |
+| `:encoding` | `String` | encoding to use. since Ant 1.7 | No; defaults to default JVM character encoding |
+| `:file` | `File` | the file to write the message to. | No; only one of these may be used |
+| `:force` | `boolean` | Overwrite read-only destination files. since Ant 1.8.2 | No; defaults to false |
+| `:level` | `EchoLevel` | Control the level at which this message is reported. One of error, warning, info, verbose, debug (decreasing order) | No; default is warning |
+| `:message` | `String` | the message to echo. | No; defaults to a blank line unless text is included in a character section within this element |
+| `:output` | `Resource` | the Resource to write the message to (see note). Since Apache Ant 1.8 | No; only one of these may be used |
 
 **Body text**
 
@@ -2862,17 +2573,14 @@ is really for debugging build files.
 
 **Attributes**
 
-- `:destfile` `File` - If specified, the value indicates the name of the file to send the output of the statement to. The generated output file is compatible for loading by any Java application as a property file.
-  Required: No; by default, output to the log
-- `:failonerror` `boolean` - If an error occurs while writing the properties to a file, and this attribute is enabled, then a BuildException will be thrown, causing the build to fail. If disabled, then IO errors will be reported as a log statement, and the build will continue without failure from this task.
-  Required: No; default is true
-- `:format` `FormatAttribute` - One of text or xml. Determines the output format.
-  Required: No; defaults to text
-- `:prefix` `String` - a prefix which is used to filter the properties: only properties whose names start with this prefix will be echoed.
-  Required: No
-- `:regex` `String` - a regular expression which is used to filter the properties: only those properties whose names match it will be echoed.
-  Required: No
-- `:srcfile` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:destfile` | `File` | If specified, the value indicates the name of the file to send the output of the statement to. The generated output file is compatible for loading by any Java application as a property file. | No; by default, output to the log |
+| `:failonerror` | `boolean` | If an error occurs while writing the properties to a file, and this attribute is enabled, then a BuildException will be thrown, causing the build to fail. If disabled, then IO errors will be reported as a log statement, and the build will continue without failure from this task. | No; default is true |
+| `:format` | `FormatAttribute` | One of text or xml. Determines the output format. | No; defaults to text |
+| `:prefix` | `String` | a prefix which is used to filter the properties: only properties whose names start with this prefix will be echoed. | No |
+| `:regex` | `String` | a regular expression which is used to filter the properties: only those properties whose names match it will be echoed. | No |
+| `:srcfile` | `File` |  |  |
 
 **Nested elements**
 
@@ -2894,12 +2602,11 @@ https://ant.apache.org/manual/Tasks/echoproperties.html
 
 **Attributes**
 
-- `:append` `boolean` - Whether to append file, if specified.
-  Required: No; default is false
-- `:file` `File` - The file to receive the XML.
-  Required: No; by default nested XML is echoed to the log
-- `:namespacepolicy` `NamespacePolicy` - Sets the namespace policy as defined by org.apache.tools.ant.util.DOMElementWriter.XmlNamespacePolicy. Valid values are ignore, elementsOnly, or all. Since Apache Ant 1.8
-  Required: No; default ignore
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` | Whether to append file, if specified. | No; default is false |
+| `:file` | `File` | The file to receive the XML. | No; by default nested XML is echoed to the log |
+| `:namespacepolicy` | `NamespacePolicy` | Sets the namespace policy as defined by org.apache.tools.ant.util.DOMElementWriter.XmlNamespacePolicy. Valid values are ignore, elementsOnly, or all. Since Apache Ant 1.8 | No; default ignore |
 
 **Body text**
 
@@ -2947,37 +2654,27 @@ classes that these depend on are also automatically included in the jar file.
 
 **Attributes**
 
-- `:basejarname` `String` - The base name that is used for the generated jar files. If this attribute is specified, the generic jar file name will use this value as the prefix (followed by the value specified in the genericjarsuffix attribute) and the resultant EJB jar file (followed by any suffix specified in the nested element).
-  Required: No
-- `:basenameterminator` `String` - String value used to substring out a string from the name of each deployment descriptor found, which is then used to locate related deployment descriptors (e.g. the WebLogic descriptors). For example, a basename of. and a deployment descriptor called FooBean.ejb-jar.xml would result in a basename of FooBean which would then be used to find FooBean.weblogic-ejb-jar.xml and FooBean.weblogic-cmp-rdbms-jar.xml, as well as to create the filenames of the jar files as FooBean-generic.jar and FooBean-wl.jar. This attribute is not used if the basejarname attribute is specified.
-  Required: No; defaults to -
-- `:casesensitive` `boolean`
-- `:classpath` `Path` - This classpath is used when resolving classes which are to be added to the jar. Typically nested deployment tool elements will also support a classpath which will be combined with this classpath when resolving classes
-  Required: No
-- `:cmpversion` `CMPVersion` - Either 1.0 or 2.0. A CMP 2.0 implementation exists currently only for JBoss.
-  Required: No; default is 1.0
-- `:defaultexcludes` `boolean`
-- `:dependency` `String` - This attribute controls which additional classes and interfaces are added to the jar. Please refer to the description above
-  Required: No
-- `:descriptordir` `File` - The base directory under which to scan for EJB deployment descriptors. If this attribute is not specified, then the deployment descriptors must be located in the directory specified by the srcdir attribute.
-  Required: No
-- `:destdir` `File` - The base directory into which generated jar files are deposited. Jar files are deposited in directories corresponding to their location within the descriptordir namespace. Note that this attribute is only used if the task is generating generic jars (i.e. no vendor-specific deployment elements have been specified).
-  Required: Yes, unless vendor-specific deployment elements have been specified.
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:flatdestdir` `boolean` - Set this attribute to true if you want all generated jars to be placed in the root of the destdir, rather than according to the location of the deployment descriptor within the descriptordir hierarchy.
-  Required: No
-- `:followsymlinks` `boolean`
-- `:genericjarsuffix` `String` - String value appended to the basename of the deployment descriptor to create the filename of the generic EJB jar file.
-  Required: No; defaults to -generic.jar
-- `:includes` `String`
-- `:includesfile` `File`
-- `:manifest` `File` - the manifest file to use, if any.
-  Required: No
-- `:naming` `NamingScheme` - Controls the naming convention used to name generated EJB jars. Please refer to the description above.
-  Required: No
-- `:srcdir` `File` - The base directory containing the .class files that make up the bean. Included are the home-, remote-, pk- and implementation- classes and all classes that these depend on. Note that this can be the same as the descriptordir if all files are in the same directory tree.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basejarname` | `String` | The base name that is used for the generated jar files. If this attribute is specified, the generic jar file name will use this value as the prefix (followed by the value specified in the genericjarsuffix attribute) and the resultant EJB jar file (followed by any suffix specified in the nested element). | No |
+| `:basenameterminator` | `String` | String value used to substring out a string from the name of each deployment descriptor found, which is then used to locate related deployment descriptors (e.g. the WebLogic descriptors). For example, a basename of. and a deployment descriptor called FooBean.ejb-jar.xml would result in a basename of FooBean which would then be used to find FooBean.weblogic-ejb-jar.xml and FooBean.weblogic-cmp-rdbms-jar.xml, as well as to create the filenames of the jar files as FooBean-generic.jar and FooBean-wl.jar. This attribute is not used if the basejarname attribute is specified. | No; defaults to - |
+| `:casesensitive` | `boolean` |  |  |
+| `:classpath` | `Path` | This classpath is used when resolving classes which are to be added to the jar. Typically nested deployment tool elements will also support a classpath which will be combined with this classpath when resolving classes | No |
+| `:cmpversion` | `CMPVersion` | Either 1.0 or 2.0. A CMP 2.0 implementation exists currently only for JBoss. | No; default is 1.0 |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dependency` | `String` | This attribute controls which additional classes and interfaces are added to the jar. Please refer to the description above | No |
+| `:descriptordir` | `File` | The base directory under which to scan for EJB deployment descriptors. If this attribute is not specified, then the deployment descriptors must be located in the directory specified by the srcdir attribute. | No |
+| `:destdir` | `File` | The base directory into which generated jar files are deposited. Jar files are deposited in directories corresponding to their location within the descriptordir namespace. Note that this attribute is only used if the task is generating generic jars (i.e. no vendor-specific deployment elements have been specified). | Yes, unless vendor-specific deployment elements have been specified. |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:flatdestdir` | `boolean` | Set this attribute to true if you want all generated jars to be placed in the root of the destdir, rather than according to the location of the deployment descriptor within the descriptordir hierarchy. | No |
+| `:followsymlinks` | `boolean` |  |  |
+| `:genericjarsuffix` | `String` | String value appended to the basename of the deployment descriptor to create the filename of the generic EJB jar file. | No; defaults to -generic.jar |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:manifest` | `File` | the manifest file to use, if any. | No |
+| `:naming` | `NamingScheme` | Controls the naming convention used to name generated EJB jars. Please refer to the description above. | No |
+| `:srcdir` | `File` | The base directory containing the .class files that make up the bean. Included are the home-, remote-, pk- and implementation- classes and all classes that these depend on. Note that this can be the same as the descriptordir if all files are in the same directory tree. | Yes |
 
 **Nested elements**
 
@@ -3077,54 +2774,32 @@ tries to read from the standard input.
 
 **Attributes**
 
-- `:append` `boolean` - Whether output and error files should be appended to or overwritten.
-  Required: No; defaults to false
-- `:command` `Commandline` - the command to execute with all command line arguments. Deprecated, use executable and nested <arg> elements instead.
-  Required: Exactly one of the two
-- `:dir` `File` - the directory in which the command should be executed.
-  Required: No; if vmlauncher is true, defaults to the current working directory, otherwise the project's basedir
-- `:discarderror` `boolean` - Whether error output should completely be discarded. This setting is incompatible with any setting that redirects error output to files or properties as well as logError. Since Ant 1.10.10
-  Required: No; defaults to false
-- `:discardoutput` `boolean` - Whether output should completely be discarded. This setting is incompatible with any setting that redirects output to files or properties. If you set this to true error output will be discared as well unless you redirect error output to files, properties or enable logError. Since Ant 1.10.10
-  Required: No; defaults to false
-- `:error` `File` - The file to which the standard error of the command should be redirected. since Ant 1.6
-  Required: No
-- `:errorproperty` `String` - The name of a property in which the standard error of the command should be stored. since Ant 1.6
-  Required: No
-- `:executable` `String` - the command to execute without any command line arguments.
-  Required: Exactly one of the two
-- `:failifexecutionfails` `boolean` - Stop the build if we can't start the program.
-  Required: No; defaults to true
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code signaling failure.
-  Required: No; defaults to false
-- `:input` `File` - A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute. since Ant 1.6
-  Required: No
-- `:inputstring` `String` - A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute. since Ant 1.6
-  Required: No
-- `:logerror` `boolean` - This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. If you redirect error with the error or errorProperty attributes, this will have no effect. since Ant 1.6
-  Required: No
-- `:newenvironment` `boolean` - Do not propagate old environment when new environment variables are specified.
-  Required: No; default is false
-- `:os` `String` - list of Operating Systems on which the command may be executed. If the current OS's name is contained in this list, the command will be executed. The OS's name is determined by JVM and is set in the os.name system property.
-  Required: No
-- `:osfamily` `String` - OS family as used in the <os> condition. since Ant 1.7
-  Required: No
-- `:output` `File` - Name of a file to which to write the output. If the error stream is not also redirected to a file or property, it will appear in this output.
-  Required: No
-- `:outputproperty` `String` - The name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output.
-  Required: No
-- `:resolveexecutable` `boolean` - When this attribute is true, the name of the executable is resolved firstly against the project basedir and if that does not exist, against the execution directory if specified. On Unix systems, if you only want to allow execution of commands in the user's path, set this to false. since Ant 1.6
-  Required: No; default is false
-- `:resultproperty` `String` - the name of a property in which the return code of the command should be stored. Only of interest if failonerror=false.
-  Required: No
-- `:searchpath` `boolean` - When this attribute is true, then system path environment variables will be searched when resolving the location of the executable. since Ant 1.6.3
-  Required: No; default is false
-- `:spawn` `boolean` - whether or not you want the command to be spawned If you spawn a command, its output will not be logged by Ant. The input, output, error, and result property settings are not active when spawning a process. since Ant 1.6
-  Required: No; default is false
-- `:timeout` `Long` - Stop the command if it doesn't finish within the specified time (given in milliseconds).
-  Required: No
-- `:vmlauncher` `boolean` - Run command using the JVM's execution facilities where available. If set to false the underlying OS's shell, either directly or through the antRun scripts, will be used. Under some operating systems, this gives access to facilities not normally available through JVM including, under Windows, being able to execute scripts, rather than their associated interpreter. If you want to specify the name of the executable as a relative path to the directory given by the dir attribute, it may become necessary to set vmlauncher to false as well.
-  Required: No; default is true
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` | Whether output and error files should be appended to or overwritten. | No; defaults to false |
+| `:command` | `Commandline` | the command to execute with all command line arguments. Deprecated, use executable and nested <arg> elements instead. | Exactly one of the two |
+| `:dir` | `File` | the directory in which the command should be executed. | No; if vmlauncher is true, defaults to the current working directory, otherwise the project's basedir |
+| `:discarderror` | `boolean` | Whether error output should completely be discarded. This setting is incompatible with any setting that redirects error output to files or properties as well as logError. Since Ant 1.10.10 | No; defaults to false |
+| `:discardoutput` | `boolean` | Whether output should completely be discarded. This setting is incompatible with any setting that redirects output to files or properties. If you set this to true error output will be discared as well unless you redirect error output to files, properties or enable logError. Since Ant 1.10.10 | No; defaults to false |
+| `:error` | `File` | The file to which the standard error of the command should be redirected. since Ant 1.6 | No |
+| `:errorproperty` | `String` | The name of a property in which the standard error of the command should be stored. since Ant 1.6 | No |
+| `:executable` | `String` | the command to execute without any command line arguments. | Exactly one of the two |
+| `:failifexecutionfails` | `boolean` | Stop the build if we can't start the program. | No; defaults to true |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code signaling failure. | No; defaults to false |
+| `:input` | `File` | A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute. since Ant 1.6 | No |
+| `:inputstring` | `String` | A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute. since Ant 1.6 | No |
+| `:logerror` | `boolean` | This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. If you redirect error with the error or errorProperty attributes, this will have no effect. since Ant 1.6 | No |
+| `:newenvironment` | `boolean` | Do not propagate old environment when new environment variables are specified. | No; default is false |
+| `:os` | `String` | list of Operating Systems on which the command may be executed. If the current OS's name is contained in this list, the command will be executed. The OS's name is determined by JVM and is set in the os.name system property. | No |
+| `:osfamily` | `String` | OS family as used in the <os> condition. since Ant 1.7 | No |
+| `:output` | `File` | Name of a file to which to write the output. If the error stream is not also redirected to a file or property, it will appear in this output. | No |
+| `:outputproperty` | `String` | The name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output. | No |
+| `:resolveexecutable` | `boolean` | When this attribute is true, the name of the executable is resolved firstly against the project basedir and if that does not exist, against the execution directory if specified. On Unix systems, if you only want to allow execution of commands in the user's path, set this to false. since Ant 1.6 | No; default is false |
+| `:resultproperty` | `String` | the name of a property in which the return code of the command should be stored. Only of interest if failonerror=false. | No |
+| `:searchpath` | `boolean` | When this attribute is true, then system path environment variables will be searched when resolving the location of the executable. since Ant 1.6.3 | No; default is false |
+| `:spawn` | `boolean` | whether or not you want the command to be spawned If you spawn a command, its output will not be logged by Ant. The input, output, error, and result property settings are not active when spawning a process. since Ant 1.6 | No; default is false |
+| `:timeout` | `Integer` | Stop the command if it doesn't finish within the specified time (given in milliseconds). | No |
+| `:vmlauncher` | `boolean` | Run command using the JVM's execution facilities where available. If set to false the underlying OS's shell, either directly or through the antRun scripts, will be used. Under some operating systems, this gives access to facilities not normally available through JVM including, under Windows, being able to execute scripts, rather than their associated interpreter. If you want to specify the name of the executable as a relative path to the directory given by the dir attribute, it may become necessary to set vmlauncher to false as well. | No; default is true |
 
 **Nested elements**
 
@@ -3160,74 +2835,43 @@ will be suspended because it tries to read from the standard input.
 
 **Attributes**
 
-- `:addsourcefile` `boolean` - Whether source file names should be added to the command automatically. Since Ant 1.6.
-  Required: No; default is true
-- `:append` `boolean` - whether output should be appended to or overwrite an existing file. If you set parallel to false, you will probably want to set this one to true.
-  Required: No; default is false
-- `:command` `Commandline`
-- `:dest` `File` - the directory where the command is expected to place target files when it is executed.
-  Required: No; ignored unless a nested mapper is specified; by default, the target filenames returned by the mapper will be interpreted as absolute paths
-- `:dir` `File` - the directory in which the command should be executed.
-  Required: No; if vmlauncher is true, defaults to the current working directory, otherwise the project's basedir
-- `:discarderror` `boolean` - Whether error output should completely be discarded. This setting is incompatible with any setting that redirects error output to files or properties as well as logError. Since Ant 1.10.10
-  Required: No; defaults to false
-- `:discardoutput` `boolean` - Whether output should completely be discarded. This setting is incompatible with any setting that redirects output to files or properties. If you set this to true error output will be discared as well unless you redirect error output to files, properties or enable logError. Since Ant 1.10.10
-  Required: No; defaults to false
-- `:error` `File` - The file to which the standard error of the command should be redirected. since Ant 1.6
-  Required: No
-- `:errorproperty` `String` - The name of a property in which the standard error of the command should be stored. since Ant 1.6
-  Required: No
-- `:executable` `String` - the command to execute without any command line arguments.
-  Required: Yes
-- `:failifexecutionfails` `boolean` - Stop the build if we can't start the program.
-  Required: No; defaults to true
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code other than 0.
-  Required: No; defaults to false
-- `:force` `boolean` - Whether to bypass timestamp comparisons for target files. Since Ant 1.6.3.
-  Required: No; default is false
-- `:forwardslash` `boolean` - whether the file names should be passed with forward slashes even if the operating system requires other file separator. The option is ignored if the system file separator is a forward slash.
-  Required: No; default is false
-- `:ignoremissing` `boolean` - Whether to ignore nonexistent files specified via filelists. Since Ant 1.6.2.
-  Required: No; default is true
-- `:input` `File` - A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute. since Ant 1.6
-  Required: No
-- `:inputstring` `String` - A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute. since Ant 1.6
-  Required: No
-- `:logerror` `boolean` - This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. If you redirect error with the error or errorProperty attributes, this will have no effect. since Ant 1.6
-  Required: No
-- `:maxparallel` `int` - Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. Since Ant 1.6.
-  Required: No, unlimited by default
-- `:newenvironment` `boolean` - Do not propagate old environment when new environment variables are specified.
-  Required: No; default is false
-- `:os` `String` - list of Operating Systems on which the command may be executed.
-  Required: No
-- `:osfamily` `String` - OS family as used in the <os> condition. since Ant 1.7
-  Required: No
-- `:output` `File` - the file to which the output of the command should be redirected. If the error stream is not also redirected to a file or property, it will appear in this output.
-  Required: No
-- `:outputproperty` `String` - the name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output.
-  Required: No
-- `:parallel` `boolean` - Run the command only once, appending all files as arguments. If false, command will be executed once for every file.
-  Required: No; default is false
-- `:relative` `boolean` - whether the filenames should be passed on the command line as relative pathnames (relative to the base directory of the corresponding fileset/list for source files or the dest attribute for target files).
-  Required: No; default is false
-- `:resolveexecutable` `boolean` - When this attribute is true, the name of the executable if resolved firstly against the project basedir and if that does not exist, against the execution directory if specified. On Unix systems, if you only want to allow execution of commands in the user's path, set this to false. since Ant 1.6
-  Required: No; default is false
-- `:resultproperty` `String` - the name of a property in which the return code of the command should be stored. Only of interest if failonerror is false. If you set parallel to false, only the result of the first execution will be stored.
-  Required: No
-- `:searchpath` `boolean`
-- `:skipemptyfilesets` `boolean` - Don't run the command, if no source files have been found or are newer than their corresponding target files. Despite its name, this attribute applies to filelists as well.
-  Required: No; default is false
-- `:spawn` `boolean` - whether or not you want the commands to be spawned. If you spawn a command, its output will not be logged by Ant. The input, output, error, and result property settings are not active when spawning a process. since Ant 1.6
-  Required: No; default is false
-- `:timeout` `Long` - Stop the command if it doesn't finish within the specified time (given in milliseconds).
-  Required: No
-- `:type` `FileDirBoth` - One of file, dir or both. If set to file, only the names of plain files will be sent to the command. If set to dir, only the names of directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir.
-  Required: No; default is file
-- `:verbose` `boolean` - Whether to print a summary after execution or not. Since Ant 1.6.
-  Required: No; default is false
-- `:vmlauncher` `boolean` - Run command using the JVM's execution facilities where available. If set to false the underlying OS's shell, either directly or through the antRun scripts, will be used. Under some operating systems, this gives access to facilities not normally available through JVM including, under Windows, being able to execute scripts, rather than their associated interpreter. If you want to specify the name of the executable as a relative path to the directory given by the dir attribute, it may become necessary to set vmlauncher to false as well.
-  Required: No; default is true
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:addsourcefile` | `boolean` | Whether source file names should be added to the command automatically. Since Ant 1.6. | No; default is true |
+| `:append` | `boolean` | whether output should be appended to or overwrite an existing file. If you set parallel to false, you will probably want to set this one to true. | No; default is false |
+| `:command` | `Commandline` |  |  |
+| `:dest` | `File` | the directory where the command is expected to place target files when it is executed. | No; ignored unless a nested mapper is specified; by default, the target filenames returned by the mapper will be interpreted as absolute paths |
+| `:dir` | `File` | the directory in which the command should be executed. | No; if vmlauncher is true, defaults to the current working directory, otherwise the project's basedir |
+| `:discarderror` | `boolean` | Whether error output should completely be discarded. This setting is incompatible with any setting that redirects error output to files or properties as well as logError. Since Ant 1.10.10 | No; defaults to false |
+| `:discardoutput` | `boolean` | Whether output should completely be discarded. This setting is incompatible with any setting that redirects output to files or properties. If you set this to true error output will be discared as well unless you redirect error output to files, properties or enable logError. Since Ant 1.10.10 | No; defaults to false |
+| `:error` | `File` | The file to which the standard error of the command should be redirected. since Ant 1.6 | No |
+| `:errorproperty` | `String` | The name of a property in which the standard error of the command should be stored. since Ant 1.6 | No |
+| `:executable` | `String` | the command to execute without any command line arguments. | Yes |
+| `:failifexecutionfails` | `boolean` | Stop the build if we can't start the program. | No; defaults to true |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code other than 0. | No; defaults to false |
+| `:force` | `boolean` | Whether to bypass timestamp comparisons for target files. Since Ant 1.6.3. | No; default is false |
+| `:forwardslash` | `boolean` | whether the file names should be passed with forward slashes even if the operating system requires other file separator. The option is ignored if the system file separator is a forward slash. | No; default is false |
+| `:ignoremissing` | `boolean` | Whether to ignore nonexistent files specified via filelists. Since Ant 1.6.2. | No; default is true |
+| `:input` | `File` | A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute. since Ant 1.6 | No |
+| `:inputstring` | `String` | A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute. since Ant 1.6 | No |
+| `:logerror` | `boolean` | This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. If you redirect error with the error or errorProperty attributes, this will have no effect. since Ant 1.6 | No |
+| `:maxparallel` | `int` | Limit the amount of parallelism by passing at most this many sourcefiles at once. Set it to negative integer for unlimited. Since Ant 1.6. | No, unlimited by default |
+| `:newenvironment` | `boolean` | Do not propagate old environment when new environment variables are specified. | No; default is false |
+| `:os` | `String` | list of Operating Systems on which the command may be executed. | No |
+| `:osfamily` | `String` | OS family as used in the <os> condition. since Ant 1.7 | No |
+| `:output` | `File` | the file to which the output of the command should be redirected. If the error stream is not also redirected to a file or property, it will appear in this output. | No |
+| `:outputproperty` | `String` | the name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output. | No |
+| `:parallel` | `boolean` | Run the command only once, appending all files as arguments. If false, command will be executed once for every file. | No; default is false |
+| `:relative` | `boolean` | whether the filenames should be passed on the command line as relative pathnames (relative to the base directory of the corresponding fileset/list for source files or the dest attribute for target files). | No; default is false |
+| `:resolveexecutable` | `boolean` | When this attribute is true, the name of the executable if resolved firstly against the project basedir and if that does not exist, against the execution directory if specified. On Unix systems, if you only want to allow execution of commands in the user's path, set this to false. since Ant 1.6 | No; default is false |
+| `:resultproperty` | `String` | the name of a property in which the return code of the command should be stored. Only of interest if failonerror is false. If you set parallel to false, only the result of the first execution will be stored. | No |
+| `:searchpath` | `boolean` |  |  |
+| `:skipemptyfilesets` | `boolean` | Don't run the command, if no source files have been found or are newer than their corresponding target files. Despite its name, this attribute applies to filelists as well. | No; default is false |
+| `:spawn` | `boolean` | whether or not you want the commands to be spawned. If you spawn a command, its output will not be logged by Ant. The input, output, error, and result property settings are not active when spawning a process. since Ant 1.6 | No; default is false |
+| `:timeout` | `Integer` | Stop the command if it doesn't finish within the specified time (given in milliseconds). | No |
+| `:type` | `FileDirBoth` | One of file, dir or both. If set to file, only the names of plain files will be sent to the command. If set to dir, only the names of directories are considered. Note: The type attribute does not apply to nested dirsets-dirsets always implicitly assume type to be dir. | No; default is file |
+| `:verbose` | `boolean` | Whether to print a summary after execution or not. Since Ant 1.6. | No; default is false |
+| `:vmlauncher` | `boolean` | Run command using the JVM's execution facilities where available. If set to false the underlying OS's shell, either directly or through the antRun scripts, will be used. Under some operating systems, this gives access to facilities not normally available through JVM including, under Windows, being able to execute scripts, rather than their associated interpreter. If you want to specify the name of the executable as a relative path to the directory given by the dir attribute, it may become necessary to set vmlauncher to false as well. | No; default is true |
 
 **Nested elements**
 
@@ -3259,14 +2903,12 @@ character data nested into the element.
 
 **Attributes**
 
-- `:if` `Object` - Only fail if a property of the given name exists in the current project
-  Required: No
-- `:message` `String` - A message giving further information on why the build exited
-  Required: No
-- `:status` `int` - Exit using the specified status code; assuming the generated Exception is not caught, the JVM will exit with this status. Since Apache Ant 1.6.2
-  Required: No
-- `:unless` `Object` - Only fail if a property of the given name doesn't exist in the current project
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:if` | `Object` | Only fail if a property of the given name exists in the current project | No |
+| `:message` | `String` | A message giving further information on why the build exited | No |
+| `:status` | `int` | Exit using the specified status code; assuming the generated Exception is not caught, the JVM will exit with this status. Since Apache Ant 1.6.2 | No |
+| `:unless` | `Object` | Only fail if a property of the given name doesn't exist in the current project | No |
 
 **Nested elements**
 
@@ -3296,12 +2938,11 @@ incorrect tokens are ignored.
 
 **Attributes**
 
-- `:filtersfile` `File` - The file from which the filters must be read. This file must be a formatted as a property file.
-  Required: Yes; either both token and value, or only filtersfile
-- `:token` `String` - the token string without the separator chars (@)
-  Required: Yes; either both token and value, or only filtersfile
-- `:value` `String` - the string that should be put to replace the token when the file is copied
-  Required: Yes; either both token and value, or only filtersfile
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:filtersfile` | `File` | The file from which the filters must be read. This file must be a formatted as a property file. | Yes; either both token and value, or only filtersfile |
+| `:token` | `String` | the token string without the separator chars (@) | Yes; either both token and value, or only filtersfile |
+| `:value` | `String` | the string that should be put to replace the token when the file is copied | Yes; either both token and value, or only filtersfile |
 
 **Reference**
 
@@ -3332,44 +2973,28 @@ filterchain.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:cr` `AddAsisRemove` - Deprecated. Specifies how CR characters are to be handled at end-of-line (EOL). Valid values for this property are: asis: leave EOL characters alone. add: add a CR before any single LF characters. The intent is to convert all EOLs to the pair CRLF. remove: remove all CRs from the file. The intent is to convert all EOLs to a single LF. Note: One special case is recognized. The three characters CR-CR-LF are regarded as a single EOL. Unless this property is specified as asis, this sequence will be converted into the specified EOL type.
-  Required: No; default is platform-specific: remove for Unix platforms, add for DOS based systems (including Windows)
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:destdir` `File` - Where to place the corrected files.
-  Required: No; defaults to srcDir (replace the original files)
-- `:encoding` `String` - The encoding of the files.
-  Required: No; defaults to default JVM character encoding
-- `:eof` `AddAsisRemove` - Specifies how DOS end of file (control-Z) characters are to be handled. Valid values for this property are: add: ensure that there is an EOF character at the end of the file asis: leave EOF characters alone remove: remove any EOF character found at the end
-  Required: No; default is platform-specific: remove for Unix platforms, asis for DOS based systems (including Windows)
-- `:eol` `CrLf` - Specifies how end-of-line (EOL) characters are to be handled. The EOL characters are CR, LF and the pair CRLF. Valid values for this property are: asis: leave EOL characters alone cr: convert all EOLs to a single CR lf: convert all EOLs to a single LF crlf: convert all EOLs to the pair CRLF mac: convert all EOLs to a single CR unix: convert all EOLs to a single LF dos: convert all EOLs to the pair CRLF This is the preferred method for specifying EOL. The cr attribute (see below) is now deprecated. Note: One special case is recognized. The three characters CR-CR-LF are regarded as a single EOL. Unless this property is specified as asis, this sequence will be converted into the specified EOL type.
-  Required: No; default is platform-specific: lf for Unix platforms (including Mac OS X/macOS), crlf for DOS-based systems (including Windows), cr for Mac environments other than OS X
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern.
-  Required: No
-- `:file` `File` - Name of a single file to fix. Since Ant 1.7
-  Required: One of these
-- `:fixlast` `boolean` - Whether to add a missing EOL to the last line of a processed file. Ignored if eof is asis. Since Ant 1.6.1
-  Required: No; default is true
-- `:followsymlinks` `boolean`
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern.
-  Required: No
-- `:javafiles` `boolean` - Used only in association with the tab attribute (see below), this boolean attribute indicates whether the fileset is a set of Java source files (yes|no). See notes in section on tab.
-  Required: No; defaults to no
-- `:outputencoding` `String` - The encoding to use when writing the files. Since Ant 1.7
-  Required: No; defaults to encoding if set or default JVM character encoding otherwise
-- `:preservelastmodified` `boolean` - Whether to preserve the last modified date of source files. Since Ant 1.6.3
-  Required: No; default is false
-- `:srcdir` `File` - Where to find the files to be fixed up.
-  Required: One of these
-- `:tab` `AddAsisRemove` - Specifies how tab characters are to be handled. Valid values for this property are: add: convert sequences of spaces which span a tab stop to tabs asis: leave tab and space characters alone remove: convert tabs to spaces Note: When the attribute javafiles (see above) is true, literal TAB characters occurring within Java string or character constants are never modified. This functionality also requires the recognition of Java-style comments. Note: There is an incompatibility between this and the previous version in the handling of white space at the end of lines. This version does not remove trailing whitespace on lines.
-  Required: No; default is asis
-- `:tablength` `int` - TAB character interval. Valid values are between 2 and 80 inclusive.
-  Required: No; default is 8
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:cr` | `AddAsisRemove` | Deprecated. Specifies how CR characters are to be handled at end-of-line (EOL). Valid values for this property are: asis: leave EOL characters alone. add: add a CR before any single LF characters. The intent is to convert all EOLs to the pair CRLF. remove: remove all CRs from the file. The intent is to convert all EOLs to a single LF. Note: One special case is recognized. The three characters CR-CR-LF are regarded as a single EOL. Unless this property is specified as asis, this sequence will be converted into the specified EOL type. | No; default is platform-specific: remove for Unix platforms, add for DOS based systems (including Windows) |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:destdir` | `File` | Where to place the corrected files. | No; defaults to srcDir (replace the original files) |
+| `:encoding` | `String` | The encoding of the files. | No; defaults to default JVM character encoding |
+| `:eof` | `AddAsisRemove` | Specifies how DOS end of file (control-Z) characters are to be handled. Valid values for this property are: add: ensure that there is an EOF character at the end of the file asis: leave EOF characters alone remove: remove any EOF character found at the end | No; default is platform-specific: remove for Unix platforms, asis for DOS based systems (including Windows) |
+| `:eol` | `CrLf` | Specifies how end-of-line (EOL) characters are to be handled. The EOL characters are CR, LF and the pair CRLF. Valid values for this property are: asis: leave EOL characters alone cr: convert all EOLs to a single CR lf: convert all EOLs to a single LF crlf: convert all EOLs to the pair CRLF mac: convert all EOLs to a single CR unix: convert all EOLs to a single LF dos: convert all EOLs to the pair CRLF This is the preferred method for specifying EOL. The cr attribute (see below) is now deprecated. Note: One special case is recognized. The three characters CR-CR-LF are regarded as a single EOL. Unless this property is specified as asis, this sequence will be converted into the specified EOL type. | No; default is platform-specific: lf for Unix platforms (including Mac OS X/macOS), crlf for DOS-based systems (including Windows), cr for Mac environments other than OS X |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern. | No |
+| `:file` | `File` | Name of a single file to fix. Since Ant 1.7 | One of these |
+| `:fixlast` | `boolean` | Whether to add a missing EOL to the last line of a processed file. Ignored if eof is asis. Since Ant 1.6.1 | No; default is true |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern. | No |
+| `:javafiles` | `boolean` | Used only in association with the tab attribute (see below), this boolean attribute indicates whether the fileset is a set of Java source files (yes\\|no). See notes in section on tab. | No; defaults to no |
+| `:outputencoding` | `String` | The encoding to use when writing the files. Since Ant 1.7 | No; defaults to encoding if set or default JVM character encoding otherwise |
+| `:preservelastmodified` | `boolean` | Whether to preserve the last modified date of source files. Since Ant 1.6.3 | No; default is false |
+| `:srcdir` | `File` | Where to find the files to be fixed up. | One of these |
+| `:tab` | `AddAsisRemove` | Specifies how tab characters are to be handled. Valid values for this property are: add: convert sequences of spaces which span a tab stop to tabs asis: leave tab and space characters alone remove: convert tabs to spaces Note: When the attribute javafiles (see above) is true, literal TAB characters occurring within Java string or character constants are never modified. This functionality also requires the recognition of Java-style comments. Note: There is an incompatibility between this and the previous version in the handling of white space at the end of lines. This version does not remove trailing whitespace on lines. | No; default is asis |
+| `:tablength` | `int` | TAB character interval. Valid values are between 2 and 80 inclusive. | No; default is 8 |
 
 **Nested elements**
 
@@ -3413,30 +3038,20 @@ https://ant.apache.org/manual/Tasks/fixcrlf.html
 
 **Attributes**
 
-- `:alias` `String` - the alias to add under
-  Required: Yes.
-- `:dname` `String` - The distinguished name for entity
-  Required: Yes unless <dname> element is specified
-- `:keyalg` `String` - the method to use when generating name-value pair
-  Required: No
-- `:keypass` `String` - password for private key (if different)
-  Required: No
-- `:keysize` `String` - (integer) indicates the size of key generated
-  Required: No
-- `:keystore` `String` - keystore location
-  Required: No
-- `:saname` `String` - The subject alternative name for entity. Requires Java 7 or higher.
-  Required: No
-- `:sigalg` `String` - the algorithm to use in signing
-  Required: No
-- `:storepass` `String` - password for keystore integrity. Must be at least 6 characters long
-  Required: Yes.
-- `:storetype` `String` - keystore type
-  Required: No
-- `:validity` `String` - (integer) indicates how many days certificate is valid
-  Required: No
-- `:verbose` `boolean` - (true|false) verbose output when signing
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:alias` | `String` | the alias to add under | Yes. |
+| `:dname` | `String` | The distinguished name for entity | Yes unless <dname> element is specified |
+| `:keyalg` | `String` | the method to use when generating name-value pair | No |
+| `:keypass` | `String` | password for private key (if different) | No |
+| `:keysize` | `String` | (integer) indicates the size of key generated | No |
+| `:keystore` | `String` | keystore location | No |
+| `:saname` | `String` | The subject alternative name for entity. Requires Java 7 or higher. | No |
+| `:sigalg` | `String` | the algorithm to use in signing | No |
+| `:storepass` | `String` | password for keystore integrity. Must be at least 6 characters long | Yes. |
+| `:storetype` | `String` | keystore type | No |
+| `:validity` | `String` | (integer) indicates how many days certificate is valid | No |
+| `:verbose` | `boolean` | (true\\|false) verbose output when signing | No |
 
 **Nested elements**
 
@@ -3470,35 +3085,23 @@ relayed to the proxy.
 
 **Attributes**
 
-- `:authenticateonredirect` `boolean` - Whether the credentials should also be sent to the new location when a redirect is followed. since Ant 1.10.13
-  Required: No; default is false
-- `:dest` `File` - the file or directory where to store the retrieved file(s).
-  Required: Yes
-- `:httpusecaches` `boolean` - HTTP only-if true, allow caching at the HttpUrlConnection level, if false, turn caching off. Note this is only a hint to the underlying UrlConnection class, implementations and proxies are free to ignore the setting.
-  Required: No; default is true
-- `:ignoreerrors` `boolean` - Log errors but don't treat as fatal.
-  Required: No; default is false
-- `:maxtime` `long` - Maximum time in seconds a single download may take, otherwise it will be interrupted and treated like a download error. Since Ant 1.8.0
-  Required: No; default is 0 which means unlimited
-- `:password` `String` - password for basic HTTP authentication
-  Required: Yes if username is set
-- `:quiet` `boolean` - Log errors only.(true|false).
-  Required: No; default is false
-- `:retries` `int` - The number of attempts to make for opening the URI. The name of the attribute is misleading as a value of 1 means \"don't retry on error\" and a value of 0 meant don't even try to reach the URI at all. since Ant 1.8.0
-  Required: No; default is 3
-- `:skipexisting` `boolean` - skip files that already exist on the local filesystem since Ant 1.8.0
-  Required: No; default is false
-- `:src` `URL` - the URL from which to retrieve a file.
-  Required: Yes, or a nested resource collection
-- `:trygzipencoding` `boolean`
-- `:useragent` `String` - User-Agent HTTP header to send. since Ant 1.9.3
-  Required: No; defaults to Apache Ant VERSION
-- `:username` `String` - username for basic HTTP authentication
-  Required: Yes, if password is set
-- `:usetimestamp` `boolean` - conditionally download a file based on the timestamp of the local copy. HTTP only
-  Required: No; default is false
-- `:verbose` `boolean` - show verbose progress information (on|off).
-  Required: No; default is off
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:authenticateonredirect` | `boolean` | Whether the credentials should also be sent to the new location when a redirect is followed. since Ant 1.10.13 | No; default is false |
+| `:dest` | `File` | the file or directory where to store the retrieved file(s). | Yes |
+| `:httpusecaches` | `boolean` | HTTP only-if true, allow caching at the HttpUrlConnection level, if false, turn caching off. Note this is only a hint to the underlying UrlConnection class, implementations and proxies are free to ignore the setting. | No; default is true |
+| `:ignoreerrors` | `boolean` | Log errors but don't treat as fatal. | No; default is false |
+| `:maxtime` | `long` | Maximum time in seconds a single download may take, otherwise it will be interrupted and treated like a download error. Since Ant 1.8.0 | No; default is 0 which means unlimited |
+| `:password` | `String` | password for basic HTTP authentication | Yes if username is set |
+| `:quiet` | `boolean` | Log errors only.(true\\|false). | No; default is false |
+| `:retries` | `int` | The number of attempts to make for opening the URI. The name of the attribute is misleading as a value of 1 means \"don't retry on error\" and a value of 0 meant don't even try to reach the URI at all. since Ant 1.8.0 | No; default is 3 |
+| `:skipexisting` | `boolean` | skip files that already exist on the local filesystem since Ant 1.8.0 | No; default is false |
+| `:src` | `URL` | the URL from which to retrieve a file. | Yes, or a nested resource collection |
+| `:trygzipencoding` | `boolean` |  |  |
+| `:useragent` | `String` | User-Agent HTTP header to send. since Ant 1.9.3 | No; defaults to Apache Ant VERSION |
+| `:username` | `String` | username for basic HTTP authentication | Yes, if password is set |
+| `:usetimestamp` | `boolean` | conditionally download a file based on the timestamp of the local copy. HTTP only | No; default is false |
+| `:verbose` | `boolean` | show verbose progress information (on\\|off). | No; default is off |
 
 **Nested elements**
 
@@ -3527,11 +3130,11 @@ Dependencies for more information.
 
 **Attributes**
 
-- `:dest` `File` - the destination file or directory.
-  Required: No
-- `:src` `File` - the file to expand.
-  Required: Yes, or a nested resource collection
-- `:srcresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dest` | `File` | the destination file or directory. | No |
+| `:src` | `File` | the file to expand. | Yes, or a nested resource collection |
+| `:srcresource` | `Resource` |  |  |
 
 **Reference**
 
@@ -3552,13 +3155,12 @@ the Ant distribution. See Library Dependencies for more information.
 
 **Attributes**
 
-- `:destfile` `File` - the destination file to create.
-  Required: Exactly one of the two
-- `:src` `File` - the file to gzip/bzip/xz.
-  Required: Yes, or a nested resource collection
-- `:srcresource` `Resource`
-- `:zipfile` `File` - deprecated old name of destfile.
-  Required: Exactly one of the two
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:destfile` | `File` | the destination file to create. | Exactly one of the two |
+| `:src` | `File` | the file to gzip/bzip/xz. | Yes, or a nested resource collection |
+| `:srcresource` | `Resource` |  |  |
+| `:zipfile` | `File` | deprecated old name of destfile. | Exactly one of the two |
 
 **Reference**
 
@@ -3590,10 +3192,10 @@ probably in an initialization target.
 
 **Attributes**
 
-- `:host` `String` - The host to retrieve the information for.
-  Required: No; default is to retrieve information for the host the task is running on
-- `:prefix` `String` - Prefix used for all properties set.
-  Required: No; defaults to no prefix
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:host` | `String` | The host to retrieve the information for. | No; default is to retrieve information for the host the task is running on |
+| `:prefix` | `String` | Prefix used for all properties set. | No; defaults to no prefix |
 
 **Reference**
 
@@ -3666,14 +3268,12 @@ relativePath=\"imported.properties\"/> </loadproperties>
 
 **Attributes**
 
-- `:as` `String` - Specifies the prefix prepended to the target names.
-  Required: No; defaults to name attribute of the project tag of the imported file
-- `:file` `String` - The file to import. If this is a relative file name, the file name will be resolved relative to the importing file. Note: this is unlike most other Ant file attributes, where relative files are resolved relative to basedir.
-  Required: Yes or a nested resource collection
-- `:optional` `boolean` - If true, do not stop the build if the file does not exist.
-  Required: No; default is false
-- `:prefixseparator` `String` - Specifies the separator to be used between the prefix and the target name.
-  Required: No; defaults to.
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:as` | `String` | Specifies the prefix prepended to the target names. | No; defaults to name attribute of the project tag of the imported file |
+| `:file` | `String` | The file to import. If this is a relative file name, the file name will be resolved relative to the importing file. Note: this is unlike most other Ant file attributes, where relative files are resolved relative to basedir. | Yes or a nested resource collection |
+| `:optional` | `boolean` | If true, do not stop the build if the file does not exist. | No; default is false |
+| `:prefixseparator` | `String` | Specifies the separator to be used between the prefix and the target name. | No; defaults to. |
 
 **Reference**
 
@@ -3741,14 +3341,12 @@ relativePath=\"included.properties\"/> </loadproperties>
 
 **Attributes**
 
-- `:as` `String` - Specifies the prefix prepended to the target names.
-  Required: Yes, if the included file's project tag doesn't specify a name attribute (which is otherwise taken as default)
-- `:file` `String` - The file to include. If this is a relative file name, the file name will be resolved relative to the including file. Note, this is unlike most other ant file attributes, where relative files are resolved relative to ${basedir}.
-  Required: Yes or a nested resource collection
-- `:optional` `boolean` - If true, do not stop the build if the file does not exist.
-  Required: No; default is false
-- `:prefixseparator` `String` - Specifies the separator to be used between the prefix and the target name.
-  Required: No; defaults to.
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:as` | `String` | Specifies the prefix prepended to the target names. | Yes, if the included file's project tag doesn't specify a name attribute (which is otherwise taken as default) |
+| `:file` | `String` | The file to include. If this is a relative file name, the file name will be resolved relative to the including file. Note, this is unlike most other ant file attributes, where relative files are resolved relative to ${basedir}. | Yes or a nested resource collection |
+| `:optional` | `boolean` | If true, do not stop the build if the file does not exist. | No; default is false |
+| `:prefixseparator` | `String` | Specifies the separator to be used between the prefix and the target name. | No; defaults to. |
 
 **Reference**
 
@@ -3783,14 +3381,12 @@ task.
 
 **Attributes**
 
-- `:addproperty` `String` - the name of a property to be created from input. Behaviour is equal to property task which means that existing properties cannot be overridden.
-  Required: No
-- `:defaultvalue` `String` - Defines the default value of the property to be created from input. Property value will be set to default if no input is received.
-  Required: No
-- `:message` `String` - the Message which gets displayed to the user during the build run.
-  Required: No
-- `:validargs` `String` - comma separated String containing valid input arguments. If set, input task will reject any input not defined here. Comparison of input to validargs is case sensitive. If you want a and A to be accepted you will need to define both arguments within validargs.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:addproperty` | `String` | the name of a property to be created from input. Behaviour is equal to property task which means that existing properties cannot be overridden. | No |
+| `:defaultvalue` | `String` | Defines the default value of the property to be created from input. Property value will be set to default if no input is received. | No |
+| `:message` | `String` | the Message which gets displayed to the user during the build run. | No |
+| `:validargs` | `String` | comma separated String containing valid input arguments. If set, input task will reject any input not defined here. Comparison of input to validargs is case sensitive. If you want a and A to be accepted you will need to define both arguments within validargs. | No |
 
 **Nested elements**
 
@@ -3826,20 +3422,15 @@ generate new stubs and skeletons.
 
 **Attributes**
 
-- `:classpath` `Path` - The classpath used when generating EJB stubs and skeletons. Nested classpath elements may also be used.
-  Required: No; defaults to the classpath specified when Ant was started
-- `:debug` `boolean` - Indicates whether or not the ejbc utility should log additional debugging statements to the standard output. If yes, the additional debugging statements will be generated.
-  Required: No; defaults to no
-- `:dest` `File` - The is the base directory where the RMI stubs and skeletons are written. In addition, the class files for each bean (home interface, remote interface, and EJB implementation) must be found in this directory.
-  Required: Yes
-- `:ejbdescriptor` `File` - Standard EJB 1.1 XML descriptor (typically titled ejb-jar.xml).
-  Required: Yes
-- `:iasdescriptor` `File` - iAS-specific EJB XML descriptor (typically titled ias-ejb-jar.xml).
-  Required: Yes
-- `:iashome` `File` - May be used to specify the \"home\" directory for this iAS installation. This is used to find the ejbc utility if it isn't included in the user's system path. If specified, it should refer to the [install-location]/iplanet/ias6/ias directory.
-  Required: No; by default the ejbc utility must be on the user's system path
-- `:keepgenerated` `boolean` - Indicates whether or not the Java source files which are generated by ejbc will be saved or automatically deleted. If yes, the source files will be retained.
-  Required: No; defaults to no
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` | The classpath used when generating EJB stubs and skeletons. Nested classpath elements may also be used. | No; defaults to the classpath specified when Ant was started |
+| `:debug` | `boolean` | Indicates whether or not the ejbc utility should log additional debugging statements to the standard output. If yes, the additional debugging statements will be generated. | No; defaults to no |
+| `:dest` | `File` | The is the base directory where the RMI stubs and skeletons are written. In addition, the class files for each bean (home interface, remote interface, and EJB implementation) must be found in this directory. | Yes |
+| `:ejbdescriptor` | `File` | Standard EJB 1.1 XML descriptor (typically titled ejb-jar.xml). | Yes |
+| `:iasdescriptor` | `File` | iAS-specific EJB XML descriptor (typically titled ias-ejb-jar.xml). | Yes |
+| `:iashome` | `File` | May be used to specify the \"home\" directory for this iAS installation. This is used to find the ejbc utility if it isn't included in the user's system path. If specified, it should refer to the [install-location]/iplanet/ias6/ias directory. | No; by default the ejbc utility must be on the user's system path |
+| `:keepgenerated` | `boolean` | Indicates whether or not the Java source files which are generated by ejbc will be saved or automatically deleted. If yes, the source files will be retained. | No; defaults to no |
 
 **Nested elements**
 
@@ -3901,73 +3492,45 @@ deleting 'same' classes from the versions-branches, you have to do more ...
 
 **Attributes**
 
-- `:basedir` `File` - the directory from which to jar the files.
-  Required: No
-- `:casesensitive` `boolean`
-- `:comment` `String`
-- `:compress` `boolean` - Not only store data but also compress them. Unless you set the keepcompression attribute to false, this will apply to the entire archive, not only the files you've added while updating.
-  Required: No; defaults to true
-- `:createunicodeextrafields` `UnicodeExtraField` - Whether to create Unicode extra fields to store the file names a second time inside the entry's metadata. Possible values are never, always and not-encodeable which will only add Unicode extra fields if the file name cannot. See also the discussion in the zip task page
-  Required: No; defaults to never
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no)
-  Required: No; defaults to yes
-- `:destfile` `File` - the JAR file to create.
-  Required: Yes
-- `:duplicate` `Duplicate` - behavior when a duplicate file is found. Valid values are add, preserve, and fail.
-  Required: No; defaults to add
-- `:encoding` `String` - The character encoding to use for filenames inside the archive. It is not recommended to change this value as the created archive will most likely be unreadable for Java otherwise. See also the discussion in the zip task page
-  Required: No; defaults to UTF8
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - Name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:fallbacktoutf8` `boolean` - Whether to use UTF-8 and the language encoding flag instead of the specified encoding if a file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page
-  Required: No; defaults to false
-- `:file` `File`
-- `:filesetmanifest` `FilesetManifestConfig` - behavior when a manifest is found in a zipfileset or zipgroupfileset file. Valid values are skip, merge, and mergewithoutmain. merge will merge all of the manifests together, and merge this into any other specified manifests. mergewithoutmain merges everything but the Main section of the manifests.
-  Required: No; defaults to skip
-- `:filesonly` `boolean` - Store only file entries
-  Required: No; defaults to false
-- `:flattenattributes` `boolean` - Whether to merge attributes occurring more than once in a section (this can only happen for the Class-Path attribute) into a single attribute. Since Ant 1.8.0.
-  Required: No; defaults to false
-- `:followsymlinks` `boolean`
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:index` `boolean` - whether to create an index list to speed up classloading. Unless you specify additional jars with nested indexjars elements, only the contents of this jar will be included in the index.
-  Required: No; defaults to false
-- `:indexmetainf` `boolean` - whether to include META-INF and its children in the index. Doesn't have any effect if index is false. Sun's jar implementation used to skip the META-INF directory and Ant followed that example. The behavior has been changed with Java 5. In order to avoid problems with Ant generated jars on Java 1.4 or earlier Ant will not include META-INF unless explicitly asked to. Since Ant 1.8.0
-  Required: No; defaults to false
-- `:jarfile` `File`
-- `:keepcompression` `boolean` - For entries coming from existing archives (like nested zipfilesets or while updating the archive), keep the compression as it has been originally instead of using the compress attribute. Since Ant 1.6
-  Required: No; defaults to false
-- `:level` `int` - Non-default level at which file compression should be performed. Valid values range from 0 (no compression/fastest) to 9 (maximum compression/slowest). Since Ant 1.7
-  Required: No
-- `:manifest` `File` - the manifest file to use. This can be either the location of a manifest, or the name of a jar added through a fileset. If its the name of an added jar, the task expects the manifest to be in the jar at META-INF/MANIFEST.MF
-  Required: No
-- `:manifestencoding` `String` - The encoding used to read the JAR manifest, when a manifest file is specified. The task will always use UTF-8 when writing the manifest.
-  Required: No; defaults to default JVM character encoding
-- `:mergeclasspathattributes` `boolean` - Whether to merge the Class-Path attributes found in different manifests (if merging manifests). If false, only the attribute of the last merged manifest will be preserved. Since Ant 1.8.0. Unless you also set flattenAttributes to true, this may result in manifests containing multiple Class-Path attributes which violates the manifest specification.
-  Required: No; defaults to false
-- `:modificationtime` `String` - Set all stored file modification times to the given time. This can either be a number interpreted as milliseconds since 1970-01-01T00:00:00Z or a string that can be parsed as a ISO 8601 timestamp with optional timezone. Since Ant 1.10.2.
-  Required: No
-- `:preserve0permissions` `boolean` - when updating an archive or adding entries from a different archive Ant will assume that a Unix permissions value of 0 (nobody is allowed to do anything to the file/directory) means that the permissions haven't been stored at all rather than real permissions and will instead apply its own default values. Set this attribute to true if you really want to preserve the original permission field. since Ant 1.8.0
-  Required: No; defaults to false
-- `:roundup` `boolean` - Whether the file modification times will be rounded up to the next even number of seconds. Zip archives store file modification times with a granularity of 2 seconds, so the times will either be rounded up or down. If you round down, the archive will always seem out-of-date when you rerun the task, so the default is to round up. Rounding up may lead to a different type of problems like JSPs inside a web archive that seem to be slightly more recent than precompiled pages, rendering precompilation useless. Since Ant 1.6.2
-  Required: No; defaults to true
-- `:strict` `StrictMode` - Configures how to handle breaks of the packaging version specification: fail = throws a BuildException warn = logs a message on warn level ignore = logs a message on verbose level (default) Since Ant 1.7.1
-  Required: No; defaults to ignore
-- `:update` `boolean` - indicates whether to update or overwrite the destination file if it already exists
-  Required: No; defaults to false
-- `:uselanguageencodingflag` `boolean` - Whether to set the language encoding flag if the encoding is UTF-8. This setting doesn't have any effect if the encoding is not UTF-8. Since Ant 1.8.0. See also the discussion in the zip task page
-  Required: No; defaults to true
-- `:whenempty` `WhenEmpty`
-- `:whenmanifestonly` `WhenEmpty` - behavior when no files match. Valid values are fail, skip, and create.
-  Required: No; defaults to create
-- `:zip64mode` `Zip64ModeAttribute` - When to use Zip64 extensions for entries. The possible values are never, always and as-needed. Since Ant 1.9.1. See also the discussion in the zip task page
-  Required: No; defaults to never
-- `:zipfile` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` | the directory from which to jar the files. | No |
+| `:casesensitive` | `boolean` |  |  |
+| `:comment` | `String` |  |  |
+| `:compress` | `boolean` | Not only store data but also compress them. Unless you set the keepcompression attribute to false, this will apply to the entire archive, not only the files you've added while updating. | No; defaults to true |
+| `:createunicodeextrafields` | `UnicodeExtraField` | Whether to create Unicode extra fields to store the file names a second time inside the entry's metadata. Possible values are never, always and not-encodeable which will only add Unicode extra fields if the file name cannot. See also the discussion in the zip task page | No; defaults to never |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no) | No; defaults to yes |
+| `:destfile` | `File` | the JAR file to create. | Yes |
+| `:duplicate` | `Duplicate` | behavior when a duplicate file is found. Valid values are add, preserve, and fail. | No; defaults to add |
+| `:encoding` | `String` | The character encoding to use for filenames inside the archive. It is not recommended to change this value as the created archive will most likely be unreadable for Java otherwise. See also the discussion in the zip task page | No; defaults to UTF8 |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | Name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:fallbacktoutf8` | `boolean` | Whether to use UTF-8 and the language encoding flag instead of the specified encoding if a file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page | No; defaults to false |
+| `:file` | `File` |  |  |
+| `:filesetmanifest` | `FilesetManifestConfig` | behavior when a manifest is found in a zipfileset or zipgroupfileset file. Valid values are skip, merge, and mergewithoutmain. merge will merge all of the manifests together, and merge this into any other specified manifests. mergewithoutmain merges everything but the Main section of the manifests. | No; defaults to skip |
+| `:filesonly` | `boolean` | Store only file entries | No; defaults to false |
+| `:flattenattributes` | `boolean` | Whether to merge attributes occurring more than once in a section (this can only happen for the Class-Path attribute) into a single attribute. Since Ant 1.8.0. | No; defaults to false |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern | No |
+| `:index` | `boolean` | whether to create an index list to speed up classloading. Unless you specify additional jars with nested indexjars elements, only the contents of this jar will be included in the index. | No; defaults to false |
+| `:indexmetainf` | `boolean` | whether to include META-INF and its children in the index. Doesn't have any effect if index is false. Sun's jar implementation used to skip the META-INF directory and Ant followed that example. The behavior has been changed with Java 5. In order to avoid problems with Ant generated jars on Java 1.4 or earlier Ant will not include META-INF unless explicitly asked to. Since Ant 1.8.0 | No; defaults to false |
+| `:jarfile` | `File` |  |  |
+| `:keepcompression` | `boolean` | For entries coming from existing archives (like nested zipfilesets or while updating the archive), keep the compression as it has been originally instead of using the compress attribute. Since Ant 1.6 | No; defaults to false |
+| `:level` | `int` | Non-default level at which file compression should be performed. Valid values range from 0 (no compression/fastest) to 9 (maximum compression/slowest). Since Ant 1.7 | No |
+| `:manifest` | `File` | the manifest file to use. This can be either the location of a manifest, or the name of a jar added through a fileset. If its the name of an added jar, the task expects the manifest to be in the jar at META-INF/MANIFEST.MF | No |
+| `:manifestencoding` | `String` | The encoding used to read the JAR manifest, when a manifest file is specified. The task will always use UTF-8 when writing the manifest. | No; defaults to default JVM character encoding |
+| `:mergeclasspathattributes` | `boolean` | Whether to merge the Class-Path attributes found in different manifests (if merging manifests). If false, only the attribute of the last merged manifest will be preserved. Since Ant 1.8.0. Unless you also set flattenAttributes to true, this may result in manifests containing multiple Class-Path attributes which violates the manifest specification. | No; defaults to false |
+| `:modificationtime` | `String` | Set all stored file modification times to the given time. This can either be a number interpreted as milliseconds since 1970-01-01T00:00:00Z or a string that can be parsed as a ISO 8601 timestamp with optional timezone. Since Ant 1.10.2. | No |
+| `:preserve0permissions` | `boolean` | when updating an archive or adding entries from a different archive Ant will assume that a Unix permissions value of 0 (nobody is allowed to do anything to the file/directory) means that the permissions haven't been stored at all rather than real permissions and will instead apply its own default values. Set this attribute to true if you really want to preserve the original permission field. since Ant 1.8.0 | No; defaults to false |
+| `:roundup` | `boolean` | Whether the file modification times will be rounded up to the next even number of seconds. Zip archives store file modification times with a granularity of 2 seconds, so the times will either be rounded up or down. If you round down, the archive will always seem out-of-date when you rerun the task, so the default is to round up. Rounding up may lead to a different type of problems like JSPs inside a web archive that seem to be slightly more recent than precompiled pages, rendering precompilation useless. Since Ant 1.6.2 | No; defaults to true |
+| `:strict` | `StrictMode` | Configures how to handle breaks of the packaging version specification: fail = throws a BuildException warn = logs a message on warn level ignore = logs a message on verbose level (default) Since Ant 1.7.1 | No; defaults to ignore |
+| `:update` | `boolean` | indicates whether to update or overwrite the destination file if it already exists | No; defaults to false |
+| `:uselanguageencodingflag` | `boolean` | Whether to set the language encoding flag if the encoding is UTF-8. This setting doesn't have any effect if the encoding is not UTF-8. Since Ant 1.8.0. See also the discussion in the zip task page | No; defaults to true |
+| `:whenempty` | `WhenEmpty` |  |  |
+| `:whenmanifestonly` | `WhenEmpty` | behavior when no files match. Valid values are fail, skip, and create. | No; defaults to create |
+| `:zip64mode` | `Zip64ModeAttribute` | When to use Zip64 extensions for entries. The possible values are never, always and as-needed. Since Ant 1.9.1. See also the discussion in the zip task page | No; defaults to never |
+| `:zipfile` | `File` |  |  |
 
 **Nested elements**
 
@@ -4024,10 +3587,10 @@ Extension and ExtensionSet documentation for further details.
 
 **Attributes**
 
-- `:file` `File` - The file to check for extension
-  Required: Yes, unless a nested <extensionSet> or <fileset> is specified
-- `:property` `String` - The name of property to set if extensions is available
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` | The file to check for extension | Yes, unless a nested <extensionSet> or <fileset> is specified |
+| `:property` | `String` | The name of property to set if extensions is available | Yes |
 
 **Nested elements**
 
@@ -4055,8 +3618,9 @@ ExtensionSet documentation for further details.
 
 **Attributes**
 
-- `:file` `File` - The file to display extension information about
-  Required: Yes, unless a nested <fileset> is specified
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` | The file to display extension information about | Yes, unless a nested <fileset> is specified |
 
 **Nested elements**
 
@@ -4085,8 +3649,9 @@ for further details.
 
 **Attributes**
 
-- `:destfile` `File` - The file to generate Manifest into
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:destfile` | `File` | The file to generate Manifest into | Yes |
 
 **Nested elements**
 
@@ -4119,12 +3684,11 @@ Extension and ExtensionSet documentation for further details.
 
 **Attributes**
 
-- `:checkextension` `boolean` - true if libraries returned by nested resolvers should be checked to see if they supply extension.
-  Required: No; defaults to true
-- `:failonerror` `boolean` - true if failure to locate library should result in build exception.
-  Required: No; defaults to true
-- `:property` `String` - The name of property to set to library location.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:checkextension` | `boolean` | true if libraries returned by nested resolvers should be checked to see if they supply extension. | No; defaults to true |
+| `:failonerror` | `boolean` | true if failure to locate library should result in build exception. | No; defaults to true |
+| `:property` | `String` | The name of property to set to library location. | Yes |
 
 **Nested elements**
 
@@ -4158,67 +3722,39 @@ to read from the standard input.
 
 **Attributes**
 
-- `:append` `boolean` - Whether output and error files should be appended to or overwritten.
-  Required: No; defaults to false
-- `:args` `String` - the arguments for the class that is executed. Deprecated, use nested <arg> elements instead.
-  Required: No
-- `:classname` `String` - the Java class to execute.
-  Required: Exactly one of the four
-- `:classpath` `Path` - the classpath to use.
-  Required: No
-- `:classpathref` `Reference` - the classpath to use, given as reference to a Path defined elsewhere.
-  Required: No
-- `:clonevm` `boolean` - If set to true, then all system properties and the bootclasspath of the forked JVM will be the same as those of the JVM running Ant. since Ant 1.7
-  Required: No; default is false, ignored if fork is false
-- `:dir` `File` - The directory to invoke the JVM in, ignored if fork is false.
-  Required: No
-- `:discarderror` `boolean` - Whether error output should completely be discarded. This setting is incompatible with any setting that redirects error output to files or properties as well as logError. Since Ant 1.10.10
-  Required: No; defaults to false
-- `:discardoutput` `boolean` - Whether output should completely be discarded. This setting is incompatible with any setting that redirects output to files or properties. If you set this to true error output will be discared as well unless you redirect error output to files, properties or enable logError. Since Ant 1.10.10
-  Required: No; defaults to false
-- `:error` `File` - The file to which the standard error of the command should be redirected.
-  Required: No
-- `:errorproperty` `String` - The name of a property in which the standard error of the command should be stored.
-  Required: No
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code other than 0.
-  Required: No; default is false (see note)
-- `:fork` `boolean` - if enabled triggers the class execution in another JVM.
-  Required: No; default is false
-- `:input` `File` - A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute
-  Required: No; default is to take standard input from console unless spawn is true
-- `:inputstring` `String` - A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute.
-  Required: No; default is to take standard input from console unless spawn is true)
-- `:jar` `File` - the location of the jar file to execute (must have a Main-Class entry in the manifest). fork must be set to true if this option is selected. See notes below for more details.
-  Required: Exactly one of the four
-- `:jvm` `String` - the command used to invoke JVM. The command is resolved by java.lang.Runtime.exec(). Ignored if fork is false.
-  Required: No, default is java
-- `:jvmargs` `String` - the arguments to pass to the forked JVM, ignored if fork is disabled. Deprecated, use nested <jvmarg> elements instead.
-  Required: No
-- `:jvmversion` `String`
-- `:logerror` `boolean` - This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. If you redirect error with the error or errorProperty attributes, this will have no effect.
-  Required: No
-- `:maxmemory` `String` - Max amount of memory to allocate to the forked JVM, ignored if fork is false
-  Required: No
-- `:module` `String` - The initial or main module to resolve (must have a Main-Class entry in the manifest). fork must be set to true if this option is selected. since Ant 1.9.7
-  Required: Exactly one of the four
-- `:modulepath` `Path` - Specify where to find application modules. A list of directories of modules, module files or exploded modules. since Ant 1.9.7
-  Required: No
-- `:modulepathref` `Reference` - The modulepath to use, given as reference to a Path defined elsewhere. since Ant 1.9.7
-  Required: No
-- `:newenvironment` `boolean` - Do not propagate old environment when new environment variables are specified.
-  Required: No; default is false, ignored if fork is false
-- `:output` `File` - Name of a file to which to write the output. If the error stream is not also redirected to a file or property, it will appear in this output.
-  Required: No
-- `:outputproperty` `String` - The name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output.
-  Required: No
-- `:resultproperty` `String` - The name of a property in which the return code of the command should be stored. Only of interest if failonerror is false and if fork is true.
-  Required: No
-- `:sourcefile` `String` - The location of a \".java\" file or a file containing shebang with Java source code. Set this attribute to run Java single file source programs, a feature introduced in Java 11. fork must be set to true if this option is selected. since Ant 1.10.5
-  Required: Exactly one of the four
-- `:spawn` `boolean` - if enabled allows to start a process which will outlive Ant. Requires that fork is true, and not compatible with timeout, input, output, error, result attributes
-  Required: No; default is false
-- `:timeout` `Long` - Stop the command if it doesn't finish within the specified time (given in milliseconds). It is highly recommended to use this feature only if fork is true.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` | Whether output and error files should be appended to or overwritten. | No; defaults to false |
+| `:args` | `String` | the arguments for the class that is executed. Deprecated, use nested <arg> elements instead. | No |
+| `:classname` | `String` | the Java class to execute. | Exactly one of the four |
+| `:classpath` | `Path` | the classpath to use. | No |
+| `:classpathref` | `Reference` | the classpath to use, given as reference to a Path defined elsewhere. | No |
+| `:clonevm` | `boolean` | If set to true, then all system properties and the bootclasspath of the forked JVM will be the same as those of the JVM running Ant. since Ant 1.7 | No; default is false, ignored if fork is false |
+| `:dir` | `File` | The directory to invoke the JVM in, ignored if fork is false. | No |
+| `:discarderror` | `boolean` | Whether error output should completely be discarded. This setting is incompatible with any setting that redirects error output to files or properties as well as logError. Since Ant 1.10.10 | No; defaults to false |
+| `:discardoutput` | `boolean` | Whether output should completely be discarded. This setting is incompatible with any setting that redirects output to files or properties. If you set this to true error output will be discared as well unless you redirect error output to files, properties or enable logError. Since Ant 1.10.10 | No; defaults to false |
+| `:error` | `File` | The file to which the standard error of the command should be redirected. | No |
+| `:errorproperty` | `String` | The name of a property in which the standard error of the command should be stored. | No |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code other than 0. | No; default is false (see note) |
+| `:fork` | `boolean` | if enabled triggers the class execution in another JVM. | No; default is false |
+| `:input` | `File` | A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute | No; default is to take standard input from console unless spawn is true |
+| `:inputstring` | `String` | A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute. | No; default is to take standard input from console unless spawn is true) |
+| `:jar` | `File` | the location of the jar file to execute (must have a Main-Class entry in the manifest). fork must be set to true if this option is selected. See notes below for more details. | Exactly one of the four |
+| `:jvm` | `String` | the command used to invoke JVM. The command is resolved by java.lang.Runtime.exec(). Ignored if fork is false. | No, default is java |
+| `:jvmargs` | `String` | the arguments to pass to the forked JVM, ignored if fork is disabled. Deprecated, use nested <jvmarg> elements instead. | No |
+| `:jvmversion` | `String` |  |  |
+| `:logerror` | `boolean` | This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. If you redirect error with the error or errorProperty attributes, this will have no effect. | No |
+| `:maxmemory` | `String` | Max amount of memory to allocate to the forked JVM, ignored if fork is false | No |
+| `:module` | `String` | The initial or main module to resolve (must have a Main-Class entry in the manifest). fork must be set to true if this option is selected. since Ant 1.9.7 | Exactly one of the four |
+| `:modulepath` | `Path` | Specify where to find application modules. A list of directories of modules, module files or exploded modules. since Ant 1.9.7 | No |
+| `:modulepathref` | `Reference` | The modulepath to use, given as reference to a Path defined elsewhere. since Ant 1.9.7 | No |
+| `:newenvironment` | `boolean` | Do not propagate old environment when new environment variables are specified. | No; default is false, ignored if fork is false |
+| `:output` | `File` | Name of a file to which to write the output. If the error stream is not also redirected to a file or property, it will appear in this output. | No |
+| `:outputproperty` | `String` | The name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output. | No |
+| `:resultproperty` | `String` | The name of a property in which the return code of the command should be stored. Only of interest if failonerror is false and if fork is true. | No |
+| `:sourcefile` | `String` | The location of a \".java\" file or a file containing shebang with Java source code. Set this attribute to run Java single file source programs, a feature introduced in Java 11. fork must be set to true if this option is selected. since Ant 1.10.5 | Exactly one of the four |
+| `:spawn` | `boolean` | if enabled allows to start a process which will outlive Ant. Requires that fork is true, and not compatible with timeout, input, output, error, result attributes | No; default is false |
+| `:timeout` | `Long` | Stop the command if it doesn't finish within the specified time (given in milliseconds). It is highly recommended to use this feature only if fork is true. | No |
 
 **Nested elements**
 
@@ -4304,99 +3840,57 @@ be outdated.
 
 **Attributes**
 
-- `:bootclasspath` `Path` - Location of bootstrap class files. (See below for using the -X and -J-X parameters for specifying the bootstrap classpath).
-  Required: No
-- `:bootclasspathref` `Reference` - The bootstrapclasspath to use, given as a reference to a path defined elsewhere.
-  Required: No
-- `:casesensitive` `boolean`
-- `:classpath` `Path` - The classpath to use.
-  Required: No
-- `:classpathref` `Reference` - The classpath to use, given as a reference to a path defined elsewhere.
-  Required: No
-- `:compiler` `String` - The compiler implementation to use. See the above list of valid compilers.
-  Required: No; defaults to the value of the build.compiler property, if set, or default compiler for the current JDK otherwise
-- `:createmissingpackageinfoclass` `boolean` - Some package level annotations in package-info.java files don't create any package-info.class files so Ant would recompile the same file every time. Since Ant 1.8, an empty package-info.class is created for each package-info.java if there isn't one created by the compiler. In some setups this additional class causes problems and it can be suppressed by setting this attribute to false. Since Ant 1.8.3.
-  Required: No; default is true
-- `:debug` `boolean` - Indicates whether source should be compiled with debug information. If set to off, -g:none will be passed on the command line for compilers that support it (for other compilers, no command line argument will be used). If set to true, the value of the debuglevel attribute determines the command line argument.
-  Required: No; defaults to off
-- `:debuglevel` `String` - Keyword list to be appended to the -g command-line switch. Legal values are none or a comma-separated list of the following keywords: lines, vars, and source.
-  Required: No; ignored when debug is false or any implementation other than modern, javac1.2 and jikes; by default, nothing will be appended to -g
-- `:defaultexcludes` `boolean` - Indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:depend` `boolean` - Enables dependency tracking for compilers that support this (jikes and classic).
-  Required: No
-- `:deprecation` `boolean` - Indicates whether source should be compiled with deprecation information.
-  Required: No; defaults to off
-- `:destdir` `File` - Location to store the class files.
-  Required: No
-- `:encoding` `String` - Encoding of source files. (Note: gcj doesn't support this option yet.)
-  Required: No
-- `:errorproperty` `String` - The property to set to true if compilation fails. Since Ant 1.7.1.
-  Required: No
-- `:excludes` `String` - Comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - Name of a file. Each line of this file is taken to be an exclude pattern.
-  Required: No
-- `:executable` `String` - Complete path to the javac executable to use in case of fork is yes. Since Ant 1.6 this attribute can also be used to specify the path to the executable when using jikes, jvc, gcj or sj.
-  Required: No; defaults to the compiler of current JDK, ignored if fork is no
-- `:extdirs` `Path` - Location of installed extensions.
-  Required: No
-- `:failonerror` `boolean` - Indicates whether compilation errors will fail the build>.
-  Required: No; defaults to true
-- `:followsymlinks` `boolean`
-- `:fork` `boolean` - Whether to execute javac using the JDK compiler externally.
-  Required: No; defaults to no
-- `:includeantruntime` `boolean` - Whether to include the Ant run-time libraries in the classpath. It is usually best to set this to false so the script's behavior is not sensitive to the environment in which it is run.
-  Required: No; defaults to yes, unless build.sysclasspath property is set
-- `:includedestclasses` `boolean` - This attribute controls whether to include the destination classes directory in the classpath given to the compiler. If set to true (default), previously compiled classes are on the classpath for the compiler. This means that \"greedy\" compilers will not recompile dependent classes that are already compiled. In general this is a good thing as it stops the compiler for doing unnecessary work. However, for some edge cases, involving generics, the javac compiler needs to compile the dependent classes to get the generics information. One example is documented in the bug report: Bug 40776 - a problem compiling a Java 5 project with generics. Setting the attribute to false will cause the compiler to recompile dependent classes. Since Ant 1.7.1.
-  Required: No; default is true
-- `:includejavaruntime` `boolean` - Whether to include the default run-time libraries from the executing JVM in the classpath. Note: In some setups the run-time libraries may be part of the \"Ant run-time libraries\" so you may need to explicitly set includeAntRuntime to false to ensure that the Java run-time libraries are not included.
-  Required: No; defaults to no
-- `:includes` `String` - Comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all .java files
-- `:includesfile` `File` - Name of a file. Each line of this file is taken to be an include pattern.
-  Required: No
-- `:listfiles` `boolean` - Indicates whether the source files to be compiled will be listed.
-  Required: No; defaults to no
-- `:memoryinitialsize` `String` - The initial size of the memory for the underlying JVM, if javac is run externally. (Examples: 83886080, 81920k, or 80m)
-  Required: No; defaults to the standard JVM memory setting, ignored if fork is no
-- `:memorymaximumsize` `String` - The maximum size of the memory for the underlying JVM, if javac is run externally; ignored otherwise. (Examples: 83886080, 81920k, or 80m)
-  Required: No; defaults to the standard JVM memory setting, ignored if fork is no
-- `:modulepath` `Path` - Specify where to find application modules. A list of directories of modules, module files or exploded modules. since Ant 1.9.7
-  Required: No
-- `:modulepathref` `Reference` - The modulepath to use, given as reference to a path defined elsewhere. since Ant 1.9.7
-  Required: No
-- `:modulesourcepath` `Path` - Specify where to find input source files for multiple module compilation. since Ant 1.9.7
-  Required: Yes, unless srcdir attribute or nested <src> elements are present
-- `:modulesourcepathref` `Reference` - The modulesourcepath to use, given as reference to a path defined elsewhere. since Ant 1.9.7
-  Required: No
-- `:nativeheaderdir` `File` - Specify where to place generated native header files. Since Ant 1.9.8. No, ignored when compiling on JDK 7 or earlier
-- `:nowarn` `boolean` - Indicates whether the -nowarn switch should be passed to the compiler.
-  Required: No; defaults to off
-- `:optimize` `boolean` - Indicates whether source should be compiled with optimization. Note that this flag is just ignored by Sun's javac since JDK 1.3 (because compile-time optimization is unnecessary).
-  Required: No; defaults to off
-- `:proceed` `boolean`
-- `:release` `String` - Specify the value for the --release switch. When set and running on JDK 9+ the source and target attributes as well as the bootclasspath will be ignored. Since Ant 1.9.8. No, ignored when compiling on JDK 8 or earlier
-- `:source` `String` - Java language features accepted by compiler, as specified by the -source command-line switch. Valid feature versions are 1.3, 1.4, 1.5 or 5, etc. The attribute will be ignored by all implementations prior to javac1.4 (or modern when Ant is not running in a JVM 1.3), gcj and jikes. If you use this attribute together with gcj or jikes, you must make sure that your version supports the -source (or -fsource for gcj) switch.
-  Required: No; by default, no -source argument will be used at all unless the magic ant.build.javac.source property is set Note that the default value depends on JDK that is running Ant. We highly recommend to always specify this attribute.
-- `:sourcepath` `Path` - The sourcepath to use. To suppress the sourcepath switch, use sourcepath=.
-  Required: No; defaults to srcdir unless nested <src> elements are specified
-- `:sourcepathref` `Reference` - The sourcepath to use, given as a reference to a path defined elsewhere.
-  Required: No
-- `:srcdir` `Path` - Location of the java files. (See the note below.)
-  Required: Yes, unless nested <src> elements or modulesourcepath attribute or corresponding elements are present
-- `:target` `String` - Generate class files for specific JVM version (cross-compile).
-  Required: No; by default, no -target argument will be used at all unless the magic ant.build.javac.target property is set Note that the default value depends on JDK that is running Ant and on source (see Cross-Compilation Options). We highly recommend to always specify this attribute.
-- `:tempdir` `File` - Where Ant should place temporary files. This is only used if the task is forked and the command line args length exceeds 4 kB. Since Ant 1.6.
-  Required: No; default is java.io.tmpdir
-- `:updatedproperty` `String` - The property to set to true if compilation has taken place and has been successful. Since Ant 1.7.1.
-  Required: No
-- `:upgrademodulepath` `Path` - Specify the location of modules that replace upgradeable modules in the runtime image. since Ant 1.9.7
-  Required: No
-- `:upgrademodulepathref` `Reference` - The upgrademodulepath to use, given as reference to a path defined elsewhere. since Ant 1.9.7
-  Required: No
-- `:verbose` `boolean` - Asks the compiler for verbose output.
-  Required: No; defaults to no
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:bootclasspath` | `Path` | Location of bootstrap class files. (See below for using the -X and -J-X parameters for specifying the bootstrap classpath). | No |
+| `:bootclasspathref` | `Reference` | The bootstrapclasspath to use, given as a reference to a path defined elsewhere. | No |
+| `:casesensitive` | `boolean` |  |  |
+| `:classpath` | `Path` | The classpath to use. | No |
+| `:classpathref` | `Reference` | The classpath to use, given as a reference to a path defined elsewhere. | No |
+| `:compiler` | `String` | The compiler implementation to use. See the above list of valid compilers. | No; defaults to the value of the build.compiler property, if set, or default compiler for the current JDK otherwise |
+| `:createmissingpackageinfoclass` | `boolean` | Some package level annotations in package-info.java files don't create any package-info.class files so Ant would recompile the same file every time. Since Ant 1.8, an empty package-info.class is created for each package-info.java if there isn't one created by the compiler. In some setups this additional class causes problems and it can be suppressed by setting this attribute to false. Since Ant 1.8.3. | No; default is true |
+| `:debug` | `boolean` | Indicates whether source should be compiled with debug information. If set to off, -g:none will be passed on the command line for compilers that support it (for other compilers, no command line argument will be used). If set to true, the value of the debuglevel attribute determines the command line argument. | No; defaults to off |
+| `:debuglevel` | `String` | Keyword list to be appended to the -g command-line switch. Legal values are none or a comma-separated list of the following keywords: lines, vars, and source. | No; ignored when debug is false or any implementation other than modern, javac1.2 and jikes; by default, nothing will be appended to -g |
+| `:defaultexcludes` | `boolean` | Indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:depend` | `boolean` | Enables dependency tracking for compilers that support this (jikes and classic). | No |
+| `:deprecation` | `boolean` | Indicates whether source should be compiled with deprecation information. | No; defaults to off |
+| `:destdir` | `File` | Location to store the class files. | No |
+| `:encoding` | `String` | Encoding of source files. (Note: gcj doesn't support this option yet.) | No |
+| `:errorproperty` | `String` | The property to set to true if compilation fails. Since Ant 1.7.1. | No |
+| `:excludes` | `String` | Comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | Name of a file. Each line of this file is taken to be an exclude pattern. | No |
+| `:executable` | `String` | Complete path to the javac executable to use in case of fork is yes. Since Ant 1.6 this attribute can also be used to specify the path to the executable when using jikes, jvc, gcj or sj. | No; defaults to the compiler of current JDK, ignored if fork is no |
+| `:extdirs` | `Path` | Location of installed extensions. | No |
+| `:failonerror` | `boolean` | Indicates whether compilation errors will fail the build>. | No; defaults to true |
+| `:followsymlinks` | `boolean` |  |  |
+| `:fork` | `boolean` | Whether to execute javac using the JDK compiler externally. | No; defaults to no |
+| `:includeantruntime` | `boolean` | Whether to include the Ant run-time libraries in the classpath. It is usually best to set this to false so the script's behavior is not sensitive to the environment in which it is run. | No; defaults to yes, unless build.sysclasspath property is set |
+| `:includedestclasses` | `boolean` | This attribute controls whether to include the destination classes directory in the classpath given to the compiler. If set to true (default), previously compiled classes are on the classpath for the compiler. This means that \"greedy\" compilers will not recompile dependent classes that are already compiled. In general this is a good thing as it stops the compiler for doing unnecessary work. However, for some edge cases, involving generics, the javac compiler needs to compile the dependent classes to get the generics information. One example is documented in the bug report: Bug 40776 - a problem compiling a Java 5 project with generics. Setting the attribute to false will cause the compiler to recompile dependent classes. Since Ant 1.7.1. | No; default is true |
+| `:includejavaruntime` | `boolean` | Whether to include the default run-time libraries from the executing JVM in the classpath. Note: In some setups the run-time libraries may be part of the \"Ant run-time libraries\" so you may need to explicitly set includeAntRuntime to false to ensure that the Java run-time libraries are not included. | No; defaults to no |
+| `:includes` | `String` | Comma- or space-separated list of patterns of files that must be included. | No; defaults to all .java files |
+| `:includesfile` | `File` | Name of a file. Each line of this file is taken to be an include pattern. | No |
+| `:listfiles` | `boolean` | Indicates whether the source files to be compiled will be listed. | No; defaults to no |
+| `:memoryinitialsize` | `String` | The initial size of the memory for the underlying JVM, if javac is run externally. (Examples: 83886080, 81920k, or 80m) | No; defaults to the standard JVM memory setting, ignored if fork is no |
+| `:memorymaximumsize` | `String` | The maximum size of the memory for the underlying JVM, if javac is run externally; ignored otherwise. (Examples: 83886080, 81920k, or 80m) | No; defaults to the standard JVM memory setting, ignored if fork is no |
+| `:modulepath` | `Path` | Specify where to find application modules. A list of directories of modules, module files or exploded modules. since Ant 1.9.7 | No |
+| `:modulepathref` | `Reference` | The modulepath to use, given as reference to a path defined elsewhere. since Ant 1.9.7 | No |
+| `:modulesourcepath` | `Path` | Specify where to find input source files for multiple module compilation. since Ant 1.9.7 | Yes, unless srcdir attribute or nested <src> elements are present |
+| `:modulesourcepathref` | `Reference` | The modulesourcepath to use, given as reference to a path defined elsewhere. since Ant 1.9.7 | No |
+| `:nativeheaderdir` | `File` | Specify where to place generated native header files. Since Ant 1.9.8. No, ignored when compiling on JDK 7 or earlier |  |
+| `:nowarn` | `boolean` | Indicates whether the -nowarn switch should be passed to the compiler. | No; defaults to off |
+| `:optimize` | `boolean` | Indicates whether source should be compiled with optimization. Note that this flag is just ignored by Sun's javac since JDK 1.3 (because compile-time optimization is unnecessary). | No; defaults to off |
+| `:proceed` | `boolean` |  |  |
+| `:release` | `String` | Specify the value for the --release switch. When set and running on JDK 9+ the source and target attributes as well as the bootclasspath will be ignored. Since Ant 1.9.8. No, ignored when compiling on JDK 8 or earlier |  |
+| `:source` | `String` | Java language features accepted by compiler, as specified by the -source command-line switch. Valid feature versions are 1.3, 1.4, 1.5 or 5, etc. The attribute will be ignored by all implementations prior to javac1.4 (or modern when Ant is not running in a JVM 1.3), gcj and jikes. If you use this attribute together with gcj or jikes, you must make sure that your version supports the -source (or -fsource for gcj) switch. | No; by default, no -source argument will be used at all unless the magic ant.build.javac.source property is set Note that the default value depends on JDK that is running Ant. We highly recommend to always specify this attribute. |
+| `:sourcepath` | `Path` | The sourcepath to use. To suppress the sourcepath switch, use sourcepath=. | No; defaults to srcdir unless nested <src> elements are specified |
+| `:sourcepathref` | `Reference` | The sourcepath to use, given as a reference to a path defined elsewhere. | No |
+| `:srcdir` | `Path` | Location of the java files. (See the note below.) | Yes, unless nested <src> elements or modulesourcepath attribute or corresponding elements are present |
+| `:target` | `String` | Generate class files for specific JVM version (cross-compile). | No; by default, no -target argument will be used at all unless the magic ant.build.javac.target property is set Note that the default value depends on JDK that is running Ant and on source (see Cross-Compilation Options). We highly recommend to always specify this attribute. |
+| `:tempdir` | `File` | Where Ant should place temporary files. This is only used if the task is forked and the command line args length exceeds 4 kB. Since Ant 1.6. | No; default is java.io.tmpdir |
+| `:updatedproperty` | `String` | The property to set to true if compilation has taken place and has been successful. Since Ant 1.7.1. | No |
+| `:upgrademodulepath` | `Path` | Specify the location of modules that replace upgradeable modules in the runtime image. since Ant 1.9.7 | No |
+| `:upgrademodulepathref` | `Reference` | The upgrademodulepath to use, given as reference to a path defined elsewhere. since Ant 1.9.7 | No |
+| `:verbose` | `boolean` | Asks the compiler for verbose output. | No; defaults to no |
 
 **Nested elements**
 
@@ -4459,58 +3953,34 @@ always generate the output files.
 
 **Attributes**
 
-- `:buildparser` `boolean` - Sets the BUILD_PARSER grammar option. This is a boolean option.
-  Required: No
-- `:buildtokenmanager` `boolean` - Sets the BUILD_TOKEN_MANAGER grammar option. This is a boolean option.
-  Required: No
-- `:cachetokens` `boolean` - Sets the CACHE_TOKENS grammar option. This is a boolean option.
-  Required: No
-- `:choiceambiguitycheck` `int` - Sets the CHOICE_AMBIGUITY_CHECK grammar option. This is an integer option.
-  Required: No
-- `:commontokenaction` `boolean` - Sets the COMMON_TOKEN_ACTION grammar option. This is a boolean option.
-  Required: No
-- `:debuglookahead` `boolean` - Sets the DEBUG_LOOKAHEAD grammar option. This is a boolean option.
-  Required: No
-- `:debugparser` `boolean` - Sets the DEBUG_PARSER grammar option. This is a boolean option.
-  Required: No
-- `:debugtokenmanager` `boolean` - Sets the DEBUG_TOKEN_MANAGER grammar option. This is a boolean option.
-  Required: No
-- `:errorreporting` `boolean` - Sets the ERROR_REPORTING grammar option. This is a boolean option.
-  Required: No
-- `:forcelacheck` `boolean` - Sets the FORCE_LA_CHECK grammar option. This is a boolean option.
-  Required: No
-- `:ignorecase` `boolean` - Sets the IGNORE_CASE grammar option. This is a boolean option.
-  Required: No
-- `:javacchome` `File` - The directory containing the JavaCC distribution.
-  Required: Yes
-- `:javaunicodeescape` `boolean` - Sets the JAVA_UNICODE_ESCAPE grammar option. This is a boolean option.
-  Required: No
-- `:jdkversion` `String` - Sets the JDK_VERSION option. This is a string option.
-  Required: No
-- `:keeplinecolumn` `boolean` - Sets the KEEP_LINE_COLUMN grammar option. This is a boolean option.
-  Required: No
-- `:lookahead` `int` - Sets the LOOKAHEAD grammar option. This is an integer option.
-  Required: No
-- `:maxmemory` `String` - Max amount of memory to allocate to the forked JVM. since Ant 1.8.3
-  Required: No
-- `:optimizetokenmanager` `boolean` - Sets the OPTIMIZE_TOKEN_MANAGER grammar option. This is a boolean option.
-  Required: No
-- `:otherambiguitycheck` `int` - Sets the OTHER_AMBIGUITY_CHECK grammar option. This is an integer option.
-  Required: No
-- `:outputdirectory` `File` - The directory to write the generated files to. If not set, the files are written to the directory containing the grammar file.
-  Required: No
-- `:sanitycheck` `boolean` - Sets the SANITY_CHECK grammar option. This is a boolean option.
-  Required: No
-- `:static` `boolean` - Sets the STATIC grammar option. This is a boolean option.
-  Required: No
-- `:target` `File` - The grammar file to process.
-  Required: Yes
-- `:unicodeinput` `boolean` - Sets the UNICODE_INPUT grammar option. This is a boolean option.
-  Required: No
-- `:usercharstream` `boolean` - Sets the USER_CHAR_STREAM grammar option. This is a boolean option.
-  Required: No
-- `:usertokenmanager` `boolean` - Sets the USER_TOKEN_MANAGER grammar option. This is a boolean option.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:buildparser` | `boolean` | Sets the BUILD_PARSER grammar option. This is a boolean option. | No |
+| `:buildtokenmanager` | `boolean` | Sets the BUILD_TOKEN_MANAGER grammar option. This is a boolean option. | No |
+| `:cachetokens` | `boolean` | Sets the CACHE_TOKENS grammar option. This is a boolean option. | No |
+| `:choiceambiguitycheck` | `int` | Sets the CHOICE_AMBIGUITY_CHECK grammar option. This is an integer option. | No |
+| `:commontokenaction` | `boolean` | Sets the COMMON_TOKEN_ACTION grammar option. This is a boolean option. | No |
+| `:debuglookahead` | `boolean` | Sets the DEBUG_LOOKAHEAD grammar option. This is a boolean option. | No |
+| `:debugparser` | `boolean` | Sets the DEBUG_PARSER grammar option. This is a boolean option. | No |
+| `:debugtokenmanager` | `boolean` | Sets the DEBUG_TOKEN_MANAGER grammar option. This is a boolean option. | No |
+| `:errorreporting` | `boolean` | Sets the ERROR_REPORTING grammar option. This is a boolean option. | No |
+| `:forcelacheck` | `boolean` | Sets the FORCE_LA_CHECK grammar option. This is a boolean option. | No |
+| `:ignorecase` | `boolean` | Sets the IGNORE_CASE grammar option. This is a boolean option. | No |
+| `:javacchome` | `File` | The directory containing the JavaCC distribution. | Yes |
+| `:javaunicodeescape` | `boolean` | Sets the JAVA_UNICODE_ESCAPE grammar option. This is a boolean option. | No |
+| `:jdkversion` | `String` | Sets the JDK_VERSION option. This is a string option. | No |
+| `:keeplinecolumn` | `boolean` | Sets the KEEP_LINE_COLUMN grammar option. This is a boolean option. | No |
+| `:lookahead` | `int` | Sets the LOOKAHEAD grammar option. This is an integer option. | No |
+| `:maxmemory` | `String` | Max amount of memory to allocate to the forked JVM. since Ant 1.8.3 | No |
+| `:optimizetokenmanager` | `boolean` | Sets the OPTIMIZE_TOKEN_MANAGER grammar option. This is a boolean option. | No |
+| `:otherambiguitycheck` | `int` | Sets the OTHER_AMBIGUITY_CHECK grammar option. This is an integer option. | No |
+| `:outputdirectory` | `File` | The directory to write the generated files to. If not set, the files are written to the directory containing the grammar file. | No |
+| `:sanitycheck` | `boolean` | Sets the SANITY_CHECK grammar option. This is a boolean option. | No |
+| `:static` | `boolean` | Sets the STATIC grammar option. This is a boolean option. | No |
+| `:target` | `File` | The grammar file to process. | Yes |
+| `:unicodeinput` | `boolean` | Sets the UNICODE_INPUT grammar option. This is a boolean option. | No |
+| `:usercharstream` | `boolean` | Sets the USER_CHAR_STREAM grammar option. This is a boolean option. | No |
+| `:usertokenmanager` | `boolean` | Sets the USER_TOKEN_MANAGER grammar option. This is a boolean option. | No |
 
 **Reference**
 
@@ -4557,142 +4027,76 @@ agrees with the exclude patterns of the packageset (and vice versa).
 
 **Attributes**
 
-- `:access` `AccessType` - Access mode: one of public, protected, package, or private
-  Required: No; default is protected
-- `:additionalparam` `String` - Lets you add additional parameters to the javadoc command line. Useful for doclets. Parameters containing spaces need to be quoted using &quot;-see also the nested arg element.
-  Required: No
-- `:author` `boolean` - Include @author paragraphs
-  Required: No
-- `:bootclasspath` `Path` - Override location of class files loaded by the bootstrap class loader
-  Required: No
-- `:bootclasspathref` `Reference` - Override location of class files loaded by the bootstrap class loader by reference to a bootclasspath defined elsewhere.
-  Required: No
-- `:bottom` `String` - Include bottom text for each page (HTML code)
-  Required: No
-- `:breakiterator` `boolean` - Use the new break iterator algorithm. since Ant 1.6. (yes|no).
-  Required: No; default is no
-- `:charset` `String` - Charset for cross-platform viewing of generated documentation
-  Required: No
-- `:classpath` `Path` - Specify where to find user class files
-  Required: No
-- `:classpathref` `Reference` - Specify where to find user class files by reference to a classpath defined elsewhere.
-  Required: No
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used (yes|no).
-  Required: No; defaults to yes
-- `:destdir` `File` - Destination directory for output files
-  Required: Yes, unless a doclet has been specified.
-- `:docencoding` `String` - Output file encoding name
-  Required: No
-- `:docfilessubdirs` `boolean` - Enables deep-copying of doc-files subdirectories. since Ant 1.8.0.
-  Required: No; defaults to false
-- `:doclet` `String` - Specifies the class file that starts the doclet used in generating the documentation-see also the nested doclet element.
-  Required: No
-- `:docletpath` `Path` - Specifies the path to the doclet class file that is specified with the -doclet option.
-  Required: No
-- `:docletpathref` `Reference` - Specifies the path to the doclet class file that is specified with the -doclet option by reference to a path defined elsewhere.
-  Required: No
-- `:doctitle` `String` - Include title for the package index (first) page (HTML code)
-  Required: No
-- `:encoding` `String` - Source file encoding name
-  Required: No
-- `:excludedocfilessubdir` `String` - Colon-separated list of doc-files subdirectories to exclude if docfilessubdirs is true. since Ant 1.8.0.
-  Required: No
-- `:excludepackagenames` `String` - comma separated list of packages you don't want docs for-see also the nested excludepackage element.
-  Required: No
-- `:executable` `String` - Specify a particular javadoc executable to use in place of the default binary (found in the same JDK as Ant is running in). since Ant 1.6.3. Note: It is up to you to ensure that this command supports the attributes you wish to use.
-  Required: No
-- `:extdirs` `Path` - Override location of installed extensions
-  Required: No
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code other than 0.
-  Required: No
-- `:failonwarning` `boolean` - Stop the build process if a warning is emitted-i.e. if javadoc's output contains the word warning. since Ant 1.9.4
-  Required: No
-- `:footer` `String` - Include footer text for each page (HTML code)
-  Required: No
-- `:group` `String` - Group specified packages together in overview page. The format is as described below-see also the nested group element.
-  Required: No
-- `:header` `String` - Include header text for each page (HTML code)
-  Required: No
-- `:helpfile` `File` - Specifies the HTML help file to use
-  Required: No
-- `:includenosourcepackages` `boolean` - If set to true, packages that don't contain Java source but a package.html will get documented as well. since Ant 1.6.3.
-  Required: No; default is false
-- `:link` `String` - Create links to javadoc output at the given URL-see also the nested link element.
-  Required: No
-- `:linkoffline` `String` - Link to docs at url using package list at alt-url by specifying a value url alt-url (space as separator). A shorthand for the nested link element with offline=true.
-  Required: No
-- `:linksource` `boolean` - Generate hyperlinks to source files. since Ant 1.6. (yes|no).
-  Required: No; default is no
-- `:locale` `String` - Locale to be used, e.g. en_US or en_US_WIN
-  Required: No
-- `:maxmemory` `String` - Max amount of memory to allocate to the javadoc JVM
-  Required: No
-- `:modulenames` `String` - Comma separated list of module names -- see also the nested module element. since Ant 1.10.6
-  Required: At least one of the four or nested <sourcepath>, <fileset>, module or <packageset>
-- `:modulepath` `Path` - Specify where to find module files since Ant 1.10.6
-  Required: No
-- `:modulepathref` `Reference` - Specify where to find module files by reference to a PATH defined elsewhere. since Ant 1.10.6
-  Required: No
-- `:modulesourcepath` `Path` - Specify where to find module source files since Ant 1.10.6
-  Required: No
-- `:modulesourcepathref` `Reference` - Specify where to find module source files by reference to a PATH defined elsewhere. since Ant 1.10.6
-  Required: No
-- `:nodeprecated` `boolean` - Do not include @deprecated information
-  Required: No
-- `:nodeprecatedlist` `boolean` - Do not generate deprecated list
-  Required: No
-- `:nohelp` `boolean` - Do not generate help link
-  Required: No
-- `:noindex` `boolean` - Do not generate index
-  Required: No
-- `:nonavbar` `boolean` - Do not generate navigation bar
-  Required: No
-- `:noqualifier` `String` - Enables the -noqualifier argument-must be all or a colon separated list of packages. since Ant 1.6.
-  Required: No
-- `:notree` `boolean` - Do not generate class hierarchy
-  Required: No
-- `:old` `boolean` - Generate output using JDK 1.1 emulating doclet. Note: This attribute has no effect unless you're using an pre jdk 1.4 external javadoc
-  Required: No
-- `:overview` `File` - Read overview documentation from HTML file
-  Required: No
-- `:package` `boolean` - Show package/protected/public classes and members
-  Required: No
-- `:packagelist` `String` - The name of a file containing the packages to process
-  Required: No
-- `:packagenames` `String` - Comma separated list of package files (with terminating wildcard)-see also the nested package element.
-  Required: No
-- `:postprocessgeneratedjavadocs` `boolean` - Whether to post-process the generated javadocs in order to mitigate CVE-2013-1571. Since Ant 1.9.2 There is a frame injection attack possible in javadocs generated by Oracle JDKs prior to Java 7 update 25 (details). When this flag is set to true, Ant will check whether the docs are vulnerable and will try to fix them.
-  Required: No; defaults to true
-- `:private` `boolean` - Show all classes and members
-  Required: No
-- `:protected` `boolean` - Show protected/public classes and members (default)
-  Required: No
-- `:public` `boolean` - Show only public classes and members
-  Required: No
-- `:serialwarn` `boolean` - Generate warning about @serial tag
-  Required: No
-- `:source` `String` - Enable javadoc to handle Java language features. Set this to 1.4 to document code that compiles using javac -source 1.4, etc.
-  Required: No; default can be provided using the magic ant.build.javac.source property.
-- `:sourcefiles` `String` - Comma separated list of source files-see also the nested source element.
-  Required: At least one of the four or nested <sourcepath>, <fileset>, module or <packageset>
-- `:sourcepath` `Path` - Specify where to find source files
-  Required: At least one of the four or nested <sourcepath>, <fileset>, module or <packageset>
-- `:sourcepathref` `Reference` - Specify where to find source files by reference to a sourcepath defined elsewhere.
-  Required: At least one of the four or nested <sourcepath>, <fileset>, module or <packageset>
-- `:splitindex` `boolean` - Split index into one file per letter
-  Required: No
-- `:stylesheetfile` `File` - Specifies the CSS stylesheet to use
-  Required: No
-- `:use` `boolean` - Create class and package usage pages
-  Required: No
-- `:useexternalfile` `boolean` - indicates whether the source file names specified in srcfiles or as nested source elements should be written to a temporary file to make the command line shorter. Also applies to the package names specified via the packagenames attribute or nested package elements. Since Ant 1.7.0, also applies to all the other command line options. (yes|no). If enabled, the file will be written to the temporary directory.
-  Required: No; default is no
-- `:verbose` `boolean` - Output messages about what javadoc is doing
-  Required: No
-- `:version` `boolean` - Include @version paragraphs
-  Required: No
-- `:windowtitle` `String` - Browser window title for the documentation (text)
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:access` | `AccessType` | Access mode: one of public, protected, package, or private | No; default is protected |
+| `:additionalparam` | `String` | Lets you add additional parameters to the javadoc command line. Useful for doclets. Parameters containing spaces need to be quoted using &quot;-see also the nested arg element. | No |
+| `:author` | `boolean` | Include @author paragraphs | No |
+| `:bootclasspath` | `Path` | Override location of class files loaded by the bootstrap class loader | No |
+| `:bootclasspathref` | `Reference` | Override location of class files loaded by the bootstrap class loader by reference to a bootclasspath defined elsewhere. | No |
+| `:bottom` | `String` | Include bottom text for each page (HTML code) | No |
+| `:breakiterator` | `boolean` | Use the new break iterator algorithm. since Ant 1.6. (yes\\|no). | No; default is no |
+| `:charset` | `String` | Charset for cross-platform viewing of generated documentation | No |
+| `:classpath` | `Path` | Specify where to find user class files | No |
+| `:classpathref` | `Reference` | Specify where to find user class files by reference to a classpath defined elsewhere. | No |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used (yes\\|no). | No; defaults to yes |
+| `:destdir` | `File` | Destination directory for output files | Yes, unless a doclet has been specified. |
+| `:docencoding` | `String` | Output file encoding name | No |
+| `:docfilessubdirs` | `boolean` | Enables deep-copying of doc-files subdirectories. since Ant 1.8.0. | No; defaults to false |
+| `:doclet` | `String` | Specifies the class file that starts the doclet used in generating the documentation-see also the nested doclet element. | No |
+| `:docletpath` | `Path` | Specifies the path to the doclet class file that is specified with the -doclet option. | No |
+| `:docletpathref` | `Reference` | Specifies the path to the doclet class file that is specified with the -doclet option by reference to a path defined elsewhere. | No |
+| `:doctitle` | `String` | Include title for the package index (first) page (HTML code) | No |
+| `:encoding` | `String` | Source file encoding name | No |
+| `:excludedocfilessubdir` | `String` | Colon-separated list of doc-files subdirectories to exclude if docfilessubdirs is true. since Ant 1.8.0. | No |
+| `:excludepackagenames` | `String` | comma separated list of packages you don't want docs for-see also the nested excludepackage element. | No |
+| `:executable` | `String` | Specify a particular javadoc executable to use in place of the default binary (found in the same JDK as Ant is running in). since Ant 1.6.3. Note: It is up to you to ensure that this command supports the attributes you wish to use. | No |
+| `:extdirs` | `Path` | Override location of installed extensions | No |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code other than 0. | No |
+| `:failonwarning` | `boolean` | Stop the build process if a warning is emitted-i.e. if javadoc's output contains the word warning. since Ant 1.9.4 | No |
+| `:footer` | `String` | Include footer text for each page (HTML code) | No |
+| `:group` | `String` | Group specified packages together in overview page. The format is as described below-see also the nested group element. | No |
+| `:header` | `String` | Include header text for each page (HTML code) | No |
+| `:helpfile` | `File` | Specifies the HTML help file to use | No |
+| `:includenosourcepackages` | `boolean` | If set to true, packages that don't contain Java source but a package.html will get documented as well. since Ant 1.6.3. | No; default is false |
+| `:link` | `String` | Create links to javadoc output at the given URL-see also the nested link element. | No |
+| `:linkoffline` | `String` | Link to docs at url using package list at alt-url by specifying a value url alt-url (space as separator). A shorthand for the nested link element with offline=true. | No |
+| `:linksource` | `boolean` | Generate hyperlinks to source files. since Ant 1.6. (yes\\|no). | No; default is no |
+| `:locale` | `String` | Locale to be used, e.g. en_US or en_US_WIN | No |
+| `:maxmemory` | `String` | Max amount of memory to allocate to the javadoc JVM | No |
+| `:modulenames` | `String` | Comma separated list of module names -- see also the nested module element. since Ant 1.10.6 | At least one of the four or nested <sourcepath>, <fileset>, module or <packageset> |
+| `:modulepath` | `Path` | Specify where to find module files since Ant 1.10.6 | No |
+| `:modulepathref` | `Reference` | Specify where to find module files by reference to a PATH defined elsewhere. since Ant 1.10.6 | No |
+| `:modulesourcepath` | `Path` | Specify where to find module source files since Ant 1.10.6 | No |
+| `:modulesourcepathref` | `Reference` | Specify where to find module source files by reference to a PATH defined elsewhere. since Ant 1.10.6 | No |
+| `:nodeprecated` | `boolean` | Do not include @deprecated information | No |
+| `:nodeprecatedlist` | `boolean` | Do not generate deprecated list | No |
+| `:nohelp` | `boolean` | Do not generate help link | No |
+| `:noindex` | `boolean` | Do not generate index | No |
+| `:nonavbar` | `boolean` | Do not generate navigation bar | No |
+| `:noqualifier` | `String` | Enables the -noqualifier argument-must be all or a colon separated list of packages. since Ant 1.6. | No |
+| `:notree` | `boolean` | Do not generate class hierarchy | No |
+| `:old` | `boolean` | Generate output using JDK 1.1 emulating doclet. Note: This attribute has no effect unless you're using an pre jdk 1.4 external javadoc | No |
+| `:overview` | `File` | Read overview documentation from HTML file | No |
+| `:package` | `boolean` | Show package/protected/public classes and members | No |
+| `:packagelist` | `String` | The name of a file containing the packages to process | No |
+| `:packagenames` | `String` | Comma separated list of package files (with terminating wildcard)-see also the nested package element. | No |
+| `:postprocessgeneratedjavadocs` | `boolean` | Whether to post-process the generated javadocs in order to mitigate CVE-2013-1571. Since Ant 1.9.2 There is a frame injection attack possible in javadocs generated by Oracle JDKs prior to Java 7 update 25 (details). When this flag is set to true, Ant will check whether the docs are vulnerable and will try to fix them. | No; defaults to true |
+| `:private` | `boolean` | Show all classes and members | No |
+| `:protected` | `boolean` | Show protected/public classes and members (default) | No |
+| `:public` | `boolean` | Show only public classes and members | No |
+| `:serialwarn` | `boolean` | Generate warning about @serial tag | No |
+| `:source` | `String` | Enable javadoc to handle Java language features. Set this to 1.4 to document code that compiles using javac -source 1.4, etc. | No; default can be provided using the magic ant.build.javac.source property. |
+| `:sourcefiles` | `String` | Comma separated list of source files-see also the nested source element. | At least one of the four or nested <sourcepath>, <fileset>, module or <packageset> |
+| `:sourcepath` | `Path` | Specify where to find source files | At least one of the four or nested <sourcepath>, <fileset>, module or <packageset> |
+| `:sourcepathref` | `Reference` | Specify where to find source files by reference to a sourcepath defined elsewhere. | At least one of the four or nested <sourcepath>, <fileset>, module or <packageset> |
+| `:splitindex` | `boolean` | Split index into one file per letter | No |
+| `:stylesheetfile` | `File` | Specifies the CSS stylesheet to use | No |
+| `:use` | `boolean` | Create class and package usage pages | No |
+| `:useexternalfile` | `boolean` | indicates whether the source file names specified in srcfiles or as nested source elements should be written to a temporary file to make the command line shorter. Also applies to the package names specified via the packagenames attribute or nested package elements. Since Ant 1.7.0, also applies to all the other command line options. (yes\\|no). If enabled, the file will be written to the temporary directory. | No; default is no |
+| `:verbose` | `boolean` | Output messages about what javadoc is doing | No |
+| `:version` | `boolean` | Include @version paragraphs | No |
+| `:windowtitle` | `String` | Browser window title for the documentation (text) | No |
 
 **Nested elements**
 
@@ -4764,142 +4168,76 @@ agrees with the exclude patterns of the packageset (and vice versa).
 
 **Attributes**
 
-- `:access` `AccessType` - Access mode: one of public, protected, package, or private
-  Required: No; default is protected
-- `:additionalparam` `String` - Lets you add additional parameters to the javadoc command line. Useful for doclets. Parameters containing spaces need to be quoted using &quot;-see also the nested arg element.
-  Required: No
-- `:author` `boolean` - Include @author paragraphs
-  Required: No
-- `:bootclasspath` `Path` - Override location of class files loaded by the bootstrap class loader
-  Required: No
-- `:bootclasspathref` `Reference` - Override location of class files loaded by the bootstrap class loader by reference to a bootclasspath defined elsewhere.
-  Required: No
-- `:bottom` `String` - Include bottom text for each page (HTML code)
-  Required: No
-- `:breakiterator` `boolean` - Use the new break iterator algorithm. since Ant 1.6. (yes|no).
-  Required: No; default is no
-- `:charset` `String` - Charset for cross-platform viewing of generated documentation
-  Required: No
-- `:classpath` `Path` - Specify where to find user class files
-  Required: No
-- `:classpathref` `Reference` - Specify where to find user class files by reference to a classpath defined elsewhere.
-  Required: No
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used (yes|no).
-  Required: No; defaults to yes
-- `:destdir` `File` - Destination directory for output files
-  Required: Yes, unless a doclet has been specified.
-- `:docencoding` `String` - Output file encoding name
-  Required: No
-- `:docfilessubdirs` `boolean` - Enables deep-copying of doc-files subdirectories. since Ant 1.8.0.
-  Required: No; defaults to false
-- `:doclet` `String` - Specifies the class file that starts the doclet used in generating the documentation-see also the nested doclet element.
-  Required: No
-- `:docletpath` `Path` - Specifies the path to the doclet class file that is specified with the -doclet option.
-  Required: No
-- `:docletpathref` `Reference` - Specifies the path to the doclet class file that is specified with the -doclet option by reference to a path defined elsewhere.
-  Required: No
-- `:doctitle` `String` - Include title for the package index (first) page (HTML code)
-  Required: No
-- `:encoding` `String` - Source file encoding name
-  Required: No
-- `:excludedocfilessubdir` `String` - Colon-separated list of doc-files subdirectories to exclude if docfilessubdirs is true. since Ant 1.8.0.
-  Required: No
-- `:excludepackagenames` `String` - comma separated list of packages you don't want docs for-see also the nested excludepackage element.
-  Required: No
-- `:executable` `String` - Specify a particular javadoc executable to use in place of the default binary (found in the same JDK as Ant is running in). since Ant 1.6.3. Note: It is up to you to ensure that this command supports the attributes you wish to use.
-  Required: No
-- `:extdirs` `Path` - Override location of installed extensions
-  Required: No
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code other than 0.
-  Required: No
-- `:failonwarning` `boolean` - Stop the build process if a warning is emitted-i.e. if javadoc's output contains the word warning. since Ant 1.9.4
-  Required: No
-- `:footer` `String` - Include footer text for each page (HTML code)
-  Required: No
-- `:group` `String` - Group specified packages together in overview page. The format is as described below-see also the nested group element.
-  Required: No
-- `:header` `String` - Include header text for each page (HTML code)
-  Required: No
-- `:helpfile` `File` - Specifies the HTML help file to use
-  Required: No
-- `:includenosourcepackages` `boolean` - If set to true, packages that don't contain Java source but a package.html will get documented as well. since Ant 1.6.3.
-  Required: No; default is false
-- `:link` `String` - Create links to javadoc output at the given URL-see also the nested link element.
-  Required: No
-- `:linkoffline` `String` - Link to docs at url using package list at alt-url by specifying a value url alt-url (space as separator). A shorthand for the nested link element with offline=true.
-  Required: No
-- `:linksource` `boolean` - Generate hyperlinks to source files. since Ant 1.6. (yes|no).
-  Required: No; default is no
-- `:locale` `String` - Locale to be used, e.g. en_US or en_US_WIN
-  Required: No
-- `:maxmemory` `String` - Max amount of memory to allocate to the javadoc JVM
-  Required: No
-- `:modulenames` `String` - Comma separated list of module names -- see also the nested module element. since Ant 1.10.6
-  Required: At least one of the four or nested <sourcepath>, <fileset>, module or <packageset>
-- `:modulepath` `Path` - Specify where to find module files since Ant 1.10.6
-  Required: No
-- `:modulepathref` `Reference` - Specify where to find module files by reference to a PATH defined elsewhere. since Ant 1.10.6
-  Required: No
-- `:modulesourcepath` `Path` - Specify where to find module source files since Ant 1.10.6
-  Required: No
-- `:modulesourcepathref` `Reference` - Specify where to find module source files by reference to a PATH defined elsewhere. since Ant 1.10.6
-  Required: No
-- `:nodeprecated` `boolean` - Do not include @deprecated information
-  Required: No
-- `:nodeprecatedlist` `boolean` - Do not generate deprecated list
-  Required: No
-- `:nohelp` `boolean` - Do not generate help link
-  Required: No
-- `:noindex` `boolean` - Do not generate index
-  Required: No
-- `:nonavbar` `boolean` - Do not generate navigation bar
-  Required: No
-- `:noqualifier` `String` - Enables the -noqualifier argument-must be all or a colon separated list of packages. since Ant 1.6.
-  Required: No
-- `:notree` `boolean` - Do not generate class hierarchy
-  Required: No
-- `:old` `boolean` - Generate output using JDK 1.1 emulating doclet. Note: This attribute has no effect unless you're using an pre jdk 1.4 external javadoc
-  Required: No
-- `:overview` `File` - Read overview documentation from HTML file
-  Required: No
-- `:package` `boolean` - Show package/protected/public classes and members
-  Required: No
-- `:packagelist` `String` - The name of a file containing the packages to process
-  Required: No
-- `:packagenames` `String` - Comma separated list of package files (with terminating wildcard)-see also the nested package element.
-  Required: No
-- `:postprocessgeneratedjavadocs` `boolean` - Whether to post-process the generated javadocs in order to mitigate CVE-2013-1571. Since Ant 1.9.2 There is a frame injection attack possible in javadocs generated by Oracle JDKs prior to Java 7 update 25 (details). When this flag is set to true, Ant will check whether the docs are vulnerable and will try to fix them.
-  Required: No; defaults to true
-- `:private` `boolean` - Show all classes and members
-  Required: No
-- `:protected` `boolean` - Show protected/public classes and members (default)
-  Required: No
-- `:public` `boolean` - Show only public classes and members
-  Required: No
-- `:serialwarn` `boolean` - Generate warning about @serial tag
-  Required: No
-- `:source` `String` - Enable javadoc to handle Java language features. Set this to 1.4 to document code that compiles using javac -source 1.4, etc.
-  Required: No; default can be provided using the magic ant.build.javac.source property.
-- `:sourcefiles` `String` - Comma separated list of source files-see also the nested source element.
-  Required: At least one of the four or nested <sourcepath>, <fileset>, module or <packageset>
-- `:sourcepath` `Path` - Specify where to find source files
-  Required: At least one of the four or nested <sourcepath>, <fileset>, module or <packageset>
-- `:sourcepathref` `Reference` - Specify where to find source files by reference to a sourcepath defined elsewhere.
-  Required: At least one of the four or nested <sourcepath>, <fileset>, module or <packageset>
-- `:splitindex` `boolean` - Split index into one file per letter
-  Required: No
-- `:stylesheetfile` `File` - Specifies the CSS stylesheet to use
-  Required: No
-- `:use` `boolean` - Create class and package usage pages
-  Required: No
-- `:useexternalfile` `boolean` - indicates whether the source file names specified in srcfiles or as nested source elements should be written to a temporary file to make the command line shorter. Also applies to the package names specified via the packagenames attribute or nested package elements. Since Ant 1.7.0, also applies to all the other command line options. (yes|no). If enabled, the file will be written to the temporary directory.
-  Required: No; default is no
-- `:verbose` `boolean` - Output messages about what javadoc is doing
-  Required: No
-- `:version` `boolean` - Include @version paragraphs
-  Required: No
-- `:windowtitle` `String` - Browser window title for the documentation (text)
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:access` | `AccessType` | Access mode: one of public, protected, package, or private | No; default is protected |
+| `:additionalparam` | `String` | Lets you add additional parameters to the javadoc command line. Useful for doclets. Parameters containing spaces need to be quoted using &quot;-see also the nested arg element. | No |
+| `:author` | `boolean` | Include @author paragraphs | No |
+| `:bootclasspath` | `Path` | Override location of class files loaded by the bootstrap class loader | No |
+| `:bootclasspathref` | `Reference` | Override location of class files loaded by the bootstrap class loader by reference to a bootclasspath defined elsewhere. | No |
+| `:bottom` | `String` | Include bottom text for each page (HTML code) | No |
+| `:breakiterator` | `boolean` | Use the new break iterator algorithm. since Ant 1.6. (yes\\|no). | No; default is no |
+| `:charset` | `String` | Charset for cross-platform viewing of generated documentation | No |
+| `:classpath` | `Path` | Specify where to find user class files | No |
+| `:classpathref` | `Reference` | Specify where to find user class files by reference to a classpath defined elsewhere. | No |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used (yes\\|no). | No; defaults to yes |
+| `:destdir` | `File` | Destination directory for output files | Yes, unless a doclet has been specified. |
+| `:docencoding` | `String` | Output file encoding name | No |
+| `:docfilessubdirs` | `boolean` | Enables deep-copying of doc-files subdirectories. since Ant 1.8.0. | No; defaults to false |
+| `:doclet` | `String` | Specifies the class file that starts the doclet used in generating the documentation-see also the nested doclet element. | No |
+| `:docletpath` | `Path` | Specifies the path to the doclet class file that is specified with the -doclet option. | No |
+| `:docletpathref` | `Reference` | Specifies the path to the doclet class file that is specified with the -doclet option by reference to a path defined elsewhere. | No |
+| `:doctitle` | `String` | Include title for the package index (first) page (HTML code) | No |
+| `:encoding` | `String` | Source file encoding name | No |
+| `:excludedocfilessubdir` | `String` | Colon-separated list of doc-files subdirectories to exclude if docfilessubdirs is true. since Ant 1.8.0. | No |
+| `:excludepackagenames` | `String` | comma separated list of packages you don't want docs for-see also the nested excludepackage element. | No |
+| `:executable` | `String` | Specify a particular javadoc executable to use in place of the default binary (found in the same JDK as Ant is running in). since Ant 1.6.3. Note: It is up to you to ensure that this command supports the attributes you wish to use. | No |
+| `:extdirs` | `Path` | Override location of installed extensions | No |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code other than 0. | No |
+| `:failonwarning` | `boolean` | Stop the build process if a warning is emitted-i.e. if javadoc's output contains the word warning. since Ant 1.9.4 | No |
+| `:footer` | `String` | Include footer text for each page (HTML code) | No |
+| `:group` | `String` | Group specified packages together in overview page. The format is as described below-see also the nested group element. | No |
+| `:header` | `String` | Include header text for each page (HTML code) | No |
+| `:helpfile` | `File` | Specifies the HTML help file to use | No |
+| `:includenosourcepackages` | `boolean` | If set to true, packages that don't contain Java source but a package.html will get documented as well. since Ant 1.6.3. | No; default is false |
+| `:link` | `String` | Create links to javadoc output at the given URL-see also the nested link element. | No |
+| `:linkoffline` | `String` | Link to docs at url using package list at alt-url by specifying a value url alt-url (space as separator). A shorthand for the nested link element with offline=true. | No |
+| `:linksource` | `boolean` | Generate hyperlinks to source files. since Ant 1.6. (yes\\|no). | No; default is no |
+| `:locale` | `String` | Locale to be used, e.g. en_US or en_US_WIN | No |
+| `:maxmemory` | `String` | Max amount of memory to allocate to the javadoc JVM | No |
+| `:modulenames` | `String` | Comma separated list of module names -- see also the nested module element. since Ant 1.10.6 | At least one of the four or nested <sourcepath>, <fileset>, module or <packageset> |
+| `:modulepath` | `Path` | Specify where to find module files since Ant 1.10.6 | No |
+| `:modulepathref` | `Reference` | Specify where to find module files by reference to a PATH defined elsewhere. since Ant 1.10.6 | No |
+| `:modulesourcepath` | `Path` | Specify where to find module source files since Ant 1.10.6 | No |
+| `:modulesourcepathref` | `Reference` | Specify where to find module source files by reference to a PATH defined elsewhere. since Ant 1.10.6 | No |
+| `:nodeprecated` | `boolean` | Do not include @deprecated information | No |
+| `:nodeprecatedlist` | `boolean` | Do not generate deprecated list | No |
+| `:nohelp` | `boolean` | Do not generate help link | No |
+| `:noindex` | `boolean` | Do not generate index | No |
+| `:nonavbar` | `boolean` | Do not generate navigation bar | No |
+| `:noqualifier` | `String` | Enables the -noqualifier argument-must be all or a colon separated list of packages. since Ant 1.6. | No |
+| `:notree` | `boolean` | Do not generate class hierarchy | No |
+| `:old` | `boolean` | Generate output using JDK 1.1 emulating doclet. Note: This attribute has no effect unless you're using an pre jdk 1.4 external javadoc | No |
+| `:overview` | `File` | Read overview documentation from HTML file | No |
+| `:package` | `boolean` | Show package/protected/public classes and members | No |
+| `:packagelist` | `String` | The name of a file containing the packages to process | No |
+| `:packagenames` | `String` | Comma separated list of package files (with terminating wildcard)-see also the nested package element. | No |
+| `:postprocessgeneratedjavadocs` | `boolean` | Whether to post-process the generated javadocs in order to mitigate CVE-2013-1571. Since Ant 1.9.2 There is a frame injection attack possible in javadocs generated by Oracle JDKs prior to Java 7 update 25 (details). When this flag is set to true, Ant will check whether the docs are vulnerable and will try to fix them. | No; defaults to true |
+| `:private` | `boolean` | Show all classes and members | No |
+| `:protected` | `boolean` | Show protected/public classes and members (default) | No |
+| `:public` | `boolean` | Show only public classes and members | No |
+| `:serialwarn` | `boolean` | Generate warning about @serial tag | No |
+| `:source` | `String` | Enable javadoc to handle Java language features. Set this to 1.4 to document code that compiles using javac -source 1.4, etc. | No; default can be provided using the magic ant.build.javac.source property. |
+| `:sourcefiles` | `String` | Comma separated list of source files-see also the nested source element. | At least one of the four or nested <sourcepath>, <fileset>, module or <packageset> |
+| `:sourcepath` | `Path` | Specify where to find source files | At least one of the four or nested <sourcepath>, <fileset>, module or <packageset> |
+| `:sourcepathref` | `Reference` | Specify where to find source files by reference to a sourcepath defined elsewhere. | At least one of the four or nested <sourcepath>, <fileset>, module or <packageset> |
+| `:splitindex` | `boolean` | Split index into one file per letter | No |
+| `:stylesheetfile` | `File` | Specifies the CSS stylesheet to use | No |
+| `:use` | `boolean` | Create class and package usage pages | No |
+| `:useexternalfile` | `boolean` | indicates whether the source file names specified in srcfiles or as nested source elements should be written to a temporary file to make the command line shorter. Also applies to the package names specified via the packagenames attribute or nested package elements. Since Ant 1.7.0, also applies to all the other command line options. (yes\\|no). If enabled, the file will be written to the temporary directory. | No; default is no |
+| `:verbose` | `boolean` | Output messages about what javadoc is doing | No |
+| `:version` | `boolean` | Include @version paragraphs | No |
+| `:windowtitle` | `String` | Browser window title for the documentation (text) | No |
 
 **Nested elements**
 
@@ -4956,28 +4294,20 @@ is breaking the amount of classes to compile into smaller chunks.
 
 **Attributes**
 
-- `:bootclasspath` `Path` - location of bootstrap class files
-  Required: No
-- `:bootclasspathref` `Reference`
-- `:class` `String` - the fully-qualified name of the class (or classes, separated by commas)
-  Required: Yes
-- `:classpath` `Path` - the classpath to use
-  Required: No
-- `:classpathref` `Reference`
-- `:destdir` `File` - sets the directory where javah saves the header files or the stub files.
-  Required: Exactly one of the two
-- `:force` `boolean` - specifies that output files should always be written (only when using an external javah of JDK 1.2)
-  Required: No
-- `:implementation` `String` - The compiler implementation to use. (See the above list of valid compilers.)
-  Required: No; defaults to default compiler for the current JDK
-- `:old` `boolean` - specifies that old JDK 1.0-style header files should be generated (otherwise output file contain JNI-style native method function prototypes) (only when using an external javah of JDK 1.2)
-  Required: No
-- `:outputfile` `File` - concatenates the resulting header or source files for all the classes listed into this file
-  Required: Exactly one of the two
-- `:stubs` `boolean` - generate C declarations from the Java object file (used with old)
-  Required: No
-- `:verbose` `boolean` - causes javah to print a message concerning the status of the generated files
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:bootclasspath` | `Path` | location of bootstrap class files | No |
+| `:bootclasspathref` | `Reference` |  |  |
+| `:class` | `String` | the fully-qualified name of the class (or classes, separated by commas) | Yes |
+| `:classpath` | `Path` | the classpath to use | No |
+| `:classpathref` | `Reference` |  |  |
+| `:destdir` | `File` | sets the directory where javah saves the header files or the stub files. | Exactly one of the two |
+| `:force` | `boolean` | specifies that output files should always be written (only when using an external javah of JDK 1.2) | No |
+| `:implementation` | `String` | The compiler implementation to use. (See the above list of valid compilers.) | No; defaults to default compiler for the current JDK |
+| `:old` | `boolean` | specifies that old JDK 1.0-style header files should be generated (otherwise output file contain JNI-style native method function prototypes) (only when using an external javah of JDK 1.2) | No |
+| `:outputfile` | `File` | concatenates the resulting header or source files for all the classes listed into this file | Exactly one of the two |
+| `:stubs` | `boolean` | generate C declarations from the Java object file (used with old) | No |
+| `:verbose` | `boolean` | causes javah to print a message concerning the status of the generated files | No |
 
 **Nested elements**
 
@@ -5013,18 +4343,14 @@ generated BNF documentation file.
 
 **Attributes**
 
-- `:javacchome` `File` - The directory containing the JavaCC distribution.
-  Required: Yes
-- `:maxmemory` `String` - Max amount of memory to allocate to the forked JVM. since Ant 1.8.3
-  Required: No
-- `:onetable` `boolean` - Sets the ONE_TABLE BNF documentation option. This is a boolean option.
-  Required: No
-- `:outputfile` `String` - The file to write the generated BNF documentation file to. If not set, the file is written with the same name as the JavaCC grammar file but with a the suffix .html or .txt
-  Required: No
-- `:target` `File` - The JavaCC grammar file to process.
-  Required: Yes
-- `:text` `boolean` - Sets the TEXT BNF documentation option. This is a boolean option.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:javacchome` | `File` | The directory containing the JavaCC distribution. | Yes |
+| `:maxmemory` | `String` | Max amount of memory to allocate to the forked JVM. since Ant 1.8.3 | No |
+| `:onetable` | `boolean` | Sets the ONE_TABLE BNF documentation option. This is a boolean option. | No |
+| `:outputfile` | `String` | The file to write the generated BNF documentation file to. If not set, the file is written with the same name as the JavaCC grammar file but with a the suffix .html or .txt | No |
+| `:target` | `File` | The JavaCC grammar file to process. | Yes |
+| `:text` | `boolean` | Sets the TEXT BNF documentation option. This is a boolean option. | No |
 
 **Reference**
 
@@ -5054,38 +4380,24 @@ the generated JavaCC file.
 
 **Attributes**
 
-- `:buildnodefiles` `boolean` - Sets the BUILD_NODE_FILES grammar option. This is a boolean option.
-  Required: No
-- `:javacchome` `File` - The directory containing the JavaCC distribution.
-  Required: Yes
-- `:maxmemory` `String` - Max amount of memory to allocate to the forked JVM. since Ant 1.8.3
-  Required: No
-- `:multi` `boolean` - Sets the MULTI grammar option. This is a boolean option.
-  Required: No
-- `:nodedefaultvoid` `boolean` - Sets the NODE_DEFAULT_VOID grammar option. This is a boolean option.
-  Required: No
-- `:nodefactory` `boolean` - Sets the NODE_FACTORY grammar option. This is boolean option.
-  Required: No
-- `:nodepackage` `String` - Sets the NODE_PACKAGE grammar option. This is a string option.
-  Required: No
-- `:nodeprefix` `String` - Sets the NODE_PREFIX grammar option. This is a string option.
-  Required: No
-- `:nodescopehook` `boolean` - Sets the NODE_SCOPE_HOOK grammar option. This is a boolean option.
-  Required: No
-- `:nodeusesparser` `boolean` - Sets the NODE_USES_PARSER grammar option. This is a boolean option.
-  Required: No
-- `:outputdirectory` `File` - The directory to write the generated JavaCC grammar and node files to. If not set, the files are written to the directory containing the grammar file.
-  Required: No
-- `:outputfile` `String` - The file to write the generated JavaCC grammar file to. If not set, the file is written with the same name as the JJTree grammar file but with a the suffix .jj. This is a filename relative to outputdirectory if specified, the project's basedir.
-  Required: No
-- `:static` `boolean` - Sets the STATIC grammar option. This is a boolean option.
-  Required: No
-- `:target` `File` - The JJTree grammar file to process.
-  Required: Yes
-- `:visitor` `boolean` - Sets the VISITOR grammar option. This is a boolean option.
-  Required: No
-- `:visitorexception` `String` - Sets the VISITOR_EXCEPTION grammar option. This is a string option.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:buildnodefiles` | `boolean` | Sets the BUILD_NODE_FILES grammar option. This is a boolean option. | No |
+| `:javacchome` | `File` | The directory containing the JavaCC distribution. | Yes |
+| `:maxmemory` | `String` | Max amount of memory to allocate to the forked JVM. since Ant 1.8.3 | No |
+| `:multi` | `boolean` | Sets the MULTI grammar option. This is a boolean option. | No |
+| `:nodedefaultvoid` | `boolean` | Sets the NODE_DEFAULT_VOID grammar option. This is a boolean option. | No |
+| `:nodefactory` | `boolean` | Sets the NODE_FACTORY grammar option. This is boolean option. | No |
+| `:nodepackage` | `String` | Sets the NODE_PACKAGE grammar option. This is a string option. | No |
+| `:nodeprefix` | `String` | Sets the NODE_PREFIX grammar option. This is a string option. | No |
+| `:nodescopehook` | `boolean` | Sets the NODE_SCOPE_HOOK grammar option. This is a boolean option. | No |
+| `:nodeusesparser` | `boolean` | Sets the NODE_USES_PARSER grammar option. This is a boolean option. | No |
+| `:outputdirectory` | `File` | The directory to write the generated JavaCC grammar and node files to. If not set, the files are written to the directory containing the grammar file. | No |
+| `:outputfile` | `String` | The file to write the generated JavaCC grammar file to. If not set, the file is written with the same name as the JJTree grammar file but with a the suffix .jj. This is a filename relative to outputdirectory if specified, the project's basedir. | No |
+| `:static` | `boolean` | Sets the STATIC grammar option. This is a boolean option. | No |
+| `:target` | `File` | The JJTree grammar file to process. | Yes |
+| `:visitor` | `boolean` | Sets the VISITOR grammar option. This is a boolean option. | No |
+| `:visitorexception` | `String` | Sets the VISITOR_EXCEPTION grammar option. This is a string option. | No |
 
 **Reference**
 
@@ -5126,21 +4438,19 @@ to the base directory.
 
 **Attributes**
 
-- `:addfiles` `Path` - files to be added to the output.
-  Required: Exactly one of the two
-- `:casesensitive` `boolean`
-- `:compress` `boolean` - whether or not the output should be compressed. true, yes, or on result in compressed output.
-  Required: No; defaults to uncompressed (inflated) output
-- `:defaultexcludes` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:mergefiles` `Path` - files to be merged into the output, if possible.
-  Required: Exactly one of the two
-- `:outfile` `File` - the path of the output file.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:addfiles` | `Path` | files to be added to the output. | Exactly one of the two |
+| `:casesensitive` | `boolean` |  |  |
+| `:compress` | `boolean` | whether or not the output should be compressed. true, yes, or on result in compressed output. | No; defaults to uncompressed (inflated) output |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:mergefiles` | `Path` | files to be merged into the output, if possible. | Exactly one of the two |
+| `:outfile` | `File` | the path of the output file. | Yes |
 
 **Nested elements**
 
@@ -5188,52 +4498,31 @@ JDK's jmod tool. Requires Java 9 or later.
 
 **Attributes**
 
-- `:classpath` `Path` - Files to be placed in the jmod file. Usually a single module.
-  Required: One of these is required, unless a nested <classpath> is present.
-- `:classpathref` `Reference` - Files to be placed in the jmod file, given as a reference to a path defined elsewhere.
-  Required: One of these is required, unless a nested <classpath> is present.
-- `:commandpath` `Path` - Directories containing native commands to include in jmod.
-  Required: No
-- `:commandpathref` `Reference` - Directories containing native commands to include in jmod, given as a reference to a path defined elsewhere.
-  Required: No
-- `:configpath` `Path` - Directories containing user-editable configuration files to include in jmod.
-  Required: No
-- `:configpathref` `Reference` - Directories containing user-editable configuration files to include in jmod, given as a reference to a path defined elsewhere.
-  Required: No
-- `:destfile` `File` - jmod file to create.
-  Required: Yes
-- `:hashmodulespattern` `String` - Regular expression for names of modules in the module path which depend on the jmod being created, and which should have hashes generated for them and included in the new jmod.
-  Required: No
-- `:headerpath` `Path` - Directories containing header files to include in jmod.
-  Required: No
-- `:headerpathref` `Reference` - Directories containing header files to include in jmod, given as a reference to a path defined elsewhere.
-  Required: No
-- `:legalpath` `Path` - Directories containing legal licenses and notices to include in jmod.
-  Required: No
-- `:legalpathref` `Reference` - Directories containing legal licenses and notices to include in jmod, given as a reference to a path defined elsewhere.
-  Required: No
-- `:mainclass` `String` - Class that acts as executable entry point of module.
-  Required: No
-- `:manpath` `Path` - Directories containing man pages to include in jmod.
-  Required: No
-- `:manpathref` `Reference` - Directories containing man pages to include in jmod, given as a reference to a path defined elsewhere.
-  Required: No
-- `:modulepath` `Path` - Locations of modules on which classpath modules depend.
-  Required: No
-- `:modulepathref` `Reference` - Locations of modules on which classpath modules depend, given as a reference to a path defined elsewhere.
-  Required: No
-- `:modulewarnings` `String` - Whether to emit warnings when resolving modules which are not recommended for use. Comma-separated list of one of more of the following: deprecated Warn if module is deprecated leaving Warn if module is deprecated for removal incubating Warn if module is an incubating (not yet official) module
-  Required: No, default is no warnings.
-- `:nativelibpath` `Path` - Directories containing native libraries to include in jmod.
-  Required: No
-- `:nativelibpathref` `Reference` - Directories containing native libraries to include in jmod, given as a reference to a path defined elsewhere.
-  Required: No
-- `:platform` `String` - The target platform for the jmod. Typically takes the form OS-architecture. A particular JDK's platform can be seen by running a command like jmod describe $JDK_HOME/jmods/java.base.jmod | grep -i platform
-  Required: No
-- `:resolvebydefault` `boolean` - Boolean indicating whether the jmod should be one of the default resolved modules when it is in a module path searched by tools and applications.
-  Required: No. Default is true.
-- `:version` `String` - Module version of jmod.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` | Files to be placed in the jmod file. Usually a single module. | One of these is required, unless a nested <classpath> is present. |
+| `:classpathref` | `Reference` | Files to be placed in the jmod file, given as a reference to a path defined elsewhere. | One of these is required, unless a nested <classpath> is present. |
+| `:commandpath` | `Path` | Directories containing native commands to include in jmod. | No |
+| `:commandpathref` | `Reference` | Directories containing native commands to include in jmod, given as a reference to a path defined elsewhere. | No |
+| `:configpath` | `Path` | Directories containing user-editable configuration files to include in jmod. | No |
+| `:configpathref` | `Reference` | Directories containing user-editable configuration files to include in jmod, given as a reference to a path defined elsewhere. | No |
+| `:destfile` | `File` | jmod file to create. | Yes |
+| `:hashmodulespattern` | `String` | Regular expression for names of modules in the module path which depend on the jmod being created, and which should have hashes generated for them and included in the new jmod. | No |
+| `:headerpath` | `Path` | Directories containing header files to include in jmod. | No |
+| `:headerpathref` | `Reference` | Directories containing header files to include in jmod, given as a reference to a path defined elsewhere. | No |
+| `:legalpath` | `Path` | Directories containing legal licenses and notices to include in jmod. | No |
+| `:legalpathref` | `Reference` | Directories containing legal licenses and notices to include in jmod, given as a reference to a path defined elsewhere. | No |
+| `:mainclass` | `String` | Class that acts as executable entry point of module. | No |
+| `:manpath` | `Path` | Directories containing man pages to include in jmod. | No |
+| `:manpathref` | `Reference` | Directories containing man pages to include in jmod, given as a reference to a path defined elsewhere. | No |
+| `:modulepath` | `Path` | Locations of modules on which classpath modules depend. | No |
+| `:modulepathref` | `Reference` | Locations of modules on which classpath modules depend, given as a reference to a path defined elsewhere. | No |
+| `:modulewarnings` | `String` | Whether to emit warnings when resolving modules which are not recommended for use. Comma-separated list of one of more of the following: deprecated Warn if module is deprecated leaving Warn if module is deprecated for removal incubating Warn if module is an incubating (not yet official) module | No, default is no warnings. |
+| `:nativelibpath` | `Path` | Directories containing native libraries to include in jmod. | No |
+| `:nativelibpathref` | `Reference` | Directories containing native libraries to include in jmod, given as a reference to a path defined elsewhere. | No |
+| `:platform` | `String` | The target platform for the jmod. Typically takes the form OS-architecture. A particular JDK's platform can be seen by running a command like jmod describe $JDK_HOME/jmods/java.base.jmod \\| grep -i platform | No |
+| `:resolvebydefault` | `boolean` | Boolean indicating whether the jmod should be one of the default resolved modules when it is in a module path searched by tools and applications. | No. Default is true. |
+| `:version` | `String` | Module version of jmod. | No |
 
 **Nested elements**
 
@@ -5281,43 +4570,30 @@ tests after deployment to compile and test your pages, all in one go.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:classpath` `Path` - The classpath to use to run the JSP compiler.
-  Required: No, but it seems to work better when used; can also be specified by the nested element classpath
-- `:classpathref` `Reference` - A Reference. As per classpath.
-  Required: No
-- `:compiler` `String` - Class name of JSP compiler adapter to use.
-  Required: No; defaults to the standard adapter for Jasper
-- `:compilerclasspath` `Path` - The classpath used to find the compiler adapter specified by the compiler attribute.
-  Required: No
-- `:defaultexcludes` `boolean`
-- `:destdir` `File` - Where to place the generated files. They are located under here according to the given package name.
-  Required: Yes
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:failonerror` `boolean` - flag to control action on compile failures.
-  Required: No; default yes
-- `:followsymlinks` `boolean`
-- `:ieplugin` `String` - Java Plugin classid for Internet Explorer.
-  Required: No
-- `:includes` `String`
-- `:includesfile` `File`
-- `:mapped` `boolean` - (boolean) Generate separate write() calls for each HTML line in the JSP.
-  Required: No
-- `:package` `String` - Name of the destination package for generated Java classes.
-  Required: No
-- `:srcdir` `Path` - Where to look for source JSP files.
-  Required: Yes
-- `:uribase` `File` - The context of relative URI references in JSP.
-  Required: No; derived from the location of the file relative to the declared or derived value of uriroot
-- `:uriroot` `File` - The root directory that URIs should be resolved against.
-  Required: No
-- `:verbose` `int` - The verbosity integer to pass to the compiler.
-  Required: No; default 0
-- `:webinc` `File` - Output file name for the fraction of web.xml that lists servlets.
-  Required: No
-- `:webxml` `File` - File name for web.xml to be generated
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:classpath` | `Path` | The classpath to use to run the JSP compiler. | No, but it seems to work better when used; can also be specified by the nested element classpath |
+| `:classpathref` | `Reference` | A Reference. As per classpath. | No |
+| `:compiler` | `String` | Class name of JSP compiler adapter to use. | No; defaults to the standard adapter for Jasper |
+| `:compilerclasspath` | `Path` | The classpath used to find the compiler adapter specified by the compiler attribute. | No |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:destdir` | `File` | Where to place the generated files. They are located under here according to the given package name. | Yes |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:failonerror` | `boolean` | flag to control action on compile failures. | No; default yes |
+| `:followsymlinks` | `boolean` |  |  |
+| `:ieplugin` | `String` | Java Plugin classid for Internet Explorer. | No |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:mapped` | `boolean` | (boolean) Generate separate write() calls for each HTML line in the JSP. | No |
+| `:package` | `String` | Name of the destination package for generated Java classes. | No |
+| `:srcdir` | `Path` | Where to look for source JSP files. | Yes |
+| `:uribase` | `File` | The context of relative URI references in JSP. | No; derived from the location of the file relative to the declared or derived value of uriroot |
+| `:uriroot` | `File` | The root directory that URIs should be resolved against. | No |
+| `:verbose` | `int` | The verbosity integer to pass to the compiler. | No; default 0 |
+| `:webinc` | `File` | Output file name for the fraction of web.xml that lists servlets. | No |
+| `:webxml` | `File` | File name for web.xml to be generated | No |
 
 **Nested elements**
 
@@ -5365,22 +4641,16 @@ more nested resource collections. Can also be used as a condition.
 
 **Attributes**
 
-- `:file` `File` - Single file whose length to report.
-  Required: One of these, or one or more nested filesets
-- `:length` `long` - Comparison length.
-  Required: Ignored
-- `:mode` `FileMode` - File length mode; when all the resulting value is the sum of all included resources' lengths; when each the task outputs the absolute path and length of each included resource, one per line.
-  Required: No; default is all
-- `:property` `String` - The property to set.
-  Required: No; by default, output value to the log
-- `:resource` `Resource` - Single resource whose length to report (using extended properties handling). Since Ant 1.8.1
-  Required: One of these, or one or more nested filesets
-- `:string` `String` - The string whose length to report.
-  Required: One of these, or one or more nested filesets
-- `:trim` `boolean` - Whether to trim when operating on a string.
-  Required: No; default is false, ignored unless string is set
-- `:when` `When` - Comparison type: equal, eq, greater, gt, less, lt, ge (greater or equal), ne (not equal), le (less or equal).
-  Required: No; default is equal
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` | Single file whose length to report. | One of these, or one or more nested filesets |
+| `:length` | `long` | Comparison length. | Ignored |
+| `:mode` | `FileMode` | File length mode; when all the resulting value is the sum of all included resources' lengths; when each the task outputs the absolute path and length of each included resource, one per line. | No; default is all |
+| `:property` | `String` | The property to set. | No; by default, output value to the log |
+| `:resource` | `Resource` | Single resource whose length to report (using extended properties handling). Since Ant 1.8.1 | One of these, or one or more nested filesets |
+| `:string` | `String` | The string whose length to report. | One of these, or one or more nested filesets |
+| `:trim` | `boolean` | Whether to trim when operating on a string. | No; default is false, ignored unless string is set |
+| `:when` | `When` | Comparison type: equal, eq, greater, gt, less, lt, ge (greater or equal), ne (not equal), le (less or equal). | No; default is equal |
 
 **Reference**
 
@@ -5399,47 +4669,29 @@ Requires Java 9 or later.
 
 **Attributes**
 
-- `:bindservices` `boolean` - Boolean, whether to include in linked image any service providers found in module path corresponding to service provider interfaces used by explicitly linked modules.
-  Required: No, default is false
-- `:checkduplicatelegal` `boolean` - Boolean. When merging legal notices from different modules because they have the same name, verify that their contents are identical.
-  Required: No, default is false, which means any license files with the same name are assumed to have the same content, and no checking is done.
-- `:compress` `CompressionLevel` - Compression level of linked image. One of: 0 or none no compression (default) 1 or strings constant string sharing 2 or zip zip compression
-  Required: No, default is no compression
-- `:debug` `boolean` - Boolean, whether to include debug information.
-  Required: No, default is true
-- `:destdir` `File` - Root directory of created image.
-  Required: Yes
-- `:endianness` `Endianness` - Byte order of linked image, must be little or big No, default is native byte order
-- `:excludefiles` `String` - Comma-separated list of patterns specifying files to exclude from linked image. Each is either a standard PathMatcher pattern or @filename, indicating a text file with one file name per line.
-  Required: No
-- `:excluderesources` `String` - Comma-separated list of patterns specifying resources to exclude from source jmods. Each is either a standard PathMatcher pattern or @filename, indicating a text file with one resource name per line.
-  Required: No
-- `:ignoresigning` `boolean` - Boolean, whether to allow signed jar files. (Note: As of Java 11, this is ignored and is always treated as true.)
-  Required: No, default is false
-- `:includeheaders` `boolean` - Boolean, whether to include header files in linked image.
-  Required: No, default is true
-- `:includemanpages` `boolean` - Boolean, whether to include man pages in linked image.
-  Required: No, default is true
-- `:includenativecommands` `boolean` - Boolean, whether to include native executables in linked image.
-  Required: No, default is true
-- `:launchers` `String` - Comma-separated list of commands, each of the form name=module or name=module/mainclass
-  Required: No
-- `:locales` `String` - Comma-separated list of extra locales, or wildcard patterns matching multiple locale names, to include. Requires jdk.localedata module.
-  Required: No
-- `:modulepath` `Path` - Path-like sequence of jmod files to link in order to create image.
-  Required: One of these is required, unless a nested <modulepath> is present.
-- `:modulepathref` `Reference` - Path-like sequence of jmod files to link in order to create image, given as a reference to a path defined elsewhere.
-  Required: One of these is required, unless a nested <modulepath> is present.
-- `:modules` `String` - Comma-separated list of modules to place in the linked image.
-  Required: Yes, unless one or more nested <module> elements are present.
-- `:observablemodules` `String` - Comma-separated list of explicit modules that comprise \"universe\" visible to link tool while linking.
-  Required: No
-- `:resourceorder` `String` - Comma-separated list of patterns specifying resource search order. Each is either a standard PathMatcher pattern or @filename, indicating a text file with one resource name per line.
-  Required: No
-- `:verboselevel` `LogLevel` - If set, the linker will produce verbose output, which will be logged at the specified Ant log level (DEBUG, VERBOSE, INFO, WARN, or ERR).
-  Required: No, default is no verbose output
-- `:vmtype` `VMType` - Hotspot VM in image. One of: client server minimal all
-  Required: No, default is all
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:bindservices` | `boolean` | Boolean, whether to include in linked image any service providers found in module path corresponding to service provider interfaces used by explicitly linked modules. | No, default is false |
+| `:checkduplicatelegal` | `boolean` | Boolean. When merging legal notices from different modules because they have the same name, verify that their contents are identical. | No, default is false, which means any license files with the same name are assumed to have the same content, and no checking is done. |
+| `:compress` | `CompressionLevel` | Compression level of linked image. One of: 0 or none no compression (default) 1 or strings constant string sharing 2 or zip zip compression | No, default is no compression |
+| `:debug` | `boolean` | Boolean, whether to include debug information. | No, default is true |
+| `:destdir` | `File` | Root directory of created image. | Yes |
+| `:endianness` | `Endianness` | Byte order of linked image, must be little or big No, default is native byte order |  |
+| `:excludefiles` | `String` | Comma-separated list of patterns specifying files to exclude from linked image. Each is either a standard PathMatcher pattern or @filename, indicating a text file with one file name per line. | No |
+| `:excluderesources` | `String` | Comma-separated list of patterns specifying resources to exclude from source jmods. Each is either a standard PathMatcher pattern or @filename, indicating a text file with one resource name per line. | No |
+| `:ignoresigning` | `boolean` | Boolean, whether to allow signed jar files. (Note: As of Java 11, this is ignored and is always treated as true.) | No, default is false |
+| `:includeheaders` | `boolean` | Boolean, whether to include header files in linked image. | No, default is true |
+| `:includemanpages` | `boolean` | Boolean, whether to include man pages in linked image. | No, default is true |
+| `:includenativecommands` | `boolean` | Boolean, whether to include native executables in linked image. | No, default is true |
+| `:launchers` | `String` | Comma-separated list of commands, each of the form name=module or name=module/mainclass | No |
+| `:locales` | `String` | Comma-separated list of extra locales, or wildcard patterns matching multiple locale names, to include. Requires jdk.localedata module. | No |
+| `:modulepath` | `Path` | Path-like sequence of jmod files to link in order to create image. | One of these is required, unless a nested <modulepath> is present. |
+| `:modulepathref` | `Reference` | Path-like sequence of jmod files to link in order to create image, given as a reference to a path defined elsewhere. | One of these is required, unless a nested <modulepath> is present. |
+| `:modules` | `String` | Comma-separated list of modules to place in the linked image. | Yes, unless one or more nested <module> elements are present. |
+| `:observablemodules` | `String` | Comma-separated list of explicit modules that comprise \"universe\" visible to link tool while linking. | No |
+| `:resourceorder` | `String` | Comma-separated list of patterns specifying resource search order. Each is either a standard PathMatcher pattern or @filename, indicating a text file with one resource name per line. | No |
+| `:verboselevel` | `LogLevel` | If set, the linker will produce verbose output, which will be logged at the specified Ant log level (DEBUG, VERBOSE, INFO, WARN, or ERR). | No, default is no verbose output |
+| `:vmtype` | `VMType` | Hotspot VM in image. One of: client server minimal all | No, default is all |
 
 **Nested elements**
 
@@ -5473,16 +4725,13 @@ the property is not set.
 
 **Attributes**
 
-- `:encoding` `String` - encoding to use when loading the file
-  Required: No
-- `:failonerror` `boolean` - Whether to halt the build on failure
-  Required: No; default true
-- `:property` `String` - property to save to
-  Required: Yes
-- `:quiet` `boolean` - Do not display a diagnostic message (unless Apache Ant has been invoked with the -verbose or -debug switches) or modify the exit status to reflect an error. Setting this to true implies setting failonerror to false. Since Ant 1.7.0.
-  Required: No; default false
-- `:srcfile` `File` - source file
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:encoding` | `String` | encoding to use when loading the file | No |
+| `:failonerror` | `boolean` | Whether to halt the build on failure | No; default true |
+| `:property` | `String` | property to save to | Yes |
+| `:quiet` | `boolean` | Do not display a diagnostic message (unless Apache Ant has been invoked with the -verbose or -debug switches) or modify the exit status to reflect an error. Setting this to true implies setting failonerror to false. Since Ant 1.7.0. | No; default false |
+| `:srcfile` | `File` | source file | Yes |
 
 **Nested elements**
 
@@ -5508,20 +4757,15 @@ default value of the same attribute in the <property> task.
 
 **Attributes**
 
-- `:classpath` `Path` - the classpath to use when looking up a resource.
-  Required: No
-- `:classpathref` `Reference` - the classpath to use when looking up a resource, given as reference to a <path> defined elsewhere.
-  Required: No
-- `:encoding` `String` - encoding to use when loading the file
-  Required: No
-- `:prefix` `String` - Prefix to apply to loaded properties. Since Ant 1.8.1
-  Required: No; default is.
-- `:prefixvalues` `boolean` - Whether to apply the prefix when expanding the right hand side of the properties. Since Ant 1.8.2
-  Required: No; default is true
-- `:resource` `String` - the resource name of the property file
-  Required: One of these or a nested resource
-- `:srcfile` `File` - source file
-  Required: One of these or a nested resource
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` | the classpath to use when looking up a resource. | No |
+| `:classpathref` | `Reference` | the classpath to use when looking up a resource, given as reference to a <path> defined elsewhere. | No |
+| `:encoding` | `String` | encoding to use when loading the file | No |
+| `:prefix` | `String` | Prefix to apply to loaded properties. Since Ant 1.8.1 | No; default is. |
+| `:prefixvalues` | `boolean` | Whether to apply the prefix when expanding the right hand side of the properties. Since Ant 1.8.2 | No; default is true |
+| `:resource` | `String` | the resource name of the property file | One of these or a nested resource |
+| `:srcfile` | `File` | source file | One of these or a nested resource |
 
 **Nested elements**
 
@@ -5548,14 +4792,12 @@ are immutable, the task will not change the value of an existing property.
 
 **Attributes**
 
-- `:encoding` `String` - encoding to use when loading the resource
-  Required: No
-- `:failonerror` `boolean` - Whether to halt the build on failure
-  Required: No; default is true
-- `:property` `String` - property to save to
-  Required: Yes
-- `:quiet` `boolean` - Do not display a diagnostic message (unless Ant has been invoked with the -verbose or -debug switches) or modify the exit status to reflect an error. Setting this to true implies setting failonerror to false.
-  Required: No; default is false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:encoding` | `String` | encoding to use when loading the resource | No |
+| `:failonerror` | `boolean` | Whether to halt the build on failure | No; default is true |
+| `:property` | `String` | property to save to | Yes |
+| `:quiet` | `boolean` | Do not display a diagnostic message (unless Ant has been invoked with the -verbose or -debug switches) or modify the exit status to reflect an error. Setting this to true implies setting failonerror to false. | No; default is false |
 
 **Nested elements**
 
@@ -5584,8 +4826,9 @@ precedes its definition. See the examples section.
 
 **Attributes**
 
-- `:name` `String` - The property to declare in the current scope
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` | The property to declare in the current scope | Yes |
 
 **Nested elements**
 
@@ -5609,12 +4852,11 @@ These get substituted into the <sequential> task when the new task is run.
 
 **Attributes**
 
-- `:backtrace` `boolean` - This controls the error traceback if there is an error detected when running the macro. If this is set to true, there will be an error trackback, if false there will be none. Since Ant 1.7.
-  Required: No; default true
-- `:name` `String` - The name of the new definition.
-  Required: Yes
-- `:uri` `String` - The uri that this definition should live in.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:backtrace` | `boolean` | This controls the error traceback if there is an error detected when running the macro. If this is set to true, there will be an error trackback, if false there will be none. Since Ant 1.7. | No; default true |
+| `:name` | `String` | The name of the new definition. | Yes |
+| `:uri` | `String` | The uri that this definition should live in. | No |
 
 **Nested elements**
 
@@ -5649,54 +4891,32 @@ jakarta.mail if both are available.
 
 **Attributes**
 
-- `:bcclist` `String` - Comma-separated list of recipients to blind carbon copy
-  Required: At least one of these, or the equivalent nested elements
-- `:cclist` `String` - Comma-separated list of recipients to carbon copy
-  Required: At least one of these, or the equivalent nested elements
-- `:charset` `String` - Character set of the email. You can also set the charset in the message nested element. These options are mutually exclusive.
-  Required: No
-- `:checkserveridentity` `boolean` - (boolean) Whether the server's identity shall be verified during TLS handshake. Ignored unless ssl or enableStartTLS is true. Requires JavaMail. Since Ant 1.10.16
-  Required: No; default is true
-- `:enablestarttls` `boolean` - (boolean) Whether the STARTTLS command used to switch to an encrypted connection for authentication should be supported. Requires JavaMail. Since Ant 1.8.0
-  Required: No
-- `:encoding` `Encoding` - Specifies the encoding to use for the content of the email. Values are mime, uu, plain, or auto. uu or plain are not compatible with SMTP auth
-  Required: No; default is auto
-- `:failonerror` `boolean` - flag to indicate whether to halt the build on any error.
-  Required: No; default is true
-- `:files` `String` - Files to send as attachments to the email. Separate multiple file names using a comma or space. You can also use <fileset> elements to specify files.
-  Required: No
-- `:from` `String` - Email address of sender.
-  Required: Either a from attribute, or a <from> element.
-- `:ignoreinvalidrecipients` `boolean` - (boolean) Whether the task should try to send the message to as many recipients as possible and should only fail if neither is reachable. Since Ant 1.8.0.
-  Required: No; default is false
-- `:includefilenames` `boolean` - Include filename(s) before file contents.
-  Required: No; default is false, ignored unless plain encoding is used
-- `:mailhost` `String` - Host name of the SMTP server.
-  Required: No; default is localhost
-- `:mailport` `int` - TCP port of the SMTP server.
-  Required: No; default is 25
-- `:message` `String` - Message to send in the body of the email.
-  Required: One of these or a <message> element.
-- `:messagefile` `File` - File to send as the body of the email. Property values in the file will be expanded.
-  Required: One of these or a <message> element.
-- `:messagefileinputencoding` `String` - Specifies the encoding of the input file. Please see Supported Encodings for a list of possible values. Since Ant 1.9.4
-  Required: No; defaults to default JVM character encoding
-- `:messagemimetype` `String` - The content type of the message.
-  Required: No; default is text/plain
-- `:password` `String` - password for SMTP auth
-  Required: Yes, if SMTP auth is required on your SMTP server; the email message will be then sent using MIME and requires JavaMail
-- `:replyto` `String` - Reply-to email address.
-  Required: No
-- `:requirestarttls` `boolean` - (boolean) Whether the STARTTLS command used to switch to an encrypted connection for authentication should be required. Implicitly sets enableStartTLS to true if enabled. Requires JavaMail. Since Ant 1.10.16
-  Required: No; default is false
-- `:ssl` `boolean` - true, on, or yes accepted here indicates whether you need TLS/SSL
-  Required: No
-- `:subject` `String` - Email subject line.
-  Required: No
-- `:tolist` `String` - Comma-separated list of recipients.
-  Required: At least one of these, or the equivalent nested elements
-- `:user` `String` - user name for SMTP auth
-  Required: Yes, if SMTP auth is required on your SMTP server; the email message will be then sent using MIME and requires JavaMail
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:bcclist` | `String` | Comma-separated list of recipients to blind carbon copy | At least one of these, or the equivalent nested elements |
+| `:cclist` | `String` | Comma-separated list of recipients to carbon copy | At least one of these, or the equivalent nested elements |
+| `:charset` | `String` | Character set of the email. You can also set the charset in the message nested element. These options are mutually exclusive. | No |
+| `:checkserveridentity` | `boolean` | (boolean) Whether the server's identity shall be verified during TLS handshake. Ignored unless ssl or enableStartTLS is true. Requires JavaMail. Since Ant 1.10.16 | No; default is true |
+| `:enablestarttls` | `boolean` | (boolean) Whether the STARTTLS command used to switch to an encrypted connection for authentication should be supported. Requires JavaMail. Since Ant 1.8.0 | No |
+| `:encoding` | `Encoding` | Specifies the encoding to use for the content of the email. Values are mime, uu, plain, or auto. uu or plain are not compatible with SMTP auth | No; default is auto |
+| `:failonerror` | `boolean` | flag to indicate whether to halt the build on any error. | No; default is true |
+| `:files` | `String` | Files to send as attachments to the email. Separate multiple file names using a comma or space. You can also use <fileset> elements to specify files. | No |
+| `:from` | `String` | Email address of sender. | Either a from attribute, or a <from> element. |
+| `:ignoreinvalidrecipients` | `boolean` | (boolean) Whether the task should try to send the message to as many recipients as possible and should only fail if neither is reachable. Since Ant 1.8.0. | No; default is false |
+| `:includefilenames` | `boolean` | Include filename(s) before file contents. | No; default is false, ignored unless plain encoding is used |
+| `:mailhost` | `String` | Host name of the SMTP server. | No; default is localhost |
+| `:mailport` | `int` | TCP port of the SMTP server. | No; default is 25 |
+| `:message` | `String` | Message to send in the body of the email. | One of these or a <message> element. |
+| `:messagefile` | `File` | File to send as the body of the email. Property values in the file will be expanded. | One of these or a <message> element. |
+| `:messagefileinputencoding` | `String` | Specifies the encoding of the input file. Please see Supported Encodings for a list of possible values. Since Ant 1.9.4 | No; defaults to default JVM character encoding |
+| `:messagemimetype` | `String` | The content type of the message. | No; default is text/plain |
+| `:password` | `String` | password for SMTP auth | Yes, if SMTP auth is required on your SMTP server; the email message will be then sent using MIME and requires JavaMail |
+| `:replyto` | `String` | Reply-to email address. | No |
+| `:requirestarttls` | `boolean` | (boolean) Whether the STARTTLS command used to switch to an encrypted connection for authentication should be required. Implicitly sets enableStartTLS to true if enabled. Requires JavaMail. Since Ant 1.10.16 | No; default is false |
+| `:ssl` | `boolean` | true, on, or yes accepted here indicates whether you need TLS/SSL | No |
+| `:subject` | `String` | Email subject line. | No |
+| `:tolist` | `String` | Comma-separated list of recipients. | At least one of these, or the equivalent nested elements |
+| `:user` | `String` | user name for SMTP auth | Yes, if SMTP auth is required on your SMTP server; the email message will be then sent using MIME and requires JavaMail |
 
 **Nested elements**
 
@@ -5729,14 +4949,12 @@ between them.
 
 **Attributes**
 
-- `:file` `File` - name of a file to be converted into a URL
-  Required: File
-- `:property` `String` - name of a property to set to the URL
-  Required: String
-- `:separator` `String` - separator for the multi-URL option
-  Required: String
-- `:validate` `boolean` - validate that every named file exists
-  Required: boolean
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` | name of a file to be converted into a URL | File |
+| `:property` | `String` | name of a property to set to the URL | String |
+| `:separator` | `String` | separator for the multi-URL option | String |
+| `:validate` | `boolean` | validate that every named file exists | boolean |
 
 **Nested elements**
 
@@ -5772,16 +4990,13 @@ hand-crafted manifest.
 
 **Attributes**
 
-- `:encoding` `String` - The encoding used to read the existing manifest when updating. The task will always use UTF-8 when writing the manifest.
-  Required: No; defaults to UTF-8 encoding
-- `:file` `File` - the manifest-file to create/update.
-  Required: Yes
-- `:flattenattributes` `boolean` - Whether to merge attributes occurring more than once in a section (this can only happen for the Class-Path attribute) into a single attribute. Since Ant 1.8.0.
-  Required: No; default is false
-- `:mergeclasspathattributes` `boolean` - Whether to merge the Class-Path attributes found in different manifests (if updating). If false, only the attribute of the most recent manifest will be preserved. Since Ant 1.8.0. Unless you also set flattenAttributes to true this may result in manifests containing multiple Class-Path attributes which violates the manifest specification.
-  Required: No; default is false
-- `:mode` `Mode` - One of update or replace.
-  Required: No; default is replace
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:encoding` | `String` | The encoding used to read the existing manifest when updating. The task will always use UTF-8 when writing the manifest. | No; defaults to UTF-8 encoding |
+| `:file` | `File` | the manifest-file to create/update. | Yes |
+| `:flattenattributes` | `boolean` | Whether to merge attributes occurring more than once in a section (this can only happen for the Class-Path attribute) into a single attribute. Since Ant 1.8.0. | No; default is false |
+| `:mergeclasspathattributes` | `boolean` | Whether to merge the Class-Path attributes found in different manifests (if updating). If false, only the attribute of the most recent manifest will be preserved. Since Ant 1.8.0. Unless you also set flattenAttributes to true this may result in manifests containing multiple Class-Path attributes which violates the manifest specification. | No; default is false |
+| `:mode` | `Mode` | One of update or replace. | No; default is replace |
 
 **Nested elements**
 
@@ -5818,12 +5033,11 @@ jar.
 
 **Attributes**
 
-- `:jarfile` `File` - the filename for the Jar which will contain the manifest that will use the property this task will set. This file need not exist yet, but its parent directory must exist.
-  Required: Yes
-- `:maxparentlevels` `int` - The maximum number of parent directories one is allowed to traverse to navigate from the jar file to the path entry. Put differently, the maximum number of .. which is allowed in the relative path from the jar file to a given class path entry. Specify 0 to enforce a path entry to be in the same directory (or one of its sub-directories) as the jar file itself.
-  Required: No; defaults to 2
-- `:property` `String` - the name of the property to set. This property must not already be set.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:jarfile` | `File` | the filename for the Jar which will contain the manifest that will use the property this task will set. This file need not exist yet, but its parent directory must exist. | Yes |
+| `:maxparentlevels` | `int` | The maximum number of parent directories one is allowed to traverse to navigate from the jar file to the path entry. Put differently, the maximum number of .. which is allowed in the relative path from the jar file to a given class path entry. Specify 0 to enforce a path entry to be in the same directory (or one of its sub-directories) as the jar file itself. | No; defaults to 2 |
+| `:property` | `String` | the name of the property to set. This property must not already be set. | Yes |
 
 **Nested elements**
 
@@ -5851,40 +5065,32 @@ files can be attached using FileSets.
 
 **Attributes**
 
-- `:bcclist` `String` - Comma-separated list of BCC: recipients
-  Required: Yes, at least one of these
-- `:cclist` `String` - Comma-separated list of CC: recipients
-  Required: Yes, at least one of these
-- `:charset` `String`
-- `:checkserveridentity` `boolean`
-- `:enablestarttls` `boolean`
-- `:encoding` `Encoding`
-- `:failonerror` `boolean` - Stop the build process if an error occurs sending the e-mail.
-  Required: No; default to true
-- `:files` `String`
-- `:from` `String` - Email address of sender.
-  Required: Yes
-- `:ignoreinvalidrecipients` `boolean`
-- `:includefilenames` `boolean`
-- `:mailhost` `String` - Host name of the mail server.
-  Required: No; default to localhost
-- `:mailport` `int`
-- `:message` `String` - The message body
-  Required: Exactly one of these, or a nested fileset
-- `:messagefile` `File` - A filename to read and used as the message body
-  Required: Exactly one of these, or a nested fileset
-- `:messagefileinputencoding` `String`
-- `:messagemimetype` `String` - MIME type to use for message or messageFile when attached.
-  Required: No; defaults to text/plain
-- `:password` `String`
-- `:replyto` `String`
-- `:requirestarttls` `boolean`
-- `:ssl` `boolean`
-- `:subject` `String` - Email subject line.
-  Required: No
-- `:tolist` `String` - Comma-separated list of To: recipients
-  Required: Yes, at least one of these
-- `:user` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:bcclist` | `String` | Comma-separated list of BCC: recipients | Yes, at least one of these |
+| `:cclist` | `String` | Comma-separated list of CC: recipients | Yes, at least one of these |
+| `:charset` | `String` |  |  |
+| `:checkserveridentity` | `boolean` |  |  |
+| `:enablestarttls` | `boolean` |  |  |
+| `:encoding` | `Encoding` |  |  |
+| `:failonerror` | `boolean` | Stop the build process if an error occurs sending the e-mail. | No; default to true |
+| `:files` | `String` |  |  |
+| `:from` | `String` | Email address of sender. | Yes |
+| `:ignoreinvalidrecipients` | `boolean` |  |  |
+| `:includefilenames` | `boolean` |  |  |
+| `:mailhost` | `String` | Host name of the mail server. | No; default to localhost |
+| `:mailport` | `int` |  |  |
+| `:message` | `String` | The message body | Exactly one of these, or a nested fileset |
+| `:messagefile` | `File` | A filename to read and used as the message body | Exactly one of these, or a nested fileset |
+| `:messagefileinputencoding` | `String` |  |  |
+| `:messagemimetype` | `String` | MIME type to use for message or messageFile when attached. | No; defaults to text/plain |
+| `:password` | `String` |  |  |
+| `:replyto` | `String` |  |  |
+| `:requirestarttls` | `boolean` |  |  |
+| `:ssl` | `boolean` |  |  |
+| `:subject` | `String` | Email subject line. | No |
+| `:tolist` | `String` | Comma-separated list of To: recipients | Yes, at least one of these |
+| `:user` | `String` |  |  |
 
 **Nested elements**
 
@@ -5915,8 +5121,9 @@ Does nothing if the directory already exists.
 
 **Attributes**
 
-- `:dir` `File` - the directory to create.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dir` | `File` | the directory to create. | Yes |
 
 **Reference**
 
@@ -5940,16 +5147,13 @@ for your user.
 
 **Attributes**
 
-- `:link` `File` - The name of the link to be created, will be resolved relative to the project's basedir.
-  Required: Yes
-- `:linktype` `LinkType` - The type of link to create, may be file-symlink, dir-symlink, hardlink or junction.
-  Required: Yes unless targetFile is given in which case it defaults to file-symlink or dir-symlink depending on whether the target is a plain file or a directory.
-- `:overwrite` `boolean` - Overwrite existing files or not. If overwrite is set to true, then any existing file, specified by the link attribute, will be overwritten irrespective of whether or not the existing file is a link. otherwise any existing file is considered an error and make the task fail.
-  Required: No; defaults to false
-- `:targetfile` `File` - The resource the link should point to, will be resolved relative to the project's basedir.
-  Required: Exactly one of targetFile and targetText must be given.
-- `:targettext` `String` - The resource the link should point to. This will be passed to mklink verbatim.
-  Required: Exactly one of targetFile and targetText must be given.
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:link` | `File` | The name of the link to be created, will be resolved relative to the project's basedir. | Yes |
+| `:linktype` | `LinkType` | The type of link to create, may be file-symlink, dir-symlink, hardlink or junction. | Yes unless targetFile is given in which case it defaults to file-symlink or dir-symlink depending on whether the target is a plain file or a directory. |
+| `:overwrite` | `boolean` | Overwrite existing files or not. If overwrite is set to true, then any existing file, specified by the link attribute, will be overwritten irrespective of whether or not the existing file is a link. otherwise any existing file is considered an error and make the task fail. | No; defaults to false |
+| `:targetfile` | `File` | The resource the link should point to, will be resolved relative to the project's basedir. | Exactly one of targetFile and targetText must be given. |
+| `:targettext` | `String` | The resource the link should point to. This will be passed to mklink verbatim. | Exactly one of targetFile and targetText must be given. |
 
 **Reference**
 
@@ -5977,40 +5181,25 @@ fail.
 
 **Attributes**
 
-- `:enablemultiplemappings` `boolean` - If true the task will process to all the mappings for a given source path. If false the task will only process the first file or directory. This attribute is only relevant if there is a mapper subelement. since Ant 1.6.
-  Required: No; defaults to false
-- `:encoding` `String` - The encoding to assume when filter-copying the files. since Ant 1.5.
-  Required: No; defaults to default JVM character encoding
-- `:failonerror` `boolean` - If false, log a warning message, but do not stop the build, when the file to copy does not exist or one of the nested filesets points to a directory that doesn't exist or an error occurs while moving.
-  Required: No; defaults to true
-- `:file` `File` - the file or directory to move
-  Required: One of file or at least one nested resource collection element
-- `:filtering` `boolean` - indicates whether token filtering should take place during the move. See the filter task for a description of how filters work.
-  Required: No
-- `:flatten` `boolean` - ignore directory structure of source directory, copy all files into a single directory, specified by the todir attribute. Note that you can achieve the same effect by using a flatten mapper
-  Required: No; defaults to false
-- `:force` `boolean` - Overwrite read-only destination files. since Ant 1.8.2
-  Required: No; defaults to false
-- `:granularity` `long` - The number of milliseconds leeway to give before deciding a file is out of date. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.6.
-  Required: No; default is 0 milliseconds, or 2 seconds on DOS systems
-- `:includeemptydirs` `boolean` - Copy empty directories included with the nested FileSet(s).
-  Required: No; defaults to yes
-- `:outputencoding` `String` - The encoding to use when writing the files. since Ant 1.6.
-  Required: No; defaults to encoding if set or default JVM character encoding otherwise
-- `:overwrite` `boolean` - overwrite existing files even if the destination files are newer
-  Required: No; defaults to true
-- `:performgconfaileddelete` `boolean` - If Ant fails to delete a file or directory it will retry the operation once. If this flag is set to true it will perform a garbage collection before retrying the delete. Setting this flag to true is known to resolve some problems on Windows (where it defaults to true) but also for directory trees residing on an NFS share. Since Ant 1.8.3
-  Required: No; defaults to true on Windows and false on any other OS
-- `:preservelastmodified` `boolean` - Give the moved files the same last modified time as the original source files. (Note: Ignored on Java 1.1)
-  Required: No; defaults to false
-- `:quiet` `boolean` - If true and failonerror is false, then do not log a warning message when the file to copy does not exist or one of the nested filesets points to a directory that doesn't exist or an error occurs while copying. since Ant 1.8.3.
-  Required: No; defaults to false
-- `:todir` `File` - the directory to move to
-  Required: With the file attribute, either tofile or todir can be used. With nested filesets, if the fileset size is greater than 1 or if the only entry in the fileset is a directory or if the file attribute is already specified, only todir is allowed
-- `:tofile` `File` - the file to move to
-  Required: With the file attribute, either tofile or todir can be used. With nested filesets, if the fileset size is greater than 1 or if the only entry in the fileset is a directory or if the file attribute is already specified, only todir is allowed
-- `:verbose` `boolean` - Log the files that are being moved.
-  Required: No; defaults to false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:enablemultiplemappings` | `boolean` | If true the task will process to all the mappings for a given source path. If false the task will only process the first file or directory. This attribute is only relevant if there is a mapper subelement. since Ant 1.6. | No; defaults to false |
+| `:encoding` | `String` | The encoding to assume when filter-copying the files. since Ant 1.5. | No; defaults to default JVM character encoding |
+| `:failonerror` | `boolean` | If false, log a warning message, but do not stop the build, when the file to copy does not exist or one of the nested filesets points to a directory that doesn't exist or an error occurs while moving. | No; defaults to true |
+| `:file` | `File` | the file or directory to move | One of file or at least one nested resource collection element |
+| `:filtering` | `boolean` | indicates whether token filtering should take place during the move. See the filter task for a description of how filters work. | No |
+| `:flatten` | `boolean` | ignore directory structure of source directory, copy all files into a single directory, specified by the todir attribute. Note that you can achieve the same effect by using a flatten mapper | No; defaults to false |
+| `:force` | `boolean` | Overwrite read-only destination files. since Ant 1.8.2 | No; defaults to false |
+| `:granularity` | `long` | The number of milliseconds leeway to give before deciding a file is out of date. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.6. | No; default is 0 milliseconds, or 2 seconds on DOS systems |
+| `:includeemptydirs` | `boolean` | Copy empty directories included with the nested FileSet(s). | No; defaults to yes |
+| `:outputencoding` | `String` | The encoding to use when writing the files. since Ant 1.6. | No; defaults to encoding if set or default JVM character encoding otherwise |
+| `:overwrite` | `boolean` | overwrite existing files even if the destination files are newer | No; defaults to true |
+| `:performgconfaileddelete` | `boolean` | If Ant fails to delete a file or directory it will retry the operation once. If this flag is set to true it will perform a garbage collection before retrying the delete. Setting this flag to true is known to resolve some problems on Windows (where it defaults to true) but also for directory trees residing on an NFS share. Since Ant 1.8.3 | No; defaults to true on Windows and false on any other OS |
+| `:preservelastmodified` | `boolean` | Give the moved files the same last modified time as the original source files. (Note: Ignored on Java 1.1) | No; defaults to false |
+| `:quiet` | `boolean` | If true and failonerror is false, then do not log a warning message when the file to copy does not exist or one of the nested filesets points to a directory that doesn't exist or an error occurs while copying. since Ant 1.8.3. | No; defaults to false |
+| `:todir` | `File` | the directory to move to | With the file attribute, either tofile or todir can be used. With nested filesets, if the fileset size is greater than 1 or if the only entry in the fileset is a directory or if the file attribute is already specified, only todir is allowed |
+| `:tofile` | `File` | the file to move to | With the file attribute, either tofile or todir can be used. With nested filesets, if the fileset size is greater than 1 or if the only entry in the fileset is a directory or if the file attribute is already specified, only todir is allowed |
+| `:verbose` | `boolean` | Log the files that are being moved. | No; defaults to false |
 
 **Nested elements**
 
@@ -6064,30 +5253,21 @@ of valid converters.) No; defaults to default converter for the current JVM
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean` - Indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:dest` `File` - The directory to output file to
-  Required: Yes
-- `:encoding` `String` - The native encoding the files are in
-  Required: No; defaults to default JVM character encoding
-- `:excludes` `String` - Comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - Name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:ext` `String` - File extension to use in renaming output files
-  Required: No
-- `:followsymlinks` `boolean`
-- `:implementation` `String` - The converter implementation to use. (See the above list of valid converters.)
-  Required: No; defaults to default converter for the current JVM
-- `:includes` `String` - Comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - Name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:reverse` `boolean` - Reverse the sense of the conversion, i.e. convert from ASCII to native Only supported by the sun and builtin converters
-  Required: No
-- `:src` `File` - The directory to find files in; default is basedir
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` | Indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:dest` | `File` | The directory to output file to | Yes |
+| `:encoding` | `String` | The native encoding the files are in | No; defaults to default JVM character encoding |
+| `:excludes` | `String` | Comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | Name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:ext` | `String` | File extension to use in renaming output files | No |
+| `:followsymlinks` | `boolean` |  |  |
+| `:implementation` | `String` | The converter implementation to use. (See the above list of valid converters.) | No; defaults to default converter for the current JVM |
+| `:includes` | `String` | Comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | Name of a file. Each line of this file is taken to be an include pattern | No |
+| `:reverse` | `boolean` | Reverse the sense of the conversion, i.e. convert from ASCII to native Only supported by the sun and builtin converters | No |
+| `:src` | `File` | The directory to find files in; default is basedir | No |
 
 **Nested elements**
 
@@ -6134,10 +5314,10 @@ https://ant.apache.org/manual/Tasks/native2ascii.html
 
 **Attributes**
 
-- `:currentpriority` `String` - name of the property whose value should be set to the current \"nice-ness\" level.
-  Required: No
-- `:newpriority` `int` - value to which the \"nice-ness\" level should be set. Must be a valid Java Thread priority.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:currentpriority` | `String` | name of the property whose value should be set to the current \"nice-ness\" level. | No |
+| `:newpriority` | `int` | value to which the \"nice-ness\" level should be set. Must be a valid Java Thread priority. | No |
 
 **Reference**
 
@@ -6168,16 +5348,13 @@ rather than an easy trick to speed up build times on a multicore CPU.
 
 **Attributes**
 
-- `:failonany` `boolean` - If any of the nested tasks fails, execution of the task completes at that point without waiting for any other tasks to complete.
-  Required: No; default is false.
-- `:pollinterval` `int` - Currently has no effect
-  Required: No; default is 1000
-- `:threadcount` `int` - Maximum numbers of thread to use.
-  Required: No
-- `:threadsperprocessor` `int` - Maximum number of threads to use per available processor (Java 1.4+)
-  Required: No; defers to threadCount
-- `:timeout` `long` - Number of milliseconds before execution is terminated
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:failonany` | `boolean` | If any of the nested tasks fails, execution of the task completes at that point without waiting for any other tasks to complete. | No; default is false. |
+| `:pollinterval` | `int` | Currently has no effect | No; default is 1000 |
+| `:threadcount` | `int` | Maximum numbers of thread to use. | No |
+| `:threadsperprocessor` | `int` | Maximum number of threads to use per available processor (Java 1.4+) | No; defers to threadCount |
+| `:timeout` | `long` | Number of milliseconds before execution is terminated | No |
 
 **Nested elements**
 
@@ -6199,26 +5376,18 @@ https://ant.apache.org/manual/Tasks/parallel.html
 
 **Attributes**
 
-- `:backups` `boolean` - Keep backups of the unpatched files
-  Required: No
-- `:destfile` `File` - the file to send the output to instead of patching the file(s) in place. since Apache Ant 1.6
-  Required: No
-- `:dir` `File` - The directory in which to run the patch command.
-  Required: No; default is the project's basedir
-- `:failonerror` `boolean` - Stop the build process if the command exits with a return code signaling failure. since Ant 1.8.0
-  Required: No; defaults to false
-- `:ignorewhitespace` `boolean` - Ignore whitespace differences.
-  Required: No
-- `:originalfile` `File` - the file to patch
-  Required: No; tries to guess it from the diff file
-- `:patchfile` `File` - the file that includes the diff output
-  Required: Yes
-- `:quiet` `boolean` - Work silently unless an error occurs
-  Required: No
-- `:reverse` `boolean` - Assume patch was created with old and new files swapped.
-  Required: No
-- `:strip` `int` - Strip the smallest prefix containing num leading slashes from filenames.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:backups` | `boolean` | Keep backups of the unpatched files | No |
+| `:destfile` | `File` | the file to send the output to instead of patching the file(s) in place. since Apache Ant 1.6 | No |
+| `:dir` | `File` | The directory in which to run the patch command. | No; default is the project's basedir |
+| `:failonerror` | `boolean` | Stop the build process if the command exits with a return code signaling failure. since Ant 1.8.0 | No; defaults to false |
+| `:ignorewhitespace` | `boolean` | Ignore whitespace differences. | No |
+| `:originalfile` | `File` | the file to patch | No; tries to guess it from the diff file |
+| `:patchfile` | `File` | the file that includes the diff output | Yes |
+| `:quiet` | `boolean` | Work silently unless an error occurs | No |
+| `:reverse` | `boolean` | Assume patch was created with old and new files swapped. | No |
+| `:strip` | `int` | Strip the smallest prefix containing num leading slashes from filenames. | No |
 
 **Reference**
 
@@ -6242,22 +5411,16 @@ transformations can be achieved using a nested <mapper> (since Apache Ant 1.6.2)
 
 **Attributes**
 
-- `:dest` `Resource` - A destination resource into which to write the converted path (Ant interprets this as a File by default). Since Ant 1.10.13
-  Required: No, result will be logged if neither @property nor @dest is set
-- `:dirsep` `String` - The character(s) to use as the directory separator in the generated paths.
-  Required: No; defaults to current JVM File.separator
-- `:pathsep` `String` - The character(s) to use as the path-element separator in the generated paths.
-  Required: No; defaults to current JVM File.pathSeparator
-- `:preserveduplicates` `boolean` - Whether to preserve duplicate resources. Since Ant 1.8
-  Required: No; default is false
-- `:property` `String` - The name of the property in which to place the converted path.
-  Required: No, result will be logged if neither @property nor @dest is set
-- `:refid` `Reference` - What to convert, given as a reference to a <path>, <fileset>, <dirset>, or <filelist> defined elsewhere
-  Required: Yes, unless a nested <path> element is supplied
-- `:setonempty` `boolean` - Should the property be set, even if the result is the empty string?
-  Required: No; default is true
-- `:targetos` `TargetOs` - The target architecture. Must be one of unix, windows, netware, tandem or os/2. This is a shorthand mechanism for specifying both pathsep and dirsep according to the specified target architecture.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dest` | `Resource` | A destination resource into which to write the converted path (Ant interprets this as a File by default). Since Ant 1.10.13 | No, result will be logged if neither @property nor @dest is set |
+| `:dirsep` | `String` | The character(s) to use as the directory separator in the generated paths. | No; defaults to current JVM File.separator |
+| `:pathsep` | `String` | The character(s) to use as the path-element separator in the generated paths. | No; defaults to current JVM File.pathSeparator |
+| `:preserveduplicates` | `boolean` | Whether to preserve duplicate resources. Since Ant 1.8 | No; default is false |
+| `:property` | `String` | The name of the property in which to place the converted path. | No, result will be logged if neither @property nor @dest is set |
+| `:refid` | `Reference` | What to convert, given as a reference to a <path>, <fileset>, <dirset>, or <filelist> defined elsewhere | Yes, unless a nested <path> element is supplied |
+| `:setonempty` | `boolean` | Should the property be set, even if the result is the empty string? | No; default is true |
+| `:targetos` | `TargetOs` | The target architecture. Must be one of unix, windows, netware, tandem or os/2. This is a shorthand mechanism for specifying both pathsep and dirsep according to the specified target architecture. | No |
 
 **Nested elements**
 
@@ -6284,10 +5447,10 @@ is defined.
 
 **Attributes**
 
-- `:name` `String` - the name of the new definition
-  Required: Yes
-- `:uri` `String` - The URI that this definition should live in.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` | the name of the new definition | Yes |
+| `:uri` | `String` | The URI that this definition should live in. | No |
 
 **Reference**
 
@@ -6346,35 +5509,23 @@ possible to load properties defined in XML according to Sun DTD, when running on
 
 **Attributes**
 
-- `:basedir` `File` - The basedir to calculate the relative path from. Since Ant 1.8.0
-  Required: No; default is project's basedir
-- `:classpath` `Path` - the classpath to use when looking up a resource.
-  Required: No
-- `:classpathref` `Reference` - the classpath to use when looking up a resource, given as reference to a <path> defined elsewhere..
-  Required: No
-- `:environment` `String` - the prefix to use when retrieving environment variables. Thus if you specify environment=myenv you will be able to access OS-specific environment variables via property names myenv.PATH or myenv.TERM. Note that if you supply a property name with a final. it will not be doubled; i.e. environment=myenv. will still allow access of environment variables through myenv.PATH and myenv.TERM. This functionality is currently only implemented on select platforms. Feel free to send patches to increase the number of platforms on which this functionality is supported;-). Note also that properties are case-sensitive, even if the environment variables on your operating system are not; e.g. Windows 2000 or later system path variable is set to an Ant property named env.Path rather than env.PATH.
-  Required: One of these, unless the name attribute is set
-- `:file` `File` - the location of the properties file to load.
-  Required: One of these, unless the name attribute is set
-- `:name` `String` - the name of the property to set.
-  Required: No
-- `:prefix` `String` - Prefix to apply to properties loaded using file, resource, or url. A. is appended to the prefix if not specified.
-  Required: No
-- `:prefixvalues` `boolean` - Whether to apply the prefix when expanding the right hand side of properties loaded using file, resource, or url. Since Ant 1.8.2
-  Required: No; default is false
-- `:refid` `Reference` - Reference to an object defined elsewhere. Only yields reasonable results for references to path-like structures or properties.
-  Required: One of these or nested text, when the name attribute is set
-- `:relative` `boolean` - If set to true the relative path to basedir is set. Since Ant 1.8.0
-  Required: No; default is false
-- `:resource` `String` - the name of the classpath resource containing properties settings in properties file format.
-  Required: One of these, unless the name attribute is set
-- `:runtime` `String` - the prefix to use when retrieving runtime properties. Thus if you specify runtime=myrt you will be able to access runtime values corresponding to methods in the Runtime class via property names myrt.availableProcessors, myrt.maxMemory, myrt.totalMemory or myrt.freeMemory. Note that if you supply a property name with a final. it will not be doubled; i.e. runtime=myrt. will still allow access of runtime properties as e.g. myrt.maxMemory. Note also that the property values are snapshots taken at the point in time when the property has been executed. Since Ant 1.10.4
-  Required: One of these, unless the name attribute is set
-- `:url` `URL` - a URL containing properties-format settings.
-  Required: One of these, unless the name attribute is set
-- `:userproperty` `boolean`
-- `:value` `Object` - the value of the property.
-  Required: One of these or nested text, when the name attribute is set
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` | The basedir to calculate the relative path from. Since Ant 1.8.0 | No; default is project's basedir |
+| `:classpath` | `Path` | the classpath to use when looking up a resource. | No |
+| `:classpathref` | `Reference` | the classpath to use when looking up a resource, given as reference to a <path> defined elsewhere.. | No |
+| `:environment` | `String` | the prefix to use when retrieving environment variables. Thus if you specify environment=myenv you will be able to access OS-specific environment variables via property names myenv.PATH or myenv.TERM. Note that if you supply a property name with a final. it will not be doubled; i.e. environment=myenv. will still allow access of environment variables through myenv.PATH and myenv.TERM. This functionality is currently only implemented on select platforms. Feel free to send patches to increase the number of platforms on which this functionality is supported;-). Note also that properties are case-sensitive, even if the environment variables on your operating system are not; e.g. Windows 2000 or later system path variable is set to an Ant property named env.Path rather than env.PATH. | One of these, unless the name attribute is set |
+| `:file` | `File` | the location of the properties file to load. | One of these, unless the name attribute is set |
+| `:name` | `String` | the name of the property to set. | No |
+| `:prefix` | `String` | Prefix to apply to properties loaded using file, resource, or url. A. is appended to the prefix if not specified. | No |
+| `:prefixvalues` | `boolean` | Whether to apply the prefix when expanding the right hand side of properties loaded using file, resource, or url. Since Ant 1.8.2 | No; default is false |
+| `:refid` | `Reference` | Reference to an object defined elsewhere. Only yields reasonable results for references to path-like structures or properties. | One of these or nested text, when the name attribute is set |
+| `:relative` | `boolean` | If set to true the relative path to basedir is set. Since Ant 1.8.0 | No; default is false |
+| `:resource` | `String` | the name of the classpath resource containing properties settings in properties file format. | One of these, unless the name attribute is set |
+| `:runtime` | `String` | the prefix to use when retrieving runtime properties. Thus if you specify runtime=myrt you will be able to access runtime values corresponding to methods in the Runtime class via property names myrt.availableProcessors, myrt.maxMemory, myrt.totalMemory or myrt.freeMemory. Note that if you supply a property name with a final. it will not be doubled; i.e. runtime=myrt. will still allow access of runtime properties as e.g. myrt.maxMemory. Note also that the property values are snapshots taken at the point in time when the property has been executed. Since Ant 1.10.4 | One of these, unless the name attribute is set |
+| `:url` | `URL` | a URL containing properties-format settings. | One of these, unless the name attribute is set |
+| `:userproperty` | `boolean` |  |  |
+| `:value` | `Object` | the value of the property. | One of these or nested text, when the name attribute is set |
 
 **Nested elements**
 
@@ -6407,12 +5558,11 @@ when reading it.
 
 **Attributes**
 
-- `:comment` `String` - Header for the file itself
-  Required: No
-- `:file` `File` - Location of the property file to be edited
-  Required: Yes
-- `:jdkproperties` `boolean` - Use java.lang.Properties, which will lose comments and layout of file. since Ant 1.8.0
-  Required: No; default is false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:comment` | `String` | Header for the file itself | No |
+| `:file` | `File` | Location of the property file to be edited | Yes |
+| `:jdkproperties` | `boolean` | Use java.lang.Properties, which will lose comments and layout of file. since Ant 1.8.0 | No; default is false |
 
 **Nested elements**
 
@@ -6458,34 +5608,22 @@ contained by the repository.
 
 **Attributes**
 
-- `:config` `File` - path of a non default .cfg file. Can be given absolute or relative to project's base directory.
-  Required: No
-- `:filenameformat` `String` - The format of your folder names in a format suitable for java.text.MessageFormat. Repositories where the archive extension is not -arc should set this.
-  Required: No; defaults to {0}-arc({1})
-- `:force` `String` - If set to yes all files that exists and are writable are overwritten. Default no causes the files that are writable to be ignored. This stops the PVCS command get to stop asking questions!
-  Required: No; default is no
-- `:ignorereturncode` `boolean` - If set to true the return value from executing the PVCS commands are ignored.
-  Required: No
-- `:label` `String` - Only files marked with this label are extracted.
-  Required: No
-- `:linestart` `String` - Used to parse the output of the pcli command. The parser already knows about / and \\\\, this property is useful in cases where the repository is accessed on a Windows platform via a drive letter mapping.
-  Required: No; defaults to \"P:
-- `:promotiongroup` `String` - Only files within this promotion group are extracted. Using both the label and the promotiongroup tag will cause the files in the promotion group and with that label to be extracted.
-  Required: No
-- `:pvcsbin` `String` - On some systems the PVCS executables pcli and get are not found in the PATH. In such cases this attribute should be set to the bin directory of the PVCS installation containing the executables mentioned before. If this attribute isn't specified the tag expects the executables to be found using the PATH environment variable.
-  Required: No
-- `:pvcsproject` `String` - The project within the PVCS repository to extract files from.
-  Required: No; defaults to root project, /
-- `:repository` `String` - The location of the repository (see your PVCS manuals).
-  Required: Yes
-- `:revision` `String` - Retrieve the specified revision.
-  Required: No
-- `:updateonly` `boolean` - If set to true files are gotten only if newer than existing local files.
-  Required: No
-- `:userid` `String` - Use the specified userid.
-  Required: No
-- `:workspace` `String` - By specifying a workspace, the files are extracted to that location. A PVCS workspace is a name for a location of the workfiles and isn't as such the location itself. You define the location for a workspace using the PVCS GUI clients.
-  Required: No; defaults to default workspace for the current user
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:config` | `File` | path of a non default .cfg file. Can be given absolute or relative to project's base directory. | No |
+| `:filenameformat` | `String` | The format of your folder names in a format suitable for java.text.MessageFormat. Repositories where the archive extension is not -arc should set this. | No; defaults to {0}-arc({1}) |
+| `:force` | `String` | If set to yes all files that exists and are writable are overwritten. Default no causes the files that are writable to be ignored. This stops the PVCS command get to stop asking questions! | No; default is no |
+| `:ignorereturncode` | `boolean` | If set to true the return value from executing the PVCS commands are ignored. | No |
+| `:label` | `String` | Only files marked with this label are extracted. | No |
+| `:linestart` | `String` | Used to parse the output of the pcli command. The parser already knows about / and \\\\, this property is useful in cases where the repository is accessed on a Windows platform via a drive letter mapping. | No; defaults to \"P: |
+| `:promotiongroup` | `String` | Only files within this promotion group are extracted. Using both the label and the promotiongroup tag will cause the files in the promotion group and with that label to be extracted. | No |
+| `:pvcsbin` | `String` | On some systems the PVCS executables pcli and get are not found in the PATH. In such cases this attribute should be set to the bin directory of the PVCS installation containing the executables mentioned before. If this attribute isn't specified the tag expects the executables to be found using the PATH environment variable. | No |
+| `:pvcsproject` | `String` | The project within the PVCS repository to extract files from. | No; defaults to root project, / |
+| `:repository` | `String` | The location of the repository (see your PVCS manuals). | Yes |
+| `:revision` | `String` | Retrieve the specified revision. | No |
+| `:updateonly` | `boolean` | If set to true files are gotten only if newer than existing local files. | No |
+| `:userid` | `String` | Use the specified userid. | No |
+| `:workspace` | `String` | By specifying a workspace, the files are extracted to that location. A PVCS workspace is a name for a location of the workfiles and isn't as such the location itself. You define the location for a workspace using the PVCS GUI clients. | No; defaults to default workspace for the current user |
 
 **Nested elements**
 
@@ -6515,16 +5653,13 @@ closed on a buildFinished event.
 
 **Attributes**
 
-- `:action` `ActionChoices` - This tells the logger what to do: should it start recording or stop? The first time that the recorder task is called for this logfile, and if this attribute is not provided, then the default for this attribute is start. If this attribute is not provided on subsequent calls, then the state remains as previous.
-  Required: No [values = start|stop, default = no state change]
-- `:append` `boolean` - Should the recorder append to a file, or create a new one? This is only applicable the first time this task is called for this file.
-  Required: No [values = start|stop, default = no state change]
-- `:emacsmode` `boolean` - Removes [task] banners like Apache Ant's -emacs command line switch if set to true.
-  Required: No; default is false
-- `:loglevel` `LogLevel` - At what logging level should this recorder instance record to? This is not a once only parameter (like append is)-you can increase or decrease the logging level as the build process continues.
-  Required: No [values = error|warn|info|verbose|debug, default = no change]
-- `:name` `String` - The name of the file this logger is associated with.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:action` | `ActionChoices` | This tells the logger what to do: should it start recording or stop? The first time that the recorder task is called for this logfile, and if this attribute is not provided, then the default for this attribute is start. If this attribute is not provided on subsequent calls, then the state remains as previous. | No [values = start\\|stop, default = no state change] |
+| `:append` | `boolean` | Should the recorder append to a file, or create a new one? This is only applicable the first time this task is called for this file. | No [values = start\\|stop, default = no state change] |
+| `:emacsmode` | `boolean` | Removes [task] banners like Apache Ant's -emacs command line switch if set to true. | No; default is false |
+| `:loglevel` | `VerbosityLevelChoices` | At what logging level should this recorder instance record to? This is not a once only parameter (like append is)-you can increase or decrease the logging level as the build process continues. | No [values = error\\|warn\\|info\\|verbose\\|debug, default = no change] |
+| `:name` | `String` | The name of the file this logger is associated with. | Yes |
 
 **Reference**
 
@@ -6542,12 +5677,11 @@ https://ant.apache.org/manual/Tasks/recorder.html
 
 **Attributes**
 
-- `:dest` `File` - new name of the file.
-  Required: Yes
-- `:replace` `String` - Enable replacing of existing file.
-  Required: No; default is on
-- `:src` `File` - file to rename.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dest` | `File` | new name of the file. | Yes |
+| `:replace` | `String` | Enable replacing of existing file. | No; default is on |
+| `:src` | `File` | file to rename. | Yes |
 
 **Reference**
 
@@ -6570,26 +5704,19 @@ to write patterns. This task forms an implicit FileSet and supports most attribu
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:followsymlinks` `boolean`
-- `:fromextension` `String` - The string that files must end in to be renamed
-  Required: Yes
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:replace` `boolean` - Whether the file being renamed to should be replaced if it already exists
-  Required: No
-- `:srcdir` `File` - The starting directory for files to search in
-  Required: Yes
-- `:toextension` `String` - The string that renamed files will end with on completion
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:followsymlinks` | `boolean` |  |  |
+| `:fromextension` | `String` | The string that files must end in to be renamed | Yes |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern | No |
+| `:replace` | `boolean` | Whether the file being renamed to should be replaced if it already exists | No |
+| `:srcdir` | `File` | The starting directory for files to search in | Yes |
+| `:toextension` | `String` | The string that renamed files will end with on completion | Yes |
 
 **Nested elements**
 
@@ -6637,40 +5764,27 @@ unchanged files which have been regenerated by this task.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:dir` `File` - The base directory to use when replacing a token in multiple files.
-  Required: Exactly one of the two
-- `:encoding` `String` - The encoding of the files upon which replace operates.
-  Required: No; defaults to default JVM character encoding
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:failonnoreplacements` `boolean` - Whether to fail the build if the task didn't do anything. since Ant 1.8.0.
-  Required: No; defaults to false
-- `:file` `File` - file for which the token should be replaced.
-  Required: Exactly one of the two
-- `:followsymlinks` `boolean`
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:preservelastmodified` `boolean` - Keep the file timestamp(s) even if the file(s) is(are) modified. since Apache Ant 1.8.0.
-  Required: No; defaults to false
-- `:propertyfile` `File` - valid property file from which properties specified using nested <replacefilter> elements are drawn.
-  Required: Yes, only if property attribute of <replacefilter> is used.
-- `:propertyresource` `Resource`
-- `:replacefilterfile` `File` - valid property file. Each property will be treated as a replacefilter where token is the name of the property and value is the property's value.
-  Required: No
-- `:replacefilterresource` `Resource`
-- `:summary` `boolean` - Indicates whether a summary of the replace operation should be produced, detailing how many token occurrences and files were processed
-  Required: No; defaults to no summary
-- `:token` `String` - the token which must be replaced.
-  Required: Yes, unless a nested replacetoken element or the replacefilterfile attribute is used.
-- `:value` `String` - the new value for the token.
-  Required: No; defaults to empty string ()
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:dir` | `File` | The base directory to use when replacing a token in multiple files. | Exactly one of the two |
+| `:encoding` | `String` | The encoding of the files upon which replace operates. | No; defaults to default JVM character encoding |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:failonnoreplacements` | `boolean` | Whether to fail the build if the task didn't do anything. since Ant 1.8.0. | No; defaults to false |
+| `:file` | `File` | file for which the token should be replaced. | Exactly one of the two |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern | No |
+| `:preservelastmodified` | `boolean` | Keep the file timestamp(s) even if the file(s) is(are) modified. since Apache Ant 1.8.0. | No; defaults to false |
+| `:propertyfile` | `File` | valid property file from which properties specified using nested <replacefilter> elements are drawn. | Yes, only if property attribute of <replacefilter> is used. |
+| `:propertyresource` | `Resource` |  |  |
+| `:replacefilterfile` | `File` | valid property file. Each property will be treated as a replacefilter where token is the name of the property and value is the property's value. | No |
+| `:replacefilterresource` | `Resource` |  |  |
+| `:summary` | `boolean` | Indicates whether a summary of the replace operation should be produced, detailing how many token occurrences and files were processed | No; defaults to no summary |
+| `:token` | `String` | the token which must be replaced. | Yes, unless a nested replacetoken element or the replacefilterfile attribute is used. |
+| `:value` | `String` | the new value for the token. | No; defaults to empty string () |
 
 **Nested elements**
 
@@ -6725,22 +5839,16 @@ Type.
 
 **Attributes**
 
-- `:byline` `boolean` - Process the file(s) one line at a time, executing the replacement on one line at a time (true|false). This is useful if you want to only replace the first occurrence of a regular expression on each line, which is not easy to do when processing the file as a whole.
-  Required: No; defaults to false
-- `:encoding` `String` - The encoding of the file. since Apache Ant 1.6
-  Required: No; defaults to default JVM character encoding
-- `:failonerror` `boolean` - Stop the build process if certain file operations fail. For historical reasons the task swallows and logs certain failure cases, enabling this option makes sure the exception make the build fail instead. since Ant 1.10.15
-  Required: No; defaults to false
-- `:file` `File` - file for which the regular expression should be replaced.
-  Required: Yes, unless nested <fileset> is used
-- `:flags` `String` - The flags to use when matching the regular expression. For more information, consult the Perl 5 syntax g: Global replacement. Replace all occurrences found i: Case Insensitive. Do not consider case in the match m: Multiline. Treat the string as multiple lines of input, using ^ and $ as the start or end of any line, respectively, rather than start or end of string. s: Singleline. Treat the string as a single line of input, using. to match any character, including a newline, which normally, it would not match.
-  Required: No
-- `:match` `String` - The regular expression pattern to match in the file(s)
-  Required: Yes, unless nested <regexp> is used
-- `:preservelastmodified` `boolean` - Keep the file timestamp(s) even if the file(s) is(are) modified. since Ant 1.8.0.
-  Required: No; defaults to false
-- `:replace` `String` - The substitution pattern to place in the file(s) in place of the regular expression.
-  Required: Yes, unless nested <substitution> is used
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:byline` | `boolean` | Process the file(s) one line at a time, executing the replacement on one line at a time (true\\|false). This is useful if you want to only replace the first occurrence of a regular expression on each line, which is not easy to do when processing the file as a whole. | No; defaults to false |
+| `:encoding` | `String` | The encoding of the file. since Apache Ant 1.6 | No; defaults to default JVM character encoding |
+| `:failonerror` | `boolean` | Stop the build process if certain file operations fail. For historical reasons the task swallows and logs certain failure cases, enabling this option makes sure the exception make the build fail instead. since Ant 1.10.15 | No; defaults to false |
+| `:file` | `File` | file for which the regular expression should be replaced. | Yes, unless nested <fileset> is used |
+| `:flags` | `String` | The flags to use when matching the regular expression. For more information, consult the Perl 5 syntax g: Global replacement. Replace all occurrences found i: Case Insensitive. Do not consider case in the match m: Multiline. Treat the string as multiple lines of input, using ^ and $ as the start or end of any line, respectively, rather than start or end of string. s: Singleline. Treat the string as a single line of input, using. to match any character, including a newline, which normally, it would not match. | No |
+| `:match` | `String` | The regular expression pattern to match in the file(s) | Yes, unless nested <regexp> is used |
+| `:preservelastmodified` | `boolean` | Keep the file timestamp(s) even if the file(s) is(are) modified. since Ant 1.8.0. | No; defaults to false |
+| `:replace` | `String` | The substitution pattern to place in the file(s) in place of the regular expression. | Yes, unless nested <substitution> is used |
 
 **Nested elements**
 
@@ -6765,14 +5873,12 @@ be used as a condition.
 
 **Attributes**
 
-- `:count` `int` - Comparison count.
-  Required: Ignored
-- `:property` `String` - The property to set.
-  Required: No; by default, output value to the log
-- `:refid` `Reference` - A reference to a resource collection.
-  Required: Yes, unless a nested resource collection is supplied
-- `:when` `Comparison` - Comparison type: equal, eq, greater, gt, less, lt, ge (greater or equal), ne (not equal), le (less or equal).
-  Required: No; default is equal
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:count` | `int` | Comparison count. | Ignored |
+| `:property` | `String` | The property to set. | No; by default, output value to the log |
+| `:refid` | `Reference` | A reference to a resource collection. | Yes, unless a nested resource collection is supplied |
+| `:when` | `Comparison` | Comparison type: equal, eq, greater, gt, less, lt, ge (greater or equal), ne (not equal), le (less or equal). | No; default is equal |
 
 **Reference**
 
@@ -6792,10 +5898,10 @@ thrown.
 
 **Attributes**
 
-- `:retrycount` `int` - number of times to attempt to execute the nested task
-  Required: Yes
-- `:retrydelay` `int` - number of milliseconds to wait between retry attempts task. Since Apache Ant 1.8.3
-  Required: No; defaults to no delay
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:retrycount` | `int` | number of times to attempt to execute the nested task | Yes |
+| `:retrydelay` | `int` | number of milliseconds to wait between retry attempts task. Since Apache Ant 1.8.3 | No; defaults to no delay |
 
 **Reference**
 
@@ -6844,58 +5950,35 @@ you fork the task and explicitly specify an executable.
 
 **Attributes**
 
-- `:base` `File` - the location to store the compiled files. Also serves as the parent directory for any non-Fileset includes, etc. (This functionality has remained unchanged.)
-  Required: See note
-- `:casesensitive` `boolean`
-- `:classname` `String` - the class for which to run rmic.
-  Required: No
-- `:classpath` `Path` - The classpath to use during compilation
-  Required: No
-- `:classpathref` `Reference` - The classpath to use during compilation, given as reference to a path defined elsewhere
-  Required: No
-- `:compiler` `String` - The compiler implementation to use. (See the above list of valid compilers.)
-  Required: No; defaults to the value of the build.rmic property, if set, and the default compiler for the current JDK otherwise
-- `:debug` `boolean` - generate debug info (passes -g to rmic)
-  Required: No; defaults to false
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:destdir` `File` - the location to store the compiled files.
-  Required: See note
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:executable` `String` - Complete path to the rmic executable to use in case of the forking or xnew compiler. Since Ant 1.8.0.
-  Required: No; defaults to the rmic compiler of JDK that is currently running Ant
-- `:extdirs` `Path` - location of installed extensions
-  Required: No
-- `:filtering` `boolean` - indicates whether token filtering should take place
-  Required: No
-- `:followsymlinks` `boolean`
-- `:idl` `boolean` - indicates that IDL output files should be generated. See the note on CORBA support above.
-  Required: No
-- `:idlopts` `String` - additional arguments for IDL file generation
-  Required: No
-- `:iiop` `boolean` - indicates that portable (RMI/IIOP) stubs should be generated. See the note on CORBA support above.
-  Required: No
-- `:iiopopts` `String` - additional arguments for IIOP class generation
-  Required: No
-- `:includeantruntime` `boolean` - whether to include the Ant run-time libraries
-  Required: No; defaults to yes
-- `:includejavaruntime` `boolean` - whether to include the default run-time libraries from the executing JVM
-  Required: No; defaults to no
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:listfiles` `boolean` - Indicates whether the source files to be compiled will be listed. Since Ant 1.8.0.
-  Required: No; defaults to no
-- `:sourcebase` `File` - Pass the -keepgenerated flag to rmic and move the generated source file to the given sourcebase directory.
-  Required: No
-- `:stubversion` `String` - Specify the JDK version for the generated stub code. Specify 1.1 to pass the -v1.1 option to rmic, 1.2 for -v1.2, compat for -vcompat. Since Ant 1.7, if you do not specify a version, and do not ask for .iiop or .idl files, compat is selected.
-  Required: No; default is compat
-- `:verify` `boolean` - check that classes implement Remote before handing them to rmic
-  Required: No; default is false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:base` | `File` | the location to store the compiled files. Also serves as the parent directory for any non-Fileset includes, etc. (This functionality has remained unchanged.) | See note |
+| `:casesensitive` | `boolean` |  |  |
+| `:classname` | `String` | the class for which to run rmic. | No |
+| `:classpath` | `Path` | The classpath to use during compilation | No |
+| `:classpathref` | `Reference` | The classpath to use during compilation, given as reference to a path defined elsewhere | No |
+| `:compiler` | `String` | The compiler implementation to use. (See the above list of valid compilers.) | No; defaults to the value of the build.rmic property, if set, and the default compiler for the current JDK otherwise |
+| `:debug` | `boolean` | generate debug info (passes -g to rmic) | No; defaults to false |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:destdir` | `File` | the location to store the compiled files. | See note |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:executable` | `String` | Complete path to the rmic executable to use in case of the forking or xnew compiler. Since Ant 1.8.0. | No; defaults to the rmic compiler of JDK that is currently running Ant |
+| `:extdirs` | `Path` | location of installed extensions | No |
+| `:filtering` | `boolean` | indicates whether token filtering should take place | No |
+| `:followsymlinks` | `boolean` |  |  |
+| `:idl` | `boolean` | indicates that IDL output files should be generated. See the note on CORBA support above. | No |
+| `:idlopts` | `String` | additional arguments for IDL file generation | No |
+| `:iiop` | `boolean` | indicates that portable (RMI/IIOP) stubs should be generated. See the note on CORBA support above. | No |
+| `:iiopopts` | `String` | additional arguments for IIOP class generation | No |
+| `:includeantruntime` | `boolean` | whether to include the Ant run-time libraries | No; defaults to yes |
+| `:includejavaruntime` | `boolean` | whether to include the default run-time libraries from the executing JVM | No; defaults to no |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern | No |
+| `:listfiles` | `boolean` | Indicates whether the source files to be compiled will be listed. Since Ant 1.8.0. | No; defaults to no |
+| `:sourcebase` | `File` | Pass the -keepgenerated flag to rmic and move the generated source file to the given sourcebase directory. | No |
+| `:stubversion` | `String` | Specify the JDK version for the generated stub code. Specify 1.1 to pass the -v1.1 option to rmic, 1.2 for -v1.2, compat for -vcompat. Since Ant 1.7, if you do not specify a version, and do not ask for .iiop or .idl files, compat is selected. | No; default is compat |
+| `:verify` | `boolean` | check that classes implement Remote before handing them to rmic | No; default is false |
 
 **Nested elements**
 
@@ -6945,26 +6028,19 @@ rpm support.
 
 **Attributes**
 
-- `:cleanbuilddir` `boolean` - This will remove the generated files in the BUILD directory. See the the --clean option of rpmbuild.
-  Required: No
-- `:command` `String` - The command to pass to the rpmbuild program.
-  Required: No; default is -bb
-- `:error` `File`
-- `:failonerror` `boolean` - Stop the build process if the RPM build command exits with a non-zero return code.
-  Required: No; defaults to false
-- `:output` `File`
-- `:quiet` `boolean` - Suppress output.
-  Required: No; defaults to false
-- `:removesource` `boolean` - Flag to remove the sources after the build. See the --rmsource option of rpmbuild.
-  Required: No; default is false
-- `:removespec` `boolean` - This will remove the spec file from SPECS. See the the --rmspec option of rpmbuild.
-  Required: No
-- `:rpmbuildcommand` `String` - The executable to use for building the RPM. Set this if default executables are not on PATH or a different executable is needed. Since Apache Ant 1.6.
-  Required: No; defaults to rpmbuild if it can be found or rpm otherwise
-- `:specfile` `String` - The name of the spec file to be used. This must be relative to the SPECS directory under the root of the RPM set in the topDir attribute.
-  Required: Yes
-- `:topdir` `File` - This is the directory which will have the expected subdirectories, SPECS, SOURCES, BUILD, SRPMS. If this isn't specified, the default RPM directory of the system (or user, if ~/.rpmmacros defines it) is used (often /usr/src/rpm. Defining a topdir will set %_topdir to the specified directory-there is no need to edit your .rpmmacros file.
-  Required: No, but your build file is very brittle if it is not set.
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cleanbuilddir` | `boolean` | This will remove the generated files in the BUILD directory. See the the --clean option of rpmbuild. | No |
+| `:command` | `String` | The command to pass to the rpmbuild program. | No; default is -bb |
+| `:error` | `File` |  |  |
+| `:failonerror` | `boolean` | Stop the build process if the RPM build command exits with a non-zero return code. | No; defaults to false |
+| `:output` | `File` |  |  |
+| `:quiet` | `boolean` | Suppress output. | No; defaults to false |
+| `:removesource` | `boolean` | Flag to remove the sources after the build. See the --rmsource option of rpmbuild. | No; default is false |
+| `:removespec` | `boolean` | This will remove the spec file from SPECS. See the the --rmspec option of rpmbuild. | No |
+| `:rpmbuildcommand` | `String` | The executable to use for building the RPM. Set this if default executables are not on PATH or a different executable is needed. Since Apache Ant 1.6. | No; defaults to rpmbuild if it can be found or rpm otherwise |
+| `:specfile` | `String` | The name of the spec file to be used. This must be relative to the SPECS directory under the root of the RPM set in the topDir attribute. | Yes |
+| `:topdir` | `File` | This is the directory which will have the expected subdirectories, SPECS, SOURCES, BUILD, SRPMS. If this isn't specified, the default RPM directory of the system (or user, if ~/.rpmmacros defines it) is used (often /usr/src/rpm. Defining a topdir will set %_topdir to the specified directory-there is no need to edit your .rpmmacros file. | No, but your build file is very brittle if it is not set. |
 
 **Reference**
 
@@ -6995,27 +6071,19 @@ is an error to specify a SAX1 parser.
 
 **Attributes**
 
-- `:classname` `String` - the parser to use.
-  Required: No
-- `:classpath` `Path`
-- `:classpathref` `Reference` - where to find the parser class. Optionally can use an embedded <classpath> element.
-  Required: No
-- `:disabledtd` `boolean` - Flag to disable DTD support. DTD support is needed to validate XSD files themselves, amongst others.
-  Required: No; default false
-- `:failonerror` `boolean` - fails on a error if set to true.
-  Required: No; defaults to true
-- `:file` `File` - the file(s) you want to check (optionally use an embedded fileset).
-  Required: No
-- `:fullchecking` `boolean` - enable full schema checking. Slow but strict.
-  Required: No; default true
-- `:lenient` `boolean` - if true, only check the XML document is well formed
-  Required: No
-- `:nonamespacefile` `File` - filename of a no-namespace XSD file to provide the schema for no-namespace XML content
-  Required: No
-- `:nonamespaceurl` `String` - URL of a no-namespace XSD file to provide the schema for no-namespace XML content
-  Required: No
-- `:warn` `boolean` - log parser warn events
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` | the parser to use. | No |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` | where to find the parser class. Optionally can use an embedded <classpath> element. | No |
+| `:disabledtd` | `boolean` | Flag to disable DTD support. DTD support is needed to validate XSD files themselves, amongst others. | No; default false |
+| `:failonerror` | `boolean` | fails on a error if set to true. | No; defaults to true |
+| `:file` | `File` | the file(s) you want to check (optionally use an embedded fileset). | No |
+| `:fullchecking` | `boolean` | enable full schema checking. Slow but strict. | No; default true |
+| `:lenient` | `boolean` | if true, only check the XML document is well formed | No |
+| `:nonamespacefile` | `File` | filename of a no-namespace XSD file to provide the schema for no-namespace XML content | No |
+| `:nonamespaceurl` | `String` | URL of a no-namespace XSD file to provide the schema for no-namespace XML content | No |
+| `:warn` | `boolean` | log parser warn events | No |
 
 **Nested elements**
 
@@ -7047,56 +6115,34 @@ See also the sshexec task
 
 **Attributes**
 
-- `:compressed` `boolean` - Whether to enable compression during transfer. since Ant 1.9.8
-  Required: No; defaults to false
-- `:dirmode` `String` - A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to uploaded dirs. Note the actual permissions of the remote dir will be governed by this setting and the UMASK on the remote server. since Ant 1.9.5.
-  Required: No; default is 755
-- `:failonerror` `boolean` - Whether to halt the build if the transfer fails.
-  Required: No; defaults to true
-- `:file` `String` - The file to copy. This can be a local path or a remote path of the form user[:password]@host:/directory/path.:password can be omitted if you use key based authentication or specify the password attribute. The way remote path is recognized is whether it contains @ character or not. This will not work if your localPath contains @ character.
-  Required: Yes, unless a nested <fileset> element is used
-- `:filemode` `String` - A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to uploaded files. Note the actual permissions of the remote file will be governed by this setting and the UMASK on the remote server. since Ant 1.9.5.
-  Required: No; default is 644
-- `:host` `String`
-- `:keyfile` `String` - Location of the file holding the private key.
-  Required: Yes, if you are using key based authentication
-- `:knownhosts` `String` - This sets the known hosts file to use to validate the identity of the remote host. This must be a SSH2 format file. SSH1 format is not supported.
-  Required: No; defaults to ${user.home}/.ssh/known_hosts
-- `:localfile` `String` - This is an alternative to the file attribute. But this must always point to a local file. The reason this was added was that when you give file attribute it is treated as remote if it contains @ character. This character can exist also in local paths. since Ant 1.6.2
-  Required: Alternative to file attribute
-- `:localtodir` `String` - This is an alternative to the todir attribute. But this must always point to a local directory. The reason this was added was that when you give todir attribute it is treated as remote if it contains @ character. This character can exist also in local paths. since Ant 1.6.2
-  Required: Alternative to todir attribute
-- `:localtofile` `String` - Changes the file name to the given name while receiving it, only useful if receiving a single file. since Ant 1.6.2
-  Required: Alternative to todir attribute
-- `:passphrase` `String` - Passphrase for your private key.
-  Required: No; defaults to an empty string
-- `:password` `String` - The password.
-  Required: Yes, unless you are using key based authentication or the password has been given in the file or todir attribute
-- `:port` `int` - The port to connect to on the remote host.
-  Required: No; defaults to 22
-- `:preservelastmodified` `boolean` - Determines whether the last modification timestamp of downloaded files is preserved. It only works when transferring from a remote to a local system and probably doesn't work with a server that doesn't support SSH2. since Ant 1.8.0
-  Required: No; defaults to false
-- `:remotefile` `String` - This is an alternative to the file attribute. But this must always point to a remote file. since Ant 1.6.2
-  Required: Alternative to file attribute
-- `:remotetodir` `String` - This is an alternative to the todir attribute. But this must always point to a remote directory. since Ant 1.6.2
-  Required: Alternative to todir attribute
-- `:remotetofile` `String` - Changes the file name to the given name while sending it, only useful if sending a single file. since Ant 1.6.2
-  Required: Alternative to todir attribute
-- `:serveralivecountmax` `int` - The number of server alive messages which may be sent without receiving any messages back from the server. Only used if serverAliveIntervalSeconds is not 0. since Ant 1.9.7
-  Required: No; defaults to 3
-- `:serveraliveintervalseconds` `int` - Sets a timeout interval in seconds after which if no data has been received from the server, the task will send a message through the encrypted channel to request a response from the server. since Ant 1.9.7
-  Required: No, the default is 0, indicating that these messages will not be sent to the server
-- `:sftp` `boolean` - Determines whether SCP uses the sftp protocol. The sftp protocol is the file transfer protocol of SSH2. It is recommended that this be set to true if you are copying to/from a server that doesn't support scp1. since Ant 1.7
-  Required: No; defaults to false
-- `:sshconfig` `String` - Location of the file holding the OpenSSH style configuration (e.g. ${user.home}/.ssh/config). The username and the key file are read from the configuration file, unless they are already specified in the task parameters. since Ant 1.10.8
-  Required: No
-- `:todir` `String` - The directory to copy to. This can be a local path or a remote path of the form user[:password]@host:/directory/path.:password can be omitted if you use key based authentication or specify the password attribute. The way remote path is recognized is whether it contains @ character or not. This will not work if your localPath contains @ character.
-  Required: Yes
-- `:trust` `boolean` - This trusts all unknown hosts if set to yes or true. Note: If you set this to false (the default), the host you connect to must be listed in your knownhosts file, this also implies that the file exists.
-  Required: No; defaults to no
-- `:username` `String`
-- `:verbose` `boolean` - Determines whether SCP outputs verbosely to the user. Currently this means outputting dots/stars showing the progress of a file transfer. since Ant 1.6.2
-  Required: No; defaults to false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:compressed` | `boolean` | Whether to enable compression during transfer. since Ant 1.9.8 | No; defaults to false |
+| `:dirmode` | `String` | A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to uploaded dirs. Note the actual permissions of the remote dir will be governed by this setting and the UMASK on the remote server. since Ant 1.9.5. | No; default is 755 |
+| `:failonerror` | `boolean` | Whether to halt the build if the transfer fails. | No; defaults to true |
+| `:file` | `String` | The file to copy. This can be a local path or a remote path of the form user[:password]@host:/directory/path.:password can be omitted if you use key based authentication or specify the password attribute. The way remote path is recognized is whether it contains @ character or not. This will not work if your localPath contains @ character. | Yes, unless a nested <fileset> element is used |
+| `:filemode` | `String` | A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to uploaded files. Note the actual permissions of the remote file will be governed by this setting and the UMASK on the remote server. since Ant 1.9.5. | No; default is 644 |
+| `:host` | `String` |  |  |
+| `:keyfile` | `String` | Location of the file holding the private key. | Yes, if you are using key based authentication |
+| `:knownhosts` | `String` | This sets the known hosts file to use to validate the identity of the remote host. This must be a SSH2 format file. SSH1 format is not supported. | No; defaults to ${user.home}/.ssh/known_hosts |
+| `:localfile` | `String` | This is an alternative to the file attribute. But this must always point to a local file. The reason this was added was that when you give file attribute it is treated as remote if it contains @ character. This character can exist also in local paths. since Ant 1.6.2 | Alternative to file attribute |
+| `:localtodir` | `String` | This is an alternative to the todir attribute. But this must always point to a local directory. The reason this was added was that when you give todir attribute it is treated as remote if it contains @ character. This character can exist also in local paths. since Ant 1.6.2 | Alternative to todir attribute |
+| `:localtofile` | `String` | Changes the file name to the given name while receiving it, only useful if receiving a single file. since Ant 1.6.2 | Alternative to todir attribute |
+| `:passphrase` | `String` | Passphrase for your private key. | No; defaults to an empty string |
+| `:password` | `String` | The password. | Yes, unless you are using key based authentication or the password has been given in the file or todir attribute |
+| `:port` | `int` | The port to connect to on the remote host. | No; defaults to 22 |
+| `:preservelastmodified` | `boolean` | Determines whether the last modification timestamp of downloaded files is preserved. It only works when transferring from a remote to a local system and probably doesn't work with a server that doesn't support SSH2. since Ant 1.8.0 | No; defaults to false |
+| `:remotefile` | `String` | This is an alternative to the file attribute. But this must always point to a remote file. since Ant 1.6.2 | Alternative to file attribute |
+| `:remotetodir` | `String` | This is an alternative to the todir attribute. But this must always point to a remote directory. since Ant 1.6.2 | Alternative to todir attribute |
+| `:remotetofile` | `String` | Changes the file name to the given name while sending it, only useful if sending a single file. since Ant 1.6.2 | Alternative to todir attribute |
+| `:serveralivecountmax` | `int` | The number of server alive messages which may be sent without receiving any messages back from the server. Only used if serverAliveIntervalSeconds is not 0. since Ant 1.9.7 | No; defaults to 3 |
+| `:serveraliveintervalseconds` | `int` | Sets a timeout interval in seconds after which if no data has been received from the server, the task will send a message through the encrypted channel to request a response from the server. since Ant 1.9.7 | No, the default is 0, indicating that these messages will not be sent to the server |
+| `:sftp` | `boolean` | Determines whether SCP uses the sftp protocol. The sftp protocol is the file transfer protocol of SSH2. It is recommended that this be set to true if you are copying to/from a server that doesn't support scp1. since Ant 1.7 | No; defaults to false |
+| `:sshconfig` | `String` | Location of the file holding the OpenSSH style configuration (e.g. ${user.home}/.ssh/config). The username and the key file are read from the configuration file, unless they are already specified in the task parameters. since Ant 1.10.8 | No |
+| `:todir` | `String` | The directory to copy to. This can be a local path or a remote path of the form user[:password]@host:/directory/path.:password can be omitted if you use key based authentication or specify the password attribute. The way remote path is recognized is whether it contains @ character or not. This will not work if your localPath contains @ character. | Yes |
+| `:trust` | `boolean` | This trusts all unknown hosts if set to yes or true. Note: If you set this to false (the default), the host you connect to must be listed in your knownhosts file, this also implies that the file exists. | No; defaults to no |
+| `:username` | `String` |  |  |
+| `:verbose` | `boolean` | Determines whether SCP outputs verbosely to the user. Currently this means outputting dots/stars showing the progress of a file transfer. since Ant 1.6.2 | No; defaults to false |
 
 **Nested elements**
 
@@ -7138,20 +6184,15 @@ value. In particular all targets should have different location values.
 
 **Attributes**
 
-- `:classpath` `Path` - The classpath to pass into the script. Since Ant 1.7
-  Required: No
-- `:classpathref` `Reference` - The classpath to use, given as a reference to a path defined elsewhere. Since Ant 1.7
-  Required: No
-- `:encoding` `String` - The encoding of the script as a file. Since Ant 1.10.2.
-  Required: No; defaults to default JVM character encoding
-- `:language` `String` - The programming language the script is written in. Must be a supported Apache BSF or JSR 223 language
-  Required: Yes
-- `:manager` `ScriptManager {auto|bsf|javax}` - Since Ant 1.7. The script engine manager to use. This can have one of three values: auto, bsf or javax. bsf use the BSF scripting manager to run the language. javax use the javax.scripting manager to run the language. auto use the BSF engine if it exists, otherwise use the javax.scripting manager.
-  Required: No; default is auto
-- `:setbeans` `boolean` - This attribute controls whether to set variables for all properties, references and targets in the running script. If this attribute is false, only the project and self variables are set. If this attribute is true all the variables are set. Since Ant 1.7
-  Required: No; defaults to true
-- `:src` `String` - The location of the script as a file, if not inline
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` | The classpath to pass into the script. Since Ant 1.7 | No |
+| `:classpathref` | `Reference` | The classpath to use, given as a reference to a path defined elsewhere. Since Ant 1.7 | No |
+| `:encoding` | `String` | The encoding of the script as a file. Since Ant 1.10.2. | No; defaults to default JVM character encoding |
+| `:language` | `String` | The programming language the script is written in. Must be a supported Apache BSF or JSR 223 language | Yes |
+| `:manager` | `ScriptManager {auto\\|bsf\\|javax}` | Since Ant 1.7. The script engine manager to use. This can have one of three values: auto, bsf or javax. bsf use the BSF scripting manager to run the language. javax use the javax.scripting manager to run the language. auto use the BSF engine if it exists, otherwise use the javax.scripting manager. | No; default is auto |
+| `:setbeans` | `boolean` | This attribute controls whether to set variables for all properties, references and targets in the running script. If this attribute is false, only the project and self variables are set. If this attribute is true all the variables are set. Since Ant 1.7 | No; defaults to true |
+| `:src` | `String` | The location of the script as a file, if not inline | No |
 
 **Nested elements**
 
@@ -7201,28 +6242,20 @@ scripts, please refer to the <script> task.
 
 **Attributes**
 
-- `:classpath` `Path` - The classpath to pass into the script.
-  Required: No
-- `:classpathref` `Reference` - The classpath to use, given as a reference to a path defined elsewhere. No
-- `:compiled` `boolean` - If true, the script is compiled before the first evaluation for faster multiple executions, on the condition that the manager is javax and the target engine implements javax.script.Compilable. Note that the bsf manager may automatically compile the script. since Ant 1.10.2.
-  Required: No; defaults to false
-- `:encoding` `String` - The encoding of the script as a file. since Ant 1.10.2.
-  Required: No; defaults to default JVM character encoding
-- `:language` `String` - The programming language the script is written in. Must be a supported Apache BSF or JSR 223 language
-  Required: Yes
-- `:loaderref` `Reference` - the name of the loader that is used to load the script, constructed from the specified classpath. This allows multiple script definitions to reuse the same class loader.
-  Required: No
-- `:manager` `ScriptManager {auto|bsf|javax}` - The script engine manager to use. See the script task for using this attribute.
-  Required: No; default is auto
-- `:name` `String` - the name of the task to be created using the script
-  Required: Yes
-- `:reverseloader` `boolean`
-- `:setbeans` `boolean` - This attribute controls whether to set variables for all properties, references and targets in the running script. If this attribute is false, only the project and self variables are set. If this attribute is true all the variables are set. Since Ant 1.10.13
-  Required: No; default false for backward compatibility
-- `:src` `File` - The location of the script as a file, if not inline
-  Required: No
-- `:uri` `String` - The XML namespace uri that this definition should live in.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` | The classpath to pass into the script. | No |
+| `:classpathref` | `Reference` | The classpath to use, given as a reference to a path defined elsewhere. No |  |
+| `:compiled` | `boolean` | If true, the script is compiled before the first evaluation for faster multiple executions, on the condition that the manager is javax and the target engine implements javax.script.Compilable. Note that the bsf manager may automatically compile the script. since Ant 1.10.2. | No; defaults to false |
+| `:encoding` | `String` | The encoding of the script as a file. since Ant 1.10.2. | No; defaults to default JVM character encoding |
+| `:language` | `String` | The programming language the script is written in. Must be a supported Apache BSF or JSR 223 language | Yes |
+| `:loaderref` | `Reference` | the name of the loader that is used to load the script, constructed from the specified classpath. This allows multiple script definitions to reuse the same class loader. | No |
+| `:manager` | `ScriptManager {auto\\|bsf\\|javax}` | The script engine manager to use. See the script task for using this attribute. | No; default is auto |
+| `:name` | `String` | the name of the task to be created using the script | Yes |
+| `:reverseloader` | `boolean` |  |  |
+| `:setbeans` | `boolean` | This attribute controls whether to set variables for all properties, references and targets in the running script. If this attribute is false, only the project and self variables are set. If this attribute is true all the variables are set. Since Ant 1.10.13 | No; default false for backward compatibility |
+| `:src` | `File` | The location of the script as a file, if not inline | No |
+| `:uri` | `String` | The XML namespace uri that this definition should live in. | No |
 
 **Nested elements**
 
@@ -7271,10 +6304,10 @@ elements may enforce rules for which attributes are required, depending on the t
 
 **Attributes**
 
-- `:action` `String` - This is the action to be performed. For most cases this will be deploy. Some tools support additional actions, such as delete, list, undeploy, update, ...
-  Required: Yes
-- `:source` `File` - A fully qualified path/filename of the component to be deployed. This may be an .ear, .jar, .war, or any other type that is supported by the server.
-  Required: Tool dependent
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:action` | `String` | This is the action to be performed. For most cases this will be deploy. Some tools support additional actions, such as delete, list, undeploy, update, ... | Yes |
+| `:source` | `File` | A fully qualified path/filename of the component to be deployed. This may be an .ear, .jar, .war, or any other type that is supported by the server. | Tool dependent |
 
 **Nested elements**
 
@@ -7307,16 +6340,13 @@ to apply to either type of resource.
 
 **Attributes**
 
-- `:actonlinktargets` `boolean` - Whether to set the permissions of the targets of symbolic links or Windows junctions instead of the links themselves. since Ant 1.10.16.
-  Required: No; defaults to true
-- `:failonerror` `boolean` - Whether to stop the build if setting permissions fails.
-  Required: No; defaults to true
-- `:mode` `String` - The permissions to set as traditional Unix three-digit octal number.
-  Required: No
-- `:nonposixmode` `NonPosixMode {fail|pass|tryDosOrFail|tryDosOrPass}` - What to do if changing the permissions of a file is not possible because the file-system doesn't support POSIX file permissions. Possible options are fail (fail the build), pass (just log an error), tryDosOrFail (at least try to set the read-only flag on DOS file systems, fail if that isn't possible either) and tryDosOrPass (at least try to set the read-only flag on DOS file systems, just log an error if that isn't possible either).
-  Required: No; defaults to fail
-- `:permissions` `String` - The permissions to set as comma separated list of names of PosixFilePermission values.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:actonlinktargets` | `boolean` | Whether to set the permissions of the targets of symbolic links or Windows junctions instead of the links themselves. since Ant 1.10.16. | No; defaults to true |
+| `:failonerror` | `boolean` | Whether to stop the build if setting permissions fails. | No; defaults to true |
+| `:mode` | `String` | The permissions to set as traditional Unix three-digit octal number. | No |
+| `:nonposixmode` | `NonPosixMode {fail\\|pass\\|tryDosOrFail\\|tryDosOrPass}` | What to do if changing the permissions of a file is not possible because the file-system doesn't support POSIX file permissions. Possible options are fail (fail the build), pass (just log an error), tryDosOrFail (at least try to set the read-only flag on DOS file systems, fail if that isn't possible either) and tryDosOrPass (at least try to set the read-only flag on DOS file systems, just log an error if that isn't possible either). | No; defaults to fail |
+| `:permissions` | `String` | The permissions to set as comma separated list of names of PosixFilePermission values. | No |
 
 **Reference**
 
@@ -7337,20 +6367,15 @@ all.
 
 **Attributes**
 
-- `:nonproxyhosts` `String` - A list of hosts to bypass the proxy on. These should be separated with the vertical bar character |. Only in Java 1.4 does FTP use this list. e.g. fozbot.corp.sun.com|*.eng.sun.com
-  Required: String
-- `:proxyhost` `String` - the HTTP/FTP proxy host. Set this to for the HTTP proxy option to be disabled.
-  Required: String
-- `:proxypassword` `String` - Set the password for the proxy. Used only if the proxyUser is set.
-  Required: String
-- `:proxyport` `int` - the HTTP/FTP proxy port number
-  Required: int
-- `:proxyuser` `String` - set the proxy user. Probably requires a password to accompany this setting.
-  Required: String
-- `:socksproxyhost` `String` - The name of a SOCKS server. Set to to turn SOCKS proxying off.
-  Required: String
-- `:socksproxyport` `int` - Set the ProxyPort for SOCKS connections.
-  Required: int
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:nonproxyhosts` | `String` | A list of hosts to bypass the proxy on. These should be separated with the vertical bar character \\|. Only in Java 1.4 does FTP use this list. e.g. fozbot.corp.sun.com\\|*.eng.sun.com | String |
+| `:proxyhost` | `String` | the HTTP/FTP proxy host. Set this to for the HTTP proxy option to be disabled. | String |
+| `:proxypassword` | `String` | Set the password for the proxy. Used only if the proxyUser is set. | String |
+| `:proxyport` | `int` | the HTTP/FTP proxy port number | int |
+| `:proxyuser` | `String` | set the proxy user. Probably requires a password to accompany this setting. | String |
+| `:socksproxyhost` | `String` | The name of a SOCKS server. Set to to turn SOCKS proxying off. | String |
+| `:socksproxyport` | `int` | Set the ProxyPort for SOCKS connections. | int |
 
 **Reference**
 
@@ -7376,61 +6401,36 @@ and lazy is false, the JAR is signed.
 
 **Attributes**
 
-- `:alias` `String` - the alias to sign under
-  Required: Yes
-- `:destdir` `File`
-- `:digestalg` `String` - name of digest algorithm
-  Required: No
-- `:executable` `String` - Specify a particular jarsigner executable to use in place of the default binary (found in the same JDK as Apache Ant is running in). Must support the same command line options as the Sun JDK jarsigner command. since Ant 1.8.0.
-  Required: No
-- `:force` `boolean` - Whether to force signing of the jar file even if it doesn't seem to be out of date or already signed. since Ant 1.8.0.
-  Required: No; default false
-- `:internalsf` `boolean` - (true|false) include the .SF file inside the signature block
-  Required: No; default false
-- `:jar` `File` - the jar file to sign
-  Required: Yes, unless nested paths have been used
-- `:keypass` `String` - password for private key (if different)
-  Required: No
-- `:keystore` `String` - keystore location
-  Required: No
-- `:lazy` `boolean` - flag to control whether the presence of a signature file means a JAR is signed. This is only used when the target JAR matches the source JAR
-  Required: No; default false
-- `:maxmemory` `String` - Specifies the maximum memory the jarsigner JVM will use. Specified in the style of standard Java memory specs (e.g. 128m = 128 MBytes)
-  Required: No
-- `:preservelastmodified` `boolean` - Give the signed files the same last modified time as the original jar files.
-  Required: No; default false.
-- `:providerarg` `String` - Represents an optional string input argument for the constructor of provider_class_name. Ignored if providerclass is not set. since Ant 1.10.6.
-  Required: No
-- `:providerclass` `String` - name of a cryptographic service provider's master class file when the service provider is not listed in the security properties file. since Ant 1.10.6.
-  Required: No
-- `:providername` `String` - name of a cryptographic service provider's name when listed in the security properties file. since Ant 1.10.6.
-  Required: No
-- `:sectionsonly` `boolean` - (true|false) don't compute hash of entire manifest
-  Required: No; default false
-- `:sigalg` `String` - name of signature algorithm
-  Required: No
-- `:sigfile` `String` - name of .SF/.DSA file
-  Required: No
-- `:signedjar` `File` - name of signed JAR file. This can only be set when the jar attribute is set.
-  Required: No
-- `:storepass` `String` - password for keystore integrity. Ant will not use the -storepass command line argument but send the password to jarsigner when it prompts for it.
-  Required: Yes
-- `:storetype` `String` - keystore type
-  Required: No
-- `:strict` `boolean` - (true|false) strict checking when signing. since Ant 1.9.1.
-  Required: No; default false
-- `:tsacert` `String` - alias in the keystore for a timestamp authority for timestamped JAR files in Java 5+
-  Required: No
-- `:tsadigestalg` `String` - name of TSA digest algorithm. since Ant 1.10.2
-  Required: No
-- `:tsaproxyhost` `String` - proxy host to be used when connecting to TSA server
-  Required: No
-- `:tsaproxyport` `String` - proxy port to be used when connecting to TSA server
-  Required: No
-- `:tsaurl` `String` - URL for a timestamp authority for timestamped JAR files in Java 5+
-  Required: No
-- `:verbose` `boolean` - (true|false) verbose output when signing
-  Required: No; default false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:alias` | `String` | the alias to sign under | Yes |
+| `:destdir` | `File` |  |  |
+| `:digestalg` | `String` | name of digest algorithm | No |
+| `:executable` | `String` | Specify a particular jarsigner executable to use in place of the default binary (found in the same JDK as Apache Ant is running in). Must support the same command line options as the Sun JDK jarsigner command. since Ant 1.8.0. | No |
+| `:force` | `boolean` | Whether to force signing of the jar file even if it doesn't seem to be out of date or already signed. since Ant 1.8.0. | No; default false |
+| `:internalsf` | `boolean` | (true\\|false) include the .SF file inside the signature block | No; default false |
+| `:jar` | `File` | the jar file to sign | Yes, unless nested paths have been used |
+| `:keypass` | `String` | password for private key (if different) | No |
+| `:keystore` | `String` | keystore location | No |
+| `:lazy` | `boolean` | flag to control whether the presence of a signature file means a JAR is signed. This is only used when the target JAR matches the source JAR | No; default false |
+| `:maxmemory` | `String` | Specifies the maximum memory the jarsigner JVM will use. Specified in the style of standard Java memory specs (e.g. 128m = 128 MBytes) | No |
+| `:preservelastmodified` | `boolean` | Give the signed files the same last modified time as the original jar files. | No; default false. |
+| `:providerarg` | `String` | Represents an optional string input argument for the constructor of provider_class_name. Ignored if providerclass is not set. since Ant 1.10.6. | No |
+| `:providerclass` | `String` | name of a cryptographic service provider's master class file when the service provider is not listed in the security properties file. since Ant 1.10.6. | No |
+| `:providername` | `String` | name of a cryptographic service provider's name when listed in the security properties file. since Ant 1.10.6. | No |
+| `:sectionsonly` | `boolean` | (true\\|false) don't compute hash of entire manifest | No; default false |
+| `:sigalg` | `String` | name of signature algorithm | No |
+| `:sigfile` | `String` | name of .SF/.DSA file | No |
+| `:signedjar` | `File` | name of signed JAR file. This can only be set when the jar attribute is set. | No |
+| `:storepass` | `String` | password for keystore integrity. Ant will not use the -storepass command line argument but send the password to jarsigner when it prompts for it. | Yes |
+| `:storetype` | `String` | keystore type | No |
+| `:strict` | `boolean` | (true\\|false) strict checking when signing. since Ant 1.9.1. | No; default false |
+| `:tsacert` | `String` | alias in the keystore for a timestamp authority for timestamped JAR files in Java 5+ | No |
+| `:tsadigestalg` | `String` | name of TSA digest algorithm. since Ant 1.10.2 | No |
+| `:tsaproxyhost` | `String` | proxy host to be used when connecting to TSA server | No |
+| `:tsaproxyport` | `String` | proxy port to be used when connecting to TSA server | No |
+| `:tsaurl` | `String` | URL for a timestamp authority for timestamped JAR files in Java 5+ | No |
+| `:verbose` | `boolean` | (true\\|false) verbose output when signing | No; default false |
 
 **Nested elements**
 
@@ -7456,16 +6456,13 @@ requires an interval between tasks.
 
 **Attributes**
 
-- `:failonerror` `boolean` - flag controlling whether to break the build on an error
-  Required: No
-- `:hours` `int` - hours to to add to the sleep time
-  Required: No
-- `:milliseconds` `int` - milliseconds to add to the sleep time
-  Required: No
-- `:minutes` `int` - minutes to add to the sleep time
-  Required: No
-- `:seconds` `int` - seconds to add to the sleep time
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:failonerror` | `boolean` | flag controlling whether to break the build on an error | No |
+| `:hours` | `int` | hours to to add to the sleep time | No |
+| `:milliseconds` | `int` | milliseconds to add to the sleep time | No |
+| `:minutes` | `int` | minutes to add to the sleep time | No |
+| `:seconds` | `int` | seconds to add to the sleep time | No |
 
 **Reference**
 
@@ -7483,34 +6480,22 @@ https://ant.apache.org/manual/Tasks/sleep.html
 
 **Attributes**
 
-- `:comment` `String` - A comment to be applied to all files being checked in
-  Required: No
-- `:file` `String` - Filename to act upon
-  Required: No; by default, act upon the project
-- `:localpath` `Path` - Override the working directory and get to the specified path
-  Required: No
-- `:nocache` `boolean` - true|false-Only needed if SOSHOME is set as an environment variable
-  Required: No
-- `:nocompress` `boolean` - true|false-disable compression
-  Required: No
-- `:password` `String` - SourceSafe password
-  Required: No
-- `:projectpath` `String` - SourceSafe project path-eg. $/SourceRoot/Project1
-  Required: Yes
-- `:recursive` `boolean` - true|false-Only works with the CheckOutProject command
-  Required: No
-- `:soscmd` `String` - Directory which contains soscmd(.exe)
-  Required: No; by default, the executable must be in the path
-- `:soshome` `String` - The path to the SourceOffSite home directory
-  Required: No
-- `:sosserverpath` `String` - address and port of the SOS server-eg. 192.168.0.1:8888
-  Required: Yes
-- `:username` `String` - SourceSafe username
-  Required: Yes
-- `:verbose` `boolean` - true|false-Status messages are displayed
-  Required: No
-- `:vssserverpath` `String` - path to the srcsafe.ini-eg. \\\\server\\vss\\srcsafe.ini
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:comment` | `String` | A comment to be applied to all files being checked in | No |
+| `:file` | `String` | Filename to act upon | No; by default, act upon the project |
+| `:localpath` | `Path` | Override the working directory and get to the specified path | No |
+| `:nocache` | `boolean` | true\\|false-Only needed if SOSHOME is set as an environment variable | No |
+| `:nocompress` | `boolean` | true\\|false-disable compression | No |
+| `:password` | `String` | SourceSafe password | No |
+| `:projectpath` | `String` | SourceSafe project path-eg. $/SourceRoot/Project1 | Yes |
+| `:recursive` | `boolean` | true\\|false-Only works with the CheckOutProject command | No |
+| `:soscmd` | `String` | Directory which contains soscmd(.exe) | No; by default, the executable must be in the path |
+| `:soshome` | `String` | The path to the SourceOffSite home directory | No |
+| `:sosserverpath` | `String` | address and port of the SOS server-eg. 192.168.0.1:8888 | Yes |
+| `:username` | `String` | SourceSafe username | Yes |
+| `:verbose` | `boolean` | true\\|false-Status messages are displayed | No |
+| `:vssserverpath` | `String` | path to the srcsafe.ini-eg. \\\\server\\vss\\srcsafe.ini | Yes |
 
 **Reference**
 
@@ -7528,32 +6513,21 @@ https://ant.apache.org/manual/Tasks/sos.html#SOSCheckIn
 
 **Attributes**
 
-- `:file` `String` - Filename to act upon
-  Required: No; by default, act upon the project
-- `:localpath` `Path` - Override the working directory and get to the specified path
-  Required: No
-- `:nocache` `boolean` - true|false-Only needed if SOSHOME is set as an environment variable
-  Required: No
-- `:nocompress` `boolean` - true|false-disable compression
-  Required: No
-- `:password` `String` - SourceSafe password
-  Required: No
-- `:projectpath` `String` - SourceSafe project path-eg. $/SourceRoot/Project1
-  Required: Yes
-- `:recursive` `boolean` - true|false-Only works with the CheckOutProject command
-  Required: No
-- `:soscmd` `String` - Directory which contains soscmd(.exe)
-  Required: No; by default, the executable must be in the path
-- `:soshome` `String` - The path to the SourceOffSite home directory
-  Required: No
-- `:sosserverpath` `String` - address and port of the SOS server-eg. 192.168.0.1:8888
-  Required: Yes
-- `:username` `String` - SourceSafe username
-  Required: Yes
-- `:verbose` `boolean` - true|false-Status messages are displayed
-  Required: No
-- `:vssserverpath` `String` - path to the srcsafe.ini-eg. \\\\server\\vss\\srcsafe.ini
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `String` | Filename to act upon | No; by default, act upon the project |
+| `:localpath` | `Path` | Override the working directory and get to the specified path | No |
+| `:nocache` | `boolean` | true\\|false-Only needed if SOSHOME is set as an environment variable | No |
+| `:nocompress` | `boolean` | true\\|false-disable compression | No |
+| `:password` | `String` | SourceSafe password | No |
+| `:projectpath` | `String` | SourceSafe project path-eg. $/SourceRoot/Project1 | Yes |
+| `:recursive` | `boolean` | true\\|false-Only works with the CheckOutProject command | No |
+| `:soscmd` | `String` | Directory which contains soscmd(.exe) | No; by default, the executable must be in the path |
+| `:soshome` | `String` | The path to the SourceOffSite home directory | No |
+| `:sosserverpath` | `String` | address and port of the SOS server-eg. 192.168.0.1:8888 | Yes |
+| `:username` | `String` | SourceSafe username | Yes |
+| `:verbose` | `boolean` | true\\|false-Status messages are displayed | No |
+| `:vssserverpath` | `String` | path to the srcsafe.ini-eg. \\\\server\\vss\\srcsafe.ini | Yes |
 
 **Reference**
 
@@ -7571,36 +6545,23 @@ https://ant.apache.org/manual/Tasks/sos.html#SOSCheckOut
 
 **Attributes**
 
-- `:file` `String` - Filename to act upon
-  Required: No; by default, act upon the project
-- `:label` `String` - a label version to get-Only works with the GetProject command
-  Required: No
-- `:localpath` `Path` - Override the working directory and get to the specified path
-  Required: No
-- `:nocache` `boolean` - true|false-Only needed if SOSHOME is set as an environment variable
-  Required: No
-- `:nocompress` `boolean` - true|false-disable compression
-  Required: No
-- `:password` `String` - SourceSafe password
-  Required: No
-- `:projectpath` `String` - SourceSafe project path-eg. $/SourceRoot/Project1
-  Required: Yes
-- `:recursive` `boolean` - true|false-Only works with the GetProject command
-  Required: No
-- `:soscmd` `String` - Directory which contains soscmd(.exe)
-  Required: No; by default, the executable must be in the path
-- `:soshome` `String` - The path to the SourceOffSite home directory
-  Required: No
-- `:sosserverpath` `String` - address & port of the SOS server-eg. 192.168.0.1:8888
-  Required: Yes
-- `:username` `String` - SourceSafe username
-  Required: Yes
-- `:verbose` `boolean` - true|false-Status messages are displayed
-  Required: No
-- `:version` `String` - a version number to get-Only works with the GetFile command
-  Required: No
-- `:vssserverpath` `String` - path to the srcsafe.ini-eg. \\\\server\\vss\\srcsafe.ini
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `String` | Filename to act upon | No; by default, act upon the project |
+| `:label` | `String` | a label version to get-Only works with the GetProject command | No |
+| `:localpath` | `Path` | Override the working directory and get to the specified path | No |
+| `:nocache` | `boolean` | true\\|false-Only needed if SOSHOME is set as an environment variable | No |
+| `:nocompress` | `boolean` | true\\|false-disable compression | No |
+| `:password` | `String` | SourceSafe password | No |
+| `:projectpath` | `String` | SourceSafe project path-eg. $/SourceRoot/Project1 | Yes |
+| `:recursive` | `boolean` | true\\|false-Only works with the GetProject command | No |
+| `:soscmd` | `String` | Directory which contains soscmd(.exe) | No; by default, the executable must be in the path |
+| `:soshome` | `String` | The path to the SourceOffSite home directory | No |
+| `:sosserverpath` | `String` | address & port of the SOS server-eg. 192.168.0.1:8888 | Yes |
+| `:username` | `String` | SourceSafe username | Yes |
+| `:verbose` | `boolean` | true\\|false-Status messages are displayed | No |
+| `:version` | `String` | a version number to get-Only works with the GetFile command | No |
+| `:vssserverpath` | `String` | path to the srcsafe.ini-eg. \\\\server\\vss\\srcsafe.ini | Yes |
 
 **Reference**
 
@@ -7618,29 +6579,22 @@ https://ant.apache.org/manual/Tasks/sos.html#SOSGet
 
 **Attributes**
 
-- `:comment` `String` - A comment to be applied to all files being labeled
-  Required: No
-- `:label` `String` - The label to apply to a project
-  Required: Yes
-- `:localpath` `Path`
-- `:nocache` `boolean`
-- `:nocompress` `boolean`
-- `:password` `String` - SourceSafe password
-  Required: No
-- `:projectpath` `String` - SourceSafe project path-eg. $/SourceRoot/Project1
-  Required: Yes
-- `:soscmd` `String` - Directory which contains soscmd(.exe)
-  Required: No; by default, the executable must be in the path
-- `:soshome` `String`
-- `:sosserverpath` `String` - address and port of the SOS server-eg. 192.168.0.1:8888
-  Required: Yes
-- `:username` `String` - SourceSafe username
-  Required: Yes
-- `:verbose` `boolean` - true|false-Status messages are displayed
-  Required: No
-- `:version` `String`
-- `:vssserverpath` `String` - path to the srcsafe.ini-eg. \\\\server\\vss\\srcsafe.ini
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:comment` | `String` | A comment to be applied to all files being labeled | No |
+| `:label` | `String` | The label to apply to a project | Yes |
+| `:localpath` | `Path` |  |  |
+| `:nocache` | `boolean` |  |  |
+| `:nocompress` | `boolean` |  |  |
+| `:password` | `String` | SourceSafe password | No |
+| `:projectpath` | `String` | SourceSafe project path-eg. $/SourceRoot/Project1 | Yes |
+| `:soscmd` | `String` | Directory which contains soscmd(.exe) | No; by default, the executable must be in the path |
+| `:soshome` | `String` |  |  |
+| `:sosserverpath` | `String` | address and port of the SOS server-eg. 192.168.0.1:8888 | Yes |
+| `:username` | `String` | SourceSafe username | Yes |
+| `:verbose` | `boolean` | true\\|false-Status messages are displayed | No |
+| `:version` | `String` |  |  |
+| `:vssserverpath` | `String` | path to the srcsafe.ini-eg. \\\\server\\vss\\srcsafe.ini | Yes |
 
 **Reference**
 
@@ -7672,73 +6626,43 @@ settings need to be valid, or Ant's proxy support disabled with -noproxy option.
 
 **Attributes**
 
-- `:append` `boolean` - whether output should be appended to or overwrite an existing file.
-  Required: No; defaults to false, ignored if output does not specify a filesystem destination
-- `:autocommit` `boolean` - Auto commit flag for database connection
-  Required: No; defaults to false
-- `:caching` `boolean` - Should the task cache loaders and the driver?
-  Required: No; defaults to true
-- `:classpath` `Path` - Classpath used to load driver
-  Required: No; defaults to system classpath
-- `:classpathref` `Reference` - The classpath to use, given as a reference to a path defined elsewhere.
-  Required: No; defaults to system classpath
-- `:csvcolumnseparator` `String` - The column separator used when printing the results. Since Ant 1.8.0.
-  Required: No; defaults to,
-- `:csvquotecharacter` `String` - The character used to quote column values. If set, columns that contain either the column separator or the quote character itself will be surrounded by the quote character. The quote character itself will be doubled if it appears inside of the column's value. Note: BLOB values will never be quoted. Since Ant 1.8.0.
-  Required: No; default is not set (i.e. no quoting ever occurs)
-- `:delimiter` `String` - String that separates SQL statements
-  Required: No; defaults to;;
-- `:delimitertype` `DelimiterType` - Control whether the delimiter will only be recognized on a line by itself. Can be normal-anywhere on the line, or row, meaning it must be on a line by itself
-  Required: No; defaults to normal
-- `:driver` `String` - Class name of the jdbc driver
-  Required: Yes
-- `:encoding` `String` - The encoding of the files containing SQL statements
-  Required: No; defaults to default JVM character encoding
-- `:errorproperty` `String` - The name of a property to set in the event of an error. Since Ant 1.8.0
-  Required: No
-- `:escapeprocessing` `boolean` - Control whether the Java statement object will perform escape substitution. See Statement's API docs for details. Since Ant 1.6. No; defaults to true
-- `:expandproperties` `boolean` - Set to true to turn on property expansion in nested SQL, inline in the task or nested transactions. Since Ant 1.7. No; defaults to true
-- `:failonconnectionerror` `boolean` - If false, will only print a warning message and not execute any statement if the task fails to connect to the database. Since Ant 1.8.0.
-  Required: No; defaults to true
-- `:forcecsvquotechar` `boolean` - If true, quoting always occurs
-  Required: No; default is not set (i.e. quoting occurs only where needed)
-- `:keepformat` `boolean` - Control whether the format of SQL will be preserved. Useful when loading packages and procedures. No; defaults to false
-- `:onerror` `OnError` - Action to perform when statement fails: continue, stop, abort
-  Required: No; defaults to abort
-- `:output` `Resource` - Output file for result sets. Since Ant 1.8 can specify any Resource that supports output (see note).
-  Required: No; print to System.out by default
-- `:outputencoding` `String` - The encoding of the files holding results. since Ant 1.9.4
-  Required: No; defaults to default JVM character encoding
-- `:password` `String` - Database password
-  Required: Yes
-- `:print` `boolean` - Print result sets from the statements
-  Required: No; defaults to false
-- `:rawblobs` `boolean` - If true, will write raw streams rather than hex encoding when printing BLOB results. Since Ant 1.7.1.
-  Required: No; defaults to false
-- `:rdbms` `String` - Execute task only if this rdbms
-  Required: No; unrestricted by default
-- `:rowcountproperty` `String` - The name of a property to set to the number of rows updated by the first statement/transaction that actually returned a row count. Since Ant 1.8.0
-  Required: No
-- `:showheaders` `boolean` - Print headers for result sets from the statements
-  Required: No; defaults to true
-- `:showtrailers` `boolean` - Print trailer for number of rows affected
-  Required: No; defaults to true
-- `:showwarnings` `boolean` - If true, SQLWarnings will be logged at the warning level. Since Ant 1.8.0. Note: even if the attribute is set to false, warnings that apply to the connection will be logged at the verbose level.
-  Required: No; defaults to false
-- `:src` `File` - File containing SQL statements
-  Required: Yes, unless statements enclosed within tags
-- `:strictdelimitermatching` `boolean` - If false, delimiters will be searched for in a case-insensitive manner (i.e. delimiter=go matches GO) and surrounding whitespace will be ignored (delimiter=go matches GO). Since Ant 1.8.0.
-  Required: No; defaults to true
-- `:treatwarningsaserrors` `boolean` - If true, SQLWarnings will be treated like errors-and the logic selected via the onError attribute applies. Since Ant 1.8.0.
-  Required: No; defaults to false
-- `:url` `String` - Database connection URL
-  Required: Yes
-- `:userid` `String` - Database user name
-  Required: Yes
-- `:version` `String` - Execute task only if rdbms version match
-  Required: No; unrestricted by default
-- `:warningproperty` `String` - The name of a property to set in the event of an warning. Since Ant 1.8.0
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` | whether output should be appended to or overwrite an existing file. | No; defaults to false, ignored if output does not specify a filesystem destination |
+| `:autocommit` | `boolean` | Auto commit flag for database connection | No; defaults to false |
+| `:caching` | `boolean` | Should the task cache loaders and the driver? | No; defaults to true |
+| `:classpath` | `Path` | Classpath used to load driver | No; defaults to system classpath |
+| `:classpathref` | `Reference` | The classpath to use, given as a reference to a path defined elsewhere. | No; defaults to system classpath |
+| `:csvcolumnseparator` | `String` | The column separator used when printing the results. Since Ant 1.8.0. | No; defaults to, |
+| `:csvquotecharacter` | `String` | The character used to quote column values. If set, columns that contain either the column separator or the quote character itself will be surrounded by the quote character. The quote character itself will be doubled if it appears inside of the column's value. Note: BLOB values will never be quoted. Since Ant 1.8.0. | No; default is not set (i.e. no quoting ever occurs) |
+| `:delimiter` | `String` | String that separates SQL statements | No; defaults to;; |
+| `:delimitertype` | `DelimiterType` | Control whether the delimiter will only be recognized on a line by itself. Can be normal-anywhere on the line, or row, meaning it must be on a line by itself | No; defaults to normal |
+| `:driver` | `String` | Class name of the jdbc driver | Yes |
+| `:encoding` | `String` | The encoding of the files containing SQL statements | No; defaults to default JVM character encoding |
+| `:errorproperty` | `String` | The name of a property to set in the event of an error. Since Ant 1.8.0 | No |
+| `:escapeprocessing` | `boolean` | Control whether the Java statement object will perform escape substitution. See Statement's API docs for details. Since Ant 1.6. No; defaults to true |  |
+| `:expandproperties` | `boolean` | Set to true to turn on property expansion in nested SQL, inline in the task or nested transactions. Since Ant 1.7. No; defaults to true |  |
+| `:failonconnectionerror` | `boolean` | If false, will only print a warning message and not execute any statement if the task fails to connect to the database. Since Ant 1.8.0. | No; defaults to true |
+| `:forcecsvquotechar` | `boolean` | If true, quoting always occurs | No; default is not set (i.e. quoting occurs only where needed) |
+| `:keepformat` | `boolean` | Control whether the format of SQL will be preserved. Useful when loading packages and procedures. No; defaults to false |  |
+| `:onerror` | `OnError` | Action to perform when statement fails: continue, stop, abort | No; defaults to abort |
+| `:output` | `Resource` | Output file for result sets. Since Ant 1.8 can specify any Resource that supports output (see note). | No; print to System.out by default |
+| `:outputencoding` | `String` | The encoding of the files holding results. since Ant 1.9.4 | No; defaults to default JVM character encoding |
+| `:password` | `String` | Database password | Yes |
+| `:print` | `boolean` | Print result sets from the statements | No; defaults to false |
+| `:rawblobs` | `boolean` | If true, will write raw streams rather than hex encoding when printing BLOB results. Since Ant 1.7.1. | No; defaults to false |
+| `:rdbms` | `String` | Execute task only if this rdbms | No; unrestricted by default |
+| `:rowcountproperty` | `String` | The name of a property to set to the number of rows updated by the first statement/transaction that actually returned a row count. Since Ant 1.8.0 | No |
+| `:showheaders` | `boolean` | Print headers for result sets from the statements | No; defaults to true |
+| `:showtrailers` | `boolean` | Print trailer for number of rows affected | No; defaults to true |
+| `:showwarnings` | `boolean` | If true, SQLWarnings will be logged at the warning level. Since Ant 1.8.0. Note: even if the attribute is set to false, warnings that apply to the connection will be logged at the verbose level. | No; defaults to false |
+| `:src` | `File` | File containing SQL statements | Yes, unless statements enclosed within tags |
+| `:strictdelimitermatching` | `boolean` | If false, delimiters will be searched for in a case-insensitive manner (i.e. delimiter=go matches GO) and surrounding whitespace will be ignored (delimiter=go matches GO). Since Ant 1.8.0. | No; defaults to true |
+| `:treatwarningsaserrors` | `boolean` | If true, SQLWarnings will be treated like errors-and the logic selected via the onError attribute applies. Since Ant 1.8.0. | No; defaults to false |
+| `:url` | `String` | Database connection URL | Yes |
+| `:userid` | `String` | Database user name | Yes |
+| `:version` | `String` | Execute task only if rdbms version match | No; unrestricted by default |
+| `:warningproperty` | `String` | The name of a property to set in the event of an warning. Since Ant 1.8.0 | No |
 
 **Nested elements**
 
@@ -7770,74 +6694,42 @@ with versions of JSCh earlier than 0.1.28. See also the scp task
 
 **Attributes**
 
-- `:append` `boolean` - Whether output file should be appended to or overwritten.
-  Required: No; defaults to false, meaning overwrite any existing file
-- `:bindsensitive` `String` - Contains string with key=values pairs are divided by sensitiveDelimiter. since Ant 1.10.16
-  Required: Yes if hideSensitive set to true
-- `:command` `String` - The command to run on the remote host.
-  Required: Exactly one of the two
-- `:commandresource` `String` - The resource (file) that contains the commands to run on the remote host. Since Ant 1.7.1
-  Required: Exactly one of the two
-- `:errappend` `boolean` - Whether errorOutput file should be appended to or overwritten. since Ant 1.9.4
-  Required: No; defaults to false, meaning overwrite any existing file
-- `:erroroutput` `File` - The file to which the standard error of the command should be redirected. since Ant 1.9.4
-  Required: No
-- `:errorproperty` `String` - The name of a property in which the standard error of the command should be stored. since Ant 1.9.4
-  Required: No
-- `:failonerror` `boolean` - Whether to halt the build if the command does not complete successfully.
-  Required: No; defaults to true
-- `:hidesensitive` `boolean` - Allows to hide sensitive data in logs without output supressing. It makes easier debugging with sensitive data hiding. since Ant 1.10.16
-  Required: No; defaults to false
-- `:host` `String` - The hostname or IP address of the remote host to which you wish to connect.
-  Required: Yes
-- `:input` `File` - A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring and inputproperty attributes. When executing more than one command via commandResource, input will be read for each command. since Ant 1.8.0
-  Required: No
-- `:inputproperty` `String` - Name of a property content of which serves as the input stream for the executed command. This attribute is mutually exclusive with the input and inputstring attributes. When executing more than one command via commandResource, input will be read for each command. since Ant 1.8.0
-  Required: No
-- `:inputstring` `String` - A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input and inputproperty attributes. When executing more than one command via commandResource, input will be read for each command. since Ant 1.8.3
-  Required: No
-- `:keyfile` `String` - Location of the file holding the private key.
-  Required: Yes, if you are using key based authentication
-- `:knownhosts` `String` - This sets the known hosts file to use to validate the identity of the remote host. This must be a SSH2 format file. SSH1 format is not supported.
-  Required: No; defaults to ${user.home}/.ssh/known_hosts
-- `:output` `File` - Name of a file to which to write the output.
-  Required: No
-- `:outputproperty` `String` - The name of a property in which the output of the command should be stored. If you use the commandResource attribute, each command's output will be prefixed by the command itself.
-  Required: No
-- `:passphrase` `String` - Passphrase for your private key.
-  Required: No; defaults to an empty string
-- `:password` `String` - The password.
-  Required: Yes, unless you are using key based authentication or the password has been given in the file or todir attribute.
-- `:placeholderbrackets` `String` - Contains symbols to destinguish placeholder are needed to replace with sensitive data. since Ant 1.10.16
-  Required: No, defaults to:
-- `:port` `int` - The port to connect to on the remote host.
-  Required: No; defaults to 22
-- `:resultproperty` `String` - the name of a property in which the return code of the command should be stored. Only of interest if failonerror=false. since Ant 1.9.4
-  Required: No
-- `:sensitivedelimiter` `String` - Sensitive data delimiter of key=values pairs. since Ant 1.10.16
-  Required: No, defaults to;
-- `:serveralivecountmax` `int` - The number of server alive messages which may be sent without receiving any messages back from the server. Only used if serverAliveIntervalSeconds is not 0. since Ant 1.9.7
-  Required: No; defaults to 3
-- `:serveraliveintervalseconds` `int` - Sets a timeout interval in seconds after which if no data has been received from the server, the task will send a message through the encrypted channel to request a response from the server. since Ant 1.9.7
-  Required: No, the default is 0, indicating that these messages will not be sent to the server
-- `:sshconfig` `String` - Location of the file holding the OpenSSH style configuration (e.g. ${user.home}/.ssh/config). The username and the key file are read from the configuration file, unless they are already specified in the task parameters. since Ant 1.10.8
-  Required: No
-- `:suppresssystemerr` `boolean` - Whether to suppress System.err. since Ant 1.9.4
-  Required: No; defaults to false
-- `:suppresssystemout` `boolean` - Whether to suppress system out. since Ant 1.9.0
-  Required: No; defaults to false
-- `:timeout` `long` - Stop the command if it doesn't finish within the specified time (given in milliseconds unlike telnet, which expects a timeout in seconds).
-  Required: No; defaults to 0 which means never
-- `:trust` `boolean` - This trusts all unknown hosts if set to yes or true. Note: If you set this to false (the default), the host you connect to must be listed in your knownhosts file, this also implies that the file exists.
-  Required: No; defaults to no
-- `:usepty` `boolean` - Whether to allocate a pseudo-tty (like ssh -t). since Ant 1.8.3
-  Required: No; defaults to false
-- `:username` `String` - The username on the remote host to which you are connecting.
-  Required: Yes
-- `:usesystemin` `boolean` - Whether to pass the current standard input to the remote process. since Ant 1.9.4
-  Required: No; defaults to false
-- `:verbose` `boolean` - Determines whether sshexec outputs verbosely to the user. Similar output is generated as the ssh command line tool with the -v option. since Ant 1.8.0
-  Required: No; defaults to false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `boolean` | Whether output file should be appended to or overwritten. | No; defaults to false, meaning overwrite any existing file |
+| `:bindsensitive` | `String` | Contains string with key=values pairs are divided by sensitiveDelimiter. since Ant 1.10.16 | Yes if hideSensitive set to true |
+| `:command` | `String` | The command to run on the remote host. | Exactly one of the two |
+| `:commandresource` | `String` | The resource (file) that contains the commands to run on the remote host. Since Ant 1.7.1 | Exactly one of the two |
+| `:errappend` | `boolean` | Whether errorOutput file should be appended to or overwritten. since Ant 1.9.4 | No; defaults to false, meaning overwrite any existing file |
+| `:erroroutput` | `File` | The file to which the standard error of the command should be redirected. since Ant 1.9.4 | No |
+| `:errorproperty` | `String` | The name of a property in which the standard error of the command should be stored. since Ant 1.9.4 | No |
+| `:failonerror` | `boolean` | Whether to halt the build if the command does not complete successfully. | No; defaults to true |
+| `:hidesensitive` | `boolean` | Allows to hide sensitive data in logs without output supressing. It makes easier debugging with sensitive data hiding. since Ant 1.10.16 | No; defaults to false |
+| `:host` | `String` | The hostname or IP address of the remote host to which you wish to connect. | Yes |
+| `:input` | `File` | A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring and inputproperty attributes. When executing more than one command via commandResource, input will be read for each command. since Ant 1.8.0 | No |
+| `:inputproperty` | `String` | Name of a property content of which serves as the input stream for the executed command. This attribute is mutually exclusive with the input and inputstring attributes. When executing more than one command via commandResource, input will be read for each command. since Ant 1.8.0 | No |
+| `:inputstring` | `String` | A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input and inputproperty attributes. When executing more than one command via commandResource, input will be read for each command. since Ant 1.8.3 | No |
+| `:keyfile` | `String` | Location of the file holding the private key. | Yes, if you are using key based authentication |
+| `:knownhosts` | `String` | This sets the known hosts file to use to validate the identity of the remote host. This must be a SSH2 format file. SSH1 format is not supported. | No; defaults to ${user.home}/.ssh/known_hosts |
+| `:output` | `File` | Name of a file to which to write the output. | No |
+| `:outputproperty` | `String` | The name of a property in which the output of the command should be stored. If you use the commandResource attribute, each command's output will be prefixed by the command itself. | No |
+| `:passphrase` | `String` | Passphrase for your private key. | No; defaults to an empty string |
+| `:password` | `String` | The password. | Yes, unless you are using key based authentication or the password has been given in the file or todir attribute. |
+| `:placeholderbrackets` | `String` | Contains symbols to destinguish placeholder are needed to replace with sensitive data. since Ant 1.10.16 | No, defaults to: |
+| `:port` | `int` | The port to connect to on the remote host. | No; defaults to 22 |
+| `:resultproperty` | `String` | the name of a property in which the return code of the command should be stored. Only of interest if failonerror=false. since Ant 1.9.4 | No |
+| `:sensitivedelimiter` | `String` | Sensitive data delimiter of key=values pairs. since Ant 1.10.16 | No, defaults to; |
+| `:serveralivecountmax` | `int` | The number of server alive messages which may be sent without receiving any messages back from the server. Only used if serverAliveIntervalSeconds is not 0. since Ant 1.9.7 | No; defaults to 3 |
+| `:serveraliveintervalseconds` | `int` | Sets a timeout interval in seconds after which if no data has been received from the server, the task will send a message through the encrypted channel to request a response from the server. since Ant 1.9.7 | No, the default is 0, indicating that these messages will not be sent to the server |
+| `:sshconfig` | `String` | Location of the file holding the OpenSSH style configuration (e.g. ${user.home}/.ssh/config). The username and the key file are read from the configuration file, unless they are already specified in the task parameters. since Ant 1.10.8 | No |
+| `:suppresssystemerr` | `boolean` | Whether to suppress System.err. since Ant 1.9.4 | No; defaults to false |
+| `:suppresssystemout` | `boolean` | Whether to suppress system out. since Ant 1.9.0 | No; defaults to false |
+| `:timeout` | `long` | Stop the command if it doesn't finish within the specified time (given in milliseconds unlike telnet, which expects a timeout in seconds). | No; defaults to 0 which means never |
+| `:trust` | `boolean` | This trusts all unknown hosts if set to yes or true. Note: If you set this to false (the default), the host you connect to must be listed in your knownhosts file, this also implies that the file exists. | No; defaults to no |
+| `:usepty` | `boolean` | Whether to allocate a pseudo-tty (like ssh -t). since Ant 1.8.3 | No; defaults to false |
+| `:username` | `String` | The username on the remote host to which you are connecting. | Yes |
+| `:usesystemin` | `boolean` | Whether to pass the current standard input to the remote process. since Ant 1.9.4 | No; defaults to false |
+| `:verbose` | `boolean` | Determines whether sshexec outputs verbosely to the user. Similar output is generated as the ssh command line tool with the -v option. since Ant 1.8.0 | No; defaults to false |
 
 **Nested elements**
 
@@ -7864,35 +6756,24 @@ with versions of JSCh earlier than 0.1.28. See also the sshexec and scp tasks
 
 **Attributes**
 
-- `:failonerror` `boolean` - Whether to halt the build if the command does not complete successfully.
-  Required: No; defaults to true
-- `:host` `String` - The hostname or IP address of the remote host to which you wish to connect.
-  Required: Yes
-- `:keyfile` `String` - Location of the file holding the private key.
-  Required: Yes, if you are using key based authentication
-- `:knownhosts` `String` - This sets the known hosts file to use to validate the identity of the remote host. This must be a SSH2 format file. SSH1 format is not supported.
-  Required: No; defaults to ${user.home}/.ssh/known_hosts
-- `:localtunnels` `String` - A comma-delimited list of colon-delimited lport:rhost:rport triplets defining local port forwarding. If nested localtunnel elements are also provided, both sets of tunnels will be established.
-  Required: No
-- `:passphrase` `String` - Passphrase for your private key.
-  Required: No; defaults to an empty string
-- `:password` `String` - The password.
-  Required: Yes, unless you are using key based authentication or the password has been given in the file or todir attribute
-- `:port` `int` - The port to connect to on the remote host.
-  Required: No; defaults to 22
-- `:remotetunnels` `String` - A comma-delimited list of colon-delimited rport:lhost:lport triplets defining remote port forwarding. If nested remotetunnel elements are also provided, both sets of tunnels will be established.
-  Required: No
-- `:serveralivecountmax` `int`
-- `:serveraliveintervalseconds` `int`
-- `:sshconfig` `String` - Location of the file holding the OpenSSH style configuration (e.g. ${user.home}/.ssh/config). The username and the key file are read from the configuration file, unless they are already specified in the task parameters. since Ant 1.10.8
-  Required: No
-- `:timeout` `long` - Give up if the connection cannot be established within the specified time (given in milliseconds).
-  Required: No; defaults to 0 which means never
-- `:trust` `boolean` - This trusts all unknown hosts if set to yes or true. Note: If you set this to false (the default), the host you connect to must be listed in your knownhosts file, this also implies that the file exists.
-  Required: No; defaults to no
-- `:username` `String` - The username on the remote host to which you are connecting.
-  Required: Yes
-- `:verbose` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:failonerror` | `boolean` | Whether to halt the build if the command does not complete successfully. | No; defaults to true |
+| `:host` | `String` | The hostname or IP address of the remote host to which you wish to connect. | Yes |
+| `:keyfile` | `String` | Location of the file holding the private key. | Yes, if you are using key based authentication |
+| `:knownhosts` | `String` | This sets the known hosts file to use to validate the identity of the remote host. This must be a SSH2 format file. SSH1 format is not supported. | No; defaults to ${user.home}/.ssh/known_hosts |
+| `:localtunnels` | `String` | A comma-delimited list of colon-delimited lport:rhost:rport triplets defining local port forwarding. If nested localtunnel elements are also provided, both sets of tunnels will be established. | No |
+| `:passphrase` | `String` | Passphrase for your private key. | No; defaults to an empty string |
+| `:password` | `String` | The password. | Yes, unless you are using key based authentication or the password has been given in the file or todir attribute |
+| `:port` | `int` | The port to connect to on the remote host. | No; defaults to 22 |
+| `:remotetunnels` | `String` | A comma-delimited list of colon-delimited rport:lhost:lport triplets defining remote port forwarding. If nested remotetunnel elements are also provided, both sets of tunnels will be established. | No |
+| `:serveralivecountmax` | `int` |  |  |
+| `:serveraliveintervalseconds` | `int` |  |  |
+| `:sshconfig` | `String` | Location of the file holding the OpenSSH style configuration (e.g. ${user.home}/.ssh/config). The username and the key file are read from the configuration file, unless they are already specified in the task parameters. since Ant 1.10.8 | No |
+| `:timeout` | `long` | Give up if the connection cannot be established within the specified time (given in milliseconds). | No; defaults to 0 which means never |
+| `:trust` | `boolean` | This trusts all unknown hosts if set to yes or true. Note: If you set this to false (the default), the host you connect to must be listed in your knownhosts file, this also implies that the file exists. | No; defaults to no |
+| `:username` | `String` | The username on the remote host to which you are connecting. | Yes |
+| `:verbose` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -7950,58 +6831,36 @@ path-like structure).
 
 **Attributes**
 
-- `:basedir` `File` - where to find the source XML file.
-  Required: No; defaults to the project's basedir
-- `:casesensitive` `boolean`
-- `:classpath` `Path` - the classpath to use when looking up the XSLT processor.
-  Required: No
-- `:classpathref` `Reference` - the classpath to use, given as reference to a path defined elsewhere.
-  Required: No
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:destdir` `File` - directory in which to store the results.
-  Required: Yes, unless in and out have been specified.
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:extension` `String` - desired file extension to be used for the targets.
-  Required: No; default is .html, ignored if a nested <mapper> or both in and out have been specified
-- `:failonerror` `boolean` - Whether the build should fail if any error occurs. Note that transformation errors can still be suppressed by setting failOnTransformationError to false even if this attribute is true. Since Ant 1.8.0.
-  Required: No; default is true
-- `:failonnoresources` `boolean` - Whether the build should fail if the nested resource collection is empty. Note that this attribute has no effect of failOnError is false. Since Ant 1.8.0.
-  Required: No; default is true
-- `:failontransformationerror` `boolean` - Whether the build should fail if an error occurs while transforming the document. Note that this attribute has no effect if failOnError is false. Since Ant 1.8.0.
-  Required: No; default is true
-- `:filedirparameter` `String` - Specifies a XSL parameter for accessing the directory of the current processed file. For files in the current directory, a value of. will be passed to the transformation. If not set, the directory is not passed to the transformation. Since Ant 1.7.
-  Required: No
-- `:filenameparameter` `String` - Specifies an XSL parameter for accessing the name of the current processed file. If not set, the file name is not passed to the transformation. Since Ant 1.7.
-  Required: No
-- `:followsymlinks` `boolean`
-- `:force` `boolean` - Recreate target files, even if they are newer than their corresponding source files or the stylesheet.
-  Required: No; default is false
-- `:granularity` `long` - The number of milliseconds leeway to give before deciding a file is out of date with respect of the source file or stylesheet. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.10.16.
-  Required: No; default is 1 second, or 2 seconds on DOS systems
-- `:in` `File` - specifies a single XML document to be styled. Should be used with the out attribute.
-  Required: No
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:out` `File` - specifies the output name for the styled result from the in attribute.
-  Required: No
-- `:processor` `String` - name of the XSLT processor to use. Permissible value is: trax for a TraX compliant processor (ie JAXP interface implementation such as Xalan 2 or Saxon) Support for Xalan 1 has been removed since Ant 1.7.
-  Required: No; defaults to trax
-- `:reloadstylesheet` `boolean` - Control whether the stylesheet transformer is created anew for every transform operation. If you set this to true, performance may suffer, but you may work around a bug in certain Xalan versions. Since Ant 1.5.2.
-  Required: No; default is false
-- `:scanincludeddirectories` `boolean` - If any directories are matched by the includes/excludes patterns, try to transform all files in these directories. No; default is true
-- `:style` `String` - name of the stylesheet to use-given either relative to the project's basedir or as an absolute path. Alternatively, a nested element which Ant can interpret as a resource can be used to indicate where to find the stylesheet. Deprecated variation: If the stylesheet cannot be found, and if you have specified the attribute basedir for the task, Ant will assume that the style attribute is relative to the basedir of the task.
-  Required: No, if the location of the stylesheet is specified using a nested <style> element
-- `:suppresswarnings` `boolean` - Whether processor warnings shall be suppressed. This option requires support by the processor, it is supported by the TrAX processor bundled with Ant. Since Ant 1.8.0.
-  Required: No; default is false
-- `:useimplicitfileset` `boolean` - Whether the implicit fileset formed by this task shall be used. If you set this to false you must use nested resource collections-or the in attribute, in which case this attribute has no impact anyway. Since Ant 1.7.
-  Required: No; default is true
-- `:xslresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` | where to find the source XML file. | No; defaults to the project's basedir |
+| `:casesensitive` | `boolean` |  |  |
+| `:classpath` | `Path` | the classpath to use when looking up the XSLT processor. | No |
+| `:classpathref` | `Reference` | the classpath to use, given as reference to a path defined elsewhere. | No |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:destdir` | `File` | directory in which to store the results. | Yes, unless in and out have been specified. |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:extension` | `String` | desired file extension to be used for the targets. | No; default is .html, ignored if a nested <mapper> or both in and out have been specified |
+| `:failonerror` | `boolean` | Whether the build should fail if any error occurs. Note that transformation errors can still be suppressed by setting failOnTransformationError to false even if this attribute is true. Since Ant 1.8.0. | No; default is true |
+| `:failonnoresources` | `boolean` | Whether the build should fail if the nested resource collection is empty. Note that this attribute has no effect of failOnError is false. Since Ant 1.8.0. | No; default is true |
+| `:failontransformationerror` | `boolean` | Whether the build should fail if an error occurs while transforming the document. Note that this attribute has no effect if failOnError is false. Since Ant 1.8.0. | No; default is true |
+| `:filedirparameter` | `String` | Specifies a XSL parameter for accessing the directory of the current processed file. For files in the current directory, a value of. will be passed to the transformation. If not set, the directory is not passed to the transformation. Since Ant 1.7. | No |
+| `:filenameparameter` | `String` | Specifies an XSL parameter for accessing the name of the current processed file. If not set, the file name is not passed to the transformation. Since Ant 1.7. | No |
+| `:followsymlinks` | `boolean` |  |  |
+| `:force` | `boolean` | Recreate target files, even if they are newer than their corresponding source files or the stylesheet. | No; default is false |
+| `:granularity` | `long` | The number of milliseconds leeway to give before deciding a file is out of date with respect of the source file or stylesheet. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.10.16. | No; default is 1 second, or 2 seconds on DOS systems |
+| `:in` | `File` | specifies a single XML document to be styled. Should be used with the out attribute. | No |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern | No |
+| `:out` | `File` | specifies the output name for the styled result from the in attribute. | No |
+| `:processor` | `String` | name of the XSLT processor to use. Permissible value is: trax for a TraX compliant processor (ie JAXP interface implementation such as Xalan 2 or Saxon) Support for Xalan 1 has been removed since Ant 1.7. | No; defaults to trax |
+| `:reloadstylesheet` | `boolean` | Control whether the stylesheet transformer is created anew for every transform operation. If you set this to true, performance may suffer, but you may work around a bug in certain Xalan versions. Since Ant 1.5.2. | No; default is false |
+| `:scanincludeddirectories` | `boolean` | If any directories are matched by the includes/excludes patterns, try to transform all files in these directories. No; default is true |  |
+| `:style` | `String` | name of the stylesheet to use-given either relative to the project's basedir or as an absolute path. Alternatively, a nested element which Ant can interpret as a resource can be used to indicate where to find the stylesheet. Deprecated variation: If the stylesheet cannot be found, and if you have specified the attribute basedir for the task, Ant will assume that the style attribute is relative to the basedir of the task. | No, if the location of the stylesheet is specified using a nested <style> element |
+| `:suppresswarnings` | `boolean` | Whether processor warnings shall be suppressed. This option requires support by the processor, it is supported by the TrAX processor bundled with Ant. Since Ant 1.8.0. | No; default is false |
+| `:useimplicitfileset` | `boolean` | Whether the implicit fileset formed by this task shall be used. If you set this to false you must use nested resource collections-or the in attribute, in which case this attribute has no impact anyway. Since Ant 1.7. | No; default is true |
+| `:xslresource` | `Resource` |  |  |
 
 **Nested elements**
 
@@ -8058,25 +6917,18 @@ page apply here as well.
 
 **Attributes**
 
-- `:antfile` `String` - Build file name, to use in conjunction with directories.
-  Required: String
-- `:buildpath` `Path` - Set the buildpath to be used to find sub-projects.
-  Required: Path
-- `:buildpathref` `Reference` - Buildpath to use, by reference.
-  Required: Reference
-- `:failonerror` `boolean` - Sets whether to fail with a build exception on error, or go on.
-  Required: boolean
-- `:genericantfile` `File` - Build file path, to use in conjunction with directories. Use genericantfile, in order to run the same build file with different basedirs. If this attribute is set, antfile is ignored.
-  Required: File
-- `:inheritall` `boolean` - Corresponds to <ant>'s inheritall attribute but defaults to false in this task.
-  Required: boolean
-- `:inheritrefs` `boolean` - Corresponds to <ant>'s inheritrefs attribute.
-  Required: boolean
-- `:output` `String` - Corresponds to <ant>'s output attribute.
-  Required: String
-- `:target` `String`
-- `:verbose` `boolean` - Enable/disable log messages showing when each sub-build path is entered/exited.
-  Required: boolean
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:antfile` | `String` | Build file name, to use in conjunction with directories. | String |
+| `:buildpath` | `Path` | Set the buildpath to be used to find sub-projects. | Path |
+| `:buildpathref` | `Reference` | Buildpath to use, by reference. | Reference |
+| `:failonerror` | `boolean` | Sets whether to fail with a build exception on error, or go on. | boolean |
+| `:genericantfile` | `File` | Build file path, to use in conjunction with directories. Use genericantfile, in order to run the same build file with different basedirs. If this attribute is set, antfile is ignored. | File |
+| `:inheritall` | `boolean` | Corresponds to <ant>'s inheritall attribute but defaults to false in this task. | boolean |
+| `:inheritrefs` | `boolean` | Corresponds to <ant>'s inheritrefs attribute. | boolean |
+| `:output` | `String` | Corresponds to <ant>'s output attribute. | String |
+| `:target` | `String` |  |  |
+| `:verbose` | `boolean` | Enable/disable log messages showing when each sub-build path is entered/exited. | boolean |
 
 **Nested elements**
 
@@ -8110,18 +6962,14 @@ a set of property files to create links from.
 
 **Attributes**
 
-- `:action` `String` - The type of action to perform, may be single, \"record, recreate or delete.
-  Required: No; defaults to single
-- `:failonerror` `boolean` - Stop build if true, log a warning message, but do not stop the build, when the an error occurs if false.
-  Required: No; defaults to true
-- `:link` `String` - The name of the link to be created or deleted. Note: this attribute is resolved against the current working directory rather than the project's basedir for historical reasons. It is recommended you always use an absolute path or a path like ${basedir}/some-path as its value.
-  Required: Yes, for action=single or delete; ignored in other actions
-- `:linkfilename` `String` - The name of the properties file to create in each included directory.
-  Required: Yes, for action=record; ignored in other actions
-- `:overwrite` `boolean` - Overwrite existing files or not. If overwrite is set to true, then any existing file, specified by the link attribute, will be overwritten irrespective of whether or not the existing file is a symbolic link.
-  Required: No; defaults to false
-- `:resource` `String` - The resource the link should point to.
-  Required: Yes, for action=single; ignored in other actions
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:action` | `String` | The type of action to perform, may be single, \"record, recreate or delete. | No; defaults to single |
+| `:failonerror` | `boolean` | Stop build if true, log a warning message, but do not stop the build, when the an error occurs if false. | No; defaults to true |
+| `:link` | `String` | The name of the link to be created or deleted. Note: this attribute is resolved against the current working directory rather than the project's basedir for historical reasons. It is recommended you always use an absolute path or a path like ${basedir}/some-path as its value. | Yes, for action=single or delete; ignored in other actions |
+| `:linkfilename` | `String` | The name of the properties file to create in each included directory. | Yes, for action=record; ignored in other actions |
+| `:overwrite` | `boolean` | Overwrite existing files or not. If overwrite is set to true, then any existing file, specified by the link attribute, will be overwritten irrespective of whether or not the existing file is a symbolic link. | No; defaults to false |
+| `:resource` | `String` | The resource the link should point to. | Yes, for action=single; ignored in other actions |
 
 **Nested elements**
 
@@ -8147,18 +6995,14 @@ the target.
 
 **Attributes**
 
-- `:failonerror` `boolean` - If set to false, log a warning message, but do not stop the build, when one of the nested filesets points to a directory that doesn't exist.
-  Required: No; defaults to true
-- `:granularity` `long` - The number of milliseconds leeway to give before deciding a file is out of date. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.6.2.
-  Required: No; default is 0 milliseconds, or 2 seconds on DOS systems.
-- `:includeemptydirs` `boolean` - Copy any empty directories included in the resource collection(s). Note: this attribute also controls the behavior for any nested <preserveintarget> element. If this attribute is false (the default) empty directories that only exist in the target directory will be removed even if they are matched by the patterns of <preserveintarget>. This can be overridden by <preserveintarget>'s preserveEmptyDirs attribute.
-  Required: No; defaults to false
-- `:overwrite` `boolean` - Overwrite existing files even if the destination files are newer.
-  Required: No; defaults to false
-- `:todir` `File` - the target directory to sync with the resource collections
-  Required: Yes
-- `:verbose` `boolean` - Log the files that are being copied.
-  Required: No; defaults to false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:failonerror` | `boolean` | If set to false, log a warning message, but do not stop the build, when one of the nested filesets points to a directory that doesn't exist. | No; defaults to true |
+| `:granularity` | `long` | The number of milliseconds leeway to give before deciding a file is out of date. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.6.2. | No; default is 0 milliseconds, or 2 seconds on DOS systems. |
+| `:includeemptydirs` | `boolean` | Copy any empty directories included in the resource collection(s). Note: this attribute also controls the behavior for any nested <preserveintarget> element. If this attribute is false (the default) empty directories that only exist in the target directory will be removed even if they are matched by the patterns of <preserveintarget>. This can be overridden by <preserveintarget>'s preserveEmptyDirs attribute. | No; defaults to false |
+| `:overwrite` | `boolean` | Overwrite existing files even if the destination files are newer. | No; defaults to false |
+| `:todir` | `File` | the target directory to sync with the resource collections | Yes |
+| `:verbose` | `boolean` | Log the files that are being copied. | No; defaults to false |
 
 **Nested elements**
 
@@ -8213,28 +7057,21 @@ compression by setting the compression attribute to gzip, bzip2, or xz.
 
 **Attributes**
 
-- `:basedir` `File` - the directory from which to tar the files.
-  Required: No
-- `:casesensitive` `boolean`
-- `:compression` `TarCompressionMethod` - compression method. Allowable values are none, gzip, xz and bzip2.
-  Required: No; default is none
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:destfile` `File` - the tar file to create.
-  Required: Yes
-- `:encoding` `String` - The character encoding to use for filenames inside the tar file. For a list of possible values see the Supported Encodings. In general the tar format expects names to use a single byte encoding and specifying a multi-byte encoding here may lead to archives that cannot be properly extracted by my tar tools. Since Ant 1.9.5 No; defaults to default JVM character encoding
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:followsymlinks` `boolean`
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:longfile` `TarLongFileMode` - Determines how long filenames (> 100 chars) are to be handled. Allowed values are truncate, fail, warn, omit, gnu and posix.
-  Required: No; default is warn
-- `:tarfile` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` | the directory from which to tar the files. | No |
+| `:casesensitive` | `boolean` |  |  |
+| `:compression` | `TarCompressionMethod` | compression method. Allowable values are none, gzip, xz and bzip2. | No; default is none |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:destfile` | `File` | the tar file to create. | Yes |
+| `:encoding` | `String` | The character encoding to use for filenames inside the tar file. For a list of possible values see the Supported Encodings. In general the tar format expects names to use a single byte encoding and specifying a multi-byte encoding here may lead to archives that cannot be properly extracted by my tar tools. Since Ant 1.9.5 No; defaults to default JVM character encoding |  |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern | No |
+| `:longfile` | `TarLongFileMode` | Determines how long filenames (> 100 chars) are to be handled. Allowed values are truncate, fail, warn, omit, gnu and posix. | No; default is warn |
+| `:tarfile` | `File` |  |  |
 
 **Nested elements**
 
@@ -8282,20 +7119,22 @@ respectively. Anything said in the manual page of typedef applies to taskdef as 
 
 **Attributes**
 
-- `:adapter` `String`
-- `:adaptto` `String`
-- `:antlib` `String`
-- `:classname` `String`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:file` `File`
-- `:format` `Format`
-- `:loaderref` `Reference`
-- `:name` `String`
-- `:onerror` `OnError`
-- `:resource` `String`
-- `:reverseloader` `boolean`
-- `:uri` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:adapter` | `String` |  |  |
+| `:adaptto` | `String` |  |  |
+| `:antlib` | `String` |  |  |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:file` | `File` |  |  |
+| `:format` | `Format` |  |  |
+| `:loaderref` | `Reference` |  |  |
+| `:name` | `String` |  |  |
+| `:onerror` | `OnError` |  |  |
+| `:resource` | `String` |  |  |
+| `:reverseloader` | `boolean` |  |  |
+| `:uri` | `String` |  |  |
 
 **Nested elements**
 
@@ -8319,18 +7158,14 @@ it does guarantee that the file did not exist when the task was executed.
 
 **Attributes**
 
-- `:createfile` `boolean` - Whether the temp file should be created by this task. Since Ant 1.8
-  Required: boolean
-- `:deleteonexit` `boolean` - Whether the temp file will be marked for deletion on normal exit of JVM (even though the file may never be created). Since Apache Ant 1.7
-  Required: boolean
-- `:destdir` `File` - Sets the destination directory.
-  Required: File
-- `:prefix` `String` - Sets the optional prefix string for the temp file.
-  Required: String
-- `:property` `String` - Sets the property you wish to assign the temporary file to.
-  Required: String
-- `:suffix` `String` - Sets the optional suffix string for the temp file.
-  Required: String
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:createfile` | `boolean` | Whether the temp file should be created by this task. Since Ant 1.8 | boolean |
+| `:deleteonexit` | `boolean` | Whether the temp file will be marked for deletion on normal exit of JVM (even though the file may never be created). Since Apache Ant 1.7 | boolean |
+| `:destdir` | `File` | Sets the destination directory. | File |
+| `:prefix` | `String` | Sets the optional prefix string for the temp file. | String |
+| `:property` | `String` | Sets the property you wish to assign the temporary file to. | String |
+| `:suffix` | `String` | Sets the optional suffix string for the temp file. | String |
 
 **Reference**
 
@@ -8357,18 +7192,14 @@ the modification time of a file you do not own on many Unix systems, for example
 
 **Attributes**
 
-- `:datetime` `String` - Specifies the new modification time of the file. Since Ant 1.8, the special value now indicates the current time.
-  Required: No; datetime takes precedence, however if both are omitted then current time is assumed
-- `:file` `File` - The name of the file.
-  Required: Unless a nested resource collection element has been specified
-- `:millis` `long` - Specifies the new modification time of the file in milliseconds since midnight Jan 1 1970.
-  Required: No; datetime takes precedence, however if both are omitted then current time is assumed
-- `:mkdirs` `boolean` - Whether to create nonexistent parent directories when touching new files. Since Ant 1.6.3
-  Required: No; default false
-- `:pattern` `String` - SimpleDateFormat-compatible pattern string using the current locale. Since Ant 1.6.3
-  Required: No; defaults to MM/dd/YYYY hh:mm a or MM/dd/yyyy hh:mm:ss a using the US locale.
-- `:verbose` `boolean` - Whether to log the creation of new files. Since Ant 1.6.3
-  Required: No; default true
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:datetime` | `String` | Specifies the new modification time of the file. Since Ant 1.8, the special value now indicates the current time. | No; datetime takes precedence, however if both are omitted then current time is assumed |
+| `:file` | `File` | The name of the file. | Unless a nested resource collection element has been specified |
+| `:millis` | `long` | Specifies the new modification time of the file in milliseconds since midnight Jan 1 1970. | No; datetime takes precedence, however if both are omitted then current time is assumed |
+| `:mkdirs` | `boolean` | Whether to create nonexistent parent directories when touching new files. Since Ant 1.6.3 | No; default false |
+| `:pattern` | `String` | SimpleDateFormat-compatible pattern string using the current locale. Since Ant 1.6.3 | No; defaults to MM/dd/YYYY hh:mm a or MM/dd/yyyy hh:mm:ss a using the US locale. |
+| `:verbose` | `boolean` | Whether to log the creation of new files. Since Ant 1.6.3 | No; default true |
 
 **Nested elements**
 
@@ -8412,35 +7243,26 @@ are preserved in the translated files. FileSets are used to select files to tran
 
 **Attributes**
 
-- `:bundle` `String` - Family name of resource bundle.
-  Required: Yes
-- `:bundlecountry` `String` - Locale specific country of resource bundle.
-  Required: No; defaults to default locale's country
-- `:bundleencoding` `String` - Resource Bundle file encoding scheme.
-  Required: No; defaults to srcencoding
-- `:bundlelanguage` `String` - Locale specific language of resource bundle.
-  Required: No; defaults to default locale's language
-- `:bundlevariant` `String` - Locale specific variant of resource bundle.
-  Required: No; defaults to bundlelanguage_bundlecountry
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:destencoding` `String` - Destination file encoding scheme.
-  Required: No; defaults to srcencoding
-- `:endtoken` `String` - The ending token to identify keys.
-  Required: Yes
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:followsymlinks` `boolean`
-- `:forceoverwrite` `boolean` - Overwrite existing files even if the destination files are newer.
-  Required: No; defaults to no
-- `:includes` `String`
-- `:includesfile` `File`
-- `:srcencoding` `String` - Source file encoding scheme.
-  Required: No; defaults to default JVM character encoding
-- `:starttoken` `String` - The starting token to identify keys.
-  Required: Yes
-- `:todir` `File` - Destination directory where destination files are to be created.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:bundle` | `String` | Family name of resource bundle. | Yes |
+| `:bundlecountry` | `String` | Locale specific country of resource bundle. | No; defaults to default locale's country |
+| `:bundleencoding` | `String` | Resource Bundle file encoding scheme. | No; defaults to srcencoding |
+| `:bundlelanguage` | `String` | Locale specific language of resource bundle. | No; defaults to default locale's language |
+| `:bundlevariant` | `String` | Locale specific variant of resource bundle. | No; defaults to bundlelanguage_bundlecountry |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:destencoding` | `String` | Destination file encoding scheme. | No; defaults to srcencoding |
+| `:endtoken` | `String` | The ending token to identify keys. | Yes |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:forceoverwrite` | `boolean` | Overwrite existing files even if the destination files are newer. | No; defaults to no |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:srcencoding` | `String` | Source file encoding scheme. | No; defaults to default JVM character encoding |
+| `:starttoken` | `String` | The starting token to identify keys. | Yes |
+| `:todir` | `File` | Destination directory where destination files are to be created. | Yes |
 
 **Nested elements**
 
@@ -8487,16 +7309,13 @@ resource collections.
 
 **Attributes**
 
-- `:adjust` `Long` - Specifies the number of bytes (and positive/negative direction) by which to adjust file lengths. The same suffixes are supported for this attribute as for the length attribute.
-  Required: At most one of these; omitting both implies length=0
-- `:create` `boolean` - Whether to create nonexistent files.
-  Required: No; default true
-- `:file` `File` - The name of the file.
-  Required: Unless a nested resource collection element has been specified
-- `:length` `Long` - Specifies the new file length (in bytes) to set. The following suffixes are supported: K: Kilobytes (1024 bytes) M: Megabytes (1024 K) G: Gigabytes (1024 M) T: Terabytes (1024 G) P: Petabytes (1024 T)
-  Required: At most one of these; omitting both implies length=0
-- `:mkdirs` `boolean` - Whether to create nonexistent parent directories when creating new files.
-  Required: No; default false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:adjust` | `Long` | Specifies the number of bytes (and positive/negative direction) by which to adjust file lengths. The same suffixes are supported for this attribute as for the length attribute. | At most one of these; omitting both implies length=0 |
+| `:create` | `boolean` | Whether to create nonexistent files. | No; default true |
+| `:file` | `File` | The name of the file. | Unless a nested resource collection element has been specified |
+| `:length` | `Long` | Specifies the new file length (in bytes) to set. The following suffixes are supported: K: Kilobytes (1024 bytes) M: Megabytes (1024 K) G: Gigabytes (1024 M) T: Terabytes (1024 G) P: Petabytes (1024 T) | At most one of these; omitting both implies length=0 |
+| `:mkdirs` | `boolean` | Whether to create nonexistent parent directories when creating new files. | No; default false |
 
 **Reference**
 
@@ -8528,8 +7347,9 @@ variable and will instead use the \"current\" date.
 
 **Attributes**
 
-- `:prefix` `String` - Prefix used for all properties set.
-  Required: No; default is no prefix
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:prefix` | `String` | Prefix used for all properties set. | No; default is no prefix |
 
 **Nested elements**
 
@@ -8575,32 +7395,22 @@ work.
 
 **Attributes**
 
-- `:adapter` `String` - A class that is used to adapt the defined class to another interface/class. The adapter class must implement the interface org.apache.tools.ant.TypeAdapter. The adapter class will be used to wrap the defined class unless the defined class implements/extends the class defined by the attribute adaptto. If adaptto is not set, the defined class will always be wrapped. Since Ant 1.6
-  Required: No
-- `:adaptto` `String` - This attribute is used in conjunction with the adapter attribute. If the defined class does not implement/extend the interface/class specified by this attribute, the adaptor class will be used to wrap the class. Since Ant 1.6
-  Required: No
-- `:antlib` `String`
-- `:classname` `String` - the full class name implementing the data type
-  Required: Yes, unless file or resource attributes have been specified.
-- `:classpath` `Path` - the classpath to use when looking up classname.
-  Required: No
-- `:classpathref` `Reference` - a reference to a classpath to use when looking up classname.
-  Required: No
-- `:file` `File` - Name of the file to load definitions from.
-  Required: No
-- `:format` `Format` - The format of the file or resource. The values are properties\" or xml. If the value is properties the file/resource is a property file contains name-classname pairs. If the value is xml, the file/resource is an XML file/resource structured according to Antlib. The default is properties unless the file/resource name ends with .xml, in which case the format attribute will have the value xml. Since Ant 1.6
-  Required: No
-- `:loaderref` `Reference` - the name of the loader that is used to load the class, constructed from the specified classpath. Use this to allow multiple tasks/types to be loaded with the same loader, so they can call each other. Since Ant 1.5
-  Required: No
-- `:name` `String` - the name of the data type
-  Required: Yes, unless file or resource attributes have been specified.
-- `:onerror` `OnError` - The action to take if there was a failure in defining the type. The values are fail: cause a build exception; report: output a warning, but continue; ignore: do nothing. Since Ant 1.6, an additional value is failall: cause all behavior of fail, as well as a build exception for the resource or file attribute if the resource or file is not found.
-  Required: No; default is fail (since Ant 1.7)
-- `:resource` `String` - Name of the resource to load definitions from. If multiple resources by this name are found along the classpath, and format is properties, the first resource will be loaded; otherwise all such resources will be loaded.
-  Required: No
-- `:reverseloader` `boolean`
-- `:uri` `String` - The uri that this definition should live in. Since Ant 1.6
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:adapter` | `String` | A class that is used to adapt the defined class to another interface/class. The adapter class must implement the interface org.apache.tools.ant.TypeAdapter. The adapter class will be used to wrap the defined class unless the defined class implements/extends the class defined by the attribute adaptto. If adaptto is not set, the defined class will always be wrapped. Since Ant 1.6 | No |
+| `:adaptto` | `String` | This attribute is used in conjunction with the adapter attribute. If the defined class does not implement/extend the interface/class specified by this attribute, the adaptor class will be used to wrap the class. Since Ant 1.6 | No |
+| `:antlib` | `String` |  |  |
+| `:classname` | `String` | the full class name implementing the data type | Yes, unless file or resource attributes have been specified. |
+| `:classpath` | `Path` | the classpath to use when looking up classname. | No |
+| `:classpathref` | `Reference` | a reference to a classpath to use when looking up classname. | No |
+| `:file` | `File` | Name of the file to load definitions from. | No |
+| `:format` | `Format` | The format of the file or resource. The values are properties\" or xml. If the value is properties the file/resource is a property file contains name-classname pairs. If the value is xml, the file/resource is an XML file/resource structured according to Antlib. The default is properties unless the file/resource name ends with .xml, in which case the format attribute will have the value xml. Since Ant 1.6 | No |
+| `:loaderref` | `Reference` | the name of the loader that is used to load the class, constructed from the specified classpath. Use this to allow multiple tasks/types to be loaded with the same loader, so they can call each other. Since Ant 1.5 | No |
+| `:name` | `String` | the name of the data type | Yes, unless file or resource attributes have been specified. |
+| `:onerror` | `OnError` | The action to take if there was a failure in defining the type. The values are fail: cause a build exception; report: output a warning, but continue; ignore: do nothing. Since Ant 1.6, an additional value is failall: cause all behavior of fail, as well as a build exception for the resource or file attribute if the resource or file is not found. | No; default is fail (since Ant 1.7) |
+| `:resource` | `String` | Name of the resource to load definitions from. If multiple resources by this name are found along the classpath, and format is properties, the first resource will be loaded; otherwise all such resources will be loaded. | No |
+| `:reverseloader` | `boolean` |  |  |
+| `:uri` | `String` | The uri that this definition should live in. Since Ant 1.6 | No |
 
 **Nested elements**
 
@@ -8640,22 +7450,16 @@ you use Windows' functions to extract an Ant generated ZIP archive.
 
 **Attributes**
 
-- `:allowfilestoescapedest` `boolean` - Whether to allow the extracted file or directory to be outside of the dest directory. since Ant 1.10.4
-  Required: No, defaults to false unless stripAbsolutePathSpec is false and the entry's name starts with a leading path spec.
-- `:dest` `File` - directory where to store the expanded files.
-  Required: Yes
-- `:encoding` `String` - The character encoding that has been used for filenames inside the zip file. For a list of possible values see the Supported Encodings. Use the magic value native-encoding for default JVM character encoding. See also the discussion in the zip task page
-  Required: No; defaults to UTF8 for unzip and default JVM character encoding for untar task
-- `:failonemptyarchive` `boolean` - whether trying to extract an empty archive is an error. since Ant 1.8.0
-  Required: No; defaults to false
-- `:overwrite` `boolean` - Overwrite files, even if they are newer than the corresponding entries in the archive (true|false).
-  Required: No; default is true
-- `:scanforunicodeextrafields` `boolean` - Note: This attribute is not available for the untar task. If the archive contains Unicode extra fields then use them to set the file names, ignoring the specified encoding. See also the discussion in the zip task page
-  Required: No; defaults to true
-- `:src` `File` - archive file to expand.
-  Required: Yes, unless filesets are used
-- `:stripabsolutepathspec` `boolean` - whether Ant should remove leading / or \\ characters from the extracted file name before extracting it. Note that this changes the entry name before applying include/exclude patterns and before using the nested mappers (if any). since Ant 1.8.0
-  Required: No; defaults to true since Ant 1.10.4 (used to default to false prior to that)
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:allowfilestoescapedest` | `boolean` | Whether to allow the extracted file or directory to be outside of the dest directory. since Ant 1.10.4 | No, defaults to false unless stripAbsolutePathSpec is false and the entry's name starts with a leading path spec. |
+| `:dest` | `File` | directory where to store the expanded files. | Yes |
+| `:encoding` | `String` | The character encoding that has been used for filenames inside the zip file. For a list of possible values see the Supported Encodings. Use the magic value native-encoding for default JVM character encoding. See also the discussion in the zip task page | No; defaults to UTF8 for unzip and default JVM character encoding for untar task |
+| `:failonemptyarchive` | `boolean` | whether trying to extract an empty archive is an error. since Ant 1.8.0 | No; defaults to false |
+| `:overwrite` | `boolean` | Overwrite files, even if they are newer than the corresponding entries in the archive (true\\|false). | No; default is true |
+| `:scanforunicodeextrafields` | `boolean` | Note: This attribute is not available for the untar task. If the archive contains Unicode extra fields then use them to set the file names, ignoring the specified encoding. See also the discussion in the zip task page | No; defaults to true |
+| `:src` | `File` | archive file to expand. | Yes, unless filesets are used |
+| `:stripabsolutepathspec` | `boolean` | whether Ant should remove leading / or \\ characters from the extracted file name before extracting it. Note that this changes the entry name before applying include/exclude patterns and before using the nested mappers (if any). since Ant 1.8.0 | No; defaults to true since Ant 1.10.4 (used to default to false prior to that) |
 
 **Nested elements**
 
@@ -8679,15 +7483,17 @@ https://ant.apache.org/manual/Tasks/unzip.html
 
 **Attributes**
 
-- `:allowfilestoescapedest` `boolean`
-- `:compression` `UntarCompressionMethod`
-- `:dest` `File`
-- `:encoding` `String`
-- `:failonemptyarchive` `boolean`
-- `:overwrite` `boolean`
-- `:scanforunicodeextrafields` `boolean`
-- `:src` `File`
-- `:stripabsolutepathspec` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:allowfilestoescapedest` | `boolean` |  |  |
+| `:compression` | `UntarCompressionMethod` |  |  |
+| `:dest` | `File` |  |  |
+| `:encoding` | `String` |  |  |
+| `:failonemptyarchive` | `boolean` |  |  |
+| `:overwrite` | `boolean` |  |  |
+| `:scanforunicodeextrafields` | `boolean` |  |  |
+| `:src` | `File` |  |  |
+| `:stripabsolutepathspec` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -8729,22 +7535,16 @@ you use Windows' functions to extract an Ant generated ZIP archive.
 
 **Attributes**
 
-- `:allowfilestoescapedest` `boolean` - Whether to allow the extracted file or directory to be outside of the dest directory. since Ant 1.10.4
-  Required: No, defaults to false unless stripAbsolutePathSpec is false and the entry's name starts with a leading path spec.
-- `:dest` `File` - directory where to store the expanded files.
-  Required: Yes
-- `:encoding` `String` - The character encoding that has been used for filenames inside the zip file. For a list of possible values see the Supported Encodings. Use the magic value native-encoding for default JVM character encoding. See also the discussion in the zip task page
-  Required: No; defaults to UTF8 for unzip and default JVM character encoding for untar task
-- `:failonemptyarchive` `boolean` - whether trying to extract an empty archive is an error. since Ant 1.8.0
-  Required: No; defaults to false
-- `:overwrite` `boolean` - Overwrite files, even if they are newer than the corresponding entries in the archive (true|false).
-  Required: No; default is true
-- `:scanforunicodeextrafields` `boolean` - Note: This attribute is not available for the untar task. If the archive contains Unicode extra fields then use them to set the file names, ignoring the specified encoding. See also the discussion in the zip task page
-  Required: No; defaults to true
-- `:src` `File` - archive file to expand.
-  Required: Yes, unless filesets are used
-- `:stripabsolutepathspec` `boolean` - whether Ant should remove leading / or \\ characters from the extracted file name before extracting it. Note that this changes the entry name before applying include/exclude patterns and before using the nested mappers (if any). since Ant 1.8.0
-  Required: No; defaults to true since Ant 1.10.4 (used to default to false prior to that)
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:allowfilestoescapedest` | `boolean` | Whether to allow the extracted file or directory to be outside of the dest directory. since Ant 1.10.4 | No, defaults to false unless stripAbsolutePathSpec is false and the entry's name starts with a leading path spec. |
+| `:dest` | `File` | directory where to store the expanded files. | Yes |
+| `:encoding` | `String` | The character encoding that has been used for filenames inside the zip file. For a list of possible values see the Supported Encodings. Use the magic value native-encoding for default JVM character encoding. See also the discussion in the zip task page | No; defaults to UTF8 for unzip and default JVM character encoding for untar task |
+| `:failonemptyarchive` | `boolean` | whether trying to extract an empty archive is an error. since Ant 1.8.0 | No; defaults to false |
+| `:overwrite` | `boolean` | Overwrite files, even if they are newer than the corresponding entries in the archive (true\\|false). | No; default is true |
+| `:scanforunicodeextrafields` | `boolean` | Note: This attribute is not available for the untar task. If the archive contains Unicode extra fields then use them to set the file names, ignoring the specified encoding. See also the discussion in the zip task page | No; defaults to true |
+| `:src` | `File` | archive file to expand. | Yes, unless filesets are used |
+| `:stripabsolutepathspec` | `boolean` | whether Ant should remove leading / or \\ characters from the extracted file name before extracting it. Note that this changes the entry name before applying include/exclude patterns and before using the nested mappers (if any). since Ant 1.8.0 | No; defaults to true since Ant 1.10.4 (used to default to false prior to that) |
 
 **Nested elements**
 
@@ -8786,22 +7586,16 @@ you use Windows' functions to extract an Ant generated ZIP archive.
 
 **Attributes**
 
-- `:allowfilestoescapedest` `boolean` - Whether to allow the extracted file or directory to be outside of the dest directory. since Ant 1.10.4
-  Required: No, defaults to false unless stripAbsolutePathSpec is false and the entry's name starts with a leading path spec.
-- `:dest` `File` - directory where to store the expanded files.
-  Required: Yes
-- `:encoding` `String` - The character encoding that has been used for filenames inside the zip file. For a list of possible values see the Supported Encodings. Use the magic value native-encoding for default JVM character encoding. See also the discussion in the zip task page
-  Required: No; defaults to UTF8 for unzip and default JVM character encoding for untar task
-- `:failonemptyarchive` `boolean` - whether trying to extract an empty archive is an error. since Ant 1.8.0
-  Required: No; defaults to false
-- `:overwrite` `boolean` - Overwrite files, even if they are newer than the corresponding entries in the archive (true|false).
-  Required: No; default is true
-- `:scanforunicodeextrafields` `boolean` - Note: This attribute is not available for the untar task. If the archive contains Unicode extra fields then use them to set the file names, ignoring the specified encoding. See also the discussion in the zip task page
-  Required: No; defaults to true
-- `:src` `File` - archive file to expand.
-  Required: Yes, unless filesets are used
-- `:stripabsolutepathspec` `boolean` - whether Ant should remove leading / or \\ characters from the extracted file name before extracting it. Note that this changes the entry name before applying include/exclude patterns and before using the nested mappers (if any). since Ant 1.8.0
-  Required: No; defaults to true since Ant 1.10.4 (used to default to false prior to that)
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:allowfilestoescapedest` | `boolean` | Whether to allow the extracted file or directory to be outside of the dest directory. since Ant 1.10.4 | No, defaults to false unless stripAbsolutePathSpec is false and the entry's name starts with a leading path spec. |
+| `:dest` | `File` | directory where to store the expanded files. | Yes |
+| `:encoding` | `String` | The character encoding that has been used for filenames inside the zip file. For a list of possible values see the Supported Encodings. Use the magic value native-encoding for default JVM character encoding. See also the discussion in the zip task page | No; defaults to UTF8 for unzip and default JVM character encoding for untar task |
+| `:failonemptyarchive` | `boolean` | whether trying to extract an empty archive is an error. since Ant 1.8.0 | No; defaults to false |
+| `:overwrite` | `boolean` | Overwrite files, even if they are newer than the corresponding entries in the archive (true\\|false). | No; default is true |
+| `:scanforunicodeextrafields` | `boolean` | Note: This attribute is not available for the untar task. If the archive contains Unicode extra fields then use them to set the file names, ignoring the specified encoding. See also the discussion in the zip task page | No; defaults to true |
+| `:src` | `File` | archive file to expand. | Yes, unless filesets are used |
+| `:stripabsolutepathspec` | `boolean` | whether Ant should remove leading / or \\ characters from the extracted file name before extracting it. Note that this changes the entry name before applying include/exclude patterns and before using the nested mappers (if any). since Ant 1.8.0 | No; defaults to true since Ant 1.10.4 (used to default to false prior to that) |
 
 **Nested elements**
 
@@ -8836,14 +7630,12 @@ files.
 
 **Attributes**
 
-- `:property` `String` - The name of the property to set.
-  Required: Yes
-- `:srcfile` `File` - The file to check against the target file(s).
-  Required: Yes, unless a nested <srcfiles> or <srcresources> element is present.
-- `:targetfile` `File` - The file for which we want to determine the status.
-  Required: Yes, unless a nested <mapper> element is present.
-- `:value` `String` - The value to set the property to.
-  Required: No; defaults to true.
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:property` | `String` | The name of the property to set. | Yes |
+| `:srcfile` | `File` | The file to check against the target file(s). | Yes, unless a nested <srcfiles> or <srcresources> element is present. |
+| `:targetfile` | `File` | The file for which we want to determine the status. | Yes, unless a nested <mapper> element is present. |
+| `:value` | `String` | The value to set the property to. | No; defaults to true. |
 
 **Nested elements**
 
@@ -8868,34 +7660,22 @@ the jar attribute. Nested paths are also supported.
 
 **Attributes**
 
-- `:alias` `String` - the alias to verify under
-  Required: Yes
-- `:certificates` `boolean` - (true|false) display information about certificates
-  Required: No; default false
-- `:executable` `String` - Specify a particular jarsigner executable to use in place of the default binary (found in the same JDK as Apache Ant is running in). Must support the same command line options as the Sun JDK jarsigner command. since Ant 1.8.0.
-  Required: No
-- `:jar` `File` - the jar file to verify
-  Required: Yes, unless nested paths have been used
-- `:keypass` `String` - password for private key (if different)
-  Required: No
-- `:keystore` `String` - keystore location
-  Required: No
-- `:maxmemory` `String` - Specifies the maximum memory the jarsigner JVM will use. Specified in the style of standard Java memory specs (e.g. 128m = 128 MBytes)
-  Required: No
-- `:providerarg` `String` - Represents an optional string input argument for the constructor of provider_class_name. Ignored if providerclass is not set. since Ant 1.10.6.
-  Required: No
-- `:providerclass` `String` - name of a cryptographic service provider's master class file when the service provider is not listed in the security properties file. since Ant 1.10.6.
-  Required: No
-- `:providername` `String` - name of a cryptographic service provider's name when listed in the security properties file. since Ant 1.10.6.
-  Required: No
-- `:storepass` `String` - password for keystore integrity. Note that jarsigner does not read the password from stdin during verification, so the password must be send via a command line interface and may be visible to other users of the system.
-  Required: No
-- `:storetype` `String` - keystore type
-  Required: No
-- `:strict` `boolean` - (true|false) strict checking when verifying. since Ant 1.9.1.
-  Required: No; default false
-- `:verbose` `boolean` - (true|false) verbose output when verifying
-  Required: No; default false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:alias` | `String` | the alias to verify under | Yes |
+| `:certificates` | `boolean` | (true\\|false) display information about certificates | No; default false |
+| `:executable` | `String` | Specify a particular jarsigner executable to use in place of the default binary (found in the same JDK as Apache Ant is running in). Must support the same command line options as the Sun JDK jarsigner command. since Ant 1.8.0. | No |
+| `:jar` | `File` | the jar file to verify | Yes, unless nested paths have been used |
+| `:keypass` | `String` | password for private key (if different) | No |
+| `:keystore` | `String` | keystore location | No |
+| `:maxmemory` | `String` | Specifies the maximum memory the jarsigner JVM will use. Specified in the style of standard Java memory specs (e.g. 128m = 128 MBytes) | No |
+| `:providerarg` | `String` | Represents an optional string input argument for the constructor of provider_class_name. Ignored if providerclass is not set. since Ant 1.10.6. | No |
+| `:providerclass` | `String` | name of a cryptographic service provider's master class file when the service provider is not listed in the security properties file. since Ant 1.10.6. | No |
+| `:providername` | `String` | name of a cryptographic service provider's name when listed in the security properties file. since Ant 1.10.6. | No |
+| `:storepass` | `String` | password for keystore integrity. Note that jarsigner does not read the password from stdin during verification, so the password must be send via a command line interface and may be visible to other users of the system. | No |
+| `:storetype` | `String` | keystore type | No |
+| `:strict` | `boolean` | (true\\|false) strict checking when verifying. since Ant 1.9.1. | No; default false |
+| `:verbose` | `boolean` | (true\\|false) verbose output when verifying | No; default false |
 
 **Nested elements**
 
@@ -8920,25 +7700,18 @@ https://ant.apache.org/manual/Tasks/verifyjar.html
 
 **Attributes**
 
-- `:autoresponse` `String` - Y, N or empty. Specify how to reply to questions from VSS.
-  Required: No
-- `:comment` `String` - Comment to use for the files that where checked in.
-  Required: No
-- `:failonerror` `boolean` - Stop the build process if ss.exe exits with a return code 100.
-  Required: No; defaults to true
-- `:localpath` `Path` - Specify the local file(s) to add to VSS
-  Required: Yes
-- `:login` `String` - username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.
-  Required: No
-- `:recursive` `boolean` - true|false
-  Required: No
-- `:serverpath` `String` - directory where srcsafe.ini resides.
-  Required: No
-- `:ssdir` `String` - directory where ss.exe resides.
-  Required: No; by default expected to be in PATH
-- `:vsspath` `String`
-- `:writable` `boolean` - true|false
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:autoresponse` | `String` | Y, N or empty. Specify how to reply to questions from VSS. | No |
+| `:comment` | `String` | Comment to use for the files that where checked in. | No |
+| `:failonerror` | `boolean` | Stop the build process if ss.exe exits with a return code 100. | No; defaults to true |
+| `:localpath` | `Path` | Specify the local file(s) to add to VSS | Yes |
+| `:login` | `String` | username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password. | No |
+| `:recursive` | `boolean` | true\\|false | No |
+| `:serverpath` | `String` | directory where srcsafe.ini resides. | No |
+| `:ssdir` | `String` | directory where ss.exe resides. | No; by default expected to be in PATH |
+| `:vsspath` | `String` |  |  |
+| `:writable` | `boolean` | true\\|false | No |
 
 **Reference**
 
@@ -8956,26 +7729,18 @@ https://ant.apache.org/manual/Tasks/vss.html#vssadd
 
 **Attributes**
 
-- `:autoresponse` `String` - Y, N or empty. Specify how to reply to questions from VSS.
-  Required: No
-- `:comment` `String` - Comment to use for the files that where checked in.
-  Required: No
-- `:failonerror` `boolean` - Stop the build process if ss.exe exits with a return code 100.
-  Required: No; defaults to true
-- `:localpath` `Path` - Override the working directory and get to the specified path
-  Required: No
-- `:login` `String` - username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.
-  Required: No
-- `:recursive` `boolean` - true|false
-  Required: No
-- `:serverpath` `String` - directory where srcsafe.ini resides.
-  Required: No
-- `:ssdir` `String` - directory where ss.exe resides.
-  Required: No; by default expected to be in PATH
-- `:vsspath` `String` - SourceSafe path which specifies the project/file(s) you wish to perform the action on.
-  Required: Yes
-- `:writable` `boolean` - true|false
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:autoresponse` | `String` | Y, N or empty. Specify how to reply to questions from VSS. | No |
+| `:comment` | `String` | Comment to use for the files that where checked in. | No |
+| `:failonerror` | `boolean` | Stop the build process if ss.exe exits with a return code 100. | No; defaults to true |
+| `:localpath` | `Path` | Override the working directory and get to the specified path | No |
+| `:login` | `String` | username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password. | No |
+| `:recursive` | `boolean` | true\\|false | No |
+| `:serverpath` | `String` | directory where srcsafe.ini resides. | No |
+| `:ssdir` | `String` | directory where ss.exe resides. | No; by default expected to be in PATH |
+| `:vsspath` | `String` | SourceSafe path which specifies the project/file(s) you wish to perform the action on. | Yes |
+| `:writable` | `boolean` | true\\|false | No |
 
 **Reference**
 
@@ -8995,33 +7760,22 @@ date, label.
 
 **Attributes**
 
-- `:autoresponse` `String`
-- `:date` `String` - a date stamp to get at
-  Required: No; only one of these may be used
-- `:failonerror` `boolean` - Stop the build process if ss.exe exits with a return code 100.
-  Required: No; defaults to true
-- `:filetimestamp` `CurrentModUpdated` - Set the behavior for timestamps of local files. Valid options are current, modified, or updated.
-  Required: No; defaults to current
-- `:getlocalcopy` `boolean` - Set the behavior to retrieve local copies of the files.
-  Required: No; defaults to true
-- `:label` `String` - a label to get for
-  Required: No; only one of these may be used
-- `:localpath` `Path` - Override the working directory and get to the specified path
-  Required: No
-- `:login` `String` - username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.
-  Required: No
-- `:recursive` `boolean` - true|false
-  Required: No
-- `:serverpath` `String` - directory where srcsafe.ini resides.
-  Required: No
-- `:ssdir` `String` - directory where ss.exe resides.
-  Required: No; by default expected to be in PATH
-- `:version` `String` - a version number to get
-  Required: No; only one of these may be used
-- `:vsspath` `String` - SourceSafe path which specifies the project/file(s) you wish to perform the action on.
-  Required: Yes
-- `:writablefiles` `WritableFiles` - Behavior when local files are writable. Valid options are: replace, skip and fail; skip implies failonerror=false
-  Required: No; defaults to fail
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:autoresponse` | `String` |  |  |
+| `:date` | `String` | a date stamp to get at | No; only one of these may be used |
+| `:failonerror` | `boolean` | Stop the build process if ss.exe exits with a return code 100. | No; defaults to true |
+| `:filetimestamp` | `CurrentModUpdated` | Set the behavior for timestamps of local files. Valid options are current, modified, or updated. | No; defaults to current |
+| `:getlocalcopy` | `boolean` | Set the behavior to retrieve local copies of the files. | No; defaults to true |
+| `:label` | `String` | a label to get for | No; only one of these may be used |
+| `:localpath` | `Path` | Override the working directory and get to the specified path | No |
+| `:login` | `String` | username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password. | No |
+| `:recursive` | `boolean` | true\\|false | No |
+| `:serverpath` | `String` | directory where srcsafe.ini resides. | No |
+| `:ssdir` | `String` | directory where ss.exe resides. | No; by default expected to be in PATH |
+| `:version` | `String` | a version number to get | No; only one of these may be used |
+| `:vsspath` | `String` | SourceSafe path which specifies the project/file(s) you wish to perform the action on. | Yes |
+| `:writablefiles` | `WritableFiles` | Behavior when local files are writable. Valid options are: replace, skip and fail; skip implies failonerror=false | No; defaults to fail |
 
 **Reference**
 
@@ -9040,17 +7794,14 @@ is typically used before a VssAdd in order to set the target project
 
 **Attributes**
 
-- `:autoresponse` `String`
-- `:failonerror` `boolean` - Stop the build process if ss.exe exits with a return code 100.
-  Required: No; defaults to true
-- `:login` `String` - username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.
-  Required: No
-- `:serverpath` `String` - directory where srcsafe.ini resides.
-  Required: No
-- `:ssdir` `String` - directory where ss.exe resides.
-  Required: No; by default expected to be in PATH
-- `:vsspath` `String` - SourceSafe path which specifies the project you wish to make the current project.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:autoresponse` | `String` |  |  |
+| `:failonerror` | `boolean` | Stop the build process if ss.exe exits with a return code 100. | No; defaults to true |
+| `:login` | `String` | username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password. | No |
+| `:serverpath` | `String` | directory where srcsafe.ini resides. | No |
+| `:ssdir` | `String` | directory where ss.exe resides. | No; by default expected to be in PATH |
+| `:vsspath` | `String` | SourceSafe path which specifies the project you wish to make the current project. | Yes |
 
 **Reference**
 
@@ -9069,21 +7820,16 @@ in VSS.
 
 **Attributes**
 
-- `:autoresponse` `String` - What to respond with (sets the -I option). By default, -I- is used; values of Y or N will be appended to this.
-  Required: No
-- `:comment` `String` - The comment to use for this label. Empty or - for no comment.
-  Required: No
-- `:failonerror` `boolean` - fail if there is an error creating the project.
-  Required: No; defaults to true
-- `:login` `String` - username, password
-  Required: No
-- `:quiet` `boolean` - suppress output
-  Required: No; defaults to off
-- `:serverpath` `String`
-- `:ssdir` `String` - directory where ss.exe resides.
-  Required: No; by default expected to be in PATH
-- `:vsspath` `String` - SourceSafe path of project to be created
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:autoresponse` | `String` | What to respond with (sets the -I option). By default, -I- is used; values of Y or N will be appended to this. | No |
+| `:comment` | `String` | The comment to use for this label. Empty or - for no comment. | No |
+| `:failonerror` | `boolean` | fail if there is an error creating the project. | No; defaults to true |
+| `:login` | `String` | username, password | No |
+| `:quiet` | `boolean` | suppress output | No; defaults to off |
+| `:serverpath` | `String` |  |  |
+| `:ssdir` | `String` | directory where ss.exe resides. | No; by default expected to be in PATH |
+| `:vsspath` | `String` | SourceSafe path of project to be created | Yes |
 
 **Reference**
 
@@ -9103,36 +7849,23 @@ date, label.
 
 **Attributes**
 
-- `:autoresponse` `String` - What to respond with (sets the -I option). By default, -I- is used; values of Y or N will be appended to this.
-  Required: No
-- `:date` `String` - a date stamp to get at
-  Required: No; only one of these may be used
-- `:failonerror` `boolean` - Stop the build process if ss.exe exits with a return code 100
-  Required: No; defaults to true
-- `:filetimestamp` `CurrentModUpdated` - Set the behavior for timestamps of local files. Valid options are current, modified, or updated.
-  Required: No; defaults to current
-- `:label` `String` - a label to get for
-  Required: No; only one of these may be used
-- `:localpath` `Path` - Override the working directory and get to the specified path
-  Required: No
-- `:login` `String` - username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.
-  Required: No
-- `:quiet` `boolean` - suppress output
-  Required: No; defaults to off
-- `:recursive` `boolean` - true|false. Note however that in the SourceSafe UI there is a setting accessed via Tools/Options/GeneralTab called Act on projects recursively. If this setting is checked, then the recursive attribute is effectively ignored, and get will always be done recursively
-  Required: No; default false
-- `:serverpath` `String` - directory where srcsafe.ini resides.
-  Required: No
-- `:ssdir` `String` - directory where ss.exe resides.
-  Required: No; by default expected to be in PATH
-- `:version` `String` - a version number to get
-  Required: No; only one of these may be used
-- `:vsspath` `String` - SourceSafe path which specifies the project/file(s) you wish to perform the action on.
-  Required: Yes
-- `:writable` `boolean` - true|false
-  Required: No; default false
-- `:writablefiles` `WritableFiles` - Behavior when local files are writable. Valid options are: replace, skip and fail; skip implies failonerror=false
-  Required: No; defaults to fail
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:autoresponse` | `String` | What to respond with (sets the -I option). By default, -I- is used; values of Y or N will be appended to this. | No |
+| `:date` | `String` | a date stamp to get at | No; only one of these may be used |
+| `:failonerror` | `boolean` | Stop the build process if ss.exe exits with a return code 100 | No; defaults to true |
+| `:filetimestamp` | `CurrentModUpdated` | Set the behavior for timestamps of local files. Valid options are current, modified, or updated. | No; defaults to current |
+| `:label` | `String` | a label to get for | No; only one of these may be used |
+| `:localpath` | `Path` | Override the working directory and get to the specified path | No |
+| `:login` | `String` | username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password. | No |
+| `:quiet` | `boolean` | suppress output | No; defaults to off |
+| `:recursive` | `boolean` | true\\|false. Note however that in the SourceSafe UI there is a setting accessed via Tools/Options/GeneralTab called Act on projects recursively. If this setting is checked, then the recursive attribute is effectively ignored, and get will always be done recursively | No; default false |
+| `:serverpath` | `String` | directory where srcsafe.ini resides. | No |
+| `:ssdir` | `String` | directory where ss.exe resides. | No; by default expected to be in PATH |
+| `:version` | `String` | a version number to get | No; only one of these may be used |
+| `:vsspath` | `String` | SourceSafe path which specifies the project/file(s) you wish to perform the action on. | Yes |
+| `:writable` | `boolean` | true\\|false | No; default false |
+| `:writablefiles` | `WritableFiles` | Behavior when local files are writable. Valid options are: replace, skip and fail; skip implies failonerror=false | No; defaults to fail |
 
 **Reference**
 
@@ -9150,36 +7883,23 @@ https://ant.apache.org/manual/Tasks/vss.html#vssget
 
 **Attributes**
 
-- `:dateformat` `String` - Format of dates in fromDate and toDate. Used when calculating dates with the numdays attribute. This string uses the formatting rules of SimpleDateFormat.
-  Required: No; defaults to DateFormat.SHORT
-- `:failonerror` `boolean` - Stop the build process if ss.exe exits with a return code 100
-  Required: No; defaults to true
-- `:fromdate` `String` - Start date for comparison
-  Required: See below
-- `:fromlabel` `String` - Start label for comparison
-  Required: No
-- `:login` `String` - username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.
-  Required: No
-- `:numdays` `int` - The number of days for comparison.
-  Required: See below
-- `:output` `File` - File to write the diff.
-  Required: No
-- `:recursive` `boolean` - true|false
-  Required: No
-- `:serverpath` `String` - directory where srcsafe.ini resides.
-  Required: No
-- `:ssdir` `String` - directory where ss.exe resides.
-  Required: No; by default expected to be in PATH
-- `:style` `BriefCodediffNofile` - brief, codediff, default or nofile.
-  Required: No; defaults to default
-- `:todate` `String` - End date for comparison
-  Required: See below
-- `:tolabel` `String` - Start label for comparison
-  Required: No
-- `:user` `String` - Name the user whose changes we would like to see
-  Required: No
-- `:vsspath` `String` - SourceSafe path which specifies the project/file(s) you wish to perform the action on.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dateformat` | `String` | Format of dates in fromDate and toDate. Used when calculating dates with the numdays attribute. This string uses the formatting rules of SimpleDateFormat. | No; defaults to DateFormat.SHORT |
+| `:failonerror` | `boolean` | Stop the build process if ss.exe exits with a return code 100 | No; defaults to true |
+| `:fromdate` | `String` | Start date for comparison | See below |
+| `:fromlabel` | `String` | Start label for comparison | No |
+| `:login` | `String` | username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password. | No |
+| `:numdays` | `int` | The number of days for comparison. | See below |
+| `:output` | `File` | File to write the diff. | No |
+| `:recursive` | `boolean` | true\\|false | No |
+| `:serverpath` | `String` | directory where srcsafe.ini resides. | No |
+| `:ssdir` | `String` | directory where ss.exe resides. | No; by default expected to be in PATH |
+| `:style` | `BriefCodediffNofile` | brief, codediff, default or nofile. | No; defaults to default |
+| `:todate` | `String` | End date for comparison | See below |
+| `:tolabel` | `String` | Start label for comparison | No |
+| `:user` | `String` | Name the user whose changes we would like to see | No |
+| `:vsspath` | `String` | SourceSafe path which specifies the project/file(s) you wish to perform the action on. | Yes |
 
 **Reference**
 
@@ -9198,24 +7918,17 @@ specified version or current version of a file or project.
 
 **Attributes**
 
-- `:autoresponse` `String` - What to respond with (sets the -I option). By default, -I- is used; values of Y or N will be appended to this.
-  Required: No
-- `:comment` `String` - The comment to use for this label. Empty or - for no comment.
-  Required: No
-- `:failonerror` `boolean` - Stop the build process if ss.exe exits with a return code 100.
-  Required: No; defaults to true
-- `:label` `String` - A label to apply to the hierarchy
-  Required: Yes
-- `:login` `String` - username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password.
-  Required: No
-- `:serverpath` `String` - directory where srcsafe.ini resides.
-  Required: No
-- `:ssdir` `String` - directory where ss.exe resides.
-  Required: No; by default expected to be in PATH
-- `:version` `String` - An existing file or project version to label. By default the current version is labeled.
-  Required: No
-- `:vsspath` `String` - SourceSafe path which specifies the project/file(s) you wish to perform the action on.
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:autoresponse` | `String` | What to respond with (sets the -I option). By default, -I- is used; values of Y or N will be appended to this. | No |
+| `:comment` | `String` | The comment to use for this label. Empty or - for no comment. | No |
+| `:failonerror` | `boolean` | Stop the build process if ss.exe exits with a return code 100. | No; defaults to true |
+| `:label` | `String` | A label to apply to the hierarchy | Yes |
+| `:login` | `String` | username[, password]-The username and password needed to get access to VSS. Note that you may need to specify both (if you have a password)-Ant/VSS will hang if you leave the password out and VSS does not accept login without a password. | No |
+| `:serverpath` | `String` | directory where srcsafe.ini resides. | No |
+| `:ssdir` | `String` | directory where ss.exe resides. | No; by default expected to be in PATH |
+| `:version` | `String` | An existing file or project version to label. By default the current version is labeled. | No |
+| `:vsspath` | `String` | SourceSafe path which specifies the project/file(s) you wish to perform the action on. | Yes |
 
 **Reference**
 
@@ -9239,16 +7952,13 @@ come true within the specified time.
 
 **Attributes**
 
-- `:checkevery` `long` - The amount of time to wait between each test of the conditions.
-  Required: No; defaults to 500 checkeveryunits
-- `:checkeveryunit` `Unit` - The unit of time that must be used to interpret the value of the checkevery attribute. Valid values are millisecond second minute hour day week
-  Required: No; defaults to millisecond
-- `:maxwait` `long` - The maximum amount of time to wait for all the required conditions to become true before failing the task.
-  Required: No; defaults to 180000 maxwaitunits
-- `:maxwaitunit` `Unit` - The unit of time that must be used to interpret the value of the maxwait attribute. Valid values are millisecond second minute hour day week
-  Required: No; defaults to millisecond
-- `:timeoutproperty` `String` - the name of the property to set if maxwait has been exceeded.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:checkevery` | `long` | The amount of time to wait between each test of the conditions. | No; defaults to 500 checkeveryunits |
+| `:checkeveryunit` | `Unit` | The unit of time that must be used to interpret the value of the checkevery attribute. Valid values are millisecond second minute hour day week | No; defaults to millisecond |
+| `:maxwait` | `long` | The maximum amount of time to wait for all the required conditions to become true before failing the task. | No; defaults to 180000 maxwaitunits |
+| `:maxwaitunit` | `Unit` | The unit of time that must be used to interpret the value of the maxwait attribute. Valid values are millisecond second minute hour day week | No; defaults to millisecond |
+| `:timeoutproperty` | `String` | the name of the property to set if maxwait has been exceeded. | No |
 
 **Nested elements**
 
@@ -9302,75 +8012,48 @@ attribute to a value other than its default, add.
 
 **Attributes**
 
-- `:basedir` `File` - the directory from which to jar the files.
-  Required: No
-- `:casesensitive` `boolean`
-- `:comment` `String`
-- `:compress` `boolean` - Not only store data but also compress them. Unless you set the keepcompression attribute to false, this will apply to the entire archive, not only the files you've added while updating.
-  Required: No; defaults to true
-- `:createunicodeextrafields` `UnicodeExtraField` - Whether to create Unicode extra fields to store the file names a second time inside the entry's metadata. Possible values are never, always and not-encodeable which will only add Unicode extra fields if the file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page
-  Required: No; default is never
-- `:defaultexcludes` `boolean` - Indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:destfile` `File` - the WAR file to create.
-  Required: Exactly one of the two
-- `:duplicate` `Duplicate` - behavior when a duplicate file is found. Valid values are add, preserve, and fail.
-  Required: No; defaults to add
-- `:encoding` `String` - The character encoding to use for filenames inside the archive. It is not recommended to change this value as the created archive will most likely be unreadable for Java otherwise. See also the discussion in the zip task page
-  Required: No; defaults to UTF8
-- `:excludes` `String` - Comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - Name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:fallbacktoutf8` `boolean` - Whether to use UTF-8 and the language encoding flag instead of the specified encoding if a file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page
-  Required: No; default is false
-- `:file` `File`
-- `:filesetmanifest` `FilesetManifestConfig` - behavior when a manifest is found in a zipfileset or zipgroupfileset file. Valid values are skip, merge, and mergewithoutmain. merge will merge all of the manifests together, and merge this into any other specified manifests. mergewithoutmain merges everything but the Main section of the manifests.
-  Required: No; defaults to skip
-- `:filesonly` `boolean` - Store only file entries
-  Required: No; defaults to false
-- `:flattenattributes` `boolean` - Whether to merge attributes occurring more than once in a section (this can only happen for the Class-Path attribute) into a single attribute. Since Ant 1.8.0.
-  Required: No; default is false
-- `:followsymlinks` `boolean`
-- `:includes` `String` - Comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - Name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:index` `boolean`
-- `:indexmetainf` `boolean`
-- `:jarfile` `File`
-- `:keepcompression` `boolean` - For entries coming from existing archives (like nested zipfilesets or while updating the archive), keep the compression as it has been originally instead of using the compress attribute. Since Ant 1.6
-  Required: No; defaults to false
-- `:level` `int` - Non-default level at which file compression should be performed. Valid values range from 0 (no compression/fastest) to 9 (maximum compression/slowest). Since Ant 1.7
-  Required: No
-- `:manifest` `File` - the manifest file to use.
-  Required: No
-- `:manifestencoding` `String`
-- `:mergeclasspathattributes` `boolean` - Whether to merge the Class-Path attributes found in different manifests (if merging manifests). If false, only the attribute of the last merged manifest will be preserved. Since Ant 1.8.0. Unless you also set flattenAttributes to true this may result in manifests containing multiple Class-Path attributes which violates the manifest specification.
-  Required: No; default is false
-- `:modificationtime` `String` - Set all stored file modification times to the given time. This can either be a number interpreted as milliseconds since 1970-01-01T00:00:00Z or a string that can be parsed as a ISO 8601 timestamp with optional timezone. Since Ant 1.10.2.
-  Required: No
-- `:needxmlfile` `boolean` - Flag to indicate whether or not the web.xml file is needed. It should be set to false when generating servlet 2.5+ WAR files without a web.xml file. Since Apache Ant 1.7
-  Required: No; default is true
-- `:preserve0permissions` `boolean` - when updating an archive or adding entries from a different archive Ant will assume that a Unix permissions value of 0 (nobody is allowed to do anything to the file/directory) means that the permissions haven't been stored at all rather than real permissions and will instead apply its own default values. Set this attribute to true if you really want to preserve the original permission field. since Ant 1.8.0
-  Required: No; default is false
-- `:roundup` `boolean` - Whether the file modification times will be rounded up to the next even number of seconds. Zip archives store file modification times with a granularity of 2 seconds, so the times will either be rounded up or down. If you round down, the archive will always seem out-of-date when you rerun the task, so the default is to round up. Rounding up may lead to a different type of problems like JSPs inside a web archive that seem to be slightly more recent than precompiled pages, rendering precompilation useless. Since Ant 1.6.2
-  Required: No; defaults to true
-- `:strict` `StrictMode`
-- `:update` `boolean` - indicates whether to update or overwrite the destination file if it already exists.
-  Required: No; defaults to false
-- `:uselanguageencodingflag` `boolean` - Whether to set the language encoding flag if the encoding is UTF-8. This setting doesn't have any effect if the encoding is not UTF-8. Since Ant 1.8.0. See also the discussion in the zip task page
-  Required: No; default is true
-- `:warfile` `File` - Deprecated name of the file to create-use destfile instead.
-  Required: Exactly one of the two
-- `:webxml` `File` - The servlet configuration descriptor to use (WEB-INF/web.xml).
-  Required: Yes, unless needxmlfile is true, the file is pulled in via a nested fileset, or an existing WAR file is being updated.
-- `:whenempty` `WhenEmpty`
-- `:whenmanifestonly` `WhenEmpty` - behavior when no files match. Valid values are fail, skip, and create.
-  Required: No; defaults to create
-- `:zip64mode` `Zip64ModeAttribute` - When to use Zip64 extensions for entries. The possible values are never, always and as-needed. Since Ant 1.9.1. See also the discussion in the zip task page
-  Required: No; default is never
-- `:zipfile` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` | the directory from which to jar the files. | No |
+| `:casesensitive` | `boolean` |  |  |
+| `:comment` | `String` |  |  |
+| `:compress` | `boolean` | Not only store data but also compress them. Unless you set the keepcompression attribute to false, this will apply to the entire archive, not only the files you've added while updating. | No; defaults to true |
+| `:createunicodeextrafields` | `UnicodeExtraField` | Whether to create Unicode extra fields to store the file names a second time inside the entry's metadata. Possible values are never, always and not-encodeable which will only add Unicode extra fields if the file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page | No; default is never |
+| `:defaultexcludes` | `boolean` | Indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:destfile` | `File` | the WAR file to create. | Exactly one of the two |
+| `:duplicate` | `Duplicate` | behavior when a duplicate file is found. Valid values are add, preserve, and fail. | No; defaults to add |
+| `:encoding` | `String` | The character encoding to use for filenames inside the archive. It is not recommended to change this value as the created archive will most likely be unreadable for Java otherwise. See also the discussion in the zip task page | No; defaults to UTF8 |
+| `:excludes` | `String` | Comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | Name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:fallbacktoutf8` | `boolean` | Whether to use UTF-8 and the language encoding flag instead of the specified encoding if a file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion in the zip task page | No; default is false |
+| `:file` | `File` |  |  |
+| `:filesetmanifest` | `FilesetManifestConfig` | behavior when a manifest is found in a zipfileset or zipgroupfileset file. Valid values are skip, merge, and mergewithoutmain. merge will merge all of the manifests together, and merge this into any other specified manifests. mergewithoutmain merges everything but the Main section of the manifests. | No; defaults to skip |
+| `:filesonly` | `boolean` | Store only file entries | No; defaults to false |
+| `:flattenattributes` | `boolean` | Whether to merge attributes occurring more than once in a section (this can only happen for the Class-Path attribute) into a single attribute. Since Ant 1.8.0. | No; default is false |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` | Comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | Name of a file. Each line of this file is taken to be an include pattern | No |
+| `:index` | `boolean` |  |  |
+| `:indexmetainf` | `boolean` |  |  |
+| `:jarfile` | `File` |  |  |
+| `:keepcompression` | `boolean` | For entries coming from existing archives (like nested zipfilesets or while updating the archive), keep the compression as it has been originally instead of using the compress attribute. Since Ant 1.6 | No; defaults to false |
+| `:level` | `int` | Non-default level at which file compression should be performed. Valid values range from 0 (no compression/fastest) to 9 (maximum compression/slowest). Since Ant 1.7 | No |
+| `:manifest` | `File` | the manifest file to use. | No |
+| `:manifestencoding` | `String` |  |  |
+| `:mergeclasspathattributes` | `boolean` | Whether to merge the Class-Path attributes found in different manifests (if merging manifests). If false, only the attribute of the last merged manifest will be preserved. Since Ant 1.8.0. Unless you also set flattenAttributes to true this may result in manifests containing multiple Class-Path attributes which violates the manifest specification. | No; default is false |
+| `:modificationtime` | `String` | Set all stored file modification times to the given time. This can either be a number interpreted as milliseconds since 1970-01-01T00:00:00Z or a string that can be parsed as a ISO 8601 timestamp with optional timezone. Since Ant 1.10.2. | No |
+| `:needxmlfile` | `boolean` | Flag to indicate whether or not the web.xml file is needed. It should be set to false when generating servlet 2.5+ WAR files without a web.xml file. Since Apache Ant 1.7 | No; default is true |
+| `:preserve0permissions` | `boolean` | when updating an archive or adding entries from a different archive Ant will assume that a Unix permissions value of 0 (nobody is allowed to do anything to the file/directory) means that the permissions haven't been stored at all rather than real permissions and will instead apply its own default values. Set this attribute to true if you really want to preserve the original permission field. since Ant 1.8.0 | No; default is false |
+| `:roundup` | `boolean` | Whether the file modification times will be rounded up to the next even number of seconds. Zip archives store file modification times with a granularity of 2 seconds, so the times will either be rounded up or down. If you round down, the archive will always seem out-of-date when you rerun the task, so the default is to round up. Rounding up may lead to a different type of problems like JSPs inside a web archive that seem to be slightly more recent than precompiled pages, rendering precompilation useless. Since Ant 1.6.2 | No; defaults to true |
+| `:strict` | `StrictMode` |  |  |
+| `:update` | `boolean` | indicates whether to update or overwrite the destination file if it already exists. | No; defaults to false |
+| `:uselanguageencodingflag` | `boolean` | Whether to set the language encoding flag if the encoding is UTF-8. This setting doesn't have any effect if the encoding is not UTF-8. Since Ant 1.8.0. See also the discussion in the zip task page | No; default is true |
+| `:warfile` | `File` | Deprecated name of the file to create-use destfile instead. | Exactly one of the two |
+| `:webxml` | `File` | The servlet configuration descriptor to use (WEB-INF/web.xml). | Yes, unless needxmlfile is true, the file is pulled in via a nested fileset, or an existing WAR file is being updated. |
+| `:whenempty` | `WhenEmpty` |  |  |
+| `:whenmanifestonly` | `WhenEmpty` | behavior when no files match. Valid values are fail, skip, and create. | No; defaults to create |
+| `:zip64mode` | `Zip64ModeAttribute` | When to use Zip64 extensions for entries. The possible values are never, always and as-needed. Since Ant 1.9.1. See also the discussion in the zip task page | No; default is never |
+| `:zipfile` | `File` |  |  |
 
 **Nested elements**
 
@@ -9427,16 +8110,13 @@ supplied. The named property is set if the item can be found. For example:
 
 **Attributes**
 
-- `:class` `String` - The name of the class to look for.
-  Required: Exactly one of these
-- `:classpath` `Path` - The classpath to use when looking up class or resource.
-  Required: No
-- `:classpathref` `Reference` - The classpath to use, given as a reference to a path defined elsewhere. Since Apache Ant 1.7.1.
-  Required: No
-- `:property` `String` - The property to fill with the URL of the resource of class.
-  Required: Yes
-- `:resource` `String` - The name of the resource to look for.
-  Required: Exactly one of these
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:class` | `String` | The name of the class to look for. | Exactly one of these |
+| `:classpath` | `Path` | The classpath to use when looking up class or resource. | No |
+| `:classpathref` | `Reference` | The classpath to use, given as a reference to a path defined elsewhere. Since Apache Ant 1.7.1. | No |
+| `:property` | `String` | The property to fill with the URL of the resource of class. | Yes |
+| `:resource` | `String` | The name of the resource to look for. | Exactly one of these |
 
 **Nested elements**
 
@@ -9459,21 +8139,19 @@ WebLogic 4.5.1-NT 4.0 and Solaris 7 & 8
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:classpath` `Path` - Class path to use when compiling JSPs
-  Required: Yes
-- `:defaultexcludes` `boolean`
-- `:dest` `File` - root of destination directory, what you have set as WorkingDir in the WebLogic properties
-  Required: Yes
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:package` `String` - start package name under which your JSPs would be compiled
-  Required: Yes
-- `:src` `File` - root of source tree for JSP, ie, the document root for your WebLogic server
-  Required: Yes
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:classpath` | `Path` | Class path to use when compiling JSPs | Yes |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dest` | `File` | root of destination directory, what you have set as WorkingDir in the WebLogic properties | Yes |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:package` | `String` | start package name under which your JSPs would be compiled | Yes |
+| `:src` | `File` | root of source tree for JSP, ie, the document root for your WebLogic server | Yes |
 
 **Nested elements**
 
@@ -9523,25 +8201,18 @@ ${foo}) are not resolved.
 
 **Attributes**
 
-- `:collapseattributes` `boolean` - Treat attributes as nested elements.
-  Required: No; default is false
-- `:delimiter` `String` - Delimiter for splitting multiple values. since Apache Ant 1.7.1
-  Required: No; defaults to, (comma)
-- `:file` `File` - The XML file to parse.
-  Required: Yes, or a nested resource collection
-- `:includesemanticattribute` `boolean` - Include the semantic attribute name as part of the property name. Ignored if semanticAttributes is not set to true. See the Semantic Attributes section for more information.
-  Required: No; default is false
-- `:keeproot` `boolean` - Keep the XML root tag as the first value in the property name.
-  Required: No; default is true
-- `:prefix` `String` - The prefix to prepend to each property.
-  Required: No
-- `:rootdirectory` `File` - The directory to use for resolving file references. Ignored if semanticAttributes is not set to true.
-  Required: No; default is basedir
-- `:semanticattributes` `boolean` - Enable special handling of certain attribute names. See the Semantic Attributes section for more information.
-  Required: No; default is false
-- `:srcresource` `Resource`
-- `:validate` `boolean` - Validate the input file (e.g. by a DTD). Otherwise the XML must only be well-formed.
-  Required: No; default is false
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:collapseattributes` | `boolean` | Treat attributes as nested elements. | No; default is false |
+| `:delimiter` | `String` | Delimiter for splitting multiple values. since Apache Ant 1.7.1 | No; defaults to, (comma) |
+| `:file` | `File` | The XML file to parse. | Yes, or a nested resource collection |
+| `:includesemanticattribute` | `boolean` | Include the semantic attribute name as part of the property name. Ignored if semanticAttributes is not set to true. See the Semantic Attributes section for more information. | No; default is false |
+| `:keeproot` | `boolean` | Keep the XML root tag as the first value in the property name. | No; default is true |
+| `:prefix` | `String` | The prefix to prepend to each property. | No |
+| `:rootdirectory` | `File` | The directory to use for resolving file references. Ignored if semanticAttributes is not set to true. | No; default is basedir |
+| `:semanticattributes` | `boolean` | Enable special handling of certain attribute names. See the Semantic Attributes section for more information. | No; default is false |
+| `:srcresource` | `Resource` |  |  |
+| `:validate` | `boolean` | Validate the input file (e.g. by a DTD). Otherwise the XML must only be well-formed. | No; default is false |
 
 **Nested elements**
 
@@ -9577,19 +8248,15 @@ warning may not apply.
 
 **Attributes**
 
-- `:classname` `String` - the parser to use.
-  Required: No
-- `:classpath` `Path`
-- `:classpathref` `Reference` - where to find the parser class.
-  Required: No, can use an embedded <classpath> element
-- `:failonerror` `boolean` - fails on a error if set to true.
-  Required: No; defaults to true
-- `:file` `File` - the file(s) you want to check.
-  Required: Yes, unless an embedded <fileset> is specified
-- `:lenient` `boolean` - if true, only check the XML document is well formed (ignored if the specified parser is a SAX1 parser).
-  Required: No
-- `:warn` `boolean` - log parser warn events.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` | the parser to use. | No |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` | where to find the parser class. | No, can use an embedded <classpath> element |
+| `:failonerror` | `boolean` | fails on a error if set to true. | No; defaults to true |
+| `:file` | `File` | the file(s) you want to check. | Yes, unless an embedded <fileset> is specified |
+| `:lenient` | `boolean` | if true, only check the XML document is well formed (ignored if the specified parser is a SAX1 parser). | No |
+| `:warn` | `boolean` | log parser warn events. | No |
 
 **Nested elements**
 
@@ -9648,58 +8315,36 @@ path-like structure).
 
 **Attributes**
 
-- `:basedir` `File` - where to find the source XML file.
-  Required: No; defaults to the project's basedir
-- `:casesensitive` `boolean`
-- `:classpath` `Path` - the classpath to use when looking up the XSLT processor.
-  Required: No
-- `:classpathref` `Reference` - the classpath to use, given as reference to a path defined elsewhere.
-  Required: No
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:destdir` `File` - directory in which to store the results.
-  Required: Yes, unless in and out have been specified.
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern
-  Required: No
-- `:extension` `String` - desired file extension to be used for the targets.
-  Required: No; default is .html, ignored if a nested <mapper> or both in and out have been specified
-- `:failonerror` `boolean` - Whether the build should fail if any error occurs. Note that transformation errors can still be suppressed by setting failOnTransformationError to false even if this attribute is true. Since Ant 1.8.0.
-  Required: No; default is true
-- `:failonnoresources` `boolean` - Whether the build should fail if the nested resource collection is empty. Note that this attribute has no effect of failOnError is false. Since Ant 1.8.0.
-  Required: No; default is true
-- `:failontransformationerror` `boolean` - Whether the build should fail if an error occurs while transforming the document. Note that this attribute has no effect if failOnError is false. Since Ant 1.8.0.
-  Required: No; default is true
-- `:filedirparameter` `String` - Specifies a XSL parameter for accessing the directory of the current processed file. For files in the current directory, a value of. will be passed to the transformation. If not set, the directory is not passed to the transformation. Since Ant 1.7.
-  Required: No
-- `:filenameparameter` `String` - Specifies an XSL parameter for accessing the name of the current processed file. If not set, the file name is not passed to the transformation. Since Ant 1.7.
-  Required: No
-- `:followsymlinks` `boolean`
-- `:force` `boolean` - Recreate target files, even if they are newer than their corresponding source files or the stylesheet.
-  Required: No; default is false
-- `:granularity` `long` - The number of milliseconds leeway to give before deciding a file is out of date with respect of the source file or stylesheet. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.10.16.
-  Required: No; default is 1 second, or 2 seconds on DOS systems
-- `:in` `File` - specifies a single XML document to be styled. Should be used with the out attribute.
-  Required: No
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern
-  Required: No
-- `:out` `File` - specifies the output name for the styled result from the in attribute.
-  Required: No
-- `:processor` `String` - name of the XSLT processor to use. Permissible value is: trax for a TraX compliant processor (ie JAXP interface implementation such as Xalan 2 or Saxon) Support for Xalan 1 has been removed since Ant 1.7.
-  Required: No; defaults to trax
-- `:reloadstylesheet` `boolean` - Control whether the stylesheet transformer is created anew for every transform operation. If you set this to true, performance may suffer, but you may work around a bug in certain Xalan versions. Since Ant 1.5.2.
-  Required: No; default is false
-- `:scanincludeddirectories` `boolean` - If any directories are matched by the includes/excludes patterns, try to transform all files in these directories. No; default is true
-- `:style` `String` - name of the stylesheet to use-given either relative to the project's basedir or as an absolute path. Alternatively, a nested element which Ant can interpret as a resource can be used to indicate where to find the stylesheet. Deprecated variation: If the stylesheet cannot be found, and if you have specified the attribute basedir for the task, Ant will assume that the style attribute is relative to the basedir of the task.
-  Required: No, if the location of the stylesheet is specified using a nested <style> element
-- `:suppresswarnings` `boolean` - Whether processor warnings shall be suppressed. This option requires support by the processor, it is supported by the TrAX processor bundled with Ant. Since Ant 1.8.0.
-  Required: No; default is false
-- `:useimplicitfileset` `boolean` - Whether the implicit fileset formed by this task shall be used. If you set this to false you must use nested resource collections-or the in attribute, in which case this attribute has no impact anyway. Since Ant 1.7.
-  Required: No; default is true
-- `:xslresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` | where to find the source XML file. | No; defaults to the project's basedir |
+| `:casesensitive` | `boolean` |  |  |
+| `:classpath` | `Path` | the classpath to use when looking up the XSLT processor. | No |
+| `:classpathref` | `Reference` | the classpath to use, given as reference to a path defined elsewhere. | No |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:destdir` | `File` | directory in which to store the results. | Yes, unless in and out have been specified. |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern | No |
+| `:extension` | `String` | desired file extension to be used for the targets. | No; default is .html, ignored if a nested <mapper> or both in and out have been specified |
+| `:failonerror` | `boolean` | Whether the build should fail if any error occurs. Note that transformation errors can still be suppressed by setting failOnTransformationError to false even if this attribute is true. Since Ant 1.8.0. | No; default is true |
+| `:failonnoresources` | `boolean` | Whether the build should fail if the nested resource collection is empty. Note that this attribute has no effect of failOnError is false. Since Ant 1.8.0. | No; default is true |
+| `:failontransformationerror` | `boolean` | Whether the build should fail if an error occurs while transforming the document. Note that this attribute has no effect if failOnError is false. Since Ant 1.8.0. | No; default is true |
+| `:filedirparameter` | `String` | Specifies a XSL parameter for accessing the directory of the current processed file. For files in the current directory, a value of. will be passed to the transformation. If not set, the directory is not passed to the transformation. Since Ant 1.7. | No |
+| `:filenameparameter` | `String` | Specifies an XSL parameter for accessing the name of the current processed file. If not set, the file name is not passed to the transformation. Since Ant 1.7. | No |
+| `:followsymlinks` | `boolean` |  |  |
+| `:force` | `boolean` | Recreate target files, even if they are newer than their corresponding source files or the stylesheet. | No; default is false |
+| `:granularity` | `long` | The number of milliseconds leeway to give before deciding a file is out of date with respect of the source file or stylesheet. This is needed because not every file system supports tracking the last modified time to the millisecond level. This can also be useful if source and target files live on separate machines with clocks being out of sync. since Ant 1.10.16. | No; default is 1 second, or 2 seconds on DOS systems |
+| `:in` | `File` | specifies a single XML document to be styled. Should be used with the out attribute. | No |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern | No |
+| `:out` | `File` | specifies the output name for the styled result from the in attribute. | No |
+| `:processor` | `String` | name of the XSLT processor to use. Permissible value is: trax for a TraX compliant processor (ie JAXP interface implementation such as Xalan 2 or Saxon) Support for Xalan 1 has been removed since Ant 1.7. | No; defaults to trax |
+| `:reloadstylesheet` | `boolean` | Control whether the stylesheet transformer is created anew for every transform operation. If you set this to true, performance may suffer, but you may work around a bug in certain Xalan versions. Since Ant 1.5.2. | No; default is false |
+| `:scanincludeddirectories` | `boolean` | If any directories are matched by the includes/excludes patterns, try to transform all files in these directories. No; default is true |  |
+| `:style` | `String` | name of the stylesheet to use-given either relative to the project's basedir or as an absolute path. Alternatively, a nested element which Ant can interpret as a resource can be used to indicate where to find the stylesheet. Deprecated variation: If the stylesheet cannot be found, and if you have specified the attribute basedir for the task, Ant will assume that the style attribute is relative to the basedir of the task. | No, if the location of the stylesheet is specified using a nested <style> element |
+| `:suppresswarnings` | `boolean` | Whether processor warnings shall be suppressed. This option requires support by the processor, it is supported by the TrAX processor bundled with Ant. Since Ant 1.8.0. | No; default is false |
+| `:useimplicitfileset` | `boolean` | Whether the implicit fileset formed by this task shall be used. If you set this to false you must use nested resource collections-or the in attribute, in which case this attribute has no impact anyway. Since Ant 1.7. | No; default is true |
+| `:xslresource` | `Resource` |  |  |
 
 **Nested elements**
 
@@ -9806,57 +8451,35 @@ is true if you use Windows' functions to extract an Ant generated ZIP archive.
 
 **Attributes**
 
-- `:basedir` `File` - the directory from which to zip the files.
-  Required: No
-- `:casesensitive` `boolean`
-- `:comment` `String` - Comment to store in the archive. Since Ant 1.6.3
-  Required: No
-- `:compress` `boolean` - Not only store data but also compress them. Unless you set the keepcompression attribute to false, this will apply to the entire archive, not only the files you've added while updating.
-  Required: No; defaults to true
-- `:createunicodeextrafields` `UnicodeExtraField` - Whether to create Unicode extra fields to store the file names a second time inside the entry's metadata. Possible values are never, always and not-encodeable which will only add Unicode extra fields if the file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion below
-  Required: No; default is never
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:destfile` `File` - the zip file to create.
-  Required: Exactly one of the two
-- `:duplicate` `Duplicate` - behavior when a duplicate file is found. Valid values are add, preserve, and fail.
-  Required: No; default is add
-- `:encoding` `String` - The character encoding to use for filenames inside the zip file. For a list of possible values see the Supported Encodings.
-  Required: No; defaults to default JVM character encoding
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file. Each line of this file is taken to be an exclude pattern.
-  Required: No
-- `:fallbacktoutf8` `boolean` - Whether to use UTF-8 and the language encoding flag instead of the specified encoding if a file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion below
-  Required: No; default is false
-- `:file` `File`
-- `:filesonly` `boolean` - Store only file entries.
-  Required: No; defaults to false
-- `:followsymlinks` `boolean`
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all (**)
-- `:includesfile` `File` - name of a file. Each line of this file is taken to be an include pattern.
-  Required: No
-- `:keepcompression` `boolean` - For entries coming from existing archives (like nested zipfilesets or while updating the archive), keep the compression as it has been originally instead of using the compress attribute. Since Ant 1.6
-  Required: No; defaults to false
-- `:level` `int` - Non-default level at which file compression should be performed. Valid values range from 0 (no compression/fastest) to 9 (maximum compression/slowest). Since Ant 1.7
-  Required: No
-- `:modificationtime` `String` - Set all stored file modification times to the given time. This can either be a number interpreted as milliseconds since 1970-01-01T00:00:00Z or a string that can be parsed as a ISO 8601 timestamp with optional timezone. Since Ant 1.10.2.
-  Required: No
-- `:preserve0permissions` `boolean` - when updating an archive or adding entries from a different archive Ant will assume that a Unix permissions value of 0 (nobody is allowed to do anything to the file/directory) means that the permissions haven't been stored at all rather than real permissions and will instead apply its own default values. Set this attribute to true if you really want to preserve the original permission field. Since Ant 1.8.0
-  Required: No; default is false
-- `:roundup` `boolean` - Whether the file modification times will be rounded up to the next even number of seconds. Zip archives store file modification times with a granularity of 2 seconds, so the times will either be rounded up or down. If you round down, the archive will always seem out-of-date when you rerun the task, so the default is to round up. Rounding up may lead to a different type of problems like JSPs inside a web archive that seem to be slightly more recent than precompiled pages, rendering precompilation useless. Since Ant 1.6.2
-  Required: No; defaults to true
-- `:update` `boolean` - indicates whether to update or overwrite the destination file if it already exists.
-  Required: No; default is false
-- `:uselanguageencodingflag` `boolean` - Whether to set the language encoding flag if the encoding is UTF-8. This setting doesn't have any effect if the encoding is not UTF-8. Since Ant 1.8.0. See also the discussion below
-  Required: No; default is true
-- `:whenempty` `WhenEmpty` - behavior when no files match. Valid values are fail, skip, and create.
-  Required: No; default is skip
-- `:zip64mode` `Zip64ModeAttribute` - When to use Zip64 extensions for entries. The possible values are never, always and as-needed. Since Ant 1.9.1. See also the discussion below
-  Required: No; default is as-needed
-- `:zipfile` `File` - deprecated old name of destfile.
-  Required: Exactly one of the two
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` | the directory from which to zip the files. | No |
+| `:casesensitive` | `boolean` |  |  |
+| `:comment` | `String` | Comment to store in the archive. Since Ant 1.6.3 | No |
+| `:compress` | `boolean` | Not only store data but also compress them. Unless you set the keepcompression attribute to false, this will apply to the entire archive, not only the files you've added while updating. | No; defaults to true |
+| `:createunicodeextrafields` | `UnicodeExtraField` | Whether to create Unicode extra fields to store the file names a second time inside the entry's metadata. Possible values are never, always and not-encodeable which will only add Unicode extra fields if the file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion below | No; default is never |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:destfile` | `File` | the zip file to create. | Exactly one of the two |
+| `:duplicate` | `Duplicate` | behavior when a duplicate file is found. Valid values are add, preserve, and fail. | No; default is add |
+| `:encoding` | `String` | The character encoding to use for filenames inside the zip file. For a list of possible values see the Supported Encodings. | No; defaults to default JVM character encoding |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file. Each line of this file is taken to be an exclude pattern. | No |
+| `:fallbacktoutf8` | `boolean` | Whether to use UTF-8 and the language encoding flag instead of the specified encoding if a file name cannot be encoded using the specified encoding. Since Ant 1.8.0. See also the discussion below | No; default is false |
+| `:file` | `File` |  |  |
+| `:filesonly` | `boolean` | Store only file entries. | No; defaults to false |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all (**) |
+| `:includesfile` | `File` | name of a file. Each line of this file is taken to be an include pattern. | No |
+| `:keepcompression` | `boolean` | For entries coming from existing archives (like nested zipfilesets or while updating the archive), keep the compression as it has been originally instead of using the compress attribute. Since Ant 1.6 | No; defaults to false |
+| `:level` | `int` | Non-default level at which file compression should be performed. Valid values range from 0 (no compression/fastest) to 9 (maximum compression/slowest). Since Ant 1.7 | No |
+| `:modificationtime` | `String` | Set all stored file modification times to the given time. This can either be a number interpreted as milliseconds since 1970-01-01T00:00:00Z or a string that can be parsed as a ISO 8601 timestamp with optional timezone. Since Ant 1.10.2. | No |
+| `:preserve0permissions` | `boolean` | when updating an archive or adding entries from a different archive Ant will assume that a Unix permissions value of 0 (nobody is allowed to do anything to the file/directory) means that the permissions haven't been stored at all rather than real permissions and will instead apply its own default values. Set this attribute to true if you really want to preserve the original permission field. Since Ant 1.8.0 | No; default is false |
+| `:roundup` | `boolean` | Whether the file modification times will be rounded up to the next even number of seconds. Zip archives store file modification times with a granularity of 2 seconds, so the times will either be rounded up or down. If you round down, the archive will always seem out-of-date when you rerun the task, so the default is to round up. Rounding up may lead to a different type of problems like JSPs inside a web archive that seem to be slightly more recent than precompiled pages, rendering precompilation useless. Since Ant 1.6.2 | No; defaults to true |
+| `:update` | `boolean` | indicates whether to update or overwrite the destination file if it already exists. | No; default is false |
+| `:uselanguageencodingflag` | `boolean` | Whether to set the language encoding flag if the encoding is UTF-8. This setting doesn't have any effect if the encoding is not UTF-8. Since Ant 1.8.0. See also the discussion below | No; default is true |
+| `:whenempty` | `WhenEmpty` | behavior when no files match. Valid values are fail, skip, and create. | No; default is skip |
+| `:zip64mode` | `Zip64ModeAttribute` | When to use Zip64 extensions for entries. The possible values are never, always and as-needed. Since Ant 1.9.1. See also the discussion below | No; default is as-needed |
+| `:zipfile` | `File` | deprecated old name of destfile. | Exactly one of the two |
 
 **Nested elements**
 
@@ -9903,9 +8526,11 @@ https://ant.apache.org/manual/Tasks/zip.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:count` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:count` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -9923,9 +8548,11 @@ https://ant.apache.org/manual/Types/allbutfirst.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:count` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:count` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -9943,7 +8570,9 @@ https://ant.apache.org/manual/Types/allbutlast.html
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -9979,9 +8608,10 @@ option\" error and the JVM will not start. Attributes
 
 **Attributes**
 
-- `:enablesystemassertions` `Boolean` - Flag to turn system assertions on or off.
-  Required: No; default is unspecified
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:enablesystemassertions` | `Boolean` | Flag to turn system assertions on or off. | No; default is unspecified |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -10004,12 +8634,14 @@ https://ant.apache.org/manual/Types/assertions.html
 
 **Attributes**
 
-- `:directory` `boolean`
-- `:exists` `boolean`
-- `:lastmodified` `long`
-- `:name` `String`
-- `:refid` `Reference`
-- `:size` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:directory` | `boolean` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
 
 **Reference**
 
@@ -10027,8 +8659,10 @@ https://ant.apache.org/manual/Types/bzip2resource.html
 
 **Attributes**
 
-- `:from` `String`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:from` | `String` |  |  |
+| `:to` | `String` |  |  |
 
 **Nested elements**
 
@@ -10055,20 +8689,21 @@ requires the BCEL library.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
-- `:rootclass` `String` - A single root class name
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:rootclass` | `String` | A single root class name | No |
 
 **Nested elements**
 
@@ -10122,8 +8757,10 @@ https://ant.apache.org/manual/Types/classfileset.html
 
 **Attributes**
 
-- `:from` `String`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:from` | `String` |  |  |
+| `:to` | `String` |  |  |
 
 **Nested elements**
 
@@ -10145,8 +8782,10 @@ https://ant.apache.org/manual/Types/compositemapper.html
 
 **Attributes**
 
-- `:append` `File`
-- `:prepend` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:append` | `File` |  |  |
+| `:prepend` | `File` |  |  |
 
 **Reference**
 
@@ -10164,9 +8803,11 @@ https://ant.apache.org/manual/Types/concatfilter.html
 
 **Attributes**
 
-- `:dirs` `int`
-- `:from` `String`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dirs` | `int` |  |  |
+| `:from` | `String` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -10185,7 +8826,9 @@ output of the ant -projecthelp command.
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Body text**
 
@@ -10207,8 +8850,10 @@ https://ant.apache.org/manual/Types/description.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -10234,27 +8879,20 @@ container.
 
 **Attributes**
 
-- `:casesensitive` `boolean` - Specifies whether case-sensitivity should be applied (true, yes, on or false, no, off).
-  Required: No; defaults to true
-- `:defaultexcludes` `boolean`
-- `:dir` `File` - The root of the directory tree of this DirSet.
-  Required: Yes
-- `:erroronmissingdir` `boolean` - Specify what happens if the base directory does not exist. If true a build error will happen, if false, the dirset will be ignored/empty. Since Apache Ant 1.7.1
-  Required: No; defaults to true (for backward compatibility reasons)
-- `:excludes` `String` - Comma- or space-separated list of patterns of directories that must be excluded.
-  Required: No; defaults to none
-- `:excludesfile` `File` - Name of a file; each line of this file is taken to be an exclude pattern.
-  Required: No
-- `:file` `File`
-- `:followsymlinks` `boolean` - Shall symbolic links and Windows junctions be followed? See fileset's documentation. Windows junctions are detected since Ant 1.10.16.
-  Required: No; defaults to true
-- `:includes` `String` - Comma- or space-separated list of patterns of directories that must be included.
-  Required: No; defaults to all directories
-- `:includesfile` `File` - Name of a file; each line of this file is taken to be an include pattern. Note: if the file is empty and there are no other patterns defined for the fileset, all directories will be included.
-  Required: No
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference` - Makes this dirset a reference to a dirset defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` | Specifies whether case-sensitivity should be applied (true, yes, on or false, no, off). | No; defaults to true |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` | The root of the directory tree of this DirSet. | Yes |
+| `:erroronmissingdir` | `boolean` | Specify what happens if the base directory does not exist. If true a build error will happen, if false, the dirset will be ignored/empty. Since Apache Ant 1.7.1 | No; defaults to true (for backward compatibility reasons) |
+| `:excludes` | `String` | Comma- or space-separated list of patterns of directories that must be excluded. | No; defaults to none |
+| `:excludesfile` | `File` | Name of a file; each line of this file is taken to be an exclude pattern. | No |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` | Shall symbolic links and Windows junctions be followed? See fileset's documentation. Windows junctions are detected since Ant 1.10.16. | No; defaults to true |
+| `:includes` | `String` | Comma- or space-separated list of patterns of directories that must be included. | No; defaults to all directories |
+| `:includesfile` | `File` | Name of a file; each line of this file is taken to be an include pattern. Note: if the file is empty and there are no other patterns defined for the fileset, all directories will be included. | No |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` | Makes this dirset a reference to a dirset defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
 
 **Nested elements**
 
@@ -10312,22 +8950,16 @@ Versioning documentation.
 
 **Attributes**
 
-- `:extensionname` `String` - The name of extension
-  Required: yes
-- `:implementationurl` `String` - The url from which to retrieve extension.
-  Required: no
-- `:implementationvendor` `String` - The implementation vendor
-  Required: no
-- `:implementationvendorid` `String` - The implementation vendor ID
-  Required: no
-- `:implementationversion` `String` - The version of extension implementation (must be in dewey decimal aka dotted decimal notation, eg 3.2.4)
-  Required: no
-- `:refid` `Reference` - Makes this extension a reference to an extension defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
-- `:specificationvendor` `String` - The specification vendor
-  Required: no
-- `:specificationversion` `String` - The version of extension specification (must be in dewey decimal aka dotted decimal notation, eg 3.2.4)
-  Required: no
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:extensionname` | `String` | The name of extension | yes |
+| `:implementationurl` | `String` | The url from which to retrieve extension. | no |
+| `:implementationvendor` | `String` | The implementation vendor | no |
+| `:implementationvendorid` | `String` | The implementation vendor ID | no |
+| `:implementationversion` | `String` | The version of extension implementation (must be in dewey decimal aka dotted decimal notation, eg 3.2.4) | no |
+| `:refid` | `Reference` | Makes this extension a reference to an extension defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
+| `:specificationvendor` | `String` | The specification vendor | no |
+| `:specificationversion` | `String` | The version of extension specification (must be in dewey decimal aka dotted decimal notation, eg 3.2.4) | no |
 
 **Reference**
 
@@ -10352,7 +8984,9 @@ allowed.
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -10376,14 +9010,16 @@ https://ant.apache.org/manual/Types/extensionSet.html
 
 **Attributes**
 
-- `:basedir` `File`
-- `:directory` `boolean`
-- `:exists` `boolean`
-- `:file` `File`
-- `:lastmodified` `long`
-- `:name` `String`
-- `:refid` `Reference`
-- `:size` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` |  |  |
+| `:directory` | `boolean` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:file` | `File` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
 
 **Reference**
 
@@ -10406,12 +9042,11 @@ FileLists can appear inside tasks that support this feature or as stand-alone ty
 
 **Attributes**
 
-- `:dir` `File` - The base directory of this FileList.
-  Required: Yes
-- `:files` `String` - The list of file names. This is a list of file name separated by whitespace, or by commas.
-  Required: Yes, unless there is a nested file element
-- `:refid` `Reference` - Makes this filelist a reference to a filelist defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dir` | `File` | The base directory of this FileList. | Yes |
+| `:files` | `String` | The list of file names. This is a list of file name separated by whitespace, or by commas. | Yes, unless there is a nested file element |
+| `:refid` | `Reference` | Makes this filelist a reference to a filelist defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
 
 **Nested elements**
 
@@ -10433,14 +9068,16 @@ https://ant.apache.org/manual/Types/filelist.html
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -10499,29 +9136,20 @@ the FileSet. This makes a FileSet equivalent to an <and> selector container.
 
 **Attributes**
 
-- `:casesensitive` `boolean` - Must the include and exclude patterns be treated in a case sensitive way?
-  Required: No; defaults to true
-- `:defaultexcludes` `boolean` - indicates whether default excludes should be used or not (yes|no).
-  Required: No; defaults to yes
-- `:dir` `File` - the root of the directory tree of this FileSet.
-  Required: Exactly one of dir or file must be specified
-- `:erroronmissingdir` `boolean` - Specify what happens if the base directory does not exist. If true a build error will happen, if false, the fileset will be ignored/empty. Since Apache Ant 1.7.1
-  Required: No; defaults to true (for backward compatibility reasons)
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No; defaults to default excludes or none if defaultexcludes is no
-- `:excludesfile` `File` - name of a file; each line of this file is taken to be an exclude pattern.
-  Required: No
-- `:file` `File` - shortcut for specifying a single-file fileset
-  Required: Exactly one of dir or file must be specified
-- `:followsymlinks` `boolean` - Shall symbolic links and Windows junctions be followed? See the note below. Windows junctions are detected since Ant 1.10.16.
-  Required: No; defaults to true
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: No; defaults to all files
-- `:includesfile` `File` - name of a file; each line of this file is taken to be an include pattern. Note: if the file is empty and there are no other patterns defined for the fileset, all files will be included.
-  Required: No
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference` - Makes this fileset a reference to a fileset defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` | Must the include and exclude patterns be treated in a case sensitive way? | No; defaults to true |
+| `:defaultexcludes` | `boolean` | indicates whether default excludes should be used or not (yes\\|no). | No; defaults to yes |
+| `:dir` | `File` | the root of the directory tree of this FileSet. | Exactly one of dir or file must be specified |
+| `:erroronmissingdir` | `boolean` | Specify what happens if the base directory does not exist. If true a build error will happen, if false, the fileset will be ignored/empty. Since Apache Ant 1.7.1 | No; defaults to true (for backward compatibility reasons) |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No; defaults to default excludes or none if defaultexcludes is no |
+| `:excludesfile` | `File` | name of a file; each line of this file is taken to be an exclude pattern. | No |
+| `:file` | `File` | shortcut for specifying a single-file fileset | Exactly one of dir or file must be specified |
+| `:followsymlinks` | `boolean` | Shall symbolic links and Windows junctions be followed? See the note below. Windows junctions are detected since Ant 1.10.16. | No; defaults to true |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | No; defaults to all files |
+| `:includesfile` | `File` | name of a file; each line of this file is taken to be an include pattern. Note: if the file is empty and there are no other patterns defined for the fileset, all files will be included. | No |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` | Makes this fileset a reference to a fileset defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
 
 **Nested elements**
 
@@ -10624,7 +9252,9 @@ SortFilter TokenFilter FixCRLF
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -10667,9 +9297,11 @@ https://ant.apache.org/manual/Types/filterchain.html
 
 **Attributes**
 
-- `:from` `String`
-- `:refid` `Reference`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:from` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:to` | `String` |  |  |
 
 **Nested elements**
 
@@ -10712,10 +9344,12 @@ https://ant.apache.org/manual/Types/filtermapper.html
 
 **Attributes**
 
-- `:classname` `String`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -10751,18 +9385,14 @@ filters you should ensure that the set of files being filtered are all text file
 
 **Attributes**
 
-- `:begintoken` `String` - The string marking the beginning of a token (eg., @DATE@).
-  Required: @
-- `:endtoken` `String` - The string marking the end of a token (eg., @DATE@).
-  Required: @
-- `:filtersfile` `File` - Specify a single filtersfile.
-  Required: none
-- `:onmissingfiltersfile` `OnMissing` - Indicate behavior when a nonexistent filtersfile is specified. One of fail, warn, ignore. Since Ant 1.7
-  Required: fail
-- `:recurse` `boolean` - Indicates whether the replacement text of tokens should be searched for more tokens. Since Ant 1.6.3
-  Required: true
-- `:refid` `Reference` - Makes this filterset a reference to a filterset defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:begintoken` | `String` | The string marking the beginning of a token (eg., @DATE@). | @ |
+| `:endtoken` | `String` | The string marking the end of a token (eg., @DATE@). | @ |
+| `:filtersfile` | `File` | Specify a single filtersfile. | none |
+| `:onmissingfiltersfile` | `OnMissing` | Indicate behavior when a nonexistent filtersfile is specified. One of fail, warn, ignore. Since Ant 1.7 | fail |
+| `:recurse` | `boolean` | Indicates whether the replacement text of tokens should be searched for more tokens. Since Ant 1.6.3 | true |
+| `:refid` | `Reference` | Makes this filterset a reference to a filterset defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
 
 **Nested elements**
 
@@ -10787,9 +9417,11 @@ https://ant.apache.org/manual/Types/filterset.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:count` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:count` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -10807,8 +9439,10 @@ https://ant.apache.org/manual/Types/first.html
 
 **Attributes**
 
-- `:from` `String`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:from` | `String` |  |  |
+| `:to` | `String` |  |  |
 
 **Nested elements**
 
@@ -10830,8 +9464,10 @@ https://ant.apache.org/manual/Types/firstmatchmapper.html
 
 **Attributes**
 
-- `:from` `String`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:from` | `String` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -10849,10 +9485,12 @@ https://ant.apache.org/manual/Types/flattenmapper.html
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:from` `String`
-- `:handledirsep` `boolean`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:from` | `String` |  |  |
+| `:handledirsep` | `boolean` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -10870,12 +9508,14 @@ https://ant.apache.org/manual/Types/globmapper.html
 
 **Attributes**
 
-- `:directory` `boolean`
-- `:exists` `boolean`
-- `:lastmodified` `long`
-- `:name` `String`
-- `:refid` `Reference`
-- `:size` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:directory` | `boolean` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
 
 **Reference**
 
@@ -10893,8 +9533,10 @@ https://ant.apache.org/manual/Types/gzipresource.html
 
 **Attributes**
 
-- `:from` `String`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:from` | `String` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -10912,8 +9554,10 @@ https://ant.apache.org/manual/Types/identitymapper.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -10931,9 +9575,11 @@ https://ant.apache.org/manual/Types/intersect.html
 
 **Attributes**
 
-- `:basedir` `File`
-- `:file` `File`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -10980,16 +9626,18 @@ https://ant.apache.org/manual/Types/isfileselected.html
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:directory` `boolean`
-- `:exists` `boolean`
-- `:lastmodified` `long`
-- `:loaderref` `Reference`
-- `:name` `String`
-- `:parentfirst` `boolean`
-- `:refid` `Reference`
-- `:size` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:directory` | `boolean` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:loaderref` | `Reference` |  |  |
+| `:name` | `String` |  |  |
+| `:parentfirst` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
 
 **Nested elements**
 
@@ -11011,16 +9659,18 @@ https://ant.apache.org/manual/Types/javaconstant.html
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:directory` `boolean`
-- `:exists` `boolean`
-- `:lastmodified` `long`
-- `:loaderref` `Reference`
-- `:name` `String`
-- `:parentfirst` `boolean`
-- `:refid` `Reference`
-- `:size` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:directory` | `boolean` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:loaderref` | `Reference` |  |  |
+| `:name` | `String` |  |  |
+| `:parentfirst` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
 
 **Nested elements**
 
@@ -11042,9 +9692,11 @@ https://ant.apache.org/manual/Types/javaresource.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:count` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:count` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -11062,21 +9714,23 @@ https://ant.apache.org/manual/Types/last.html
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includeimpl` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:includeurl` `boolean`
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
-- `:urlbase` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includeimpl` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:includeurl` | `boolean` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:urlbase` | `String` |  |  |
 
 **Nested elements**
 
@@ -11128,7 +9782,9 @@ https://ant.apache.org/manual/Types/libfileset.html
 
 **Attributes**
 
-- `:includedelims` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:includedelims` | `boolean` |  |  |
 
 **Reference**
 
@@ -11146,9 +9802,11 @@ https://ant.apache.org/manual/Types/linetokenizer.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:enablemultiplemappings` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:enablemultiplemappings` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -11179,20 +9837,15 @@ defined in <mapper> elements with the following attributes:
 
 **Attributes**
 
-- `:classname` `String` - specifies the implementation by class name.
-  Required: Exactly one of these
-- `:classpath` `Path` - the classpath to use when looking up classname.
-  Required: No
-- `:classpathref` `Reference` - the classpath to use, given as reference to a path defined elsewhere.
-  Required: No
-- `:from` `String` - the from attribute for the given implementation.
-  Required: Depends on implementation
-- `:refid` `Reference` - Makes this mapper a reference to a mapper defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
-- `:to` `String` - the to attribute for the given implementation.
-  Required: Depends on implementation
-- `:type` `MapperType` - specifies one of the built-in implementations.
-  Required: Exactly one of these
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` | specifies the implementation by class name. | Exactly one of these |
+| `:classpath` | `Path` | the classpath to use when looking up classname. | No |
+| `:classpathref` | `Reference` | the classpath to use, given as reference to a path defined elsewhere. | No |
+| `:from` | `String` | the from attribute for the given implementation. | Depends on implementation |
+| `:refid` | `Reference` | Makes this mapper a reference to a mapper defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
+| `:to` | `String` | the to attribute for the given implementation. | Depends on implementation |
+| `:type` | `MapperType` | specifies one of the built-in implementations. | Exactly one of these |
 
 **Nested elements**
 
@@ -11215,8 +9868,10 @@ https://ant.apache.org/manual/Types/mapper.html
 
 **Attributes**
 
-- `:from` `String`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:from` | `String` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -11239,31 +9894,23 @@ and DirSet except for the dir attribute.
 
 **Attributes**
 
-- `:basedirs` `String` - Comma separated list of directories that build the roots of the MultiRootFileSet.
-  Required: No
-- `:cache` `boolean` - Whether to cache results; disabling may seriously impact performance
-  Required: No; default is true
-- `:casesensitive` `boolean` - Specifies whether case-sensitivity should be applied (true, yes, on or false, no, off).
-  Required: No; defaults to true
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean` - Specify what happens if one of the base directories does not exist. If true a build error will happen, if false, the subtree will be ignored/empty.
-  Required: No; defaults to true
-- `:excludes` `String` - A comma- or space-separated list of patterns of directories that must be excluded.
-  Required: No; defaults to none
-- `:excludesfile` `File` - Name of a file; each line of this file is taken to be an exclude pattern.
-  Required: No
-- `:file` `File`
-- `:followsymlinks` `boolean` - Shall symbolic links and Windows junctions be followed? See fileset's documentation. Windows junctions are detected since Ant 1.10.16.
-  Required: No; defaults to true
-- `:includes` `String` - A comma- or space-separated list of patterns of directories that must be included.
-  Required: No; defaults to all directories
-- `:includesfile` `File` - Name of a file; each line of this file is taken to be an include pattern.
-  Required: No
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
-- `:type` `SetType {file|dir|both}` - The type of file system entities which will be included in this set. Acceptable values are: file-regular files dir-directories both-regular files and directories
-  Required: No; defaults to file
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedirs` | `String` | Comma separated list of directories that build the roots of the MultiRootFileSet. | No |
+| `:cache` | `boolean` | Whether to cache results; disabling may seriously impact performance | No; default is true |
+| `:casesensitive` | `boolean` | Specifies whether case-sensitivity should be applied (true, yes, on or false, no, off). | No; defaults to true |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` | Specify what happens if one of the base directories does not exist. If true a build error will happen, if false, the subtree will be ignored/empty. | No; defaults to true |
+| `:excludes` | `String` | A comma- or space-separated list of patterns of directories that must be excluded. | No; defaults to none |
+| `:excludesfile` | `File` | Name of a file; each line of this file is taken to be an exclude pattern. | No |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` | Shall symbolic links and Windows junctions be followed? See fileset's documentation. Windows junctions are detected since Ant 1.10.16. | No; defaults to true |
+| `:includes` | `String` | A comma- or space-separated list of patterns of directories that must be included. | No; defaults to all directories |
+| `:includesfile` | `File` | Name of a file; each line of this file is taken to be an include pattern. | No |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:type` | `SetType {file\\|dir\\|both}` | The type of file system entities which will be included in this set. Acceptable values are: file-regular files dir-directories both-regular files and directories | No; defaults to file |
 
 **Nested elements**
 
@@ -11316,10 +9963,12 @@ https://ant.apache.org/manual/Types/multirootfileset.html
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:from` `String`
-- `:handledirsep` `boolean`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:from` | `String` |  |  |
+| `:handledirsep` | `boolean` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -11337,9 +9986,11 @@ https://ant.apache.org/manual/Types/packagemapper.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -11372,16 +10023,13 @@ or <exclude> elements or the following attributes.
 
 **Attributes**
 
-- `:excludes` `String` - comma- or space-separated list of patterns of files that must be excluded.
-  Required: No files except default excludes are excluded.
-- `:excludesfile` `File` - name of a file; each line of this file is taken to be an exclude pattern. You can specify more than one exclude file by using a nested excludesfile elements.
-  Required: See excludes
-- `:includes` `String` - comma- or space-separated list of patterns of files that must be included.
-  Required: All files are included.
-- `:includesfile` `File` - name of a file; each line of this file is taken to be an include pattern. You can specify more than one include file by using a nested includesfile elements. Note: if the file is empty and there are no other patterns defined for the fileset, all files will be included.
-  Required: See includes
-- `:refid` `Reference` - Makes this patternset a reference to a patternset defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:excludes` | `String` | comma- or space-separated list of patterns of files that must be excluded. | No files except default excludes are excluded. |
+| `:excludesfile` | `File` | name of a file; each line of this file is taken to be an exclude pattern. You can specify more than one exclude file by using a nested excludesfile elements. | See excludes |
+| `:includes` | `String` | comma- or space-separated list of patterns of files that must be included. | All files are included. |
+| `:includesfile` | `File` | name of a file; each line of this file is taken to be an include pattern. You can specify more than one include file by using a nested includesfile elements. Note: if the file is empty and there are no other patterns defined for the fileset, all files will be included. | See includes |
+| `:refid` | `Reference` | Makes this patternset a reference to a patternset defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
 
 **Nested elements**
 
@@ -11408,12 +10056,14 @@ https://ant.apache.org/manual/Types/patternset.html
 
 **Attributes**
 
-- `:directory` `boolean`
-- `:exists` `boolean`
-- `:lastmodified` `long`
-- `:name` `String`
-- `:refid` `Reference`
-- `:size` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:directory` | `boolean` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
 
 **Reference**
 
@@ -11432,12 +10082,11 @@ supports this.
 
 **Attributes**
 
-- `:dynamic` `boolean` - Whether to reevaluate the set every time the set is used.
-  Required: No; default is true
-- `:negate` `boolean` - Whether to negate results. If true, all properties not selected by nested elements will be returned. Since Ant 1.6.2
-  Required: No; default is false
-- `:refid` `Reference` - Makes this propertyset a reference to a propertyset defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dynamic` | `boolean` | Whether to reevaluate the set every time the set is used. | No; default is true |
+| `:negate` | `boolean` | Whether to negate results. If true, all properties not selected by nested elements will be returned. Since Ant 1.6.2 | No; default is false |
+| `:refid` | `Reference` | Makes this propertyset a reference to a propertyset defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
 
 **Nested elements**
 
@@ -11467,37 +10116,24 @@ output featuring the use of File Mappers to specify source (input) and destinati
 
 **Attributes**
 
-- `:alwayslog` `boolean` - Always send to the log in addition to any other destination. Since Ant 1.6.3
-  Required: No; default is false
-- `:append` `boolean` - Whether output and error files should be appended to rather than overwritten.
-  Required: No; defaults to false
-- `:binaryoutput` `boolean` - When set to true Ant will not try to split the output into lines-which it will usually do in order to separate error from normal output. This setting will not prevent binary output from getting corrupted if you also specify filter chains. Since Ant 1.9.4
-  Required: No; default is false
-- `:createemptyfiles` `boolean` - Whether output and error files should be created even when empty.
-  Required: No; defaults to true
-- `:error` `File` - The file to which the standard error of the command should be redirected.
-  Required: No
-- `:errorencoding` `String` - The error encoding.
-  Required: No
-- `:errorproperty` `String` - The name of a property in which the standard error of the command should be stored.
-  Required: No
-- `:input` `File` - A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute.
-  Required: No
-- `:inputencoding` `String` - The input encoding.
-  Required: No
-- `:inputstring` `String` - A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute.
-  Required: No
-- `:logerror` `boolean` - This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property.
-  Required: No; ignored if error or errorProperty is set
-- `:loginputstring` `boolean` - Controls the display of inputstring's value in log messages. Set to false when sending sensitive data (e.g. passwords) to external processes. Since Ant 1.6.3
-  Required: No; default is true
-- `:output` `File` - Name of a file to which output should be written. If the error stream is not also redirected to a file or property, it will appear in this output.
-  Required: No
-- `:outputencoding` `String` - The output encoding.
-  Required: No
-- `:outputproperty` `String` - The name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output.
-  Required: No
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:alwayslog` | `boolean` | Always send to the log in addition to any other destination. Since Ant 1.6.3 | No; default is false |
+| `:append` | `boolean` | Whether output and error files should be appended to rather than overwritten. | No; defaults to false |
+| `:binaryoutput` | `boolean` | When set to true Ant will not try to split the output into lines-which it will usually do in order to separate error from normal output. This setting will not prevent binary output from getting corrupted if you also specify filter chains. Since Ant 1.9.4 | No; default is false |
+| `:createemptyfiles` | `boolean` | Whether output and error files should be created even when empty. | No; defaults to true |
+| `:error` | `File` | The file to which the standard error of the command should be redirected. | No |
+| `:errorencoding` | `String` | The error encoding. | No |
+| `:errorproperty` | `String` | The name of a property in which the standard error of the command should be stored. | No |
+| `:input` | `File` | A file from which the executed command's standard input is taken. This attribute is mutually exclusive with the inputstring attribute. | No |
+| `:inputencoding` | `String` | The input encoding. | No |
+| `:inputstring` | `String` | A string which serves as the input stream for the executed command. This attribute is mutually exclusive with the input attribute. | No |
+| `:logerror` | `boolean` | This attribute is used when you wish to see error output in Ant's log and you are redirecting output to a file/property. The error output will not be included in the output file/property. | No; ignored if error or errorProperty is set |
+| `:loginputstring` | `boolean` | Controls the display of inputstring's value in log messages. Set to false when sending sensitive data (e.g. passwords) to external processes. Since Ant 1.6.3 | No; default is true |
+| `:output` | `File` | Name of a file to which output should be written. If the error stream is not also redirected to a file or property, it will appear in this output. | No |
+| `:outputencoding` | `String` | The output encoding. | No |
+| `:outputproperty` | `String` | The name of a property in which the output of the command should be stored. Unless the error stream is redirected to a separate file or stream, this property will include the error output. | No |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -11524,10 +10160,10 @@ https://ant.apache.org/manual/Types/redirector.html
 
 **Attributes**
 
-- `:pattern` `String` - regular expression pattern
-  Required: Yes
-- `:refid` `Reference` - Makes this regexp a reference to a regexp defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:pattern` | `String` | regular expression pattern | Yes |
+| `:refid` | `Reference` | Makes this regexp a reference to a regexp defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
 
 **Reference**
 
@@ -11545,10 +10181,12 @@ https://ant.apache.org/manual/Types/regexp.html
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:from` `String`
-- `:handledirsep` `boolean`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:from` | `String` |  |  |
+| `:handledirsep` | `boolean` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -11570,18 +10208,14 @@ available for explicit use since Ant 1.7.
 
 **Attributes**
 
-- `:directory` `boolean` - Whether this resource is directory-like
-  Required: No; default false
-- `:exists` `boolean` - Whether this resource exists
-  Required: No; default true
-- `:lastmodified` `long` - The last modification time of this resource
-  Required: No
-- `:name` `String` - The name of this resource
-  Required: No
-- `:refid` `Reference` - Makes this resource a reference to a resource defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
-- `:size` `long` - The size of this resource
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:directory` | `boolean` | Whether this resource is directory-like | No; default false |
+| `:exists` | `boolean` | Whether this resource exists | No; default true |
+| `:lastmodified` | `long` | The last modification time of this resource | No |
+| `:name` | `String` | The name of this resource | No |
+| `:refid` | `Reference` | Makes this resource a reference to a resource defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
+| `:size` | `long` | The size of this resource | No |
 
 **Reference**
 
@@ -11599,10 +10233,12 @@ https://ant.apache.org/manual/Types/resources.html#resource
 
 **Attributes**
 
-- `:basedir` `File`
-- `:encoding` `String`
-- `:preserveduplicates` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` |  |  |
+| `:encoding` | `String` |  |  |
+| `:preserveduplicates` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -11628,9 +10264,10 @@ available for explicit use since Ant 1.7.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference` - Makes this resource a reference to a resource defined elsewhere. If specified no other attributes or nested elements are allowed.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` | Makes this resource a reference to a resource defined elsewhere. If specified no other attributes or nested elements are allowed. | No |
 
 **Reference**
 
@@ -11648,8 +10285,10 @@ https://ant.apache.org/manual/Types/resources.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -11667,14 +10306,16 @@ https://ant.apache.org/manual/Types/restrict.html
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:encoding` `String`
-- `:language` `String`
-- `:manager` `ScriptManager {auto|bsf|javax}`
-- `:setbeans` `boolean`
-- `:src` `File`
-- `:value` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:encoding` | `String` |  |  |
+| `:language` | `String` |  |  |
+| `:manager` | `ScriptManager {auto\\|bsf\\|javax}` |  |  |
+| `:setbeans` | `boolean` |  |  |
+| `:src` | `File` |  |  |
+| `:value` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -11700,15 +10341,17 @@ https://ant.apache.org/manual/Types/scriptcondition.html
 
 **Attributes**
 
-- `:byline` `boolean`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:encoding` `String`
-- `:language` `String`
-- `:manager` `ScriptManager {auto|bsf|javax}`
-- `:setbeans` `boolean`
-- `:src` `File`
-- `:token` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:byline` | `boolean` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:encoding` | `String` |  |  |
+| `:language` | `String` |  |  |
+| `:manager` | `ScriptManager {auto\\|bsf\\|javax}` |  |  |
+| `:setbeans` | `boolean` |  |  |
+| `:src` | `File` |  |  |
+| `:token` | `String` |  |  |
 
 **Nested elements**
 
@@ -11734,15 +10377,17 @@ https://ant.apache.org/manual/Types/scriptfilter.html
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:encoding` `String`
-- `:from` `String`
-- `:language` `String`
-- `:manager` `ScriptManager {auto|bsf|javax}`
-- `:setbeans` `boolean`
-- `:src` `File`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:encoding` | `String` |  |  |
+| `:from` | `String` |  |  |
+| `:language` | `String` |  |  |
+| `:manager` | `ScriptManager {auto\\|bsf\\|javax}` |  |  |
+| `:setbeans` | `boolean` |  |  |
+| `:src` | `File` |  |  |
+| `:to` | `String` |  |  |
 
 **Nested elements**
 
@@ -11768,16 +10413,18 @@ https://ant.apache.org/manual/Types/scriptmapper.html
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:encoding` `String`
-- `:error` `String`
-- `:language` `String`
-- `:manager` `ScriptManager {auto|bsf|javax}`
-- `:refid` `Reference`
-- `:selected` `boolean`
-- `:setbeans` `boolean`
-- `:src` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:encoding` | `String` |  |  |
+| `:error` | `String` |  |  |
+| `:language` | `String` |  |  |
+| `:manager` | `ScriptManager {auto\\|bsf\\|javax}` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:selected` | `boolean` |  |  |
+| `:setbeans` | `boolean` |  |  |
+| `:src` | `File` |  |  |
 
 **Nested elements**
 
@@ -11803,10 +10450,12 @@ https://ant.apache.org/manual/Types/scriptselector.html
 
 **Attributes**
 
-- `:error` `String`
-- `:if` `Object`
-- `:refid` `Reference`
-- `:unless` `Object`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:if` | `Object` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:unless` | `Object` |  |  |
 
 **Nested elements**
 
@@ -11853,8 +10502,10 @@ https://ant.apache.org/manual/Types/selector.html
 
 **Attributes**
 
-- `:name` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -11872,8 +10523,10 @@ https://ant.apache.org/manual/Types/signedselector.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -11891,14 +10544,16 @@ https://ant.apache.org/manual/Types/sort.html
 
 **Attributes**
 
-- `:directory` `boolean`
-- `:encoding` `String`
-- `:exists` `boolean`
-- `:lastmodified` `long`
-- `:name` `String`
-- `:refid` `Reference`
-- `:size` `long`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:directory` | `boolean` |  |  |
+| `:encoding` | `String` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
+| `:value` | `String` |  |  |
 
 **Body text**
 
@@ -11920,10 +10575,12 @@ https://ant.apache.org/manual/Types/string.html
 
 **Attributes**
 
-- `:delims` `String`
-- `:delimsaretokens` `boolean`
-- `:includedelims` `boolean`
-- `:suppressdelims` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:delims` | `String` |  |  |
+| `:delimsaretokens` | `boolean` |  |  |
+| `:includedelims` | `boolean` |  |  |
+| `:suppressdelims` | `boolean` |  |  |
 
 **Reference**
 
@@ -11941,8 +10598,10 @@ https://ant.apache.org/manual/Types/stringtokenizer.html
 
 **Attributes**
 
-- `:expression` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:expression` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -11960,14 +10619,16 @@ https://ant.apache.org/manual/Types/substitution.html
 
 **Attributes**
 
-- `:archive` `File`
-- `:directory` `boolean`
-- `:exists` `boolean`
-- `:lastmodified` `long`
-- `:mode` `int`
-- `:name` `String`
-- `:refid` `Reference`
-- `:size` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:archive` | `File` |  |  |
+| `:directory` | `boolean` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:mode` | `int` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
 
 **Reference**
 
@@ -11993,41 +10654,32 @@ attribute and referred to with the refid attribute.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:dirmode` `String` - A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to directories.
-  Required: No; default is 755
-- `:encoding` `String` - The character encoding to use for filenames inside the zip file. For a list of possible values see the Supported Encodings. Since Ant 1.9.5
-  Required: No; defaults to default JVM character encoding
-- `:erroronmissingarchive` `boolean` - Specify what happens if the archive does not exist. If true, a build error will happen; if false, the fileset will be ignored/empty. Since Ant 1.8.0
-  Required: No; defaults to true
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:filemode` `String` - A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to plain files.
-  Required: No; default is 644
-- `:followsymlinks` `boolean`
-- `:fullpath` `String` - the file described by the fileset is placed at that exact location in the archive.
-  Required: No
-- `:gid` `int` - The group identifier (GID) for the tar entry.
-  Required: No
-- `:group` `String` - The groupname for the tar entry. This is not the same as the GID.
-  Required: No
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:prefix` `String` - all files in the fileset are prefixed with that path in the archive.
-  Required: No
-- `:refid` `Reference`
-- `:src` `File` - may be used in place of the dir attribute to specify a tar file whose contents will be extracted and included in the archive.
-  Required: No
-- `:srcresource` `Resource`
-- `:uid` `int` - The user identifier (UID) for the tar entry. This is an integer value and is not the same as the username.
-  Required: No
-- `:username` `String` - The username for the tar entry. This is not the same as the UID.
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:dirmode` | `String` | A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to directories. | No; default is 755 |
+| `:encoding` | `String` | The character encoding to use for filenames inside the zip file. For a list of possible values see the Supported Encodings. Since Ant 1.9.5 | No; defaults to default JVM character encoding |
+| `:erroronmissingarchive` | `boolean` | Specify what happens if the archive does not exist. If true, a build error will happen; if false, the fileset will be ignored/empty. Since Ant 1.8.0 | No; defaults to true |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:filemode` | `String` | A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to plain files. | No; default is 644 |
+| `:followsymlinks` | `boolean` |  |  |
+| `:fullpath` | `String` | the file described by the fileset is placed at that exact location in the archive. | No |
+| `:gid` | `int` | The group identifier (GID) for the tar entry. | No |
+| `:group` | `String` | The groupname for the tar entry. This is not the same as the GID. | No |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:prefix` | `String` | all files in the fileset are prefixed with that path in the archive. | No |
+| `:refid` | `Reference` |  |  |
+| `:src` | `File` | may be used in place of the dir attribute to specify a tar file whose contents will be extracted and included in the archive. | No |
+| `:srcresource` | `Resource` |  |  |
+| `:uid` | `int` | The user identifier (UID) for the tar entry. This is an integer value and is not the same as the username. | No |
+| `:username` | `String` | The username for the tar entry. This is not the same as the UID. | No |
 
 **Nested elements**
 
@@ -12079,9 +10731,11 @@ https://ant.apache.org/manual/Types/tarfileset.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:encoding` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:encoding` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -12099,8 +10753,10 @@ https://ant.apache.org/manual/Types/tokens.html
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -12118,10 +10774,12 @@ https://ant.apache.org/manual/Types/union.html
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:from` `String`
-- `:handledirsep` `boolean`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:from` | `String` |  |  |
+| `:handledirsep` | `boolean` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -12139,16 +10797,18 @@ https://ant.apache.org/manual/Types/unpackagemapper.html
 
 **Attributes**
 
-- `:baseurl` `URL`
-- `:directory` `boolean`
-- `:exists` `boolean`
-- `:file` `File`
-- `:lastmodified` `long`
-- `:name` `String`
-- `:refid` `Reference`
-- `:relativepath` `String`
-- `:size` `long`
-- `:url` `URL`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:baseurl` | `URL` |  |  |
+| `:directory` | `boolean` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:file` | `File` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:relativepath` | `String` |  |  |
+| `:size` | `long` |  |  |
+| `:url` | `URL` |  |  |
 
 **Reference**
 
@@ -12208,11 +10868,12 @@ specification.
 
 **Attributes**
 
-- `:catalogpathref` `Reference`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:refid` `Reference` - the id of another XMLCatalog whose contents you would like to be used for this XMLCatalog
-  Required: No
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:catalogpathref` | `Reference` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:refid` | `Reference` | the id of another XMLCatalog whose contents you would like to be used for this XMLCatalog | No |
 
 **Nested elements**
 
@@ -12238,16 +10899,18 @@ https://ant.apache.org/manual/Types/xmlcatalog.html
 
 **Attributes**
 
-- `:archive` `File`
-- `:directory` `boolean`
-- `:encoding` `String`
-- `:exists` `boolean`
-- `:lastmodified` `long`
-- `:mode` `int`
-- `:name` `String`
-- `:refid` `Reference`
-- `:size` `long`
-- `:zipfile` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:archive` | `File` |  |  |
+| `:directory` | `boolean` |  |  |
+| `:encoding` | `String` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:mode` | `int` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
+| `:zipfile` | `File` |  |  |
 
 **Reference**
 
@@ -12273,32 +10936,28 @@ attribute.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:dirmode` `String` - A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to directories. Since Ant 1.5.2
-  Required: No; default is 755
-- `:encoding` `String` - The character encoding to use for filenames inside the zip file. For a list of possible values see the Supported Encodings. No; defaults to default JVM character encoding
-- `:erroronmissingarchive` `boolean` - Specify what happens if the archive does not exist. If true, a build error will happen; if false, the fileset will be ignored/empty. Since Ant 1.8.0
-  Required: No; defaults to true
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:filemode` `String` - A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to plain files. Since Ant 1.5.2
-  Required: No; default is 644
-- `:followsymlinks` `boolean`
-- `:fullpath` `String` - the file described by the fileset is placed at that exact location in the archive.
-  Required: No
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:prefix` `String` - all files in the fileset are prefixed with that path in the archive.
-  Required: No
-- `:refid` `Reference`
-- `:src` `File` - may be used in place of the dir attribute to specify a zip file whose contents will be extracted and included in the archive.
-  Required: No
-- `:srcresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:dirmode` | `String` | A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to directories. Since Ant 1.5.2 | No; default is 755 |
+| `:encoding` | `String` | The character encoding to use for filenames inside the zip file. For a list of possible values see the Supported Encodings. No; defaults to default JVM character encoding |  |
+| `:erroronmissingarchive` | `boolean` | Specify what happens if the archive does not exist. If true, a build error will happen; if false, the fileset will be ignored/empty. Since Ant 1.8.0 | No; defaults to true |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:filemode` | `String` | A 3 digit octal string, specify the user, group and other modes in the standard Unix fashion. Only applies to plain files. Since Ant 1.5.2 | No; default is 644 |
+| `:followsymlinks` | `boolean` |  |  |
+| `:fullpath` | `String` | the file described by the fileset is placed at that exact location in the archive. | No |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:prefix` | `String` | all files in the fileset are prefixed with that path in the archive. | No |
+| `:refid` | `Reference` |  |  |
+| `:src` | `File` | may be used in place of the dir attribute to specify a zip file whose contents will be extracted and included in the archive. | No |
+| `:srcresource` | `Resource` |  |  |
 
 **Nested elements**
 
@@ -12350,10 +11009,12 @@ https://ant.apache.org/manual/Types/zipfileset.html
 
 **Attributes**
 
-- `:charset` `String`
-- `:file` `File`
-- `:key` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:charset` | `String` |  |  |
+| `:file` | `File` |  |  |
+| `:key` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Reference**
 
@@ -12371,9 +11032,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -12401,10 +11064,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file` `File`
-- `:key` `String`
-- `:path` `Path`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` |  |  |
+| `:key` | `String` |  |  |
+| `:path` | `Path` |  |  |
+| `:value` | `String` |  |  |
 
 **Reference**
 
@@ -12422,8 +11087,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:error` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -12478,13 +11145,15 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file` `File`
-- `:line` `String`
-- `:path` `Path`
-- `:pathref` `Reference`
-- `:prefix` `String`
-- `:suffix` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` |  |  |
+| `:line` | `String` |  |  |
+| `:path` | `Path` |  |  |
+| `:pathref` | `Reference` |  |  |
+| `:prefix` | `String` |  |  |
+| `:suffix` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Parent context**
 
@@ -12510,13 +11179,15 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file` `File`
-- `:line` `String`
-- `:path` `Path`
-- `:pathref` `Reference`
-- `:prefix` `String`
-- `:suffix` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` |  |  |
+| `:line` | `String` |  |  |
+| `:path` | `Path` |  |  |
+| `:pathref` | `Reference` |  |  |
+| `:prefix` | `String` |  |  |
+| `:suffix` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Reference**
 
@@ -12534,9 +11205,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -12564,8 +11237,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Parent context**
 
@@ -12595,14 +11270,16 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:basedir` `File`
-- `:directory` `boolean`
-- `:exists` `boolean`
-- `:file` `File`
-- `:lastmodified` `long`
-- `:name` `String`
-- `:refid` `Reference`
-- `:size` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` |  |  |
+| `:directory` | `boolean` |  |  |
+| `:exists` | `boolean` |  |  |
+| `:file` | `File` |  |  |
+| `:lastmodified` | `long` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:size` | `long` |  |  |
 
 **Reference**
 
@@ -12620,8 +11297,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:address` `String`
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:address` | `String` |  |  |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -12639,9 +11318,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -12669,17 +11350,19 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:basdtd` `String`
-- `:classpath` `Path`
-- `:debug` `boolean`
-- `:destdir` `File`
-- `:generateclient` `boolean`
-- `:genericjarsuffix` `String`
-- `:java2iiopparams` `String`
-- `:suffix` `String`
-- `:verify` `boolean`
-- `:verifyargs` `String`
-- `:version` `int`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basdtd` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:debug` | `boolean` |  |  |
+| `:destdir` | `File` |  |  |
+| `:generateclient` | `boolean` |  |  |
+| `:genericjarsuffix` | `String` |  |  |
+| `:java2iiopparams` | `String` |  |  |
+| `:suffix` | `String` |  |  |
+| `:verify` | `boolean` |  |  |
+| `:verifyargs` | `String` |  |  |
+| `:version` | `int` |  |  |
 
 **Nested elements**
 
@@ -12719,9 +11402,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -12749,7 +11434,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:path` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:path` | `String` |  |  |
 
 **Reference**
 
@@ -12767,9 +11454,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -12797,8 +11486,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:address` `String`
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:address` | `String` |  |  |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -12816,7 +11507,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -12848,26 +11541,28 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:dirmode` `String`
-- `:encoding` `String`
-- `:erroronmissingarchive` `boolean`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:filemode` `String`
-- `:followsymlinks` `boolean`
-- `:fullpath` `String`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:prefix` `String`
-- `:refid` `Reference`
-- `:src` `File`
-- `:srcresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:dirmode` | `String` |  |  |
+| `:encoding` | `String` |  |  |
+| `:erroronmissingarchive` | `boolean` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:filemode` | `String` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:fullpath` | `String` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:prefix` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:src` | `File` |  |  |
+| `:srcresource` | `Resource` |  |  |
 
 **Nested elements**
 
@@ -12919,9 +11614,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -12949,7 +11646,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:executable` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:executable` | `String` |  |  |
 
 **Nested elements**
 
@@ -12972,9 +11671,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13002,7 +11703,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:value` | `String` |  |  |
 
 **Body text**
 
@@ -13024,15 +11727,17 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:compiler` `String`
-- `:file` `File`
-- `:implementation` `String`
-- `:line` `String`
-- `:path` `Path`
-- `:pathref` `Reference`
-- `:prefix` `String`
-- `:suffix` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:compiler` | `String` |  |  |
+| `:file` | `File` |  |  |
+| `:implementation` | `String` |  |  |
+| `:line` | `String` |  |  |
+| `:path` | `Path` |  |  |
+| `:pathref` | `Reference` |  |  |
+| `:prefix` | `String` |  |  |
+| `:suffix` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Parent context**
 
@@ -13058,9 +11763,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13088,8 +11795,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:files` `String`
-- `:level` `CompressionLevel`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:files` | `String` |  |  |
+| `:level` | `CompressionLevel` |  |  |
 
 **Nested elements**
 
@@ -13111,9 +11820,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13141,21 +11852,23 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:basedir` `File`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:environment` `String`
-- `:file` `File`
-- `:name` `String`
-- `:prefix` `String`
-- `:prefixvalues` `boolean`
-- `:refid` `Reference`
-- `:relative` `boolean`
-- `:resource` `String`
-- `:runtime` `String`
-- `:url` `URL`
-- `:userproperty` `boolean`
-- `:value` `Object`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:environment` | `String` |  |  |
+| `:file` | `File` |  |  |
+| `:name` | `String` |  |  |
+| `:prefix` | `String` |  |  |
+| `:prefixvalues` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:relative` | `boolean` |  |  |
+| `:resource` | `String` |  |  |
+| `:runtime` | `String` |  |  |
+| `:url` | `URL` |  |  |
+| `:userproperty` | `boolean` |  |  |
+| `:value` | `Object` |  |  |
 
 **Nested elements**
 
@@ -13181,12 +11894,14 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:encoding` `String`
-- `:error` `String`
-- `:ignorewhitespace` `boolean`
-- `:refid` `Reference`
-- `:text` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:encoding` | `String` |  |  |
+| `:error` | `String` |  |  |
+| `:ignorewhitespace` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:text` | `String` |  |  |
 
 **Parent context**
 
@@ -13213,10 +11928,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:byline` `boolean`
-- `:flags` `String`
-- `:pattern` `String`
-- `:replace` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:byline` | `boolean` |  |  |
+| `:flags` | `String` |  |  |
+| `:pattern` | `String` |  |  |
+| `:replace` | `String` |  |  |
 
 **Reference**
 
@@ -13234,12 +11951,14 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:error` `String`
-- `:expression` `String`
-- `:multiline` `boolean`
-- `:refid` `Reference`
-- `:singleline` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:error` | `String` |  |  |
+| `:expression` | `String` |  |  |
+| `:multiline` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:singleline` | `boolean` |  |  |
 
 **Reference**
 
@@ -13257,7 +11976,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:contains` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:contains` | `String` |  |  |
 
 **Reference**
 
@@ -13275,11 +11996,13 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classname` `String`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:error` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:error` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13316,14 +12039,16 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:checkdirs` `boolean`
-- `:datetime` `String`
-- `:error` `String`
-- `:granularity` `int`
-- `:millis` `long`
-- `:pattern` `String`
-- `:refid` `Reference`
-- `:when` `TimeComparisons`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:checkdirs` | `boolean` |  |  |
+| `:datetime` | `String` |  |  |
+| `:error` | `String` |  |  |
+| `:granularity` | `int` |  |  |
+| `:millis` | `long` |  |  |
+| `:pattern` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:when` | `TimeComparisons` |  |  |
 
 **Reference**
 
@@ -13341,7 +12066,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:refid` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `String` |  |  |
 
 **Reference**
 
@@ -13359,7 +12086,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:chars` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:chars` | `String` |  |  |
 
 **Reference**
 
@@ -13377,7 +12106,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13401,10 +12132,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:error` `String`
-- `:max` `int`
-- `:min` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:max` | `int` |  |  |
+| `:min` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -13422,12 +12155,14 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:error` `String`
-- `:granularity` `int`
-- `:ignorecontents` `boolean`
-- `:ignorefiletimes` `boolean`
-- `:refid` `Reference`
-- `:targetdir` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:granularity` | `int` |  |  |
+| `:ignorecontents` | `boolean` |  |  |
+| `:ignorefiletimes` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:targetdir` | `File` |  |  |
 
 **Nested elements**
 
@@ -13449,8 +12184,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:class` `String`
-- `:package` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:class` | `String` |  |  |
+| `:package` | `String` |  |  |
 
 **Reference**
 
@@ -13486,9 +12223,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
-- `:path` `Path`
-- `:pathref` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
+| `:path` | `Path` |  |  |
+| `:pathref` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13529,8 +12268,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:base` `URL`
-- `:publicid` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:base` | `URL` |  |  |
+| `:publicid` | `String` |  |  |
 
 **Parent context**
 
@@ -13557,9 +12298,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:implicit` `boolean`
-- `:name` `String`
-- `:optional` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:implicit` | `boolean` |  |  |
+| `:name` | `String` |  |  |
+| `:optional` | `boolean` |  |  |
 
 **Parent context**
 
@@ -13585,8 +12328,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:class` `String`
-- `:package` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:class` | `String` |  |  |
+| `:package` | `String` |  |  |
 
 **Reference**
 
@@ -13604,8 +12349,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:base` `URL`
-- `:publicid` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:base` | `URL` |  |  |
+| `:publicid` | `String` |  |  |
 
 **Reference**
 
@@ -13623,13 +12370,15 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:default` `String`
-- `:key` `String`
-- `:operation` `Operation`
-- `:pattern` `String`
-- `:type` `Type`
-- `:unit` `Unit`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:default` | `String` |  |  |
+| `:key` | `String` |  |  |
+| `:operation` | `Operation` |  |  |
+| `:pattern` | `String` |  |  |
+| `:type` | `Type` |  |  |
+| `:unit` | `Unit` |  |  |
+| `:value` | `String` |  |  |
 
 **Reference**
 
@@ -13647,10 +12396,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file` `File`
-- `:key` `String`
-- `:path` `Path`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` |  |  |
+| `:key` | `String` |  |  |
+| `:path` | `Path` |  |  |
+| `:value` | `String` |  |  |
 
 **Reference**
 
@@ -13668,11 +12419,13 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:arg1` `Object`
-- `:arg2` `Object`
-- `:casesensitive` `boolean`
-- `:forcestring` `boolean`
-- `:trim` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:arg1` | `Object` |  |  |
+| `:arg2` | `Object` |  |  |
+| `:casesensitive` | `boolean` |  |  |
+| `:forcestring` | `boolean` |  |  |
+| `:trim` | `boolean` |  |  |
 
 **Reference**
 
@@ -13690,7 +12443,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13733,13 +12488,15 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classname` `String`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:from` `String`
-- `:refid` `Reference`
-- `:to` `String`
-- `:type` `MapperType`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:from` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:to` | `String` |  |  |
+| `:type` | `MapperType` |  |  |
 
 **Nested elements**
 
@@ -13776,9 +12533,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:if` `Object`
-- `:name` `String`
-- `:unless` `Object`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:if` | `Object` |  |  |
+| `:name` | `String` |  |  |
+| `:unless` | `Object` |  |  |
 
 **Reference**
 
@@ -13796,8 +12555,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:listfile` `File`
-- `:pattern` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:listfile` | `File` |  |  |
+| `:pattern` | `String` |  |  |
 
 **Reference**
 
@@ -13815,7 +12576,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -13833,8 +12596,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:listfile` `File`
-- `:pattern` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:listfile` | `File` |  |  |
+| `:pattern` | `String` |  |  |
 
 **Reference**
 
@@ -13852,9 +12617,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:if` `Object`
-- `:name` `String`
-- `:unless` `Object`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:if` | `Object` |  |  |
+| `:name` | `String` |  |  |
+| `:unless` | `Object` |  |  |
 
 **Reference**
 
@@ -13886,9 +12653,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13930,9 +12699,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13967,7 +12738,9 @@ allowed.
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -13991,7 +12764,9 @@ https://ant.apache.org/manual/Types/extensionset.html
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Nested elements**
 
@@ -14014,8 +12789,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
-- `:value` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
+| `:value` | `boolean` |  |  |
 
 **Reference**
 
@@ -14033,12 +12810,14 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:error` `String`
-- `:name` `String`
-- `:negate` `boolean`
-- `:refid` `Reference`
-- `:regex` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:error` | `String` |  |  |
+| `:name` | `String` |  |  |
+| `:negate` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:regex` | `String` |  |  |
 
 **Reference**
 
@@ -14056,9 +12835,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -14086,9 +12867,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file1` `File`
-- `:file2` `File`
-- `:textfile` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file1` | `File` |  |  |
+| `:file2` | `File` |  |  |
+| `:textfile` | `boolean` |  |  |
 
 **Reference**
 
@@ -14106,7 +12889,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` |  |  |
 
 **Reference**
 
@@ -14124,11 +12909,13 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:encoding` `String`
-- `:file` `File`
-- `:filtering` `boolean`
-- `:trim` `boolean`
-- `:trimleading` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:encoding` | `String` |  |  |
+| `:file` | `File` |  |  |
+| `:filtering` | `boolean` |  |  |
+| `:trim` | `boolean` |  |  |
+| `:trimleading` | `boolean` |  |  |
 
 **Body text**
 
@@ -14158,12 +12945,14 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:locale` `String`
-- `:offset` `int`
-- `:pattern` `String`
-- `:property` `String`
-- `:timezone` `String`
-- `:unit` `Unit`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:locale` | `String` |  |  |
+| `:offset` | `int` |  |  |
+| `:pattern` | `String` |  |  |
+| `:property` | `String` |  |  |
+| `:timezone` | `String` |  |  |
+| `:unit` | `Unit` |  |  |
 
 **Reference**
 
@@ -14181,8 +12970,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:address` `String`
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:address` | `String` |  |  |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -14200,11 +12991,13 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classname` `String`
-- `:classpath` `Path`
-- `:password` `String`
-- `:server` `String`
-- `:username` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:password` | `String` |  |  |
+| `:server` | `String` |  |  |
+| `:username` | `String` |  |  |
 
 **Nested elements**
 
@@ -14228,9 +13021,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:actions` `String`
-- `:class` `String`
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:actions` | `String` |  |  |
+| `:class` | `String` |  |  |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -14248,8 +13043,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:packages` `String`
-- `:title` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:packages` | `String` |  |  |
+| `:title` | `String` |  |  |
 
 **Nested elements**
 
@@ -14272,14 +13069,16 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classname` `String`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:loaderref` `Reference`
-- `:refid` `String`
-- `:reverseloader` `boolean`
-- `:type` `HandlerType`
-- `:uri` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:loaderref` | `Reference` |  |  |
+| `:refid` | `String` |  |  |
+| `:reverseloader` | `boolean` |  |  |
+| `:type` | `HandlerType` |  |  |
+| `:uri` | `String` |  |  |
 
 **Nested elements**
 
@@ -14301,11 +13100,13 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:encoding` `String`
-- `:file` `File`
-- `:filtering` `boolean`
-- `:trim` `boolean`
-- `:trimleading` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:encoding` | `String` |  |  |
+| `:file` | `File` |  |  |
+| `:filtering` | `boolean` |  |  |
+| `:trim` | `boolean` |  |  |
+| `:trimleading` | `boolean` |  |  |
 
 **Body text**
 
@@ -14336,9 +13137,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -14366,8 +13169,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:lines` `long`
-- `:skip` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:lines` | `long` |  |  |
+| `:skip` | `long` |  |  |
 
 **Reference**
 
@@ -14385,11 +13190,13 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:errorsbeginat` `int`
-- `:followredirects` `boolean`
-- `:readtimeout` `int`
-- `:requestmethod` `String`
-- `:url` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:errorsbeginat` | `int` |  |  |
+| `:followredirects` | `boolean` |  |  |
+| `:readtimeout` | `int` |  |  |
+| `:requestmethod` | `String` |  |  |
+| `:url` | `String` |  |  |
 
 **Reference**
 
@@ -14407,7 +13214,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:byline` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:byline` | `boolean` |  |  |
 
 **Reference**
 
@@ -14425,9 +13234,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -14455,9 +13266,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:if` `Object`
-- `:name` `String`
-- `:unless` `Object`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:if` | `Object` |  |  |
+| `:name` | `String` |  |  |
+| `:unless` | `Object` |  |  |
 
 **Reference**
 
@@ -14475,9 +13288,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -14505,13 +13320,15 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classname` `String`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:from` `String`
-- `:refid` `Reference`
-- `:to` `String`
-- `:type` `MapperType`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:from` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:to` | `String` |  |  |
+| `:type` | `MapperType` |  |  |
 
 **Nested elements**
 
@@ -14534,7 +13351,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -14577,13 +13396,15 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classname` `String`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:from` `String`
-- `:refid` `Reference`
-- `:to` `String`
-- `:type` `MapperType`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:from` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:to` | `String` |  |  |
+| `:type` | `MapperType` |  |  |
 
 **Nested elements**
 
@@ -14606,11 +13427,13 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -14637,13 +13460,15 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:debug` `boolean`
-- `:destdir` `File`
-- `:genericjarsuffix` `String`
-- `:iashome` `File`
-- `:keepgenerated` `boolean`
-- `:suffix` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:debug` | `boolean` |  |  |
+| `:destdir` | `File` |  |  |
+| `:genericjarsuffix` | `String` |  |  |
+| `:iashome` | `File` |  |  |
+| `:keepgenerated` | `boolean` |  |  |
+| `:suffix` | `String` |  |  |
 
 **Nested elements**
 
@@ -14665,7 +13490,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:value` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:value` | `boolean` |  |  |
 
 **Reference**
 
@@ -14683,8 +13510,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:refid` `Reference`
-- `:type` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
+| `:type` | `String` |  |  |
 
 **Reference**
 
@@ -14702,7 +13531,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:property` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:property` | `String` |  |  |
 
 **Reference**
 
@@ -14720,7 +13551,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:value` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:value` | `boolean` |  |  |
 
 **Reference**
 
@@ -14738,10 +13571,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:destdir` `File`
-- `:genericjarsuffix` `String`
-- `:suffix` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:destdir` | `File` |  |  |
+| `:genericjarsuffix` | `String` |  |  |
+| `:suffix` | `String` |  |  |
 
 **Nested elements**
 
@@ -14763,23 +13598,25 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:additionalargs` `String`
-- `:classpath` `Path`
-- `:destdir` `File`
-- `:genericjarsuffix` `String`
-- `:jarsuffix` `String`
-- `:javac` `String`
-- `:javacopts` `String`
-- `:jonasroot` `File`
-- `:keepgenerated` `boolean`
-- `:keepgeneric` `boolean`
-- `:nocompil` `boolean`
-- `:nogenic` `boolean`
-- `:novalidation` `boolean`
-- `:orb` `String`
-- `:rmicopts` `String`
-- `:secpropag` `boolean`
-- `:verbose` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:additionalargs` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:destdir` | `File` |  |  |
+| `:genericjarsuffix` | `String` |  |  |
+| `:jarsuffix` | `String` |  |  |
+| `:javac` | `String` |  |  |
+| `:javacopts` | `String` |  |  |
+| `:jonasroot` | `File` |  |  |
+| `:keepgenerated` | `boolean` |  |  |
+| `:keepgeneric` | `boolean` |  |  |
+| `:nocompil` | `boolean` |  |  |
+| `:nogenic` | `boolean` |  |  |
+| `:novalidation` | `boolean` |  |  |
+| `:orb` | `String` |  |  |
+| `:rmicopts` | `String` |  |  |
+| `:secpropag` | `boolean` |  |  |
+| `:verbose` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -14809,13 +13646,15 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file` `File`
-- `:line` `String`
-- `:path` `Path`
-- `:pathref` `Reference`
-- `:prefix` `String`
-- `:suffix` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` |  |  |
+| `:line` | `String` |  |  |
+| `:path` | `Path` |  |  |
+| `:pathref` | `Reference` |  |  |
+| `:prefix` | `String` |  |  |
+| `:suffix` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Reference**
 
@@ -14833,9 +13672,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:mainclass` `String`
-- `:module` `String`
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:mainclass` | `String` |  |  |
+| `:module` | `String` |  |  |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -14853,9 +13694,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -14883,26 +13726,28 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:dirmode` `String`
-- `:encoding` `String`
-- `:erroronmissingarchive` `boolean`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:filemode` `String`
-- `:followsymlinks` `boolean`
-- `:fullpath` `String`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:prefix` `String`
-- `:refid` `Reference`
-- `:src` `File`
-- `:srcresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:dirmode` | `String` |  |  |
+| `:encoding` | `String` |  |  |
+| `:erroronmissingarchive` | `boolean` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:filemode` | `String` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:fullpath` | `String` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:prefix` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:src` | `File` |  |  |
+| `:srcresource` | `Resource` |  |  |
 
 **Nested elements**
 
@@ -14954,8 +13799,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:matchany` `boolean`
-- `:negate` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:matchany` | `boolean` |  |  |
+| `:negate` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -14977,9 +13824,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:negate` `boolean`
-- `:regexp` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:negate` | `boolean` |  |  |
+| `:regexp` | `String` |  |  |
 
 **Nested elements**
 
@@ -15001,7 +13850,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -15019,9 +13870,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:lport` `int`
-- `:rhost` `String`
-- `:rport` `int`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:lport` | `int` |  |  |
+| `:rhost` | `String` |  |  |
+| `:rport` | `int` |  |  |
 
 **Reference**
 
@@ -15053,9 +13906,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:allowtie` `boolean`
-- `:error` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:allowtie` | `boolean` |  |  |
+| `:error` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15102,9 +13957,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15132,8 +13989,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:from` `String`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:from` | `String` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -15151,8 +14010,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:prefix` `String`
-- `:suffix` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:prefix` | `String` |  |  |
+| `:suffix` | `String` |  |  |
 
 **Reference**
 
@@ -15170,9 +14031,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15200,10 +14063,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:charset` `String`
-- `:inputencoding` `String`
-- `:mimetype` `String`
-- `:src` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:charset` | `String` |  |  |
+| `:inputencoding` | `String` |  |  |
+| `:mimetype` | `String` |  |  |
+| `:src` | `File` |  |  |
 
 **Body text**
 
@@ -15225,26 +14090,28 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:dirmode` `String`
-- `:encoding` `String`
-- `:erroronmissingarchive` `boolean`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:filemode` `String`
-- `:followsymlinks` `boolean`
-- `:fullpath` `String`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:prefix` `String`
-- `:refid` `Reference`
-- `:src` `File`
-- `:srcresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:dirmode` | `String` |  |  |
+| `:encoding` | `String` |  |  |
+| `:erroronmissingarchive` | `boolean` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:filemode` | `String` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:fullpath` | `String` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:prefix` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:src` | `File` |  |  |
+| `:srcresource` | `Resource` |  |  |
 
 **Nested elements**
 
@@ -15296,19 +14163,21 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:algorithm` `AlgorithmName`
-- `:algorithmclass` `String`
-- `:cache` `CacheName`
-- `:cacheclass` `String`
-- `:comparator` `ComparatorName`
-- `:comparatorclass` `String`
-- `:delayupdate` `boolean`
-- `:error` `String`
-- `:modified` `int`
-- `:refid` `Reference`
-- `:seldirs` `boolean`
-- `:selres` `boolean`
-- `:update` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:algorithm` | `AlgorithmName` |  |  |
+| `:algorithmclass` | `String` |  |  |
+| `:cache` | `CacheName` |  |  |
+| `:cacheclass` | `String` |  |  |
+| `:comparator` | `ComparatorName` |  |  |
+| `:comparatorclass` | `String` |  |  |
+| `:delayupdate` | `boolean` |  |  |
+| `:error` | `String` |  |  |
+| `:modified` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:seldirs` | `boolean` |  |  |
+| `:selres` | `boolean` |  |  |
+| `:update` | `boolean` |  |  |
 
 **Nested elements**
 
@@ -15331,7 +14200,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Parent context**
 
@@ -15358,9 +14229,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15388,9 +14261,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15418,7 +14293,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:reason` `ResolutionWarningReason`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:reason` | `ResolutionWarningReason` |  |  |
 
 **Reference**
 
@@ -15454,9 +14331,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15484,8 +14363,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:error` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15532,8 +14413,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:error` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15588,7 +14471,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -15606,7 +14491,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15630,8 +14517,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:error` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15686,9 +14575,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:destdir` `File`
-- `:genericjarsuffix` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:destdir` | `File` |  |  |
+| `:genericjarsuffix` | `String` |  |  |
 
 **Nested elements**
 
@@ -15710,10 +14601,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:arch` `String`
-- `:family` `String`
-- `:name` `String`
-- `:version` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:arch` | `String` |  |  |
+| `:family` | `String` |  |  |
+| `:name` | `String` |  |  |
+| `:version` | `String` |  |  |
 
 **Reference**
 
@@ -15731,7 +14624,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15774,13 +14669,15 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classname` `String`
-- `:classpath` `Path`
-- `:classpathref` `Reference`
-- `:from` `String`
-- `:refid` `Reference`
-- `:to` `String`
-- `:type` `MapperType`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:classpathref` | `Reference` |  |  |
+| `:from` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:to` | `String` |  |  |
+| `:type` | `MapperType` |  |  |
 
 **Nested elements**
 
@@ -15803,8 +14700,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Reference**
 
@@ -15822,8 +14721,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:followsymlinks` `boolean`
-- `:owner` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:followsymlinks` | `boolean` |  |  |
+| `:owner` | `String` |  |  |
 
 **Reference**
 
@@ -15841,7 +14742,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -15859,18 +14762,20 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -15922,9 +14827,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
-- `:type` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
+| `:type` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Parent context**
 
@@ -15953,7 +14860,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:path` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:path` | `String` |  |  |
 
 **Reference**
 
@@ -16006,8 +14915,10 @@ https://ant.apache.org/manual/Types/permissions.html
 
 **Attributes**
 
-- `:followsymlinks` `boolean`
-- `:group` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:followsymlinks` | `boolean` |  |  |
+| `:group` | `String` |  |  |
 
 **Reference**
 
@@ -16025,8 +14936,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:followsymlinks` `boolean`
-- `:permissions` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:followsymlinks` | `boolean` |  |  |
+| `:permissions` | `String` |  |  |
 
 **Reference**
 
@@ -16044,7 +14957,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:prefix` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:prefix` | `String` |  |  |
 
 **Reference**
 
@@ -16062,10 +14977,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:error` `String`
-- `:present` `FilePresence`
-- `:refid` `Reference`
-- `:targetdir` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:present` | `FilePresence` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:targetdir` | `File` |  |  |
 
 **Nested elements**
 
@@ -16087,19 +15004,21 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:preserveemptydirs` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:preserveemptydirs` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -16151,10 +15070,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:builtin` `BuiltinPropertySetName`
-- `:name` `String`
-- `:prefix` `String`
-- `:regex` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:builtin` | `BuiltinPropertySetName` |  |  |
+| `:name` | `String` |  |  |
+| `:prefix` | `String` |  |  |
+| `:regex` | `String` |  |  |
 
 **Reference**
 
@@ -16172,7 +15093,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classname` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
 
 **Reference**
 
@@ -16190,7 +15113,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -16222,8 +15147,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:refid` `String`
-- `:torefid` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:refid` | `String` |  |  |
+| `:torefid` | `String` |  |  |
 
 **Reference**
 
@@ -16241,8 +15168,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:delete` `String`
-- `:file` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:delete` | `String` |  |  |
+| `:file` | `File` |  |  |
 
 **Nested elements**
 
@@ -16265,9 +15194,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:lhost` `String`
-- `:lport` `int`
-- `:rport` `int`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:lhost` | `String` |  |  |
+| `:lport` | `int` |  |  |
+| `:rport` | `int` |  |  |
 
 **Reference**
 
@@ -16285,9 +15216,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:property` `String`
-- `:token` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:property` | `String` |  |  |
+| `:token` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Nested elements**
 
@@ -16310,10 +15243,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:byline` `boolean`
-- `:flags` `String`
-- `:pattern` `String`
-- `:replace` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:byline` | `boolean` |  |  |
+| `:flags` | `String` |  |  |
+| `:pattern` | `String` |  |  |
+| `:replace` | `String` |  |  |
 
 **Reference**
 
@@ -16331,9 +15266,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:byline` `boolean`
-- `:from` `String`
-- `:to` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:byline` | `boolean` |  |  |
+| `:from` | `String` |  |  |
+| `:to` | `String` |  |  |
 
 **Reference**
 
@@ -16351,7 +15288,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:expandproperties` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:expandproperties` | `boolean` |  |  |
 
 **Body text**
 
@@ -16373,9 +15312,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:begintoken` `String`
-- `:endtoken` `String`
-- `:propertiesresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:begintoken` | `String` |  |  |
+| `:endtoken` | `String` |  |  |
+| `:propertiesresource` | `Resource` |  |  |
 
 **Nested elements**
 
@@ -16397,7 +15338,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:expandproperties` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:expandproperties` | `boolean` |  |  |
 
 **Body text**
 
@@ -16419,8 +15362,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:address` `String`
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:address` | `String` |  |  |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -16438,8 +15383,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:listfile` `File`
-- `:pattern` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:listfile` | `File` |  |  |
+| `:pattern` | `String` |  |  |
 
 **Reference**
 
@@ -16457,9 +15404,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:actions` `String`
-- `:class` `String`
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:actions` | `String` |  |  |
+| `:class` | `String` |  |  |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -16477,7 +15426,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classname` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classname` | `String` |  |  |
 
 **Reference**
 
@@ -16495,18 +15446,20 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -16558,9 +15511,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file` `File`
-- `:namespace` `String`
-- `:url` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` |  |  |
+| `:namespace` | `String` |  |  |
+| `:url` | `String` |  |  |
 
 **Reference**
 
@@ -16578,7 +15533,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Nested elements**
 
@@ -16600,8 +15557,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:provider` `String`
-- `:type` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:provider` | `String` |  |  |
+| `:type` | `String` |  |  |
 
 **Nested elements**
 
@@ -16623,11 +15582,13 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:error` `String`
-- `:refid` `Reference`
-- `:units` `ByteUnits`
-- `:value` `long`
-- `:when` `SizeComparisons`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:units` | `ByteUnits` |  |  |
+| `:value` | `long` |  |  |
+| `:when` | `SizeComparisons` |  |  |
 
 **Reference**
 
@@ -16645,8 +15606,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:port` `int`
-- `:server` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:port` | `int` |  |  |
+| `:server` | `String` |  |  |
 
 **Reference**
 
@@ -16664,7 +15627,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` |  |  |
 
 **Reference**
 
@@ -16696,9 +15661,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -16726,8 +15693,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -16745,9 +15714,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -16775,8 +15746,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:prefix` `String`
-- `:suffix` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:prefix` | `String` |  |  |
+| `:suffix` | `String` |  |  |
 
 **Reference**
 
@@ -16794,9 +15767,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:dir` `File`
-- `:files` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dir` | `File` |  |  |
+| `:files` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -16818,18 +15793,20 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -16881,18 +15858,20 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -16944,8 +15923,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -16977,7 +15958,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:linebreaks` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:linebreaks` | `String` |  |  |
 
 **Reference**
 
@@ -17013,7 +15996,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:suffix` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:suffix` | `String` |  |  |
 
 **Reference**
 
@@ -17031,18 +16016,20 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -17094,10 +16081,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:file` `File`
-- `:key` `String`
-- `:path` `Path`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:file` | `File` |  |  |
+| `:key` | `String` |  |  |
+| `:path` | `Path` |  |  |
+| `:value` | `String` |  |  |
 
 **Reference**
 
@@ -17115,9 +16104,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:dynamic` `boolean`
-- `:negate` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dynamic` | `boolean` |  |  |
+| `:negate` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -17141,7 +16132,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:tablength` `int`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:tablength` | `int` |  |  |
 
 **Reference**
 
@@ -17159,21 +16152,23 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:enabled` `boolean`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:name` `String`
-- `:refid` `Reference`
-- `:scope` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:enabled` | `boolean` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:name` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:scope` | `String` |  |  |
 
 **Nested elements**
 
@@ -17225,9 +16220,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
-- `:path` `Path`
-- `:pathref` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
+| `:path` | `Path` |  |  |
+| `:pathref` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -17249,8 +16246,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:lines` `long`
-- `:skip` `long`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:lines` | `long` |  |  |
+| `:skip` | `long` |  |  |
 
 **Reference**
 
@@ -17268,7 +16267,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -17286,8 +16287,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:prefix` `String`
-- `:suffix` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:prefix` | `String` |  |  |
+| `:suffix` | `String` |  |  |
 
 **Reference**
 
@@ -17305,9 +16308,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:dir` `File`
-- `:files` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:dir` | `File` |  |  |
+| `:files` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -17329,18 +16334,20 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -17392,9 +16399,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -17422,8 +16431,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 
@@ -17455,10 +16466,12 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:default` `String`
-- `:name` `String`
-- `:optional` `boolean`
-- `:trim` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:default` | `String` |  |  |
+| `:name` | `String` |  |  |
+| `:optional` | `boolean` |  |  |
+| `:trim` | `boolean` |  |  |
 
 **Reference**
 
@@ -17494,8 +16507,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:address` `String`
-- `:name` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:address` | `String` |  |  |
+| `:name` | `String` |  |  |
 
 **Reference**
 
@@ -17513,8 +16528,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:key` `String`
-- `:value` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:key` | `String` |  |  |
+| `:value` | `String` |  |  |
 
 **Reference**
 
@@ -17532,7 +16549,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:delimoutput` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:delimoutput` | `String` |  |  |
 
 **Nested elements**
 
@@ -17563,11 +16582,13 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:elements` `boolean`
-- `:extension` `boolean`
-- `:generation` `boolean`
-- `:selection` `boolean`
-- `:templates` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:elements` | `boolean` |  |  |
+| `:extension` | `boolean` |  |  |
+| `:generation` | `boolean` |  |  |
+| `:selection` | `boolean` |  |  |
+| `:templates` | `boolean` |  |  |
 
 **Reference**
 
@@ -17585,8 +16606,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:src` `File`
-- `:srcresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:src` | `File` |  |  |
+| `:srcresource` | `Resource` |  |  |
 
 **Body text**
 
@@ -17608,7 +16631,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:byline` `boolean`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:byline` | `boolean` |  |  |
 
 **Reference**
 
@@ -17626,9 +16651,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:error` `String`
-- `:refid` `Reference`
-- `:type` `FileType`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:error` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:type` | `FileType` |  |  |
 
 **Reference**
 
@@ -17646,9 +16673,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -17676,8 +16705,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:displayname` `String`
-- `:userid` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:displayname` | `String` |  |  |
+| `:userid` | `String` |  |  |
 
 **Reference**
 
@@ -17695,9 +16726,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:build` `String`
-- `:number` `String`
-- `:prerelease` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:build` | `String` |  |  |
+| `:number` | `String` |  |  |
+| `:prerelease` | `String` |  |  |
 
 **Reference**
 
@@ -17715,9 +16748,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -17745,7 +16780,9 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:basedir` `File`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:basedir` | `File` |  |  |
 
 **Reference**
 
@@ -17763,26 +16800,28 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:dirmode` `String`
-- `:encoding` `String`
-- `:erroronmissingarchive` `boolean`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:filemode` `String`
-- `:followsymlinks` `boolean`
-- `:fullpath` `String`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:prefix` `String`
-- `:refid` `Reference`
-- `:src` `File`
-- `:srcresource` `Resource`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:dirmode` | `String` |  |  |
+| `:encoding` | `String` |  |  |
+| `:erroronmissingarchive` | `boolean` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:filemode` | `String` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:fullpath` | `String` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:prefix` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
+| `:src` | `File` |  |  |
+| `:srcresource` | `Resource` |  |  |
 
 **Nested elements**
 
@@ -17834,26 +16873,28 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:args` `String`
-- `:classpath` `Path`
-- `:compiler` `String`
-- `:destdir` `File`
-- `:ejbcclass` `String`
-- `:ejbdtd` `String`
-- `:genericjarsuffix` `String`
-- `:jvmargs` `String`
-- `:jvmdebuglevel` `Integer`
-- `:keepgenerated` `String`
-- `:keepgeneric` `boolean`
-- `:newcmp` `boolean`
-- `:noejbc` `boolean`
-- `:oldcmp` `boolean`
-- `:outputdir` `File`
-- `:rebuild` `boolean`
-- `:suffix` `String`
-- `:weblogicdtd` `String`
-- `:wlclasspath` `Path`
-- `:wldtd` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:args` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:compiler` | `String` |  |  |
+| `:destdir` | `File` |  |  |
+| `:ejbcclass` | `String` |  |  |
+| `:ejbdtd` | `String` |  |  |
+| `:genericjarsuffix` | `String` |  |  |
+| `:jvmargs` | `String` |  |  |
+| `:jvmdebuglevel` | `Integer` |  |  |
+| `:keepgenerated` | `String` |  |  |
+| `:keepgeneric` | `boolean` |  |  |
+| `:newcmp` | `boolean` |  |  |
+| `:noejbc` | `boolean` |  |  |
+| `:oldcmp` | `boolean` |  |  |
+| `:outputdir` | `File` |  |  |
+| `:rebuild` | `boolean` |  |  |
+| `:suffix` | `String` |  |  |
+| `:weblogicdtd` | `String` |  |  |
+| `:wlclasspath` | `Path` |  |  |
+| `:wldtd` | `String` |  |  |
 
 **Nested elements**
 
@@ -17885,28 +16926,30 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:args` `String`
-- `:classpath` `Path`
-- `:compiler` `String`
-- `:destdir` `File`
-- `:ejbcclass` `String`
-- `:ejbdtd` `String`
-- `:genericjarsuffix` `String`
-- `:jvmargs` `String`
-- `:jvmdebuglevel` `Integer`
-- `:keepgenerated` `String`
-- `:keepgeneric` `boolean`
-- `:newcmp` `boolean`
-- `:noejbc` `boolean`
-- `:oldcmp` `boolean`
-- `:outputdir` `File`
-- `:rebuild` `boolean`
-- `:suffix` `String`
-- `:toplinkdescriptor` `String`
-- `:toplinkdtd` `String`
-- `:weblogicdtd` `String`
-- `:wlclasspath` `Path`
-- `:wldtd` `String`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:args` | `String` |  |  |
+| `:classpath` | `Path` |  |  |
+| `:compiler` | `String` |  |  |
+| `:destdir` | `File` |  |  |
+| `:ejbcclass` | `String` |  |  |
+| `:ejbdtd` | `String` |  |  |
+| `:genericjarsuffix` | `String` |  |  |
+| `:jvmargs` | `String` |  |  |
+| `:jvmdebuglevel` | `Integer` |  |  |
+| `:keepgenerated` | `String` |  |  |
+| `:keepgeneric` | `boolean` |  |  |
+| `:newcmp` | `boolean` |  |  |
+| `:noejbc` | `boolean` |  |  |
+| `:oldcmp` | `boolean` |  |  |
+| `:outputdir` | `File` |  |  |
+| `:rebuild` | `boolean` |  |  |
+| `:suffix` | `String` |  |  |
+| `:toplinkdescriptor` | `String` |  |  |
+| `:toplinkdtd` | `String` |  |  |
+| `:weblogicdtd` | `String` |  |  |
+| `:wlclasspath` | `Path` |  |  |
+| `:wldtd` | `String` |  |  |
 
 **Nested elements**
 
@@ -17930,29 +16973,31 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:classpath` `Path`
-- `:codegen` `boolean`
-- `:dbname` `String`
-- `:dbschema` `String`
-- `:dbvendor` `String`
-- `:destdir` `File`
-- `:ejbdeploy` `boolean`
-- `:ejbdtd` `String`
-- `:genericjarsuffix` `String`
-- `:keepgeneric` `boolean`
-- `:newcmp` `boolean`
-- `:noinform` `boolean`
-- `:novalidate` `boolean`
-- `:nowarn` `boolean`
-- `:oldcmp` `boolean`
-- `:quiet` `boolean`
-- `:rebuild` `boolean`
-- `:rmicoptions` `String`
-- `:suffix` `String`
-- `:tempdir` `String`
-- `:trace` `boolean`
-- `:use35` `boolean`
-- `:wasclasspath` `Path`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:classpath` | `Path` |  |  |
+| `:codegen` | `boolean` |  |  |
+| `:dbname` | `String` |  |  |
+| `:dbschema` | `String` |  |  |
+| `:dbvendor` | `String` |  |  |
+| `:destdir` | `File` |  |  |
+| `:ejbdeploy` | `boolean` |  |  |
+| `:ejbdtd` | `String` |  |  |
+| `:genericjarsuffix` | `String` |  |  |
+| `:keepgeneric` | `boolean` |  |  |
+| `:newcmp` | `boolean` |  |  |
+| `:noinform` | `boolean` |  |  |
+| `:novalidate` | `boolean` |  |  |
+| `:nowarn` | `boolean` |  |  |
+| `:oldcmp` | `boolean` |  |  |
+| `:quiet` | `boolean` |  |  |
+| `:rebuild` | `boolean` |  |  |
+| `:rmicoptions` | `String` |  |  |
+| `:suffix` | `String` |  |  |
+| `:tempdir` | `String` |  |  |
+| `:trace` | `boolean` |  |  |
+| `:use35` | `boolean` |  |  |
+| `:wasclasspath` | `Path` |  |  |
 
 **Nested elements**
 
@@ -17989,9 +17034,11 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:path` `String`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:path` | `String` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -18033,18 +17080,20 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:casesensitive` `boolean`
-- `:defaultexcludes` `boolean`
-- `:dir` `File`
-- `:erroronmissingdir` `boolean`
-- `:excludes` `String`
-- `:excludesfile` `File`
-- `:file` `File`
-- `:followsymlinks` `boolean`
-- `:includes` `String`
-- `:includesfile` `File`
-- `:maxlevelsofsymlinks` `int`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:casesensitive` | `boolean` |  |  |
+| `:defaultexcludes` | `boolean` |  |  |
+| `:dir` | `File` |  |  |
+| `:erroronmissingdir` | `boolean` |  |  |
+| `:excludes` | `String` |  |  |
+| `:excludesfile` | `File` |  |  |
+| `:file` | `File` |  |  |
+| `:followsymlinks` | `boolean` |  |  |
+| `:includes` | `String` |  |  |
+| `:includesfile` | `File` |  |  |
+| `:maxlevelsofsymlinks` | `int` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Nested elements**
 
@@ -18096,8 +17145,10 @@ Nested-only element discovered via introspection.
 
 **Attributes**
 
-- `:cache` `boolean`
-- `:refid` `Reference`
+| Attribute | Type | Description | Required |
+| --- | --- | --- | --- |
+| `:cache` | `boolean` |  |  |
+| `:refid` | `Reference` |  |  |
 
 **Reference**
 

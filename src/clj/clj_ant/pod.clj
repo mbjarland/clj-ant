@@ -15,10 +15,10 @@
   Then in a bb script:
 
       (require '[babashka.pods :as pods])
-      (pods/load-pod ['clj-ant.pod])           ; auto-discovered, see manifest
+      (pods/load-pod [\"clojure\" \"-M:pod\"])
       (require '[clj-ant.tasks :as t]
-               '[clj-ant.core  :as a])
-      (a/ant (t/echo :message \"hello from bb\"))
+               '[clj-ant.pod   :as a])
+      (a/execute [(t/echo :message \"hello from bb\")])
 
   The pod protocol is bencode-over-stdio. We implement just enough of
   it inline -- pods are small enough that pulling in a dependency for

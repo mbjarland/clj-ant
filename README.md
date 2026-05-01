@@ -8,6 +8,7 @@ resource collections (`fileset`, `path`, `dirset`, `union`, `restrict`,
 
 [![CI](https://github.com/mbjarland/clj-ant/actions/workflows/ci.yml/badge.svg)](https://github.com/mbjarland/clj-ant/actions/workflows/ci.yml)
 [![Clojars Project](https://img.shields.io/clojars/v/io.github.mbjarland/clj-ant.svg?include_prereleases)](https://clojars.org/io.github.mbjarland/clj-ant)
+[![cljdoc](https://cljdoc.org/badge/io.github.mbjarland/clj-ant)](https://cljdoc.org/d/io.github.mbjarland/clj-ant)
 [![License](https://img.shields.io/badge/license-EPL%201.0-blue.svg)](LICENSE)
 
 > **Pre-1.0 alpha.** Architecture is stable; surface APIs may shift
@@ -79,7 +80,7 @@ custom taskdefs. Compose them with the rest of your Clojure code freely.
 
 ```clojure
 ;; deps.edn
-{:deps {io.github.mbjarland/clj-ant {:mvn/version "1.0.0-alpha.1"}}}
+{:deps {io.github.mbjarland/clj-ant {:mvn/version "1.0.0-alpha.4"}}}
 ```
 
 Replace the version with the latest one shown by the Clojars badge
@@ -298,25 +299,24 @@ parameter expansion, and target execution. Put it inside a target and
 
 user=> (doc t/copy)
 clj-ant.tasks/copy
-([& {:keys [todir tofile overwrite encoding ...] :as attrs} & nested])
+([& args])
   Copies a file or resource collection ...
-  Attributes:
-    :todir          File
-    :tofile         File
-    :overwrite      boolean
-    ...
+  **Attributes**
+  | Attribute | Type | Description | Required |
+  | `:todir` | `File` | The directory to copy to. | ... |
+  ...
   https://ant.apache.org/manual/Tasks/copy.html
 ```
 
-Cursive / CIDER / clojure-lsp read `:arglists` for keyword
-completion, so typing `(t/copy :` brings up the attribute names
-inline.
+Generated `t/*` vars keep compact `([& args])` signatures so cljdoc
+doesn't bury the useful prose under huge parameter lists. Attribute
+names, Java types, manual prose, required markers, nested elements, and
+backing classes are still available in generated docstrings, var
+metadata, and `a/describe`.
 
 `clojure.repl/doc` is still the right quick human-facing REPL view for
-`t/*` vars. `a/describe` complements it by returning EDN for tools,
-UIs, bb pod callers, and validation: attribute names, Java types,
-manual prose, required markers, nested elements, backing classes, and
-manual URLs where available.
+`t/*` vars. `a/describe` complements it by returning EDN for tools, UIs,
+bb pod callers, and validation.
 
 ### SSH out of the box
 
