@@ -136,6 +136,21 @@ a Clojure map. Nothing executes until the tree is handed to `a/ant`:
 
 So you can `update`, `walk`, `assoc` plans before running them.
 
+### Quiet by default
+
+Ant's `DefaultLogger` output is captured into the result map instead of
+printed to the console:
+
+```clojure
+(let [{:keys [out err]} (a/ant (t/echo :message "hello"))]
+  out)
+;; => "     [echo] hello\n\nBUILD SUCCESSFUL\nTotal time: ...\n"
+```
+
+Use `:log :inherit` for old-style console logging and `:log :quiet` to
+discard logger output entirely. Use `:log {:console? true :capture? true :level :info}`
+to tee logger output while retaining `:out`/`:err`.
+
 ### Resource collections as Clojure sequences
 
 ```clojure
