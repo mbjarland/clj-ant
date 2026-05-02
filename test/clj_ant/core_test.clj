@@ -4,7 +4,7 @@
             [clojure.string :as str]
             [clj-ant.core :as a]
             [clj-ant.pod :as pod])
-  (:import [java.io File]
+  (:import [java.io ByteArrayOutputStream File PrintStream]
            [java.nio.file Files]
            [org.apache.tools.ant Project]))
 
@@ -102,6 +102,42 @@
         (is (contains? phases :finished))
         (is (some #(and (= :task-started (:phase %)) (= "echo" (:task %)))
                   @seen))))))
+
+(deftest ant-logger-output
+  (testing "Ant logger output is captured by default, not printed"
+    (let [r (a/ant (a/element :echo :message "logger-captured"))]
+      (is (re-find #"logger-captured" (:out r)))
+      (is (re-find #"BUILD SUCCESSFUL" (:out r)))
+      (is (= "" (:err r)))))
+
+  (testing ":log :quiet discards DefaultLogger output"
+    (let [r (a/ant :log :quiet (a/element :echo :message "hidden"))]
+      (is (not (contains? r :out)))
+      (is (not (contains? r :err)))))
+
+  (testing ":log :inherit preserves explicit logger streams"
+    (let [baos (ByteArrayOutputStream.)
+          ps   (PrintStream. baos true "UTF-8")
+          r    (a/ant :log :inherit
+                      :out ps
+                      :err ps
+                      (a/element :echo :message "logger-inherited"))]
+      (.flush ps)
+      (is (not (contains? r :out)))
+      (is (re-find #"logger-inherited" (.toString baos "UTF-8")))
+      (is (re-find #"BUILD SUCCESSFUL" (.toString baos "UTF-8")))))
+
+  (testing ":log map can tee while retaining captured output"
+    (let [baos (ByteArrayOutputStream.)
+          ps   (PrintStream. baos true "UTF-8")
+          r    (a/ant :log {:console? true
+                            :capture? true
+                            :out ps
+                            :err ps}
+                      (a/element :echo :message "logger-tee"))]
+      (.flush ps)
+      (is (re-find #"logger-tee" (:out r)))
+      (is (re-find #"logger-tee" (.toString baos "UTF-8"))))))
 
 (deftest deftarget-and-dependencies
   (testing "named targets honour declared dependencies"

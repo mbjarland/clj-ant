@@ -26,8 +26,8 @@
                                  DefaultLogger BuildListener BuildEvent]
            [org.apache.tools.ant.types Resource ResourceCollection]
            [org.apache.tools.ant.types.resources FileProvider]
-           [cljant ClojureTask]
-           [java.io File PrintStream]))
+            [cljant ClojureTask]
+            [java.io ByteArrayOutputStream File OutputStream PrintStream]))
 
 ;; ---------------------------------------------------------------------------
 ;; Element construction
@@ -229,12 +229,115 @@
 ;; ---------------------------------------------------------------------------
 ;; Project lifecycle
 
+(def ^:private logger-ref-id "_clj-ant.logger")
+
+(defn- null-output-stream []
+  (proxy [OutputStream] []
+    (write
+      ([_])
+      ([_ _ _]))))
+
+(defn- tee-output-stream [^OutputStream a ^OutputStream b]
+  (proxy [OutputStream] []
+    (write
+      ([x]
+       (.write a x)
+       (.write b x))
+      ([buf off len]
+       (.write a buf off len)
+       (.write b buf off len)))
+    (flush []
+      (.flush a)
+      (.flush b))))
+
+(defn- utf8-print-stream [^OutputStream out]
+  (PrintStream. out true "UTF-8"))
+
+(defn- captured-str [^ByteArrayOutputStream baos]
+  (when baos
+    (.toString baos "UTF-8")))
+
+(defn- normalize-log
+  "Resolve legacy logger opts plus the newer :log shorthand/map."
+  [{:keys [log out err level emacs?] :as opts}]
+  (let [log* (if (contains? opts :log)
+               log
+               (if (or (contains? opts :out) (contains? opts :err))
+                 :inherit
+                 :capture))
+        base {:enabled? true
+              :capture? false
+              :console? false
+              :level (or level :info)
+              :emacs? (boolean emacs?)
+              :out (or out System/out)
+              :err (or err System/err)}]
+    (cond
+      (or (false? log*) (= :none log*))
+      (assoc base :enabled? false)
+
+      (= :quiet log*)
+      (assoc base :console? false :capture? false)
+
+      (= :inherit log*)
+      (assoc base :console? true :capture? false)
+
+      (= :capture log*)
+      (assoc base :console? false :capture? true)
+
+      (map? log*)
+      (merge (assoc base :capture? true)
+             log*
+             {:level (or (:level log*) level :info)
+              :emacs? (boolean (if (contains? log* :emacs?)
+                                  (:emacs? log*)
+                                  emacs?))
+              :out (or (:out log*) out System/out)
+              :err (or (:err log*) err System/err)})
+
+      :else
+      (throw (ex-info "Unsupported :log option"
+                      {:log log*
+                       :supported [:capture :inherit :quiet :none false]})))))
+
+(defn- logger-streams [{:keys [enabled? capture? console? out err]}]
+  (let [capture? (and enabled? capture?)
+        out-baos (when capture? (ByteArrayOutputStream.))
+        err-baos (when capture? (ByteArrayOutputStream.))
+        null-out (delay (null-output-stream))
+        out* (cond
+               (and capture? console?) (tee-output-stream out out-baos)
+               capture? out-baos
+               console? out
+               :else @null-out)
+        err* (cond
+               (and capture? console?) (tee-output-stream err err-baos)
+               capture? err-baos
+               console? err
+               :else @null-out)]
+    {:out (utf8-print-stream out*)
+     :err (utf8-print-stream err*)
+     :state (when capture?
+              {:out out-baos
+               :err err-baos})}))
+
+(defn- logger-state [^Project project]
+  (.getReference project logger-ref-id))
+
+(defn- logger-checkpoint [state]
+  (when state
+    {:out (count (captured-str (:out state)))
+     :err (count (captured-str (:err state)))}))
+
+(defn- logger-output-since [state checkpoint]
+  (when (and state checkpoint)
+    (let [out (captured-str (:out state))
+          err (captured-str (:err state))]
+      {:out (subs out (:out checkpoint))
+       :err (subs err (:err checkpoint))})))
+
 (defn ^:no-doc default-logger
-  ^DefaultLogger [{:keys [out err level emacs?]
-                   :or   {out    System/out
-                          err    System/err
-                          level  :info
-                          emacs? false}}]
+  ^DefaultLogger [{:keys [out err level emacs?]}]
   (doto (DefaultLogger.)
     (.setMessageOutputLevel
       (case level
@@ -348,16 +451,28 @@
     :level     :error | :warn | :info | :verbose | :debug. Default :info.
     :out, :err PrintStream for the default logger.
     :emacs?    Strip the [taskname] adornments. Default false.
+    :log       Logging mode. Default :capture. Supported shorthand values:
+               :capture captures Ant logger output into execute! result
+               :inherit writes Ant logger output to :out/:err or System streams
+               :quiet discards Ant logger output
+               :none / false attaches no DefaultLogger
+               Or pass a map with :capture?, :console?, :level, :out, :err,
+               and :emacs?.
     :listeners Coll of `BuildListener` instances to attach.
     :props     Map of user properties to seed."
   ^Project [{:keys [basedir name listeners props]
              :or   {basedir "." name "clj-ant"}
              :as   opts}]
-  (let [p (doto (Project.)
+  (let [log-opts (normalize-log opts)
+        {:keys [state] :as streams} (logger-streams log-opts)
+        p (doto (Project.)
             (.setName name)
             (.setBaseDir (io/file basedir))
-            (.addBuildListener (default-logger opts))
             (.init))]
+    (when (:enabled? log-opts)
+      (.addBuildListener p (default-logger (merge log-opts streams))))
+    (when state
+      (.addReference p logger-ref-id state))
     (doseq [^BuildListener l listeners]
       (.addBuildListener p l))
     (doseq [[k v] props]
@@ -745,6 +860,11 @@
                 fresh one is built from the same options.
     :capture?   If true, attach a recording BuildListener and return
                 the captured events under :events. Default false.
+    :log        Ant DefaultLogger handling. Default :capture, which keeps
+                Ant's BUILD SUCCESSFUL/FAILED text off the console and
+                returns it as :out/:err. Use :inherit for old console
+                logging, :quiet to discard logger output, or a map accepted
+                by `make-project`.
 
   Plus any options accepted by `make-project`."
   [elements & {:as opts}]
@@ -805,6 +925,8 @@
           ;; changed since this project last saw it. With many calls to
           ;; the same with-project, this is the steady-state fast path.
           _                (sync-deftasks! project)
+          log-state        (logger-state project)
+          log-checkpoint   (logger-checkpoint log-state)
           ;; Inline tasks created via `task`. We add their fns to the
           ;; registry just for this run and remove them in `finally`,
           ;; so a long REPL session doesn't leak per-call inline tasks.
@@ -959,12 +1081,14 @@
                                  t))))]
         (try
           (.fireBuildFinished project error)
-          (cond-> {:project project
-                   :target  implicit
-                   :targets named-tgts
-                   :tasks   ues}
-                  events (assoc :events @events)
-                  (some? error) (assoc :error error))
+          (let [logger-output (logger-output-since log-state log-checkpoint)]
+            (cond-> {:project project
+                     :target  implicit
+                     :targets named-tgts
+                     :tasks   ues}
+                    logger-output (merge logger-output)
+                    events (assoc :events @events)
+                    (some? error) (assoc :error error)))
           ;; Detach everything we attached to the project during this
           ;; call -- listener, inline-task definitions, synthetic refids
           ;; we minted for JavaChild, and named targets we addOrReplace'd.
