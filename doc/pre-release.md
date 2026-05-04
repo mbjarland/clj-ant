@@ -1,6 +1,6 @@
 # Release checklist
 
-Release readiness for the current alpha series and the eventual public
+Release readiness for the current pre-1.0 series and the eventual public
 1.0. Categorized by who owns each item.
 
 Legend:
@@ -22,9 +22,9 @@ Legend:
   The group is verified and matches the artifact coordinates in
   `build.clj`.
 
-- ✅ **Tag the alpha releases.**
-  `v1.0.0-alpha.1` through `v1.0.0-alpha.5` are published. Final 1.0
-  waits for external usage and feedback on the public API.
+- ✅ **Tag the pre-1.0 releases.**
+  `v1.0.0-alpha.1` through `v1.0.0-rc.1` are published. Final 1.0 waits
+  for release-candidate usage and feedback on the public API.
 
 ### Build / publish
 
@@ -36,7 +36,7 @@ Legend:
   GitHub secrets are configured with a rotated Clojars deploy token.
 
 - ✅ **Confirm Clojars deployment.**
-  `io.github.mbjarland/clj-ant` `1.0.0-alpha.5` is available on
+  `io.github.mbjarland/clj-ant` `1.0.0-rc.1` is available on
   Clojars.
 
 ### Continuous integration
@@ -86,8 +86,8 @@ Legend:
   GitHub releases.
 
 - 🚧 **Babashka pod manifest for the registry.**
-  https://github.com/babashka/pod-registry — needs a PR after alpha.5
-  release assets exist. Lets bb users do
+  https://github.com/babashka/pod-registry — PR open with release assets.
+  Lets bb users do
   `(pods/load-pod 'io.github.mbjarland/clj-ant "...")` instead of
   spelling out `["clojure" "-M:pod"]`.
 
