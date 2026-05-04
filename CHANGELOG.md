@@ -7,12 +7,18 @@ format.
 
 ## Unreleased
 
+## 1.0.0-rc.1 - 2026-05-04
+
 ### Added
 
-- Add `:log` execution options for Ant logger handling. By default,
-  `execute!`/`ant` capture Ant's `DefaultLogger` output into `:out`/`:err`
-  instead of printing `BUILD SUCCESSFUL`; callers can opt into console
-  logging with `:log :inherit` or discard logger output with `:log :quiet`.
+- Add `:log` execution options for Ant logger handling, including console,
+  capture, quiet, and no-logger modes.
+
+### Changed
+
+- Capture Ant's `DefaultLogger` output into `:out`/`:err` by default instead
+  of printing `BUILD SUCCESSFUL`; callers can opt back into console logging
+  with `:log :inherit` or discard logger output with `:log :quiet`.
 
 ## 1.0.0-alpha.5 - 2026-05-01
 

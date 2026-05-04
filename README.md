@@ -11,9 +11,9 @@ resource collections (`fileset`, `path`, `dirset`, `union`, `restrict`,
 [![cljdoc](https://cljdoc.org/badge/io.github.mbjarland/clj-ant)](https://cljdoc.org/d/io.github.mbjarland/clj-ant)
 [![License](https://img.shields.io/badge/license-EPL%201.0-blue.svg)](LICENSE)
 
-> **Pre-1.0 alpha.** Architecture is stable; surface APIs may shift
-> slightly during the alpha period based on real-world feedback. Once
-> `1.0.0` lands, semver applies normally.
+> **Pre-1.0 release candidate.** Architecture and primary APIs are expected
+> to be stable; remaining changes before `1.0.0` should be bug fixes,
+> documentation polish, or feedback from release-candidate users.
 
 ```clojure
 (require '[clj-ant.core  :as a]
@@ -80,7 +80,7 @@ custom taskdefs. Compose them with the rest of your Clojure code freely.
 
 ```clojure
 ;; deps.edn
-{:deps {io.github.mbjarland/clj-ant {:mvn/version "1.0.0-alpha.5"}}}
+{:deps {io.github.mbjarland/clj-ant {:mvn/version "1.0.0-rc.1"}}}
 ```
 
 Replace the version with the latest one shown by the Clojars badge
